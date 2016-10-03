@@ -1,29 +1,72 @@
 stage 'Build & test across platforms'
 
-lock(resource: 'orthanc', inversePrecedence: false) {
+lock('orthanc-builder-workspace') {
     def workspacePath = '../_orthanc-ws' // we need a short workspace name to avoid long path issues with boost lib
 
-	def buildMap = [:]
-
-buildMap.put('osx', {
-	stage('Build orthanc for osx') {
+	stage('Checkout SCM osx') {
 		node('osx') {
 			checkout scm
-			sh './ciBuildOrthancOSX.sh build --orthanc nightly'
-			sh './ciBuildOrthancOSX.sh publish nightly'  // after each successful build, we regenerate the package
 		}
 	}
-})
-
-buildMap.put('windows', {
-	stage('Build orthanc for windows') {
+	stage('Checkout SCM win') {
 		node('windows') {
 			checkout scm
-			bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --orthanc nightly'
-			bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' // after each successful build, we regenerate the package
 		}
 	}
-})
 
-parallel(buildMap)
+	def buildMap = [:] //we'll trigger all stages in parallel so the failure of one of the stage will not stop the complete job
+
+	buildMap.put('osx-orthanc', {
+		stage('Build orthanc for osx') {
+			node('osx') {
+				sh './ciBuildOrthancOSX.sh build --orthanc nightly'
+				lock('orthanc-publisher-osx') { //regenerate the package after each build
+					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+						sh './ciBuildOrthancOSX.sh publish nightly'  
+					}
+				}
+			}
+		}
+	})
+
+	buildMap.put('osx-dicomweb', {
+		stage('Build dicomweb for osx') {
+			node('osx') {
+				sh './ciBuildOrthancOSX.sh build --dicomweb nightly'
+				lock('orthanc-publisher-osx') { //regenerate the package after each build
+					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+						sh './ciBuildOrthancOSX.sh publish nightly'  
+					}
+				}
+			}
+		}
+	})
+
+	buildMap.put('win-orthanc', {
+		stage('Build orthanc for windows') {
+			node('windows') {
+				bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --orthanc nightly'
+				lock('orthanc-publisher-win') { //regenerate the package after each build
+					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+						bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
+					}
+				}
+			}
+		}
+	})
+
+	buildMap.put('win-dicomweb', {
+		stage('Build dicomweb for windows') {
+			node('windows') {
+				bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --dicomweb nightly'
+				lock('orthanc-publisher-win') { //regenerate the package after each build
+					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+						bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
+					}
+				}
+			}
+		}
+	})
+
+	parallel(buildMap)
 }
