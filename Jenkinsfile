@@ -18,53 +18,53 @@ lock('orthanc-builder-workspace') {
 
 	buildMap.put('osx-orthanc', {
 		stage('Build orthanc for osx') {
-			node('osx') {
+			node('osx') { dir(path: workspacePath) {
 				sh './ciBuildOrthancOSX.sh build --orthanc nightly'
 				lock('orthanc-publisher-osx') { //regenerate the package after each build
 					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
 						sh './ciBuildOrthancOSX.sh publish nightly'  
 					}
 				}
-			}
+			}}
 		}
 	})
 
 	buildMap.put('osx-dicomweb', {
 		stage('Build dicomweb for osx') {
-			node('osx') {
+			node('osx') { dir(path: workspacePath) {
 				sh './ciBuildOrthancOSX.sh build --dicomweb nightly'
 				lock('orthanc-publisher-osx') { //regenerate the package after each build
 					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
 						sh './ciBuildOrthancOSX.sh publish nightly'  
 					}
 				}
-			}
+			}}
 		}
 	})
 
 	buildMap.put('win-orthanc', {
 		stage('Build orthanc for windows') {
-			node('windows') {
+			node('windows') { dir(path: workspacePath) {
 				bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --orthanc nightly'
 				lock('orthanc-publisher-win') { //regenerate the package after each build
 					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
 						bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
 					}
 				}
-			}
+			}}
 		}
 	})
 
 	buildMap.put('win-dicomweb', {
 		stage('Build dicomweb for windows') {
-			node('windows') {
+			node('windows') { dir(path: workspacePath) {
 				bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --dicomweb nightly'
 				lock('orthanc-publisher-win') { //regenerate the package after each build
 					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
 						bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
 					}
 				}
-			}
+			}}
 		}
 	})
 
