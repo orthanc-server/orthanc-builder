@@ -12,7 +12,7 @@ buildMap.put('osx', {
 	}
 })
 
-buildMap.put('osx', {
+buildMap.put('windows', {
 	stage('Build orthanc for windows') {
 		node('windows') {
 			checkout scm
