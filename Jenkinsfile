@@ -12,9 +12,8 @@ lock('orthanc-builder-workspace') {
 				lock('orthanc-builder-osx') { 
 					sh './ciBuildOrthancOSX.sh build --orthanc nightly'
 					
-					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
-						sh './ciBuildOrthancOSX.sh publish nightly'  
-					}
+					//regenerate the package after each build
+					sh './ciBuildOrthancOSX.sh publish nightly'  
 				}
 			}}
 		}
@@ -28,9 +27,7 @@ lock('orthanc-builder-workspace') {
 					sh './ciBuildOrthancOSX.sh build --dicomweb nightly'
 
 					//regenerate the package after each build
-					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
-						sh './ciBuildOrthancOSX.sh publish nightly'  
-					}
+					sh './ciBuildOrthancOSX.sh publish nightly'  
 				}
 			}}
 		}
@@ -44,9 +41,7 @@ lock('orthanc-builder-workspace') {
 					bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --orthanc nightly'
 				
 					//regenerate the package after each build
-					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
-						bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
-					}
+					bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
 				}
 			}}
 		}
@@ -60,13 +55,13 @@ lock('orthanc-builder-workspace') {
 					bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --dicomweb nightly'
 				
 					//regenerate the package after each build
-					withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
-						bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
-					}
+					bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish nightly' 
 				}
 			}}
 		}
 	})
 
-	parallel(buildMap)
+	withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+		parallel(buildMap)
+	}
 }
