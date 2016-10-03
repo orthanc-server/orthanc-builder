@@ -1,5 +1,5 @@
 stage 'Build & test across platforms'
-parallel 
+# parallel 
 #	osx: {
 #		node('osx') {
 #			checkout scm
