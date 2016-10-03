@@ -8,7 +8,7 @@ param(
 python -m venv env
 env\Scripts\activate.ps1
 $env:PYTHONPATH=$(pwd);$env:PYTHONPATH
-pip install http://orthanc.osimis.io/pythonToolbox/OsimisToolbox-1.12.3.tar.gz awscli
+pip install -r requirements.txt
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
 
 

@@ -16,7 +16,6 @@ export PATH=$PATH:/usr/local/bin   #such that pyvenv works
 source createPythonVenv.sh
 source env/bin/activate
 pip install -r requirements.txt
-pip install awscli
 
 #display all SDKs supports by this version of xcode
 xcodebuild -showsdks
