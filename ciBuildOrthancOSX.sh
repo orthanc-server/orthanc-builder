@@ -11,9 +11,9 @@ arg3=${3:-}
 
 startScriptDir=$(pwd)
 export PATH=$PATH:/usr/local/bin   #such that pyvenv works
-cd ..
+
 #create a python virtual environment
-source scripts/createPythonVenv.sh
+source createPythonVenv.sh
 source env/bin/activate
 pip install -r requirements.txt
 pip install awscli
