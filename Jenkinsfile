@@ -4,14 +4,14 @@ lock('orthanc-builder-workspace') {
     def workspacePath = '../_orthanc-ws' // we need a short workspace name to avoid long path issues with boost lib
 
 	stage('Checkout SCM osx') {
-		node('osx') {
+		node('osx') { dir(path: workspacePath) {
 			checkout scm
-		}
+		}}
 	}
 	stage('Checkout SCM win') {
-		node('windows') {
+		node('windows') { dir(path: workspacePath) {
 			checkout scm
-		}
+		}}
 	}
 
 	def buildMap = [:] //we'll trigger all stages in parallel so the failure of one of the stage will not stop the complete job
