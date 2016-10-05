@@ -50,7 +50,7 @@ repositories = {
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
-        'stableBranch': '0.5.2',  # tag 0.5.2
+        'stableBranch': 'master',
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
