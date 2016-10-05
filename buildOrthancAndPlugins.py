@@ -174,6 +174,13 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
                         version = branchName),
                     stdoutCallback = logger.info
                 )
+                
+                # Add executable perm to executable in osx (eg. for Orthanc binary)
+                if platform.system() == 'Darwin':
+                    outputExePath = artifactsPath + '/' + exeName
+                    mode = os.stat(outputExePath).st_mode
+                    mode |= (mode & 0o444) >> 2    # copy R bits to X
+                    os.chmod(outputExePath, mode)
 
     # include readme, configuration and startup scripts
     orthancDemoResourceFiles = os.path.join(scriptDir, 'orthancBuildResources')
