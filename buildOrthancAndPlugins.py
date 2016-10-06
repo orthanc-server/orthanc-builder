@@ -4,8 +4,6 @@ import platform
 import os
 import shutil
 import sys
-import getpass
-from subprocess import call
 from helpers import *
 
 LogHelpers.configureLogging(logging.INFO)
@@ -174,12 +172,12 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
                         version = branchName),
                     stdoutCallback = logger.info
                 )
-                
+
                 # Add executable perm to executable in osx (eg. for Orthanc binary)
                 if platform.system() == 'Darwin':
                     outputExePath = artifactsPath + '/' + exeName
                     mode = os.stat(outputExePath).st_mode
-                    mode |= (mode & 0o444) >> 2    # copy R bits to X
+                    mode |= (mode & 0o444) >> 2  # copy R bits to X
                     os.chmod(outputExePath, mode)
 
     # include readme, configuration and startup scripts
@@ -205,41 +203,8 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
                                                                                                   s3Path),
                               scriptDir, logger.info)
 
-    # build a json doc with versions info
+    # TODO: build a json doc with versions info that we can use in the orthanc.osimis.io index page
 
-    #             ret = call(
-    #                 "{exe} s3 --region eu-west-1 cp {lib} s3://orthanc.osimis.io/{target}/{project}/{version}/ --cache-control max-age=1".format(
-    #                     exe = awsExecutable,
-    #                     lib = libraryName,
-    #                     target = getAwsConfigFolder(archi),
-    #                     project = projectName,
-    #                     version = branchName))
-    #
-    #     if 'outputExes' in repository:
-    #         for outputExe in repository['outputExes']:
-    #
-    # for
-    #     logger.info("Packaging Orthanc stable release")
-    #     branchOrthanc = "Orthanc-1.1.0"
-    #     branchDicomWeb = "OrthancDicomWeb-0.3"
-    #     branchOsimisViewer = "master"
-    #     buildType = "stable"
-    # else:
-    #     logger.info("Packaging Orthanc nightly release")
-    #     branchOrthanc = "default"
-    #     branchDicomWeb = "OrthancDicomWeb-0.3"
-    #     branchOsimisViewer = "dev"
-    #     buildType = "nightly"
-    #
-    #     # upload lib
-    #     ret = call(
-    #         "{exe} s3 --region eu-west-1 cp {lib} s3://orthanc.osimis.io/{target}/viewer/{version}/ --cache-control max-age=1".format(
-    #             exe = awsExecutable,
-    #             lib = exeName,
-    #             target = getAwsConfigFolder(archi),
-    #             version = branchName))
-    #
-    #
 
 
 def build(branchName, archi, vsVersion, projectName, repository, skipCompilation = False, skipCheckout = False):
@@ -266,11 +231,16 @@ def build(branchName, archi, vsVersion, projectName, repository, skipCompilation
         # --- build ---
         if build['type'] == 'cmake':
 
-            #     FileHelpers.makeSurePathExists(orthancThirdPartyDownloadsPath)
-            #     # at the Labs, download of 3rd parties from Montefiore website sometimes fails => download them from s3
-            #     CmdHelpers.run("Downloading ThirdPartyDownloads",
-            #                    '{0} s3 --region eu-west-1 sync s3://orthanc.osimis.io/ThirdPartyDownloads {1}'.format(
-            #                        awsExecutable, orthancThirdPartyDownloadsPath), scriptDir, logger.info)
+            cmakeListsFolderPath = os.path.join(scriptDir,
+                                                repository['localName'],
+                                                build['buildFromFolder'])
+            thirdPartyDownloadsPath = os.path.join(cmakeListsFolderPath, 'ThirdPartyDownloads')
+
+            FileHelpers.makeSurePathExists(thirdPartyDownloadsPath)
+            # at the Labs, download of 3rd parties from Montefiore website sometimes fails => download them from s3
+            CmdHelpers.run("Downloading ThirdPartyDownloads",
+                           '{0} s3 --region eu-west-1 sync s3://orthanc.osimis.io/ThirdPartyDownloads {1}'.format(
+                               awsExecutable, thirdPartyDownloadsPath), scriptDir, logger.info)
 
             FileHelpers.makeSurePathDoesNotExists(buildFolder)  # cleanup old build folder
             os.makedirs(buildFolder, exist_ok = True)
@@ -335,33 +305,6 @@ def build(branchName, archi, vsVersion, projectName, repository, skipCompilation
                 stdoutCallback = logger.info
             )
 
-            #     if platform.system() == 'Windows':
-            #             outputs = ['orthanc.hg-build/Release/Orthanc.exe',
-            #                        'orthanc.hg-build/Release/ServeFolders.dll',
-            #                        'orthanc.hg-build/Release/ModalityWorklists.dll',
-            #                        'orthanc-dicomweb.hg-build/Release/OrthancDicomWeb.dll']
-            # unitTestsExecutable = 'UnitTests'
-            # awsExecutable = 'aws.cmd'
-            # projectsToBuild = "--orthanc --orthanc-dicomweb"
-            # if args.arc32:
-            #     buildArchitecture = '-32'
-            # zipFileName = 'orthancAndPluginsWin32.{0}'.format(buildType)
-            # s3Path = '/win32/{0}/'.format(buildType)
-            # else:
-            # buildArchitecture = '-64'
-            # zipFileName = 'orthancAndPluginsWin64.{0}'.format(buildType)
-            # s3Path = '/win64/{0}/'.format(buildType)
-            #
-            # elif platform.system() == 'Darwin':
-            # unitTestsExecutable = './UnitTests'
-            # outputs = ['orthanc.hg-build/Release/Orthanc',
-            #            'orthanc.hg-build/Release/libServeFolders.dylib',
-            #            'orthanc.hg-build/Release/libModalityWorklists.dylib',
-            #            'wvb-build/Release/libOsimisWebViewer.dylib',
-            #            'orthanc-dicomweb.hg-build/Release/libOrthancDicomWeb.dylib']
-            #
-            # rootBuildDir = os.getcwd()
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -373,7 +316,6 @@ if __name__ == '__main__':
 
     buildParser.add_argument('--branchName',
                              help = 'name of the branch to build (if you have not provided stable/nightly)')
-    # buildParser.add_argument('--archi', help = 'name of the architecture to build {win32,win64}', default = 'win64')
     buildParser.add_argument('--vsVersion', help = 'Visual studio version to use {2013,2015}', default = '2015')
     buildParser.add_argument('--skipCompilation', help = 'actually skip the compilation phase', action = 'store_true',
                              default = False)
@@ -424,47 +366,3 @@ if __name__ == '__main__':
                           skipCompilation = args.skipCompilation,
                           skipCheckout = args.skipCheckout)
 
-#
-#     for output in outputs:
-#         artifactPath = os.path.join(rootBuildDir, output)
-#     shutil.copy(artifactPath, artifactsPath)
-#     # copy each individual file to s3
-#     #        CmdHelpers.runExitIfFails('copying artifact to s3 ({0})'.format(artifactPath), '{0} s3 --region eu-west-1 cp {1} s3://orthanc.osimis.io{2} --cache-control max-age=1'.format(awsExecutable, artifactPath, s3Path), scriptDir, logger.info)
-#
-#     if not "osimis-webviewer" in projectsToBuild and platform.system() == 'Windows':  # windows DLL is downloaded from the web (it's built by another job)
-#         if
-#     args.arc64:
-#     archi = 'win64'
-#     else:
-#     archi = 'win32'
-#     url = "s3://orthanc.osimis.io/{archi}/viewer/{branch}/OsimisWebViewer.dll".format(archi = archi,
-#                                                                                       branch = branchOsimisViewer)
-#     filePath = os.path.join(artifactsPath, 'OsimisWebViewer.dll')
-#     logger.info("downloading OsimisWebViewer from {} to {}".format(url, filePath))
-#     CmdHelpers.runExitIfFails('download OsimisWebViewer from s3 '.format(artifactPath),
-#                               '{0} s3 --region eu-west-1 cp {1} {2} --cache-control max-age=1'.format(
-#                                   awsExecutable, url, artifactsPath), scriptDir, logger.info)
-#
-#
-# # include readme, configuration and startup scripts
-# orthancDemoResourceFiles = os.path.join(scriptDir, 'orthancBuildResources')
-# if platform.system() == 'Windows':
-#     shutil.copy(os.path.join(orthancDemoResourceFiles, 'readmeWin.txt'), os.path.join(artifactsPath, 'readme.txt'))
-# shutil.copy(os.path.join(orthancDemoResourceFiles, 'configWin.json'), artifactsPath)
-# shutil.copy(os.path.join(orthancDemoResourceFiles, 'startOrthanc.bat'), artifactsPath)
-# else:
-# shutil.copy(os.path.join(orthancDemoResourceFiles, 'readmeOSX.txt'), os.path.join(artifactsPath, 'readme.txt'))
-# shutil.copy(os.path.join(orthancDemoResourceFiles, 'configOSX.json'), artifactsPath)
-# shutil.copy(os.path.join(orthancDemoResourceFiles, 'startOrthanc.command'), artifactsPath)
-#
-# # compress to zip and upload zip to s3
-# shutil.make_archive(base_name = artifactsPath,
-#
-#                     format = 'zip',
-#                     root_dir = artifactsPath,
-#                     base_dir = None
-#                     )  # CmdHelpers.runExitIfFails('copying artifacts zip to s3', '{0} s3 --region eu-west-1 cp {1} s3://orthanc.osimis.io{2}'.format(awsExecutable, artifactsPath + '.zip', s3Path), scriptDir, logger.info)
-#
-# # build a json doc with versions info
-#
-# # hg id -i to get the hash of the hg current revision
