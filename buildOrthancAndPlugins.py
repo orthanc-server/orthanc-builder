@@ -28,7 +28,6 @@ repositories = {
         'localName': 'orthanc.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS,
-        'depends': [],
         'build': {
             'type': 'cmake',
             'cmakeTarget': 'Orthanc',
@@ -57,11 +56,10 @@ repositories = {
         'localName': 'orthanc-dicomweb.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS,
-        'depends': [],
         'build': {
             'type': 'cmake',
             'cmakeTarget': 'OrthancDicomWeb',
-            'cmakeTargetOSX': ['OrthancDicomWeb', 'UnitTests'],
+            'cmakeTargetsOSX': ['OrthancDicomWeb', 'UnitTests'],
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
             'buildFromFolder': '.',
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
@@ -71,25 +69,25 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
-    # 'postgresql': {
-    #     'url': 'https://bitbucket.org/sjodogne/orthanc-postgresql/',
-    #     'localName': 'orthanc-postgresql.hg',
-    #     'tool': 'hg',
-    #     'platforms': [WINDOWS, LINUX],
-    #     'depends': ['pythonToolbox', 'orthanc'],  # we need the toolbox to build it easily
-    #     'build': {
-    #         'type': 'cmake',
-    #         'cmakeTarget': 'OrthancPostgreSQL',
-    #         # in windows: the name of the .sln file with 2 projects: Storage and Index
-    #         'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
-    #         'buildFromFolder': '.',
-    #         'buildOutputFolder': '../orthanc-postgresql.hg-build',
-    #         'unitTestsExe': 'UnitTests'
-    #     },
-    #     'stableBranch': 'OrthancPostgreSQL-2.0',
-    #     'nightlyBranch': 'default',
-    #     'outputLibs': ['OrthancPostgreSQL'], # todo, we actualy never built the postgresql with this script ...
-    # }
+    'postgresql': {
+        'url': 'https://bitbucket.org/sjodogne/orthanc-postgresql/',
+        'localName': 'orthanc-postgresql.hg',
+        'tool': 'hg',
+        'platforms': [OSX],
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancPostgreSQL',
+            'cmakeTargetsOSX': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # 'UnitTests'],
+            # in windows: the name of the .sln file with 2 projects: Storage and Index
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-postgresql.hg-build',
+            # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
+        },
+        'stableBranch': 'OrthancPostgreSQL-2.0',
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
+    }
 }
 
 
@@ -268,11 +266,8 @@ def build(branchName, archi, vsVersion, projectName, repository, skipCompilation
         if build['unitTestsExe']:
             logger.info("Running unit tests")
 
-            if projectName == 'dicomweb' and platform.system() == 'Darwin':  # no unit test project on OSX for DicomWeb ?
-                pass
-            else:
-                CmdHelpers.runExitIfFails("Running unit tests", BuildHelpers.getExeCommandName(build['unitTestsExe']),
-                                          stdoutCallback = logger.info)
+            CmdHelpers.runExitIfFails("Running unit tests", BuildHelpers.getExeCommandName(build['unitTestsExe']),
+                                      stdoutCallback = logger.info)
 
     # --- publish to AWS ---
     if 'outputLibs' in repository:
