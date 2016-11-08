@@ -263,7 +263,7 @@ def build(branchName, archi, vsVersion, projectName, repository, skipCompilation
 
     if not skipCompilation:
         # --- run unit tests ---
-        if build['unitTestsExe']:
+        if 'unitTestsExe' in build and build['unitTestsExe'] is not None:
             logger.info("Running unit tests")
 
             CmdHelpers.runExitIfFails("Running unit tests", BuildHelpers.getExeCommandName(build['unitTestsExe']),

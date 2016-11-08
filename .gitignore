@@ -1,4 +1,8 @@
 env/
-orthanc.hg/
 .idea/
-
+orthanc.hg/
+orthanc.hg-build/
+orthanc-dicomweb.hg-build/
+orthanc-dicomweb.hg/
+orthanc-postgresql.hg-build/
+orthanc-postgresql.hg/
