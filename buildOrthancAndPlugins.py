@@ -73,7 +73,7 @@ repositories = {
         'url': 'https://bitbucket.org/sjodogne/orthanc-postgresql/',
         'localName': 'orthanc-postgresql.hg',
         'tool': 'hg',
-        'platforms': ['OSX'], # it currently does not build with VS2015
+        'platforms': ALL_PLATFORMS, # it currently does not build with VS2015
         'build': {
             'type': 'cmake',
             'cmakeTarget': 'OrthancPostgreSQL',

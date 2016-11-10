@@ -17,9 +17,11 @@ stage('User inputs') {
 	        userInput = input(
 	            id: 'userInput', message: 'Configure build', parameters: [
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildDicomWebOSX'], description: 'Build Dicom Web OSX', name: 'buildDicomWebOSX'],
-	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildDicomWebWin'], description: 'Build Dicom Web OSX', name: 'buildDicomWebWin'],
-	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildOrthancOSX'], description: 'Build Dicom Web OSX', name: 'buildOrthancOSX'],
-	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildOrthancWin'], description: 'Build Dicom Web OSX', name: 'buildOrthancWin'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildDicomWebWin'], description: 'Build Dicom Web Win', name: 'buildDicomWebWin'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildPostgresOSX'], description: 'Build Postgres OSX', name: 'buildPostgresOSX'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildPostgresWin'], description: 'Build Postgres Win', name: 'buildPostgresWin'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildOrthancOSX'], description: 'Build Orthanc OSX', name: 'buildOrthancOSX'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildOrthancWin'], description: 'Build Orthanc Win', name: 'buildOrthancWin'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['isStableBuild'], description: 'Build Stable version instead of nightly', name: 'isStableBuild'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['isPackagingOnly'], description: 'Just make the package, skip compilation', name: 'isPackagingOnly']
 	            ]
@@ -33,6 +35,8 @@ stage('User inputs') {
 	if (userInput['isPackagingOnly']) {
 		userInput['buildDicomWebOSX'] = false
 		userInput['buildDicomWebWin'] = false
+		userInput['buildPostgresOSX'] = false
+		userInput['buildPostgresWin'] = false
 		userInput['buildOrthancOSX'] = false
 		userInput['buildOrthancWin'] = false
 	}
@@ -46,6 +50,8 @@ stage('User inputs') {
 	// Print the build parameters
 	echo 'Build DicomWeb OSX : ' + (userInput['buildDicomWebOSX'] ? 'yes' : 'no')
 	echo 'Build DicomWeb Win : ' + (userInput['buildDicomWebWin'] ? 'yes' : 'no')
+	echo 'Build Postgres OSX : ' + (userInput['buildPostgresOSX'] ? 'yes' : 'no')
+	echo 'Build Postgres Win : ' + (userInput['buildPostgresWin'] ? 'yes' : 'no')
 	echo 'Build Orthanc OSX  : ' + (userInput['buildOrthancOSX'] ? 'yes' : 'no')
 	echo 'Build Orthanc Win  : ' + (userInput['buildOrthancWin'] ? 'yes' : 'no')
 	echo 'buildType          : ' + buildType
@@ -94,6 +100,24 @@ stage('Build & test across platforms') { lock('orthanc-builder-workspace') {
 		})
 	}
 
+	if (userInput['buildPostgresOSX']) {
+		buildMap.put('osx-postgres', {
+			stage('Build postgres for osx') {
+				node('osx') { dir(path: rootWorkspacePath + '-postgres') {
+					checkout scm
+					lock('orthanc-builder-osx') { 
+						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+							sh './ciBuildOrthancOSX.sh build --postgresql ' + buildType
+
+							//regenerate the package after each build
+							sh './ciBuildOrthancOSX.sh publish ' + buildType
+						}
+					}
+				}}
+			}
+		})
+	}
+
 	if (userInput['buildOrthancWin']) {
 		buildMap.put('win-orthanc', {
 			stage('Build orthanc for windows') {
@@ -121,6 +145,25 @@ stage('Build & test across platforms') { lock('orthanc-builder-workspace') {
 					lock('orthanc-builder-win') { 
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
 							bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --dicomweb ' + buildType
+						
+							//regenerate the package after each build
+							bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish ' + buildType
+						}
+					}
+				}}
+			}
+		})
+	}
+
+	if (userInput['buildPostgresWin']) {
+		buildMap.put('win-postgres', {
+			stage('Build postgres for windows') {
+				node('windows') { dir(path: rootWorkspacePath + '-postgres') {
+					checkout scm
+
+					lock('orthanc-builder-win') { 
+						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+							bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --postgresql ' + buildType
 						
 							//regenerate the package after each build
 							bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish ' + buildType
