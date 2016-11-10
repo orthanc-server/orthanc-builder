@@ -1,6 +1,8 @@
 def userInput = [
     buildDicomWebOSX: true,
     buildDicomWebWin: true,
+    buildPostgresOSX: true,
+    buildPostgresWin: true,
     buildOrthancOSX: true,
     buildOrthancWin: true,
     isStableBuild: false,
