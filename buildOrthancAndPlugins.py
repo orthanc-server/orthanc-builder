@@ -69,6 +69,40 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
+    'wsiplugin': {
+        'url': 'https://bitbucket.org/sjodogne/orthanc-wsi',
+        'localName': 'orthanc-wsi-plugin.hg',
+        'tool': 'hg',
+        'platforms': [WINDOWS],
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancWSIPlugin',
+            'cmakeTargetsOSX': ['OrthancWSIPlugin'],
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': 'ViewerPlugin',
+            'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
+        },
+        'stableBranch': 'OrthancWSI-0.1', 
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancWSI'],
+    },
+    'wsiapps': {
+        'url': 'https://bitbucket.org/sjodogne/orthanc-wsi',
+        'localName': 'orthanc-wsi-apps.hg',
+        'tool': 'hg',
+        'platforms': [WINDOWS],
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancWSIApplications',
+            'cmakeTargetsOSX': ['OrthancWSIApplications'],
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': 'Applications',
+            'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
+        },
+        'stableBranch': 'OrthancWSI-0.1', 
+        'nightlyBranch': 'default',
+        'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
+    },
     'postgresql': {
         'url': 'https://bitbucket.org/sjodogne/orthanc-postgresql/',
         'localName': 'orthanc-postgresql.hg',
@@ -84,7 +118,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-2.0',
+        'stableBranch': '1e2c87b', # OrthancPostgreSQL-2.0',
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     }
