@@ -230,7 +230,7 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
                         base_dir = None
                         )
     CmdHelpers.runExitIfFails('copying artifacts zip to s3',
-                              '{0} s3 --region eu-west-1 cp {1} s3://orthanc.osimis.io{2}'.format(awsExecutable,
+                              '{0} s3 --region eu-west-1 cp {1} s3://orthanc.osimis.io{2}  --cache-control max-age=1'.format(awsExecutable,
                                                                                                   artifactsPath + '.zip',
                                                                                                   s3Path),
                               scriptDir, logger.info)
