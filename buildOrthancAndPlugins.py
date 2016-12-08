@@ -230,9 +230,10 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
                         base_dir = None
                         )
     CmdHelpers.runExitIfFails('copying artifacts zip to s3',
-                              '{0} s3 --region eu-west-1 cp {1} s3://orthanc.osimis.io{2}  --cache-control max-age=1'.format(awsExecutable,
-                                                                                                  artifactsPath + '.zip',
-                                                                                                  s3Path),
+                              '{exe} s3 --region eu-west-1 cp {zipFile} s3://orthanc.osimis.io{path} --cache-control=max-age=1'.format(
+                                exe = awsExecutable,
+                                zipFile = artifactsPath + '.zip',
+                                path = s3Path),
                               scriptDir, logger.info)
 
     # TODO: build a json doc with versions info that we can use in the orthanc.osimis.io index page
