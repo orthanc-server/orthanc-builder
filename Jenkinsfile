@@ -3,6 +3,8 @@ def userInput = [
     buildDicomWebWin: true,
     buildPostgresOSX: true,
     buildPostgresWin: true,
+    buildWsiPluginWin: true,
+    buildWsiAppsWin: true,
     buildOrthancOSX: true,
     buildOrthancWin: true,
     isStableBuild: false,
@@ -22,6 +24,8 @@ stage('User inputs') {
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildDicomWebWin'], description: 'Build Dicom Web Win', name: 'buildDicomWebWin'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildPostgresOSX'], description: 'Build Postgres OSX', name: 'buildPostgresOSX'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildPostgresWin'], description: 'Build Postgres Win', name: 'buildPostgresWin'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildWsiPluginWin'], description: 'Build WSI Plugin Win', name: 'buildWsiPluginWin'],
+	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildWsiAppsWin'], description: 'Build WSI Apps Win', name: 'buildWsiAppsWin'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildOrthancOSX'], description: 'Build Orthanc OSX', name: 'buildOrthancOSX'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['buildOrthancWin'], description: 'Build Orthanc Win', name: 'buildOrthancWin'],
 	                [$class: 'BooleanParameterDefinition', defaultValue: userInput['isStableBuild'], description: 'Build Stable version instead of nightly', name: 'isStableBuild'],
@@ -39,6 +43,8 @@ stage('User inputs') {
 		userInput['buildDicomWebWin'] = false
 		userInput['buildPostgresOSX'] = false
 		userInput['buildPostgresWin'] = false
+		userInput['buildWsiPluginWin'] = false
+		userInput['buildWsiAppsWin'] = false
 		userInput['buildOrthancOSX'] = false
 		userInput['buildOrthancWin'] = false
 	}
@@ -54,6 +60,8 @@ stage('User inputs') {
 	echo 'Build DicomWeb Win : ' + (userInput['buildDicomWebWin'] ? 'yes' : 'no')
 	echo 'Build Postgres OSX : ' + (userInput['buildPostgresOSX'] ? 'yes' : 'no')
 	echo 'Build Postgres Win : ' + (userInput['buildPostgresWin'] ? 'yes' : 'no')
+	echo 'Build WSI Plugin Win : ' + (userInput['buildWsiPluginWin'] ? 'yes' : 'no')
+	echo 'Build WSI Apps Win : ' + (userInput['buildWsiAppsWin'] ? 'yes' : 'no')
 	echo 'Build Orthanc OSX  : ' + (userInput['buildOrthancOSX'] ? 'yes' : 'no')
 	echo 'Build Orthanc Win  : ' + (userInput['buildOrthancWin'] ? 'yes' : 'no')
 	echo 'buildType          : ' + buildType
@@ -153,6 +161,40 @@ stage('Build & test across platforms') { lock('orthanc-builder-workspace') {
 					lock('orthanc-builder-win') { 
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
 							bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --postgresql ' + buildType
+						
+							//regenerate the package after each build
+							bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish ' + buildType
+						}
+					}
+				}}
+			}
+	}
+
+	if (userInput['buildWsiPluginWin']) {
+			stage('Build WSI Plugin for windows') {
+				node('windows') { dir(path: rootWorkspacePath + '-wsi-plugin') {
+					checkout scm
+
+					lock('orthanc-builder-win') { 
+						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+							bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --wsiplugin ' + buildType
+						
+							//regenerate the package after each build
+							bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish ' + buildType
+						}
+					}
+				}}
+			}
+	}
+
+	if (userInput['buildWsiAppsWin']) {
+			stage('Build WSI Apps for windows') {
+				node('windows') { dir(path: rootWorkspacePath + '-wsi-apps') {
+					checkout scm
+
+					lock('orthanc-builder-win') { 
+						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
+							bat 'powershell.exe ./ciBuildOrthancWin.ps1 build --wsiapps ' + buildType
 						
 							//regenerate the package after each build
 							bat 'powershell.exe ./ciBuildOrthancWin.ps1 publish ' + buildType
