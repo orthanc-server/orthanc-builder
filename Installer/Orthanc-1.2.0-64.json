@@ -1,0 +1,131 @@
+{
+  "Name" : "Orthanc for Windows 64",
+  "Version" : "1.2.0",
+  "Architecture" : 64,
+  "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
+  "Components" : [
+    {
+      "Description" : "Orthanc server",
+      "Mandatory" : true,
+      "Artifacts" : [
+        [ "Orthanc 1.2.0 - VC2015-64 Release/Orthanc.exe", "" ]
+      ]
+    },
+    {
+      "Description" : "Osimis Web viewer (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "osimis",
+      "Downloads" : [
+        [ "http://orthanc.osimis.io/win64/viewer/0.5.4/OsimisWebViewer.dll", "Plugins" ]
+      ]
+    },
+    {
+      "Description" : "Modality worklists",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Orthanc 1.2.0 - VC2015-64 Release/ModalityWorklists.dll", "Plugins" ]
+      ],
+      "Resources" : [
+        [ "worklists.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "Serve folders",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Orthanc 1.2.0 - VC2015-64 Release/ServeFolders.dll", "Plugins" ]
+      ],
+      "Resources" : [
+        [ "serve-folders.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "Web Viewer of medical images (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "WebViewer 2.2 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins" ]
+      ],
+      "Resources" : [
+        [ "webviewer.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "DICOMweb support (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "DicomWeb 0.3 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins" ]
+      ],
+      "Resources" : [
+        [ "dicomweb.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "PostgreSQL backend (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "PostgreSQL 2.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins" ],
+        [ "PostgreSQL 2.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins" ]
+      ],
+      "Resources" : [
+        [ "postgresql.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "Web viewer of whole-slide microscopic images (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "WSI 0.3 - VC2015-64 Release/OrthancWSI.dll", "Plugins" ]
+      ]
+    },
+    {
+      "Description" : "Maintenance tool to recover files compressed by Orthanc",
+      "Mandatory" : false,
+      "Category" : "tools",
+      "Artifacts" : [
+        [ "Orthanc 1.2.0 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools" ]
+      ]
+    },
+    {
+      "Description" : "Conversion tools for DICOM whole-slide imaging (AGPL license)",
+      "Name" : "wsi",
+      "Mandatory" : false,
+      "Category" : "tools",
+      "Artifacts" : [
+        [ "WSI 0.3 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools" ],
+        [ "WSI 0.3 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools" ]
+      ]
+    },
+    {
+      "Description" : "OpenSlide support for proprietary formats (LGPL license)",
+      "Mandatory" : false,
+      "Category" : "tools/wsi",
+      "Downloads" : [
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools" ],
+        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools" ]
+      ]
+    }
+  ]
+}

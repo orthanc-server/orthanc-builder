@@ -1,0 +1,26 @@
+{
+  /**
+   * The following options control the configuration of the Orthanc
+   * Web Viewer plugin.
+   **/
+
+  "WebViewer" : {
+      /**
+       * The location of the cache of the Web viewer. By default, the
+       * cache is located inside the storage directory of Orthanc.
+       **/
+      // "CachePath" : "/tmp/WebViewerCache",
+      
+      /**
+       * The maximum size for the cached images, in megabytes. By
+       * default, a cache of 100 MB is used.
+       **/
+      // "CacheSize" : 10,
+
+      /**
+       * The number of threads that are used by the plugin to decode
+       * the DICOM images.
+       **/
+      // "Threads" : 4
+  }
+}

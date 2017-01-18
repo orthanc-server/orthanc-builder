@@ -1,0 +1,192 @@
+[Setup]
+AppName=${ORTHANC_NAME}
+AppVersion=${ORTHANC_VERSION}.${MERCURIAL_REVISION}
+AppPublisher=Osimis S.A., Belgium
+AppPublisherURL=http://osimis.io/
+SourceDir=.
+OutputDir=.
+OutputBaseFilename=OrthancInstaller-Win${ORTHANC_ARCHITECTURE}-${ORTHANC_VERSION}.${MERCURIAL_REVISION}
+DefaultDirName={pf}\Orthanc Server
+DefaultGroupName=Orthanc
+LicenseFile=Resources/License.rtf
+UninstallDisplayName=Orthanc ${ORTHANC_VERSION}
+VersionInfoVersion=${ORTHANC_VERSION}.${MERCURIAL_REVISION}
+
+DisableWelcomePage=no
+SetupIconFile=Resources/Osimis.ico
+WizardImageFile=Resources/OsimisWizard.bmp
+WizardSmallImageFile=Resources/OsimisWizardLogo.bmp
+WizardImageStretch=no
+
+${ORTHANC_SETUP}
+
+; Uncomment the next line to speed-up the building of the installer
+; Compression=none
+
+
+[Components]
+${ORTHANC_COMPONENTS}
+
+[Files]
+Source: "orthanc.json"; DestDir: "{app}\Configuration"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "Resources/License.rtf"; DestDir: "{app}"
+Source: "Resources/README.txt"; DestDir: "{app}"
+Source: "Resources/Orthanc.ico"; DestDir: "{app}"
+Source: "Resources/Osimis.ico"; DestDir: "{app}"
+Source: "Configuration/OrthancService.exe"; DestDir: "{app}"
+Source: "Configuration/PatchDefaultConfiguration.exe"; DestDir: "{app}"
+${ORTHANC_FILES}
+
+[Icons]
+Name: "{group}\Open Orthanc Explorer"; Filename: "http://localhost:8042/app/explorer.html"; IconFilename: "{app}\Orthanc.ico"
+Name: "{group}\Edit Orthanc settings"; Filename: "{app}\Configuration"
+Name: "{group}\Help to use Orthanc"; Filename: "{app}\README.txt";
+Name: "{group}\Open Orthanc Homepage"; Filename: "http://www.orthanc-server.com/"; IconFilename: "{app}\Orthanc.ico"
+Name: "{group}\Open Osimis Homepage"; Filename: "http://osimis.io/"; IconFilename: "{app}\Osimis.ico"
+Name: "{group}\Command prompt for Orthanc tools"; Filename: "cmd.exe"; WorkingDir: "{app}\Tools"
+Name: "{group}\Uninstall Orthanc ${ORTHANC_VERSION}"; Filename: "{uninstallexe}"
+
+[Registry]
+Root: HKLM32; Subkey: "SOFTWARE\Orthanc"; Flags: uninsdeletekeyifempty
+Root: HKLM32; Subkey: "SOFTWARE\Orthanc\Orthanc Server"; ValueType: dword; ValueName: "Installed"; ValueData: 1; Flags: uninsdeletekey
+Root: HKLM32; Subkey: "SOFTWARE\Orthanc\Orthanc Server"; ValueType: dword; ValueName: "Verbose"; ValueData: 0; Flags: uninsdeletekey
+Root: HKLM32; Subkey: "SOFTWARE\Orthanc\Orthanc Server"; ValueType: string; ValueName: "InstallDir"; ValueData: "{app}"; Flags: uninsdeletekey
+Root: HKLM32; Subkey: "SOFTWARE\Orthanc\Orthanc Server"; ValueType: string; ValueName: "OrthancDir"; ValueData: "{code:GetOrthancDir}"; Flags: uninsdeletekey
+Root: HKLM32; Subkey: "SOFTWARE\Orthanc\Orthanc Server"; ValueType: string; ValueName: "Version"; ValueData: "${ORTHANC_VERSION}"; Flags: uninsdeletekey
+
+[Dirs]
+Name: "{app}"
+Name: "{app}\Configuration"
+Name: "{app}\Logs"
+Name: "{app}\Plugins"
+Name: "{app}\Tools"
+Name: "{code:GetOrthancDir}"
+
+[Run]
+; Patch the default configuration
+Filename: "{app}\PatchDefaultConfiguration.exe"; WorkingDir: "{app}\Configuration"; Flags: runhidden
+
+; The backslash escaping below solves a vulnerability reported by Gjoko Krstic on 2016-11-28
+; http://www.commonexploits.com/unquoted-service-paths/
+Filename: "sc"; Parameters: "create Orthanc start= auto binPath= ""\""{app}\OrthancService.exe\"""""; Flags: runhidden
+Filename: "sc"; Parameters: "description Orthanc ""Lightweight, RESTful DICOM server"""; Flags: runhidden
+Filename: "sc"; Parameters: "start Orthanc"; Flags: runhidden
+
+[UninstallRun]
+Filename: "sc"; Parameters: "stop Orthanc"; Flags: runhidden
+Filename: "sc"; Parameters: "delete Orthanc"; Flags: runhidden
+
+[Code]
+
+// =============================================================
+// == Prevent installing Orthanc twice
+// =============================================================
+
+function InitializeSetup(): Boolean;
+var
+  dummy : Cardinal;
+  version : String;
+  isInstalled : Boolean;
+  
+begin
+  result := true;
+
+  isInstalled := RegQueryDWordValue(HKLM32, 'SOFTWARE\Orthanc\Orthanc Server', 'Installed', dummy);
+  if isInstalled then
+  begin
+    RegQueryStringValue(HKLM32, 'SOFTWARE\Orthanc\Orthanc Server', 'Version', version);
+    MsgBox('Orthanc ' + version + ' is already installed. Please uninstall it before running this installer.', mbConfirmation, MB_OK); 
+    result := false
+  end
+end;
+
+
+// =============================================================
+// == Prompt for Orthanc storage directory
+// == http://www.vincenzo.net/isxkb/index.php?title=Prompt_for_an_additional_folder_for_data
+// =============================================================
+
+var
+  OrthancDirPage: TInputDirWizardPage;
+
+procedure InitializeWizard;
+begin
+  // Create the page
+
+  OrthancDirPage := CreateInputDirPage(wpSelectDir,
+    'Select Orthanc storage directory', 'Where to store the Orthanc data files?',
+    'Select the folder in which Orthanc will store its data files, then click Next.',
+    False, '');
+  OrthancDirPage.Add('');
+
+  OrthancDirPage.Values[0] := GetPreviousData('OrthancDir', '');
+end;
+
+procedure RegisterPreviousData(PreviousDataKey: Integer);
+begin
+  // Store the selected folder for further reinstall/upgrade
+  SetPreviousData(PreviousDataKey, 'OrthancDir', OrthancDirPage.Values[0]);
+end;
+
+function IsAlphanumericPathCharacter(c: Char): Boolean;
+begin
+  // InnoSetup does not support sets
+  Result := (((c >= 'a') and (c <= 'z')) or
+             ((c >= 'A') and (c <= 'Z')) or
+             ((c >= '0') and (c <= '9')) or
+             (c = '_') or
+             (c = ' ') or
+             (c = ':') or
+             (c = '\') or
+             (c = '-') or
+             (c = '/'));
+end;
+
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+var
+  s: String;
+  i: Integer;
+begin
+  if CurPageID = OrthancDirPage.ID then begin
+    Result := True;
+
+    s := OrthancDirPage.Values[0];
+    for i := 1 to Length(s) do begin
+      if not IsAlphanumericPathCharacter(s[i]) then
+         Result := False;
+    end;
+
+    if not Result then begin
+      MsgBox('Please enter a path containing only alphanumeric characters.', mbInformation, MB_OK);
+    end;
+    
+  end else begin
+    // Set default folder if empty
+      if OrthancDirPage.Values[0] = '' then
+         OrthancDirPage.Values[0] := ExpandConstant('C:\Orthanc');
+    Result := True;
+  end;
+end;
+
+function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo,
+  MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
+var
+  S: String;
+begin
+  // Fill the 'Ready Memo' with the normal settings and the custom settings
+  S := '';
+
+  S := S + MemoDirInfo + NewLine + NewLine;
+
+  S := S + 'Orthanc storage folder:' + NewLine;
+  S := S + Space + OrthancDirPage.Values[0] + NewLine;
+
+  Result := S;
+end;
+
+function GetOrthancDir(Param: String): String;
+begin
+  { Return the selected OrthancDir }
+  Result := OrthancDirPage.Values[0];
+end;
