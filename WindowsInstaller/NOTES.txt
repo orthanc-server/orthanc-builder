@@ -30,7 +30,7 @@ Configuration
 
 Install an Ubuntu 16.04 box (or anything similar)
 
-# sudo apt-get install build-essentials g++-mingw-w64 wine cmake
+# sudo apt-get install build-essential g++-mingw-w64 wine cmake
 # wget http://www.jrsoftware.org/download.php/is.exe
 # wine ./is.exe
 
