@@ -23,6 +23,9 @@ docker rm $dockerContainerId
 #####################
 
 # we first need to create the container before we can copy files to it
+echo $AWS_ACCESS_KEY_ID
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
 awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
 docker cp . $awsContainerId:/tmp
 
