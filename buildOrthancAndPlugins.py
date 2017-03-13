@@ -168,6 +168,10 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
 
     for projectName in repositories.keys():
         repository = repositories[projectName]
+
+        if not platform.system() in repository['platforms']:
+            continue;
+
         if stableOrNightly == 'stable':
             branchName = repository['stableBranch']
         else:
