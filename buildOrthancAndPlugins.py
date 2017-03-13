@@ -48,7 +48,7 @@ repositories = {
     'viewer': {
         'platforms': ALL_PLATFORMS,
         'stableBranch': 'master',
-        'nightlyBranch': '0.6.1',
+        'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
     'dicomweb': {
