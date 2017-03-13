@@ -16,7 +16,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win32/viewer/0.5.4/OsimisWebViewer.dll", "Plugins" ]
+        [ "http://orthanc.osimis.io/win32/viewer/0.6.1/OsimisWebViewer.dll", "Plugins" ]
       ]
     },
     {
@@ -80,7 +80,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WSI 0.3 - VC2008-32 Release/OrthancWSI.dll", "Plugins" ]
+        [ "WSI 0.4 - VC2008-32 Release/OrthancWSI.dll", "Plugins" ]
       ]
     },
     {
@@ -97,8 +97,8 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "WSI 0.3 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools" ],
-        [ "WSI 0.3 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools" ]
+        [ "WSI 0.4 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools" ],
+        [ "WSI 0.4 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools" ]
       ]
     },
     {

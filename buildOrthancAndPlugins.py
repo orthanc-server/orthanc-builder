@@ -48,7 +48,7 @@ repositories = {
     'viewer': {
         'platforms': ALL_PLATFORMS,
         'stableBranch': 'master',
-        'nightlyBranch': 'dev',
+        'nightlyBranch': '0.6.1',
         'outputLibs': ['OsimisWebViewer'],
     },
     'dicomweb': {
@@ -82,7 +82,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.2', 
+        'stableBranch': 'OrthancWSI-0.4', 
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -99,7 +99,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.2', 
+        'stableBranch': 'OrthancWSI-0.4', 
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
