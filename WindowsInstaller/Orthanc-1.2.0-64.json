@@ -16,7 +16,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win64/viewer/0.6.1/OsimisWebViewer.dll", "Plugins" ]
+        [ "http://orthanc.osimis.io/win64/viewer/0.8.0/OsimisWebViewer.dll", "Plugins" ]
       ]
     },
     {
