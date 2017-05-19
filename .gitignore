@@ -11,6 +11,8 @@ orthanc-wsi-apps.hg-build/
 orthanc-wsi-apps.hg/
 orthanc-wsi-plugin.hg/
 orthanc-wsi-plugin.hg-build/
+orthanc-wsi.hg-build/
+orthanc-wsi.hg/
 
 orthancAndPluginsWin32.nightly.zip
 orthancAndPluginsWin32.nightly/
