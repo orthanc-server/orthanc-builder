@@ -82,7 +82,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.2', 
+        'stableBranch': 'OrthancWSI-0.4', 
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -99,7 +99,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.2', 
+        'stableBranch': 'OrthancWSI-0.4', 
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
@@ -168,6 +168,10 @@ def packageOrthancAndPlugins(stableOrNightly, archi):
 
     for projectName in repositories.keys():
         repository = repositories[projectName]
+
+        if not platform.system() in repository['platforms']:
+            continue;
+
         if stableOrNightly == 'stable':
             branchName = repository['stableBranch']
         else:
