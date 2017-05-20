@@ -1,6 +1,8 @@
 env/
 .idea/
 
+docker/binaries/
+
 orthanc.hg/
 orthanc.hg-build/
 orthanc-dicomweb.hg-build/

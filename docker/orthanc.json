@@ -1,0 +1,19 @@
+{
+        "Name": "Orthanc",
+        "StorageDirectory": "/var/lib/orthanc/db",
+        "Plugins": [
+                "/usr/share/orthanc/plugins"
+        ], 
+        "DicomAet": "ORTHANC",
+        "DicomModalities": {
+                "bar": ["BAR", "bar", 104]
+        },
+        "RemoteAccessAllowed": true,
+        "PostgreSQL": {
+                "EnableIndex": false,
+                "EnableStorage": false,
+                "Host": "orthanc-index",
+                "Database": "postgres",
+                "Username": "postgres"
+        }
+}

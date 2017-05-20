@@ -1,0 +1,9 @@
+FROM osimis/orthanc:17.5.alpha
+
+RUN apt-get update \ 
+&& DEBIAN_FRONTEND=noninteractive apt-get -y install \
+unixodbc
+
+...
+
+COPY binaries/plugins-pro/ /usr/share/orthanc/plugins
