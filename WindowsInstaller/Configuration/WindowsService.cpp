@@ -385,6 +385,7 @@ void ServiceMain(int argc, char** argv)
 
   std::wstring installDir = GetStringRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"InstallDir", L"");
   bool verbose = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Verbose", 0) == 1;
+  bool unlock = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Unlock", 1) == 1; // always try to unlock the DB when starting the Service (unless disabled in the registry)
 
   std::vector<std::wstring> a;
   a.push_back(L"Orthanc.exe");
@@ -392,6 +393,11 @@ void ServiceMain(int argc, char** argv)
   if (verbose)
   {
     a.push_back(L"--verbose");
+  }
+
+  if (unlock) 
+  {
+    a.push_back(L"--unlock");
   }
 
   a.push_back(L"--logdir=Logs");
