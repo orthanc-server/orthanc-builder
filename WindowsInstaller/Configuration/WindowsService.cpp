@@ -196,6 +196,8 @@ private:
   HANDLE processHandle_;
   DWORD processId_;
   bool ctrlC_;
+  int restartCounter_;
+  int maxRestartCount_;
 
   bool Spawn()
   {
@@ -268,9 +270,12 @@ private:
 public:
   CommandLineService(const std::vector<std::wstring>& arguments,
                      const std::wstring& workingDir,
-                     bool ctrlC) : 
+                     bool ctrlC,
+                     int maxRestartCount) : 
     workingDir_(workingDir),
-    ctrlC_(ctrlC)
+    ctrlC_(ctrlC),
+    restartCounter_(0),
+    maxRestartCount_(maxRestartCount)
   {
     if (arguments.size() == 0)
     {
@@ -299,10 +304,16 @@ public:
     {
       return true;
     }
+    else if (maxRestartCount_ == 0 || restartCounter_ < maxRestartCount_)
+    {
+      restartCounter_++;
+      Sleep(restartCounter_ * 1000); // wait more and more before it restarts
+      return Spawn();
+    }
     else
     {
-      return Spawn();
-    }    
+      return false;
+    }
   }
 
   virtual void Finalize()
@@ -386,6 +397,7 @@ void ServiceMain(int argc, char** argv)
   std::wstring installDir = GetStringRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"InstallDir", L"");
   bool verbose = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Verbose", 0) == 1;
   bool unlock = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Unlock", 1) == 1; // always try to unlock the DB when starting the Service (unless disabled in the registry)
+  int maxRestartCount = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"MaxRestartCount", 5);
 
   std::vector<std::wstring> a;
   a.push_back(L"Orthanc.exe");
@@ -402,7 +414,7 @@ void ServiceMain(int argc, char** argv)
 
   a.push_back(L"--logdir=Logs");
   a.push_back(L"Configuration");
-  service_.reset(new ThreadedServiceWrapper(new CommandLineService(a, installDir, true)));
+  service_.reset(new ThreadedServiceWrapper(new CommandLineService(a, installDir, true, maxRestartCount)));
 
   if (service_.get() == NULL)
   {
