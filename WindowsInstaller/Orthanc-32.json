@@ -17,6 +17,9 @@
       "Category" : "osimis",
       "Downloads" : [
         [ "http://orthanc.osimis.io/win32/viewer/0.8.0/OsimisWebViewer.dll", "Plugins" ]
+      ],
+      "Resources" : [
+        [ "osimis-webviewer.json", "Configuration" ]
       ]
     },
     {
