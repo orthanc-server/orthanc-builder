@@ -2,6 +2,7 @@ env/
 .idea/
 
 docker/binaries/
+docker/builder/orthanc-mssql/
 
 orthanc.hg/
 orthanc.hg-build/

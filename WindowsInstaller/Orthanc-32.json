@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "17.5.0",
+  "Version" : "17.5.0", "Comment" : "# CHANGE_VERSION",
   "Architecture" : 32,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.2.0 - VC2008-32 Release/Orthanc.exe", "" ]
+        [ "Orthanc 1.2.0 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
@@ -16,7 +16,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win32/viewer/0.8.0/OsimisWebViewer.dll", "Plugins" ]
+        [ "http://orthanc.osimis.io/win32/viewer/0.8.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "osimis-webviewer.json", "Configuration" ]
@@ -27,7 +27,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.2.0 - VC2008-32 Release/ModalityWorklists.dll", "Plugins" ]
+        [ "Orthanc 1.2.0 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "worklists.json", "Configuration" ]
@@ -38,7 +38,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.2.0 - VC2008-32 Release/ServeFolders.dll", "Plugins" ]
+        [ "Orthanc 1.2.0 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "serve-folders.json", "Configuration" ]
@@ -49,7 +49,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WebViewer 2.2 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins" ]
+        [ "WebViewer 2.2 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]
@@ -60,7 +60,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 0.3 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins" ]
+        [ "DicomWeb 0.3 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "dicomweb.json", "Configuration" ]
@@ -71,8 +71,8 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "PostgreSQL 2.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins" ],
-        [ "PostgreSQL 2.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins" ]
+        [ "PostgreSQL 2.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION" ],
+        [ "PostgreSQL 2.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "postgresql.json", "Configuration" ]
@@ -83,7 +83,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WSI 0.4 - VC2008-32 Release/OrthancWSI.dll", "Plugins" ]
+        [ "WSI 0.4 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION"  ]
       ]
     },
     {
@@ -91,7 +91,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.2.0 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools" ]
+        [ "Orthanc 1.2.0 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
@@ -100,8 +100,8 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "WSI 0.4 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools" ],
-        [ "WSI 0.4 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools" ]
+        [ "WSI 0.4 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION" ],
+        [ "WSI 0.4 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
