@@ -24,7 +24,11 @@ libpq5 \
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/executables/ /usr/bin
 
-COPY *.json /etc/orthanc/
+COPY orthanc.json /etc/orthanc/
+COPY osimis-webviewer.json /etc/orthanc/
+COPY postgresql.json /etc/orthanc/
+COPY serve-folders.json /etc/orthanc/
+COPY worklists.json /etc/orthanc/
 
 ENTRYPOINT [ "Orthanc" ]
 CMD [ "/etc/orthanc/" ]
