@@ -35,8 +35,8 @@ hg up -c "$1"
 mkdir Build
 cd Build
 cmake -DALLOW_DOWNLOADS:BOOL=ON \
+    -DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
-    -DUSE_SYSTEM_JSONCPP:BOOL=OFF \
     ..
 make -j$COUNT_CORES
 cp -L libOrthancAuthorization.so /usr/share/orthanc/plugins/

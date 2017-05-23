@@ -34,9 +34,8 @@ hg up -c "$1"
 mkdir Build
 cd Build
 cmake -DALLOW_DOWNLOADS:BOOL=ON \
+	-DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
-    -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE:BOOL=ON \
-    -DUSE_SYSTEM_JSONCPP:BOOL=OFF \
     ..
 make -j$COUNT_CORES
 ./UnitTests

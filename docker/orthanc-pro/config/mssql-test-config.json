@@ -1,0 +1,8 @@
+{
+	"MSSQL" : {
+	    "EnableIndex" : true,
+	    "EnableStorage" : false,
+	    "ConnectionString" : "Driver={ODBC Driver 13 for SQL Server};Server=tcp:osimis-tests.database.windows.net,1433;Database=mssqlpluginintegrationtests;Uid=jenkins@osimis-tests;Pwd={::35~vermont~NERVE~pounds~61::};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",
+	    "LicenseString" : "1aUaakkKCVbyqENZd/6___am%osimis.io___aaabXD7xxcsbNBmUMiXbS9zSA3LyD4eEBLuwK5Bq35mcLm"
+    }
+}
