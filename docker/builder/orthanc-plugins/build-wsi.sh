@@ -35,9 +35,8 @@ cd /root/orthanc-wsi/ViewerPlugin
 mkdir Build
 cd Build
 cmake -DALLOW_DOWNLOADS:BOOL=ON \
+	-DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
-    -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE:BOOL=ON \
-    -DUSE_SYSTEM_JSONCPP:BOOL=OFF \
     ..
 make -j$COUNT_CORES
 cp -L libOrthancWSI.so /usr/share/orthanc/plugins/
@@ -47,9 +46,8 @@ cd /root/orthanc-wsi/Applications
 mkdir Build
 cd Build
 cmake -DALLOW_DOWNLOADS:BOOL=ON \
+	-DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
-    -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE:BOOL=ON \
-    -DUSE_SYSTEM_JSONCPP:BOOL=OFF \
     ..
 make -j$COUNT_CORES
 make install

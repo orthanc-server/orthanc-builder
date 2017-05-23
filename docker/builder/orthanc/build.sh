@@ -40,11 +40,13 @@ hg up -c "$1"
 mkdir Build
 cd Build
 cmake -DALLOW_DOWNLOADS=ON \
+	-DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
-    -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE=ON \
-    -DUSE_SYSTEM_MONGOOSE=OFF \
-    -DDCMTK_LIBRARIES=dcmjpls \
     ..
+#    -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE=ON \
+#    -DUSE_SYSTEM_MONGOOSE=OFF \
+#    -DDCMTK_LIBRARIES=dcmjpls \
+#    ..
 make -j$COUNT_CORES
 ./UnitTests
 make install
