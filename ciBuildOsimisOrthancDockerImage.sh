@@ -10,6 +10,7 @@ cd $root/docker
 mkdir -p binaries
 mkdir -p binaries/plugins
 mkdir -p binaries/plugins-pro
+mkdir -p binaries/plugins-disabled
 mkdir -p binaries/executables
 
 
@@ -18,9 +19,8 @@ docker cp $containerId:/usr/share/orthanc/plugins/libOrthancDicomWeb.so binaries
 docker cp $containerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so binaries/plugins/
 docker cp $containerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so binaries/plugins/
 docker cp $containerId:/usr/share/orthanc/plugins/libOrthancWSI.so binaries/plugins/
-docker cp $containerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so binaries/plugins/
 docker cp $containerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so binaries/plugins/
-
+docker cp $containerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so binaries/plugins-disabled/
 
 docker cp $containerId:/usr/local/share/orthanc/plugins/libModalityWorklists.so.1.2.0 binaries/plugins/libModalityWorklists.so  # CHANGE_VERSION
 docker cp $containerId:/usr/local/share/orthanc/plugins/libServeFolders.so.1.2.0 binaries/plugins/libServeFolders.so  # CHANGE_VERSION
@@ -34,6 +34,4 @@ containerId=$(docker create osimis/orthanc-webviewer-plugin:am-static-build-0.8.
 docker cp $containerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
 
 
-docker build $@ -t osimis/orthanc:17.5.alpha -f orthanc/Dockerfile .  # CHANGE_VERSION
-
-# docker push osimis/orthanc:17.5.alpha # CHANGE_VERSION
+docker build $@ -t osimis/orthanc:17.5.beta -f orthanc/Dockerfile .  # CHANGE_VERSION
