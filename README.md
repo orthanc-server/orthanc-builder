@@ -19,7 +19,7 @@ This procedure is still very manual...  Each time you want to release a new pack
 - build the orthanc-builder image: `ciBuildOrthancBuilderImage.sh --no-cache`
 - build the osimis/orthanc image: `ciBuildOsimisOrthancDockerImage.sh --no-cache`
 - build the osimis/orthanc-pro image: `ciBuildOsimisOrthancProDockerImage.sh --no-cache`
-- make sure the Docker image can be started `docker run -rm -P 8042:8042 osimis/orthanc:YY.M`
+- make sure the Docker image can be started `docker run --rm -p 8042:8042 osimis/orthanc:YY.M`
 - commit your changes
 - tag the repo with the package version `git tag -a YY.M -m "YY.M"`
 - push to bitbucket (including the tag: `git push --tags` followed by `git push`)
