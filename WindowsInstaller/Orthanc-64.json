@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "17.5.0", "Comment: # CHANGE_VERSION",
+  "Version" : "17.5.0", "Comment": "# CHANGE_VERSION",
   "Architecture" : 64,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -19,7 +19,7 @@
         [ "http://orthanc.osimis.io/win64/viewer/0.8.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
-        [ "osimis-webviewer.json", "Configuration" ]
+        [ "webviewer.json", "Configuration" ]
       ]
     },
     {
@@ -50,9 +50,6 @@
       "Category" : "plugins",
       "Artifacts" : [
         [ "WebViewer 2.2 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
-      ],
-      "Resources" : [
-        [ "webviewer.json", "Configuration" ]
       ]
     },
     {

@@ -19,7 +19,7 @@
         [ "http://orthanc.osimis.io/win32/viewer/0.8.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
-        [ "osimis-webviewer.json", "Configuration" ]
+        [ "webviewer.json", "Configuration" ]
       ]
     },
     {
@@ -50,9 +50,6 @@
       "Category" : "plugins",
       "Artifacts" : [
         [ "WebViewer 2.2 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
-      ],
-      "Resources" : [
-        [ "webviewer.json", "Configuration" ]
       ]
     },
     {
