@@ -3,7 +3,7 @@ env/
 
 docker/binaries/
 docker/builder/orthanc-mssql/
-docker/mssql-test-config.json
+docker/orthanc-pro/config/mssql-test-config.json
 
 orthanc.hg/
 orthanc.hg-build/
