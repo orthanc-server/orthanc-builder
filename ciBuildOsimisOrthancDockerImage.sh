@@ -34,6 +34,6 @@ containerId=$(docker create osimis/orthanc-webviewer-plugin:am-static-build-0.8.
 docker cp $containerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
 
 
-docker build -t osimis/orthanc:17.5.alpha -f orthanc/Dockerfile .  # CHANGE_VERSION
+docker build $@ -t osimis/orthanc:17.5.alpha -f orthanc/Dockerfile .  # CHANGE_VERSION
 
 # docker push osimis/orthanc:17.5.alpha # CHANGE_VERSION
