@@ -21,5 +21,6 @@ Orthanc Web viewer plugin             2.2
 DICOMweb plugin                       0.3
 PostgreSQL plugin                     2.0
 WSI Web viewer plugin                 0.4
+Authorization plugin                  0.1.0
 
 ```
