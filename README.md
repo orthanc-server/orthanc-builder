@@ -16,6 +16,7 @@ This procedure is still very manual...  Each time you want to release a new pack
 - search for `CHANGE_VERSION` in the whole repo and look for the package version numbers -> upgrade with YY.M[.r]
 - update the WindowsInstaller/Resources/README.txt with the new version numbers
 - update the docker/README-dockerhub.txt with the new version numbers (keep the previous version package list in the readme)
+- update the docker/README-dockerhub-pro.txt with the new version numbers (keep the previous version package list in the readme)
 - build the orthanc-builder image: `ciBuildOrthancBuilderImage.sh --no-cache`
 - build the osimis/orthanc image: `ciBuildOsimisOrthancDockerImage.sh --no-cache`
 - build the osimis/orthanc-pro image: `ciBuildOsimisOrthancProDockerImage.sh --no-cache`
@@ -28,5 +29,5 @@ This procedure is still very manual...  Each time you want to release a new pack
 - notify S. Jodogne that a new Windows Installer is available
 - tag the docker images with `latest`: `docker tag osimis/orthanc:YY.M osimis/orthanc:latest` and `docker tag osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest`
 - push the 4 images to Dockerhub: `docker push [osimis/orthanc:YY.M osimis/orthanc:latest osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest]`
-- connect to Dockerhub and update the documentation manually by copy/pasting the content of `docker/README-dockerhub.txt` into the project description
+- connect to Dockerhub and update the documentation manually by copy/pasting the content of `docker/README-dockerhub.txt` into the project description (for both osimis/orthanc and osimis/orthanc-pro images)
 
