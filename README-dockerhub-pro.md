@@ -1,5 +1,5 @@
 # Orthanc for Docker
-Docker image with [Orthanc](http://www.orthanc-server.com/) and its official plugins. Orthanc is a lightweight, RESTful Vendor Neutral Archive for medical imaging.
+Docker image with [Orthanc](http://www.orthanc-server.com/) and its official plugins (including commercial plugins). Orthanc is a lightweight, RESTful Vendor Neutral Archive for medical imaging.
 
 Full documentation is available in the [Orthanc Book](http://book.orthanc-server.com/users/docker.html).
 
@@ -19,5 +19,9 @@ Orthanc Web viewer plugin             2.2
 DICOMweb plugin                       0.3
 PostgreSQL plugin                     2.0
 WSI Web viewer plugin                 0.4
-Authorization plugin                 0.1.0
+Authorization plugin                  0.1.0
+
+MSSql plugin                          0.4.1
+Osimis Web viewer pro plugin          preview
+
 ```
