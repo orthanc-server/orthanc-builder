@@ -19,7 +19,7 @@ ADD ./build-wsi.sh /root/build-wsi.sh
 RUN bash /root/build-wsi.sh "OrthancWSI-0.4" # CHANGE_VERSION
 
 ADD ./build-authorization.sh /root/build-authorization.sh
-RUN bash /root/build-authorization.sh "default"     # TODO: there's currently no tag/branch version for this ! # CHANGE_VERSION
+RUN bash /root/build-authorization.sh "0.1.0"     # CHANGE_VERSION
 
 # VOLUME [ "/var/lib/orthanc/db" ]
 EXPOSE 4242
