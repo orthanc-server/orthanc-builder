@@ -1,7 +1,7 @@
 #!usr/bin/env bash
 
-set -x #to debug the script
-set -e #to exit the script at the first failure
+set -o xtrace #to debug the script
+set -o errexit #to exit the script at the first failure
 
 root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
 
