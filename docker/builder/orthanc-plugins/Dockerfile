@@ -1,5 +1,5 @@
 FROM osimis/orthanc-only
-LABEL Description="Official plugins for Orthanc" Vendor="Sebastien Jodogne, University Hospital of Liege"
+LABEL Description="Official plugins for Orthanc"
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install libgdcm2-dev libjpeg-dev postgresql-server-dev-all libtiff-dev libopenjpeg-dev libopenslide-dev && rm -rf /var/lib/apt/lists/*
 
 ADD ./build-webviewer.sh /root/build-webviewer.sh
