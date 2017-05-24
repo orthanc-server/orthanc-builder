@@ -16,6 +16,3 @@ RUN /root/build-wsi.sh "OrthancWSI-0.4" # CHANGE_VERSION
 
 ADD ./build-authorization.sh /root/build-authorization.sh
 RUN /root/build-authorization.sh "0.1.0"     # CHANGE_VERSION
-
-ENTRYPOINT [ "Orthanc" ]
-CMD [ "/etc/orthanc/" ]
