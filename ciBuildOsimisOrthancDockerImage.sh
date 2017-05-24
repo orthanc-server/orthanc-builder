@@ -1,5 +1,4 @@
 #!usr/bin/env bash
-
 set -o xtrace #to debug the script
 set -o errexit #to exit the script at the first failure
 
@@ -40,8 +39,6 @@ viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:0.8.0)  # CHAN
 function removeOsimisWebViewer { docker rm $viewerContainerId; }
 exitHandlers+=(removeOsimisWebViewer)
 
-
 docker cp $viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
-
 
 docker build $@ -t osimis/orthanc:17.5 -f orthanc/Dockerfile .  # CHANGE_VERSION
