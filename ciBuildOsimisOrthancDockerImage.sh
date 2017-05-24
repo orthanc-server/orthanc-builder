@@ -1,4 +1,4 @@
-#!usr/bin/env bash
+#!/usr/bin/env bash
 set -o xtrace #to debug the script
 set -o errexit #to exit the script at the first failure
 
