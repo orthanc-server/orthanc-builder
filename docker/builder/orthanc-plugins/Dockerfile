@@ -1,6 +1,5 @@
 FROM osimis/orthanc-only
 
-MAINTAINER Sebastien Jodogne <s.jodogne@gmail.com>
 LABEL Description="Official plugins for Orthanc" Vendor="Sebastien Jodogne, University Hospital of Liege"
 
 RUN apt-get update
