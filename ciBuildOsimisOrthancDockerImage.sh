@@ -1,4 +1,4 @@
-#!/bin/bash
+#!usr/bin/env bash
 
 set -x #to debug the script
 set -e #to exit the script at the first failure
