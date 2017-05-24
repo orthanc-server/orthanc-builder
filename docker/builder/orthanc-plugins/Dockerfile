@@ -20,9 +20,5 @@ RUN bash /root/build-wsi.sh "OrthancWSI-0.4" # CHANGE_VERSION
 ADD ./build-authorization.sh /root/build-authorization.sh
 RUN bash /root/build-authorization.sh "0.1.0"     # CHANGE_VERSION
 
-# VOLUME [ "/var/lib/orthanc/db" ]
-EXPOSE 4242
-EXPOSE 8042
-
 ENTRYPOINT [ "Orthanc" ]
 CMD [ "/etc/orthanc/" ]
