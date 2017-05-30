@@ -17,14 +17,14 @@ Explorer does not support Microsoft Internet Explorer.
 Content of the package 17.5.0
 -----------------------------
 
-Orthanc server                      v 1.2.0
-Osimis Web viewer plugin            v 0.8.0
-Modality worklists plugin           v 1.2.0
-Serve folders plugin                v 1.2.0
-Orthanc Web viewer plugin           v 2.2
-DICOMweb plugin                     v 0.3
-PostgreSQL plugin                   v 2.0
-WSI Web viewer plugin               v 0.4
+Orthanc server                        1.2.0
+Osimis Web viewer plugin              0.8.0
+Modality worklists plugin             1.2.0
+Serve folders plugin                  1.2.0
+Orthanc Web viewer plugin             2.2
+DICOMweb plugin                       0.3
+PostgreSQL plugin                     2.0
+WSI Web viewer plugin                 0.4
 
 
 Folders

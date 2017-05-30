@@ -1,6 +1,10 @@
 env/
 .idea/
 
+docker/binaries/
+docker/builder/orthanc-mssql/
+docker/orthanc-pro/config/mssql-test-config.json
+
 orthanc.hg/
 orthanc.hg-build/
 orthanc-dicomweb.hg-build/
