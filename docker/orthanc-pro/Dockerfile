@@ -1,4 +1,4 @@
-FROM osimis/orthanc:17.5
+FROM osimis/orthanc:17.5.1
 
 RUN apt-get update \
 && DEBIAN_FRONTEND=noninteractive apt-get -y install \
