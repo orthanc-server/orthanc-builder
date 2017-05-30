@@ -15,7 +15,7 @@ Changes:
 - storage.json now contains a definition for IndexDirectory set to '/var/lib/orthanc/db'
 
 
-## 17.5
+#### 17.5
 
 ```
 
