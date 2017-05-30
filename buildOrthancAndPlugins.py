@@ -40,14 +40,14 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.2.0',
+        'stableBranch': 'Orthanc-1.2.0', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
-        'stableBranch': 'master',
+        'stableBranch': '0.8.0', # CHANGE_VERSION
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
@@ -65,7 +65,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': '1adc7c4',  # OrthancDicomWeb-0.3.0'
+        'stableBranch': '1adc7c4',  # OrthancDicomWeb-0.3.0' # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -82,7 +82,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.4', 
+        'stableBranch': 'OrthancWSI-0.4', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -99,7 +99,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.4', 
+        'stableBranch': 'OrthancWSI-0.4', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
@@ -118,7 +118,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': '1e2c87b', # OrthancPostgreSQL-2.0',
+        'stableBranch': '1e2c87b', # OrthancPostgreSQL-2.0', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     }

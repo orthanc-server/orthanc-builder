@@ -1,0 +1,6 @@
+{
+ 	"Plugins": [
+        "/usr/share/orthanc/plugins"
+    ] 
+ }
+ 
