@@ -1,3 +1,4 @@
  {
-    "StorageDirectory": "/var/lib/orthanc/db"
+    "StorageDirectory": "/var/lib/orthanc/db",
+    "IndexDirectory" : "/var/lib/orthanc/db"
  }
