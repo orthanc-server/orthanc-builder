@@ -6,7 +6,10 @@ root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
 
 cd $root/docker
 
-mkdir -p binaries/{plugins{,-{pro,disabled}},executables}
+mkdir -p binaries/plugins \
+         binaries/plugins-pro \
+         binaries/plugins-disabled \
+         binaries/executables
 
 function onExit {
 	local -r numHandlers=${#exitHandlers[@]}
