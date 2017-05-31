@@ -1,18 +1,15 @@
-#!/bin/bash
-
-set -x #to debug the script
-set -e #to exit the script at the first failure
+#!/usr/bin/env bash
+set -o xtrace #to debug the script
+set -o errexit #to exit the script at the first failure
 
 root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
 
 cd $root/docker
 
-mkdir -p binaries
-mkdir -p binaries/plugins
-mkdir -p binaries/plugins-pro
-mkdir -p binaries/plugins-disabled
-mkdir -p binaries/executables
-
+mkdir -p binaries/plugins \
+         binaries/plugins-pro \
+         binaries/plugins-disabled \
+         binaries/executables
 
 function onExit {
 	local -r numHandlers=${#exitHandlers[@]}
@@ -45,8 +42,6 @@ viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:0.8.0)  # CHAN
 function removeOsimisWebViewer { docker rm $viewerContainerId; }
 exitHandlers+=(removeOsimisWebViewer)
 
-
 docker cp $viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
-
 
 docker build $@ -t osimis/orthanc:17.5 -f orthanc/Dockerfile .  # CHANGE_VERSION
