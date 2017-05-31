@@ -2,8 +2,6 @@ FROM ubuntu:16.04
 ENTRYPOINT ["Orthanc"]
 CMD ["/etc/orthanc/"]
 
-RUN mkdir -p /etc/orthanc /usr/share/orthanc/{plugins{,-disabled},config}
-
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
