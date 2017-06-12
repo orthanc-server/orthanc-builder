@@ -9,6 +9,7 @@ Sample procedure (docker-compose file) to use this image is available [here](htt
 
 #### 17.5
 ```
+
 component                             version
 ---------------------------------------------
 Orthanc server                        1.2.0
