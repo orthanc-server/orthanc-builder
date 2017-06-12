@@ -1,5 +1,6 @@
 FROM osimis/orthanc-base
+ARG ORTHANC_VERSION
 COPY build.sh /root/build.sh
-RUN /root/build.sh Orthanc-1.2.0 # CHANGE_VERSION
+RUN /root/build.sh 	$ORTHANC_VERSION
 ENTRYPOINT ["Orthanc"]
 CMD ["/etc/orthanc/"]
