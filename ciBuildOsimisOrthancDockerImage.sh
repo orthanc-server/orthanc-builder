@@ -30,8 +30,8 @@ docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancWSI.so binari
 docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so binaries/plugins/
 docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so binaries/plugins-disabled/
 
-docker cp $orthancContainerId:/usr/local/share/orthanc/plugins/libModalityWorklists.so.1.2.0 binaries/plugins/libModalityWorklists.so  # CHANGE_VERSION
-docker cp $orthancContainerId:/usr/local/share/orthanc/plugins/libServeFolders.so.1.2.0 binaries/plugins/libServeFolders.so  # CHANGE_VERSION
+docker cp --follow-link $orthancContainerId:/usr/local/share/orthanc/plugins/libModalityWorklists.so binaries/plugins/libModalityWorklists.so 
+docker cp --follow-link $orthancContainerId:/usr/local/share/orthanc/plugins/libServeFolders.so binaries/plugins/libServeFolders.so
 
 docker cp $orthancContainerId:/usr/local/bin/OrthancRecoverCompressedFile binaries/executables/
 docker cp $orthancContainerId:/usr/local/bin/OrthancWSIDicomToTiff binaries/executables/
@@ -44,4 +44,4 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp $viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
 
-docker build $@ -t osimis/orthanc:17.5 -f orthanc/Dockerfile .  # CHANGE_VERSION
+docker build $@ -t osimis/orthanc:17.6.unstable -f orthanc/Dockerfile .  # CHANGE_VERSION

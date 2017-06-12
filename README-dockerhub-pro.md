@@ -7,6 +7,27 @@ Sample procedure (docker-compose file) to use this image is available [here](htt
 
 # packages content
 
+#### 17.6.unstable
+```
+
+component                             version
+---------------------------------------------
+Orthanc server                        4e27c2a *
+Osimis Web viewer plugin              0.8.0
+Modality worklists plugin             4e27c2a *
+Serve folders plugin                  4e27c2a *
+Orthanc Web viewer plugin             2.2
+DICOMweb plugin                       0.3
+PostgreSQL plugin                     2.0
+WSI Web viewer plugin                 0.4
+Authorization plugin                  0.1.0
+
+MSSql plugin                          0.4.1
+Osimis Web viewer pro plugin          preview
+
+```
+
+
 #### 17.5
 ```
 
