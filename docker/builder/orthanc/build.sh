@@ -39,8 +39,9 @@ hg up -c "$1"
 # Install the Orthanc core and run the unit tests
 mkdir Build
 cd Build
-cmake -DALLOW_DOWNLOADS=ON \
-	-DSTATIC_BUILD=ON \
+cmake \
+    -DALLOW_DOWNLOADS=ON \
+    -DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
     ..
 make -j$COUNT_CORES
