@@ -12,7 +12,7 @@ cd $root/docker/builder
 docker build $@ -t osimis/orthanc-base base/
 
 # build the orthanc-only image (no plugin)
-docker build $@ -t osimis/orthanc-only orthanc/ --build-arg ORTHANC_VERSION=4e27c2a   # CHANGE_VERSION (official version is someting like Orthanc-1.2.0)
+docker build $@ -t osimis/orthanc-only orthanc/ --build-arg ORTHANC_VERSION=Orthanc-1.2.0   # CHANGE_VERSION (official version is someting like Orthanc-1.2.0)
 
 # build the orthanc-with-open-plugins image
 docker build $@ -t osimis/orthanc-with-open-plugins orthanc-plugins/

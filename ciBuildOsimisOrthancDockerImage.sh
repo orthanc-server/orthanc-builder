@@ -38,10 +38,10 @@ docker cp $orthancContainerId:/usr/local/bin/OrthancWSIDicomToTiff binaries/exec
 docker cp $orthancContainerId:/usr/local/bin/OrthancWSIDicomizer binaries/executables/
 docker cp $orthancContainerId:/usr/local/sbin/Orthanc binaries/executables/
 
-viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:0.8.0)  # CHANGE_VERSION
+viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:0.9.0)  # CHANGE_VERSION
 function removeOsimisWebViewer { docker rm $viewerContainerId; }
 exitHandlers+=(removeOsimisWebViewer)
 
 docker cp $viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
 
-docker build $@ -t osimis/orthanc:17.6.unstable -f orthanc/Dockerfile .  # CHANGE_VERSION
+docker build $@ -t osimis/orthanc:17.6 -f orthanc/Dockerfile .  # CHANGE_VERSION
