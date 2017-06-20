@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "17.6.0", "Comment" : "# CHANGE_VERSION",
+  "Version" : "17.6.1", "Comment" : "# CHANGE_VERSION",
   "Architecture" : 32,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -16,7 +16,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win32/viewer/0.9.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "http://orthanc.osimis.io/win32/viewer/0.9.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]

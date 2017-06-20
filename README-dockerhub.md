@@ -7,13 +7,13 @@ Sample procedure (docker-compose file) to use this image is available [here](htt
 
 # packages content
 
-#### 17.6
+#### 17.6.1
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.2.0
-Osimis Web viewer plugin              0.9.0 *
+Osimis Web viewer plugin              0.9.1 *
 Modality worklists plugin             1.2.0
 Serve folders plugin                  1.2.0
 Orthanc Web viewer plugin             2.2
