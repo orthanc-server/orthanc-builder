@@ -16,6 +16,8 @@ RUN /tmp/install-msodbcsql.sh
 #                and "hang without any message at SQLDriverConnect stage" in MSSQL-plugin UnitTests
 RUN locale-gen "en_US.UTF-8"
 
+COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
+
 COPY binaries/plugins-pro/ /usr/share/orthanc/plugins
 RUN mv /usr/share/orthanc/plugins/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/   # deactivate the basic webviewer
 
