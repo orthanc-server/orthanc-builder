@@ -8,7 +8,12 @@ cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker"
 mkdir --parents binaries/plugins-pro
 
 # fetch mssql so file
-wget orthanc.osimis.io/docker-so/mssql/0.4.1/libOrthancMsSqlIndex.so -O binaries/plugins-pro/libOrthancMsSqlIndex.so # CHANGE_VERSION
+mssqlPlugin=binaries/plugins-pro/libOrthancMsSqlIndex.so
+if [[ ! -e $mssqlPlugin ]]; then
+	# CHANGE_VERSION
+	wget orthanc.osimis.io/docker-so/mssql/0.4.1/libOrthancMsSqlIndex.so \
+		--output-document "$mssqlPlugin"
+fi
 
 function onExit {
 	local -r numHandlers=${#exitHandlers[@]}
