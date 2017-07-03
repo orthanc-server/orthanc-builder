@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -o errexit
+find /usr/lib/orthanc/setup.d -type f -exec '{}' ';'
+exec Orthanc "$@"
