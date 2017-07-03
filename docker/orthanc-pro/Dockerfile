@@ -1,4 +1,4 @@
-# CHANGE VERSION
+# CHANGE_VERSION
 FROM osimis/orthanc:17.6.1
 
 RUN apt-get update \
