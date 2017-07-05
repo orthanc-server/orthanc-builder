@@ -1,4 +1,5 @@
-FROM osimis/orthanc:17.6.unstable
+# CHANGE VERSION
+FROM osimis/orthanc:17.6.1
 
 RUN apt-get update \
 && DEBIAN_FRONTEND=noninteractive apt-get -y install \
