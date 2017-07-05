@@ -44,7 +44,7 @@ cmake \
     -DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
     -DSTANDALONE_BUILD=ON \
-    -DUSE_DCMTK_361_PRIVATE_DIC=ON \
+    -DUSE_DCMTK_361=ON \
     ..
 make -j$COUNT_CORES
 ./UnitTests
