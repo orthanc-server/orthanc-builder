@@ -27,6 +27,6 @@ viewerContainerId=$(docker create osimis/osimis-webviewer-pro:f017049) # CHANGE_
 function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
-docker cp "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewerPro.so" binaries/plugins-pro/
+docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewerPro.so" binaries/plugins-pro/
 
 docker build --tag=osimis/orthanc-pro:17.6.1 --file=orthanc-pro/Dockerfile . # CHANGE_VERSION
