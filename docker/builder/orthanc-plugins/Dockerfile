@@ -1,4 +1,4 @@
-FROM osimis/orthanc-only
+FROM osimis/orthanc-builder
 LABEL Description="Official plugins for Orthanc"
 RUN apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -y install \
