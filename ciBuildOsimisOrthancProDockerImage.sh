@@ -5,7 +5,7 @@ set -o xtrace
 cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker"
 
 # let's build the 'pro image'
-mkdir --parents binaries/plugins-pro
+mkdir --parents binaries/plugins-{pro,deps}
 
 # fetch mssql so file
 mssqlPlugin=binaries/plugins-pro/libOrthancMsSqlIndex.so

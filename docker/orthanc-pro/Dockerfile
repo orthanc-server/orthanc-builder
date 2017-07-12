@@ -18,6 +18,7 @@ RUN locale-gen "en_US.UTF-8"
 
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 
+COPY binaries/plugins-deps/ /usr/local/lib/
 COPY binaries/plugins-pro/ /usr/share/orthanc/plugins
 RUN mv /usr/share/orthanc/plugins/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/   # deactivate the basic webviewer
 
