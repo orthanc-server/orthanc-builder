@@ -9,12 +9,16 @@ root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
 cd $root/docker/builder
 
 # build the base image (ubuntu + build tools)
-docker build $@ -t osimis/orthanc-base base/
+docker build --tag=osimis/orthanc-builder-base base
 
 # build the orthanc-only image (no plugin)
-docker build $@ -t osimis/orthanc-only orthanc/ --build-arg ORTHANC_VERSION=Orthanc-1.2.0   # CHANGE_VERSION (official version is someting like Orthanc-1.2.0)
+docker build --tag=osimis/orthanc-only \
+	--build-arg=ORTHANC_VERSION=Orthanc-1.2.0 \
+	orthanc
+# CHANGE_VERSION (official version is someting like Orthanc-1.2.0)
 
 # build the orthanc-with-open-plugins image
-docker build $@ -t osimis/orthanc-with-open-plugins orthanc-plugins/
+docker build --tag=osimis/orthanc-builder-plugins \
+	orthanc-plugins
 
 # at this stage, you may build the osimis/orthanc image by picking all the required .so files from the latest image 

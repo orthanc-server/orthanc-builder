@@ -21,7 +21,7 @@
 set -e
 
 # Get the number of available cores to speed up the build
-COUNT_CORES=`grep -c ^processor /proc/cpuinfo`
+COUNT_CORES=`grep --count ^processor /proc/cpuinfo`
 echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 
 # Create the various directories as in the official Debian package
