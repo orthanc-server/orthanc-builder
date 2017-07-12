@@ -5,7 +5,7 @@ connectionStringFile=/run/secrets/${MSSQL_CONNECTION_STRING_SECRET:-mssql-connec
 
 if [[ ! -e "$licenseStringFile" || ! -e "$connectionStringFile" ]]; then
 	echo "MSSQL-SETUP: Use mssql-licensestring and mssql-connectionstring Docker secrets to enable" >&2
-	return 0
+	exit 0
 fi
 
 echo "MSSQL-SETUP: Found license and strings files, writing mssql.json" >&2
