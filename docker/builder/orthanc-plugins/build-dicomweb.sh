@@ -24,7 +24,6 @@ COUNT_CORES=$(grep --count ^processor /proc/cpuinfo)
 echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 
 # Clone the repository and switch to the requested branch
-cd /root/
 hg clone https://bitbucket.org/sjodogne/orthanc-dicomweb/
 cd orthanc-dicomweb
 hg up -c "$1"
