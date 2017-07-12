@@ -10,6 +10,7 @@ RUN apt-get update \
 		libopenslide-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
+ARG BITBUCKET_USERINFO
 WORKDIR /root
 
 COPY build-webviewer.sh .
