@@ -3,9 +3,9 @@ FROM osimis/orthanc:17.6.1
 
 RUN apt-get update \
 && DEBIAN_FRONTEND=noninteractive apt-get -y install \
-curl \
-apt-transport-https \
-locales \
+	curl \
+	apt-transport-https \
+	locales \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
