@@ -17,9 +17,9 @@ function onExit {
 }
 trap onExit EXIT
 
-orthancContainerId=$(docker create osimis/orthanc-with-open-plugins)
-function removeOrthancWithOpenPlugins { docker rm "$orthancContainerId"; }
-exitHandlers+=(removeOrthancWithOpenPlugins)
+orthancContainerId=$(docker create osimis/orthanc-builder-plugins)
+function removeOrthancBuilder { docker rm "$orthancContainerId"; }
+exitHandlers+=(removeOrthancBuilder)
 
 docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancDicomWeb.so" binaries/plugins/
 docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so" binaries/plugins/
