@@ -7,6 +7,12 @@ RUN apt-get update \
 		libtiff-dev \
 		libopenjpeg-dev \
 		libopenslide-dev \
+		libxml++2.6-dev \
+		uuid-dev \
+		git \
+		python3-dev \
+		python3-venv \
+		python3-pip \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG BITBUCKET_USERINFO
@@ -26,3 +32,16 @@ RUN ./build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION
 
 COPY build-authorization.sh .
 RUN ./build-authorization.sh 0.1.0 # CHANGE_VERSION
+
+RUN git clone https://github.com/Microsoft/cpprestsdk.git casablanca
+RUN git clone https://github.com/Azure/azure-storage-cpp.git azure-storage-cpp
+RUN git clone "https://$BITBUCKET_USERINFO@bitbucket.org/osimis/orthanc-blob-storage.git"
+
+COPY build-casablanca.sh .
+RUN ./build-casablanca.sh
+
+COPY build-azure-storage-cpp.sh .
+RUN ./build-azure-storage-cpp.sh
+
+COPY build-azure-storage-plugin.sh .
+RUN ./build-azure-storage-plugin.sh 0.2.2 # CHANGE_VERSION
