@@ -6,6 +6,8 @@ RUN apt-get update \
 	curl \
 	apt-transport-https \
 	locales \
+	libboost-log1.58.0 \
+	libxml++2.6-2v5 \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
