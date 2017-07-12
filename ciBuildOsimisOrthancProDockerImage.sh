@@ -33,4 +33,8 @@ orthancContainerId=$(docker create osimis/orthanc-builder-plugins)
 function removeOrthancBuilder { docker rm "$orthancContainerId"; }
 exitHandlers+=(removeOrthancBuilder)
 
+docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancBlobStorage.so" binaries/plugins-pro/
+docker cp --follow-link "$orthancContainerId:/usr/local/lib/libazurestorage.so.3" binaries/plugins-deps/
+docker cp --follow-link "$orthancContainerId:/usr/local/lib/libcpprest.so.2.9" binaries/plugins-deps/
+
 docker build --tag=osimis/orthanc-pro:17.6.1 --file=orthanc-pro/Dockerfile . # CHANGE_VERSION
