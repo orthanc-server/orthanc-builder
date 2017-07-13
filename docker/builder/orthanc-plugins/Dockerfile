@@ -33,10 +33,6 @@ RUN ./build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION
 COPY build-authorization.sh .
 RUN ./build-authorization.sh 0.1.0 # CHANGE_VERSION
 
-RUN git clone https://github.com/Microsoft/cpprestsdk.git casablanca
-RUN git clone https://github.com/Azure/azure-storage-cpp.git azure-storage-cpp
-RUN git clone "https://$BITBUCKET_USERINFO@bitbucket.org/osimis/orthanc-blob-storage.git"
-
 COPY build-casablanca.sh .
 RUN ./build-casablanca.sh
 
