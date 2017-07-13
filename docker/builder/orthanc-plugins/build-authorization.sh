@@ -38,7 +38,7 @@ cmake -DALLOW_DOWNLOADS=ON \
     -DCMAKE_BUILD_TYPE=Release \
     ..
 make "--jobs=$COUNT_CORES"
-cp --dereference libOrthancAuthorization.so /usr/share/orthanc/plugins/
+ln --logical libOrthancAuthorization.so /usr/share/orthanc/plugins/
 
 # Remove the build directory to recover space
 cd /root/
