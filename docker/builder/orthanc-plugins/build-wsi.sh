@@ -53,7 +53,3 @@ make "--jobs=$COUNT_CORES"
 make install
 popd
 popd
-
-# Remove the build directory to recover space
-cd /root/
-rm -rf /root/orthanc-wsi

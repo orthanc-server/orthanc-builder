@@ -38,7 +38,3 @@ cmake -DALLOW_DOWNLOADS=ON \
 make "--jobs=$COUNT_CORES"
 ln --logical libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins/
 ln --logical libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
-
-# Remove the build directory to recover space
-cd /root/
-rm -rf /root/orthanc-postgresql
