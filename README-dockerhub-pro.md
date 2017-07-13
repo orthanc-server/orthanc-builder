@@ -69,3 +69,24 @@ MSSql plugin                          0.4.1
 Osimis Web viewer pro plugin          preview
 
 ```
+
+# Settings
+
+#### MSSQL Plugin
+
+Docker secrets:
+
+- `mssql-connectionstring`: SQL Server connection string
+- `mssql-licensestring`: Osimis-provided license string
+
+#### Azure Storage Plugin
+
+Docker secrets:
+
+- `azstor-accname`: Azure Storage account name
+- `azstor-acckey`: Azure Storage account key
+- `azstor-licensestring`: Osimis-provided license string
+
+Environment variables:
+
+- `AZSTOR_CONTAINER` (default: "orthanc"): Azure Storage Blob service container name
