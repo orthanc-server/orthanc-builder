@@ -37,7 +37,7 @@ cmake -DALLOW_DOWNLOADS:BOOL=ON \
     ..
 make "--jobs=$COUNT_CORES"
 ./UnitTests
-cp --dereference libOrthancDicomWeb.so /usr/share/orthanc/plugins/
+ln --logical libOrthancDicomWeb.so /usr/share/orthanc/plugins/
 
 # Remove the build directory to recover space
 cd /root/

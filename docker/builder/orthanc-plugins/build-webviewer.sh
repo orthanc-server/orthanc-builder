@@ -37,7 +37,7 @@ cmake -DALLOW_DOWNLOADS=ON \
 	..
 make "--jobs=$COUNT_CORES"
 ./UnitTests
-cp --dereference libOrthancWebViewer.so /usr/share/orthanc/plugins/
+ln --logical libOrthancWebViewer.so /usr/share/orthanc/plugins/
 
 # Remove the build directory to recover space
 cd /root/

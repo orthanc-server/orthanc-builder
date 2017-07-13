@@ -17,4 +17,4 @@ BITBUCKET_LICENSINGTOOLBOX_CREDENTIALS=$BITBUCKET_USERINFO \
 	    -DCMAKE_BUILD_TYPE=Release \
 	    ..
 make "--jobs=$COUNT_CORES"
-cp --dereference libOrthancBlobStorage.so /usr/share/orthanc/plugins/
+ln --logical libOrthancBlobStorage.so /usr/share/orthanc/plugins/

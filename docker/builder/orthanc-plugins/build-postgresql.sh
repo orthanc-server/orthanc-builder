@@ -36,8 +36,8 @@ cmake -DALLOW_DOWNLOADS=ON \
 	-DCMAKE_BUILD_TYPE=Release \
 	..
 make "--jobs=$COUNT_CORES"
-cp --dereference libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins/
-cp --dereference libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
+ln --logical libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins/
+ln --logical libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
 
 # Remove the build directory to recover space
 cd /root/

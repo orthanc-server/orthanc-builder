@@ -37,7 +37,7 @@ cmake -DALLOW_DOWNLOADS=ON \
 	-DCMAKE_BUILD_TYPE=Release \
 	..
 make "--jobs=$COUNT_CORES"
-cp --dereference libOrthancWSI.so /usr/share/orthanc/plugins/
+ln --logical libOrthancWSI.so /usr/share/orthanc/plugins/
 popd
 popd
 
