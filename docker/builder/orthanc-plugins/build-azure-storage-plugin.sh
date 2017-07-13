@@ -6,9 +6,10 @@ COUNT_CORES=$(grep --count ^processor /proc/cpuinfo)
 echo "Will use $COUNT_CORES parallel jobs to build"
 
 # Build Azure Storage Plugin for Orthanc
-git clone "https://$BITBUCKET_USERINFO@bitbucket.org/osimis/orthanc-blob-storage.git"
+git clone "--branch=$1" \
+	--single-branch \
+	"https://$BITBUCKET_USERINFO@bitbucket.org/osimis/orthanc-blob-storage.git"
 cd orthanc-blob-storage
-git checkout "$1"
 mkdir Build
 cd Build
 BITBUCKET_LICENSINGTOOLBOX_CREDENTIALS=$BITBUCKET_USERINFO \

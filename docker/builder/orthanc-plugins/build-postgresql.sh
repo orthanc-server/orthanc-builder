@@ -24,9 +24,9 @@ COUNT_CORES=$(grep --count ^processor /proc/cpuinfo)
 echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 
 # Clone the repository and switch to the requested branch
-hg clone https://bitbucket.org/sjodogne/orthanc-postgresql/
+hg clone "--updaterev=$1" \
+	https://bitbucket.org/sjodogne/orthanc-postgresql/
 cd orthanc-postgresql
-hg up -c "$1"
 
 # Build the plugin
 mkdir Build
