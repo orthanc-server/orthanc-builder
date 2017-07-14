@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
-set -o xtrace #to debug the script
-set -o errexit #to exit the script at the first failure
+set -o errexit
+set -o xtrace
 
-root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
+cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker"
 
-cd $root/docker
-
-mkdir -p binaries/plugins \
-         binaries/plugins-pro \
-         binaries/plugins-disabled \
-         binaries/executables
+mkdir --parents binaries/plugins \
+                binaries/plugins-pro \
+                binaries/plugins-disabled \
+                binaries/executables
 
 function onExit {
 	local -r numHandlers=${#exitHandlers[@]}
@@ -19,29 +17,29 @@ function onExit {
 }
 trap onExit EXIT
 
-orthancContainerId=$(docker create osimis/orthanc-with-open-plugins)
-function removeOrthancWithOpenPlugins { docker rm $orthancContainerId; }
-exitHandlers+=(removeOrthancWithOpenPlugins)
+orthancContainerId=$(docker create osimis/orthanc-builder-plugins)
+function removeOrthancBuilder { docker rm "$orthancContainerId"; }
+exitHandlers+=(removeOrthancBuilder)
 
-docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancDicomWeb.so binaries/plugins/
-docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so binaries/plugins/
-docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so binaries/plugins/
-docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancWSI.so binaries/plugins/
-docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so binaries/plugins/
-docker cp $orthancContainerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so binaries/plugins-disabled/
+docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancDicomWeb.so" binaries/plugins/
+docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so" binaries/plugins/
+docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so" binaries/plugins/
+docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWSI.so" binaries/plugins/
+docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so" binaries/plugins/
+docker cp "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so" binaries/plugins-disabled/
 
-docker cp --follow-link $orthancContainerId:/usr/local/share/orthanc/plugins/libModalityWorklists.so binaries/plugins/libModalityWorklists.so 
-docker cp --follow-link $orthancContainerId:/usr/local/share/orthanc/plugins/libServeFolders.so binaries/plugins/libServeFolders.so
+docker cp --follow-link "$orthancContainerId:/usr/local/share/orthanc/plugins/libModalityWorklists.so" binaries/plugins/libModalityWorklists.so
+docker cp --follow-link "$orthancContainerId:/usr/local/share/orthanc/plugins/libServeFolders.so" binaries/plugins/libServeFolders.so
 
-docker cp $orthancContainerId:/usr/local/bin/OrthancRecoverCompressedFile binaries/executables/
-docker cp $orthancContainerId:/usr/local/bin/OrthancWSIDicomToTiff binaries/executables/
-docker cp $orthancContainerId:/usr/local/bin/OrthancWSIDicomizer binaries/executables/
-docker cp $orthancContainerId:/usr/local/sbin/Orthanc binaries/executables/
+docker cp "$orthancContainerId:/usr/local/bin/OrthancRecoverCompressedFile" binaries/executables/
+docker cp "$orthancContainerId:/usr/local/bin/OrthancWSIDicomToTiff" binaries/executables/
+docker cp "$orthancContainerId:/usr/local/bin/OrthancWSIDicomizer" binaries/executables/
+docker cp "$orthancContainerId:/usr/local/sbin/Orthanc" binaries/executables/
 
 viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:0.9.1)  # CHANGE_VERSION
-function removeOsimisWebViewer { docker rm $viewerContainerId; }
+function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
-docker cp $viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so binaries/plugins/
+docker cp "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/
 
-docker build $@ -t osimis/orthanc:17.6.1 -f orthanc/Dockerfile .  # CHANGE_VERSION
+docker build --tag=osimis/orthanc:17.6.1 --file=orthanc/Dockerfile .  # CHANGE_VERSION

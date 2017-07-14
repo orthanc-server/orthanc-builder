@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Orthanc - A Lightweight, RESTful DICOM Store
 # Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
@@ -19,28 +19,23 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-set -e
+set -o errexit
 
 # Get the number of available cores to speed up the builds
-COUNT_CORES=`grep -c ^processor /proc/cpuinfo`
+COUNT_CORES=$(grep --count ^processor /proc/cpuinfo)
 echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 
 # Clone the repository and switch to the requested branch
-cd /root/
-hg clone https://bitbucket.org/osimis/orthanc-authorization/
+hg clone "--updaterev=$1" \
+	https://bitbucket.org/osimis/orthanc-authorization/
 cd orthanc-authorization
-hg up -c "$1"
 
 # Build the plugin
 mkdir Build
 cd Build
-cmake -DALLOW_DOWNLOADS:BOOL=ON \
+cmake -DALLOW_DOWNLOADS=ON \
     -DSTATIC_BUILD=ON \
-    -DCMAKE_BUILD_TYPE:STRING=Release \
+    -DCMAKE_BUILD_TYPE=Release \
     ..
-make -j$COUNT_CORES
-cp -L libOrthancAuthorization.so /usr/share/orthanc/plugins/
-
-# Remove the build directory to recover space
-cd /root/
-rm -rf /root/orthanc-authorization
+make "--jobs=$COUNT_CORES"
+ln --logical libOrthancAuthorization.so /usr/share/orthanc/plugins/

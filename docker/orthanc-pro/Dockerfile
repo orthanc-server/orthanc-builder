@@ -1,10 +1,13 @@
-# CHANGE VERSION
+# CHANGE_VERSION
 FROM osimis/orthanc:17.6.1
 
 RUN apt-get update \
 && DEBIAN_FRONTEND=noninteractive apt-get -y install \
-curl \
-apt-transport-https \
+	curl \
+	apt-transport-https \
+	locales \
+	libboost-log1.58.0 \
+	libxml++2.6-2v5 \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
@@ -15,6 +18,9 @@ RUN /tmp/install-msodbcsql.sh
 #                and "hang without any message at SQLDriverConnect stage" in MSSQL-plugin UnitTests
 RUN locale-gen "en_US.UTF-8"
 
+COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
+
+COPY binaries/plugins-deps/ /usr/local/lib/
 COPY binaries/plugins-pro/ /usr/share/orthanc/plugins
 RUN mv /usr/share/orthanc/plugins/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/   # deactivate the basic webviewer
 

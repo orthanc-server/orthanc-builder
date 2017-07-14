@@ -1,8 +1,9 @@
 FROM ubuntu:16.04
-ENTRYPOINT ["Orthanc"]
-CMD ["/etc/orthanc/"]
+ENTRYPOINT ["./docker-entrypoint"]
+CMD ["/etc/orthanc"]
+COPY orthanc/docker-entrypoint /
 
-RUN mkdir -p /etc/orthanc/
+RUN mkdir -p /etc/orthanc /usr/lib/orthanc/setup.d
 
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
