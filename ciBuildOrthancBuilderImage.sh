@@ -19,17 +19,17 @@ fi
 cd $root/docker/builder
 
 # build the base image (ubuntu + build tools)
-docker build --tag=osimis/orthanc-builder-base base
+docker build --tag=osimis/orthanc-builder-base base "$@"
 
 # build the orthanc-builder image (no plugin)
 docker build --tag=osimis/orthanc-builder \
 	--build-arg=ORTHANC_VERSION=Orthanc-1.3.0 \
-	orthanc
+	orthanc "$@"
 # CHANGE_VERSION (official version is someting like Orthanc-1.3.0)
 
 # build the orthanc-builder-plugins image
 docker build --tag=osimis/orthanc-builder-plugins \
 	"--build-arg=BITBUCKET_USERINFO=$BITBUCKET_USERINFO" \
-	orthanc-plugins
+	orthanc-plugins "$@"
 
 # at this stage, you may build the osimis/orthanc image by picking all the required .so files from the latest image 
