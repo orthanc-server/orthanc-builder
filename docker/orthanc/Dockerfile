@@ -1,4 +1,10 @@
 FROM ubuntu:16.04
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install locales && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN locale-gen en_US
+RUN locale-gen en_US.UTF-8
+RUN update-locale 
+
 ENTRYPOINT ["./docker-entrypoint"]
 CMD ["/etc/orthanc"]
 COPY orthanc/docker-entrypoint /
