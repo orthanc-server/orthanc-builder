@@ -9,13 +9,13 @@ dockerContainerId=$(docker create installer-builder)
 
 # copy the orthanc.json generated from the 32 bits version (we can't generate it with wine and Orthanc 64 bits)
 docker cp $dockerContainerId:/tmp/OsimisInstaller/orthanc.json .
-docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win32-17.6.1.exe .  # CHANGE_VERSION
+docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win32-17.7.0.exe .  # CHANGE_VERSION
 docker rm $dockerContainerId
 
 # build Windows 64 bits
 docker build -t installer-builder --build-arg configurationFile=Orthanc-64.json .
 dockerContainerId=$(docker create installer-builder)
-docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win64-17.6.1.exe .  # CHANGE_VERSION
+docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win64-17.7.0.exe .  # CHANGE_VERSION
 docker rm $dockerContainerId
 
 

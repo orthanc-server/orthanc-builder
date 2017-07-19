@@ -23,7 +23,7 @@ function onExit {
 }
 trap onExit EXIT
 
-viewerContainerId=$(docker create osimis/osimis-webviewer-pro:f017049) # CHANGE_VERSION
+viewerContainerId=$(docker create osimis/osimis-webviewer-pro:1.0.0.1) # CHANGE_VERSION
 function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
@@ -37,4 +37,4 @@ docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrtha
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libazurestorage.so.3" binaries/plugins-deps/
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libcpprest.so.2.9" binaries/plugins-deps/
 
-docker build --tag=osimis/orthanc-pro:17.6.1 --file=orthanc-pro/Dockerfile . # CHANGE_VERSION
+docker build --tag=osimis/orthanc-pro:17.7-ern --file=orthanc-pro/Dockerfile . # CHANGE_VERSION
