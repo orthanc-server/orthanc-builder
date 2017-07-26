@@ -69,6 +69,12 @@ Osimis Web viewer pro plugin          preview
 
 # Settings
 
+#### Osimis Web Viewer Pro Plugin
+
+Docker secrets:
+
+- `wvp-licensestring`: Osimis-provided license string
+
 #### MSSQL Plugin
 
 Docker secrets:
