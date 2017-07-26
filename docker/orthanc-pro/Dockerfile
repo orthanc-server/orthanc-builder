@@ -18,7 +18,7 @@ RUN /tmp/install-msodbcsql.sh
 #                and "hang without any message at SQLDriverConnect stage" in MSSQL-plugin UnitTests
 RUN locale-gen en_US
 RUN locale-gen en_US.UTF-8
-RUN update-locale 
+RUN update-locale
 
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 
