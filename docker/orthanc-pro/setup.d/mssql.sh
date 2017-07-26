@@ -8,7 +8,7 @@ if [[ ! -e "$licenseStringFile" || ! -e "$connectionStringFile" ]]; then
 	exit 0
 fi
 
-echo "MSSQL-SETUP: Found license and strings files, writing mssql.json" >&2
+echo "MSSQL-SETUP: Found license and strings files, writing mssql.json and enabling Microsoft SQL Server Index plugin" >&2
 licensestring=$(<"$licenseStringFile")
 connectionstring=$(<"$connectionStringFile")
 cat <<EOF >/etc/orthanc/mssql.json
@@ -21,3 +21,4 @@ cat <<EOF >/etc/orthanc/mssql.json
 	}
 }
 EOF
+mv /usr/share/orthanc/plugins{-disabled,}/libOrthancMsSqlIndex.so
