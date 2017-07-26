@@ -37,4 +37,4 @@ docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrtha
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libazurestorage.so.3" binaries/plugins-deps/
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libcpprest.so.2.9" binaries/plugins-deps/
 
-docker build --tag=osimis/orthanc-pro:17.7.0 --file=orthanc-pro/Dockerfile . # CHANGE_VERSION
+docker build --tag=osimis/orthanc-pro:17.7.1 --file=orthanc-pro/Dockerfile . # CHANGE_VERSION

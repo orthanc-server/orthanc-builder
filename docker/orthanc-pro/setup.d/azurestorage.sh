@@ -9,7 +9,7 @@ if [[ ! -e "$licenseStringFile" || ! -e "$accountNameFile" || ! -e "$accountKeyF
 	exit 0
 fi
 
-echo "AZSTOR-SETUP: Found license, account name and key files, writing azure-storage.json" >&2
+echo "AZSTOR-SETUP: Found license, account name and key files, writing azure-storage.json and enabling Azure Storage plugin" >&2
 licenseString=$(<"$licenseStringFile")
 accountName=$(<"$accountNameFile")
 accountKey=$(<"$accountKeyFile")
@@ -25,3 +25,4 @@ cat <<EOF >/etc/orthanc/azure-storage.json
 	}
 }
 EOF
+mv /usr/share/orthanc/plugins{-disabled,}/libOrthancBlobStorage.so
