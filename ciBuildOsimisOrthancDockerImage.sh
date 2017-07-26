@@ -42,4 +42,4 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/
 
-docker build --tag=osimis/orthanc:17.7.0 --file=orthanc/Dockerfile .  # CHANGE_VERSION
+docker build --tag=osimis/orthanc:17.7.1 --file=orthanc/Dockerfile .  # CHANGE_VERSION
