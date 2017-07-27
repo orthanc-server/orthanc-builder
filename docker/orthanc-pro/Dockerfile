@@ -5,7 +5,6 @@ RUN apt-get update \
 	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install \
 		curl \
 		apt-transport-https \
-		locales \
 		libboost-log1.58.0 \
 		libxml++2.6-2v5 \
 	apt-get clean && \
@@ -13,12 +12,6 @@ RUN apt-get update \
 
 COPY orthanc-pro/install-msodbcsql.sh /tmp/
 RUN /tmp/install-msodbcsql.sh
-
-# Necessary to avoid "locale::facet::_S_create_c_locale name not valid" error in isql connection test
-#                and "hang without any message at SQLDriverConnect stage" in MSSQL-plugin UnitTests
-RUN locale-gen en_US
-RUN locale-gen en_US.UTF-8
-RUN update-locale
 
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 COPY binaries/plugins-deps/ /usr/local/lib/
