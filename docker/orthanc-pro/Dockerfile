@@ -2,14 +2,14 @@
 FROM osimis/orthanc:17.7.1
 
 RUN apt-get update \
-&& DEBIAN_FRONTEND=noninteractive apt-get -y install \
-	curl \
-	apt-transport-https \
-	locales \
-	libboost-log1.58.0 \
-	libxml++2.6-2v5 \
-&& apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install \
+		curl \
+		apt-transport-https \
+		locales \
+		libboost-log1.58.0 \
+		libxml++2.6-2v5 \
+	apt-get clean && \
+	rm --recursive --force /var/lib/apt/lists/*
 
 COPY orthanc-pro/install-msodbcsql.sh /tmp/
 RUN /tmp/install-msodbcsql.sh
@@ -21,7 +21,6 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale
 
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
-
 COPY binaries/plugins-deps/ /usr/local/lib/
 COPY binaries/plugins-pro/ /usr/share/orthanc/plugins-disabled/
 
