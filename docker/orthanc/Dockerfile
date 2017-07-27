@@ -1,5 +1,8 @@
 FROM ubuntu:16.04
 SHELL ["/bin/bash", "-c"]
+ENTRYPOINT ["/docker-entrypoint"]
+CMD ["/etc/orthanc"]
+
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install locales && \
 	apt-get clean && \
@@ -8,12 +11,9 @@ RUN apt-get update && \
 	locale-gen en_US.UTF-8 && \
 	update-locale
 
-ENTRYPOINT ["/docker-entrypoint"]
-CMD ["/etc/orthanc"]
-COPY orthanc/docker-entrypoint /
-
 RUN mkdir --parents /etc/orthanc /usr/lib/orthanc/setup.d
 
+COPY orthanc/docker-entrypoint /
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
