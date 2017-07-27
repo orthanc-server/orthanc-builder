@@ -17,6 +17,6 @@ COPY binaries/executables/ /usr/bin
 
 COPY orthanc/config/*.json /usr/share/orthanc/config/
 
-RUN ln -s /usr/share/orthanc/config/remote-access.json /etc/orthanc/remote-access.json && \
-    ln -s /usr/share/orthanc/config/plugins.json /etc/orthanc/plugins.json && \
-    ln -s /usr/share/orthanc/config/storage.json /etc/orthanc/storage.json
+RUN ln /usr/share/orthanc/config/remote-access.json /etc/orthanc/remote-access.json && \
+    ln /usr/share/orthanc/config/plugins.json /etc/orthanc/plugins.json && \
+    ln /usr/share/orthanc/config/storage.json /etc/orthanc/storage.json
