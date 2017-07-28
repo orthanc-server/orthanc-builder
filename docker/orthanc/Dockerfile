@@ -8,8 +8,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes install locales && \
 	apt-get --assume-yes clean && \
 	rm --recursive --force /var/lib/apt/lists/* && \
-	locale-gen en_US && \
-	locale-gen en_US.UTF-8 && \
+	locale-gen en_US en_US.UTF-8
 
 RUN mkdir --parents /etc/orthanc /usr/lib/orthanc/setup.d
 
