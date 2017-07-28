@@ -3,9 +3,10 @@ SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint"]
 CMD ["/etc/orthanc"]
 
-RUN apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install locales && \
-	apt-get clean && \
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get --assume-yes update && \
+	apt-get --assume-yes install locales && \
+	apt-get --assume-yes clean && \
 	rm --recursive --force /var/lib/apt/lists/* && \
 	locale-gen en_US && \
 	locale-gen en_US.UTF-8 && \
