@@ -16,6 +16,7 @@ RUN apt-get update && \
 		msodbcsql=13.1.4.0-1 \
 		mssql-tools=14.0.3.0-1 \
 		unixodbc-dev && \
+	apt-get remove --purge --auto-remove curl apt-transport-https && \
 	apt-get clean && \
 	rm --recursive --force /var/lib/apt/lists/* /etc/apt/sources.list.d/mssql-release.list
 
