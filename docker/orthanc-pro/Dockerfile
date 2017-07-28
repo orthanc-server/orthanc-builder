@@ -13,9 +13,7 @@ RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive ACCEPT_EULA=Y apt-get --assume-yes install \
 		libboost-log1.58.0 \
 		libxml++2.6-2v5 \
-		msodbcsql=13.1.4.0-1 \
-		mssql-tools=14.0.3.0-1 \
-		unixodbc-dev && \
+		msodbcsql=13.1.4.0-1 && \
 	apt-get remove --purge --auto-remove curl apt-transport-https && \
 	apt-get clean && \
 	rm --recursive --force /var/lib/apt/lists/* /etc/apt/sources.list.d/mssql-release.list
