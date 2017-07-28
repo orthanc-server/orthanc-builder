@@ -1,8 +1,0 @@
-{
-	"MSSQL" : {
-	    "EnableIndex" : true,
-	    "EnableStorage" : false,
-	    "ConnectionString" : "odbc_connection_string_placeholder",
-	    "LicenseString" : "license_string_placeholder"
-    }
-}
