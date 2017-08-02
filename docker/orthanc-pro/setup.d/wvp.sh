@@ -19,10 +19,10 @@ echo "WVP-SETUP: Found license, overwriting osimis-webviewer.json, disabling WVB
 cat <<EOF >/etc/orthanc/osimis-webviewer.json
 {
 	"WebViewer": {
-		"StudyDownloadEnabled": true,
-		"VideoDisplayEnabled": true,
-		"AnnotationStorageEnabled": false,
-		"LiveshareEnabled": false,
+		"StudyDownloadEnabled": ${WVP_STUDY_DOWNLOAD:-true},
+		"VideoDisplayEnabled": ${WVP_VIDEO:-true},
+		"AnnotationStorageEnabled": ${WVP_ANNOTATIONS_STORAGE:-false},
+		"LiveshareEnabled": ${WVP_LIVESHARE:-false},
 		"LicenseString": "$licenseString"
 	}
 }
