@@ -94,6 +94,13 @@ Docker secrets:
 
 - `wvp-licensestring`: Osimis-provided license string
 
+Environment variables:
+
+- `WVP_STUDY_DOWNLOAD` (default: "true"): Add button to download studies
+- `WVP_VIDEO` (default: "true"): Enable video player
+- `WVP_ANNOTATIONS_STORAGE` (default: "false"): Persist annotations in Orthanc attachments
+- `WVP_LIVESHARE` (default: "false"): Use live collaboration features
+
 #### MSSQL Plugin
 
 Docker secrets:
