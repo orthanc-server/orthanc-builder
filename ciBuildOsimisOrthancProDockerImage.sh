@@ -11,7 +11,7 @@ mkdir --parents binaries/plugins-{pro,deps}
 mssqlPlugin=binaries/plugins-pro/libOrthancMsSqlIndex.so
 if [[ ! -e $mssqlPlugin ]]; then
 	# CHANGE_VERSION
-	wget orthanc.osimis.io/docker-so/mssql/0.4.1/libOrthancMsSqlIndex.so \
+	wget orthanc.osimis.io/docker-so/mssql/0.5.0/libOrthancMsSqlIndex.so \
 		--output-document "$mssqlPlugin"
 fi
 
