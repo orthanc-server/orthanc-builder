@@ -28,4 +28,4 @@ cat <<EOF >/etc/orthanc/mssql.json
 	}
 }
 EOF
-mv /usr/share/orthanc/plugins{-disabled,}/libOrthancMsSqlIndex.so
+mv /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so* /usr/share/orthanc/plugins/libOrthancMsSqlIndex.so
