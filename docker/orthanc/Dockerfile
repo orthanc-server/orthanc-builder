@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint"]
-CMD ["/etc/orthanc"]
+CMD ["/etc/orthanc", "--unlock"]
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
