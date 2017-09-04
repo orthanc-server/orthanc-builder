@@ -24,7 +24,7 @@ function onExit {
 }
 trap onExit EXIT
 
-viewerContainerId=$(docker create osimis/osimis-webviewer-pro:bd0f243) # CHANGE_VERSION
+viewerContainerId=$(docker create osimis/osimis-webviewer-pro:1.0.0.99) # CHANGE_VERSION
 function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
