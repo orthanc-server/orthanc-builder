@@ -3,7 +3,7 @@ Docker image with [Orthanc](http://www.orthanc-server.com/) and its official plu
 
 Full documentation is available in the [Orthanc Book](http://book.orthanc-server.com/users/docker.html).
 
-Sample procedure (docker-compose file) to use this image is available [here](https://bitbucket.org/snippets/osimis/eynLn/running-orthanc-with-docker)
+Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
 
 # packages content
 
