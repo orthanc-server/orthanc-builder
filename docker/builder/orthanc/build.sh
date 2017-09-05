@@ -21,7 +21,7 @@
 set -e
 
 # Get the number of available cores to speed up the build
-COUNT_CORES=`grep -c ^processor /proc/cpuinfo`
+COUNT_CORES=`grep --count ^processor /proc/cpuinfo`
 echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 
 # Create the various directories as in the official Debian package
@@ -39,14 +39,13 @@ hg up -c "$1"
 # Install the Orthanc core and run the unit tests
 mkdir Build
 cd Build
-cmake -DALLOW_DOWNLOADS=ON \
-	-DSTATIC_BUILD=ON \
+cmake \
+    -DALLOW_DOWNLOADS=ON \
+    -DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
+    -DSTANDALONE_BUILD=ON \
+    -DUSE_DCMTK_361=ON \
     ..
-#    -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE=ON \
-#    -DUSE_SYSTEM_MONGOOSE=OFF \
-#    -DDCMTK_LIBRARIES=dcmjpls \
-#    ..
 make -j$COUNT_CORES
 ./UnitTests
 make install

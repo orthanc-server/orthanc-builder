@@ -1,18 +1,43 @@
-FROM osimis/orthanc-only
-LABEL Description="Official plugins for Orthanc"
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install libgdcm2-dev libjpeg-dev postgresql-server-dev-all libtiff-dev libopenjpeg-dev libopenslide-dev && rm -rf /var/lib/apt/lists/*
+FROM osimis/orthanc-builder
+RUN apt-get update \
+	&& DEBIAN_FRONTEND=noninteractive apt-get -y install \
+		libgdcm2-dev \
+		libjpeg-dev \
+		postgresql-server-dev-all \
+		libtiff-dev \
+		libopenjpeg-dev \
+		libopenslide-dev \
+		libxml++2.6-dev \
+		uuid-dev \
+		git \
+		python3-dev \
+		python3-venv \
+		python3-pip \
+	&& rm -rf /var/lib/apt/lists/*
 
-COPY build-webviewer.sh /root/build-webviewer.sh
-RUN /root/build-webviewer.sh OrthancWebViewer-2.2 # CHANGE_VERSION
+ARG BITBUCKET_USERINFO
+WORKDIR /root
 
-COPY build-postgresql.sh /root/build-postgresql.sh
-RUN /root/build-postgresql.sh OrthancPostgreSQL-2.0 # CHANGE_VERSION
+COPY build-webviewer.sh .
+RUN ./build-webviewer.sh OrthancWebViewer-2.3 # CHANGE_VERSION
 
-COPY build-dicomweb.sh /root/build-dicomweb.sh
-RUN /root/build-dicomweb.sh OrthancDicomWeb-0.3 # CHANGE_VERSION
+COPY build-postgresql.sh .
+RUN ./build-postgresql.sh OrthancPostgreSQL-2.0 # CHANGE_VERSION
 
-COPY build-wsi.sh /root/build-wsi.sh
-RUN /root/build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION
+COPY build-dicomweb.sh .
+RUN ./build-dicomweb.sh OrthancDicomWeb-0.4 # CHANGE_VERSION
 
-COPY build-authorization.sh /root/build-authorization.sh
-RUN /root/build-authorization.sh 0.1.0     # CHANGE_VERSION
+COPY build-wsi.sh .
+RUN ./build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION
+
+COPY build-authorization.sh .
+RUN ./build-authorization.sh 0.1.0 # CHANGE_VERSION
+
+COPY build-casablanca.sh .
+RUN ./build-casablanca.sh 2.9.1 # CHANGE_VERSION
+
+COPY build-azure-storage-cpp.sh .
+RUN ./build-azure-storage-cpp.sh 3.0.0 # CHANGE_VERSION
+
+COPY build-azure-storage-plugin.sh .
+RUN ./build-azure-storage-plugin.sh 0.2.2 # CHANGE_VERSION

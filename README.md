@@ -30,4 +30,3 @@ This procedure is still very manual...  Each time you want to release a new pack
 - tag the docker images with `latest`: `docker tag osimis/orthanc:YY.M osimis/orthanc:latest` and `docker tag osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest`
 - push the 4 images to Dockerhub: `docker push [osimis/orthanc:YY.M osimis/orthanc:latest osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest]`
 - connect to Dockerhub and update the documentation manually by copy/pasting the content of `docker/README-dockerhub.txt` into the project description (for both osimis/orthanc and osimis/orthanc-pro images)
-

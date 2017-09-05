@@ -1,15 +1,21 @@
 FROM ubuntu:16.04
-ENTRYPOINT ["Orthanc"]
-CMD ["/etc/orthanc/"]
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT ["/docker-entrypoint"]
+CMD ["/etc/orthanc"]
 
-RUN mkdir -p /etc/orthanc/
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get --assume-yes update && \
+	apt-get --assume-yes install locales && \
+	apt-get --assume-yes clean && \
+	rm --recursive --force /var/lib/apt/lists/* && \
+	locale-gen en_US en_US.UTF-8
 
+RUN mkdir --parents /etc/orthanc /usr/lib/orthanc/setup.d
+
+COPY orthanc/docker-entrypoint /
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
 
 COPY orthanc/config/*.json /usr/share/orthanc/config/
-
-RUN ln -s /usr/share/orthanc/config/remote-access.json /etc/orthanc/remote-access.json && \
-    ln -s /usr/share/orthanc/config/plugins.json /etc/orthanc/plugins.json && \
-    ln -s /usr/share/orthanc/config/storage.json /etc/orthanc/storage.json
+RUN ln /usr/share/orthanc/config/{remote-access,plugins,storage}.json /etc/orthanc/

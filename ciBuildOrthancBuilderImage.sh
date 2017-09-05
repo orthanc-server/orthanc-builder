@@ -6,15 +6,30 @@ set -e #to exit the script at the first failure
 
 root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
 
+if [[ ! $BITBUCKET_USERINFO ]]; then
+	cat <<-EOF >&2
+	Please set the BITBUCKET_USERINFO environment variable to valid
+	credentials as 'username:password'.  It is recommended to use
+	restricted "App passwords" instead of the main account
+	password. Only repository read access is required.
+	EOF
+	exit 1
+fi
+
 cd $root/docker/builder
 
 # build the base image (ubuntu + build tools)
-docker build $@ -t osimis/orthanc-base base/
+docker build --tag=osimis/orthanc-builder-base base "$@"
 
-# build the orthanc-only image (no plugin)
-docker build $@ -t osimis/orthanc-only orthanc/ --build-arg ORTHANC_VERSION=Orthanc-1.3.0   # CHANGE_VERSION (official version is someting like Orthanc-1.2.0)
+# build the orthanc-builder image (no plugin)
+docker build --tag=osimis/orthanc-builder \
+	--build-arg=ORTHANC_VERSION=Orthanc-1.3.0 \
+	orthanc "$@"
+# CHANGE_VERSION (official version is someting like Orthanc-1.3.0)
 
-# build the orthanc-with-open-plugins image
-docker build $@ -t osimis/orthanc-with-open-plugins orthanc-plugins/
+# build the orthanc-builder-plugins image
+docker build --tag=osimis/orthanc-builder-plugins \
+	"--build-arg=BITBUCKET_USERINFO=$BITBUCKET_USERINFO" \
+	orthanc-plugins "$@"
 
 # at this stage, you may build the osimis/orthanc image by picking all the required .so files from the latest image 
