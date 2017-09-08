@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 RUN mkdir --parents /etc/orthanc /usr/lib/orthanc/setup.d
 
 COPY orthanc/docker-entrypoint /
+COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
