@@ -1,1 +1,3 @@
+.dockerignore
+*Dockerfile
 config/mssql-test-config.json
