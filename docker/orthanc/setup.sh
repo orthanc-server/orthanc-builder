@@ -64,6 +64,19 @@ for secret in "${secrets[@]}"; do
 	gensecret "$secret"
 done
 
+function processenv {
+	local ret=1 variable value
+	for setting in "${settings[@]}"; do
+		variable="${name}_${setting}"
+		eval value="\$$variable"
+		unset "$variable"
+		if [[ $value ]]; then
+			eval "$setting=$value"
+			ret=0
+		fi
+	done
+	return $ret
+}
 
 if [[ $conf ]]; then
 	conf=/etc/orthanc/$conf.json
@@ -78,25 +91,19 @@ else
 	if ((${#plugins[@]})); then
 		eval enabled="\$${name}_ENABLED"
 	fi
-	declare envvar
-	for setting in "${settings[@]}"; do
-		eval envvar="\$${name}_${setting}"
-		if [[ $envvar ]]; then
-			if [[ ! $conf ]]; then
-				exit 3
-			fi
-			if [[ $(type -t genconf) != function ]]; then
-				exit 4
-			fi
-			log "Generating '$conf' from environment variables"
-			genconf "$conf"
-			if ((${#plugins[@]})); then
-				enabled=true
-			fi
-			break;
+	if processenv; then
+		if [[ ! $conf ]]; then
+			exit 3
 		fi
-	done
-	unset envvar
+		if [[ $(type -t genconf) != function ]]; then
+			exit 4
+		fi
+		log "Generating '$conf' from environment variables"
+		genconf "$conf"
+		if ((${#plugins[@]})); then
+			enabled=true
+		fi
+	fi
 fi
 if [[ $enabled ]]; then
 	if ! ((${#plugins[@]})); then
