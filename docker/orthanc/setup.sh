@@ -46,9 +46,7 @@ elif [[ $plugin ]]; then
 fi
 
 function gensecret {
-	# shellcheck disable=SC2034
-	local value
-	local variable=${name}_$1 secret file
+	local variable=${name}_$1 value secret file
 	eval value="\$$variable"
 	if [[ $value ]]; then
 		# shellcheck disable=SC2163
