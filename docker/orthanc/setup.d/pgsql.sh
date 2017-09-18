@@ -1,8 +1,8 @@
 name=PG
-plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
 conf=postgresql
 settings=(INDEX STORAGE HOST PORT DB USER PASSWORD LOCK)
 secrets=(PASSWORD)
+plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
 function genconf {
 	cat <<-EOF >$1
 	{
