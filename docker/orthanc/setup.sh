@@ -48,6 +48,12 @@ function secret {
 	fi
 }
 
+function secrets {
+	for s in "$@"; do
+		secret "$s"
+	done
+}
+
 # shellcheck source=/dev/null
 source "$1"
 
