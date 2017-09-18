@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 set -o errexit
-find /usr/lib/orthanc/setup.d -type f -exec '{}' ';'
+base=/usr/lib/orthanc
+find "$base/setup.d" -type f -exec "$base/setup.sh" "{}" ";"
 exec Orthanc "$@"
