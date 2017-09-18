@@ -25,13 +25,13 @@ if [[ ! $1 ]]; then
 	exit 1
 fi
 
-declare name plugin plugins conf settings
+declare name plugin plugins conf settings secrets
 
 function log {
 	echo -e "$name: $*" >&2
 }
 
-function secret {
+function gensecret {
 	# shellcheck disable=SC2034
 	local value
 	local variable=${name}_$1 secret file
@@ -48,12 +48,6 @@ function secret {
 	fi
 }
 
-function secrets {
-	for s in "$@"; do
-		secret "$s"
-	done
-}
-
 # shellcheck source=/dev/null
 source "$1"
 
@@ -67,6 +61,11 @@ elif [[ $plugin ]]; then
 	plugins=("$plugin")
 	unset plugin
 fi
+
+for secret in "${secrets[@]}"; do
+	gensecret "$secret"
+done
+
 
 if [[ $conf ]]; then
 	conf=/etc/orthanc/$conf.json
