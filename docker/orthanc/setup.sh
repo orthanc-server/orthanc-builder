@@ -73,11 +73,11 @@ fi
 
 if [[ -e $conf ]]; then
 	log "'$conf' taking precendence over related environment variables"
-	if [[ $plugins ]]; then
+	if ((${#plugins[@]})); then
 		enabled=true
 	fi
 else
-	if [[ $plugins ]]; then
+	if ((${#plugins[@]})); then
 		eval enabled="\$${name}_ENABLED"
 	fi
 	declare envvar
@@ -92,7 +92,7 @@ else
 			fi
 			log "Generating '$conf' from environment variables"
 			genconf "$conf"
-			if [[ $plugins ]]; then
+			if ((${#plugins[@]})); then
 				enabled=true
 			fi
 			break;
@@ -101,7 +101,7 @@ else
 	unset envvar
 fi
 if [[ $enabled ]]; then
-	if [[ ! $plugins ]]; then
+	if ! ((${#plugins[@]})); then
 		exit 5
 	fi
 	for plugin in "${plugins[@]}"; do
