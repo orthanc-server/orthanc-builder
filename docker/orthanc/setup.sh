@@ -25,7 +25,7 @@ if [[ ! $1 ]]; then
 	exit 1
 fi
 
-declare name plugin conf settings
+declare name plugin plugins conf settings
 
 function log {
 	echo -e "$name: $*" >&2
