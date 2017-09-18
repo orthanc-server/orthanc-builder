@@ -31,6 +31,20 @@ function log {
 	echo -e "$name: $*" >&2
 }
 
+# shellcheck source=/dev/null
+source "$1"
+
+if [[ ! $name ]]; then
+	exit 2
+fi
+
+if [[ $plugin ]] && ((${#plugins[@]})); then
+	exit 6
+elif [[ $plugin ]]; then
+	plugins=("$plugin")
+	unset plugin
+fi
+
 function gensecret {
 	# shellcheck disable=SC2034
 	local value
@@ -47,20 +61,6 @@ function gensecret {
 		eval "$variable=$(<"$file")"
 	fi
 }
-
-# shellcheck source=/dev/null
-source "$1"
-
-if [[ ! $name ]]; then
-	exit 2
-fi
-
-if [[ $plugin && $plugins ]]; then
-	exit 6
-elif [[ $plugin ]]; then
-	plugins=("$plugin")
-	unset plugin
-fi
 
 for secret in "${secrets[@]}"; do
 	gensecret "$secret"
