@@ -72,7 +72,7 @@ if [[ $conf ]]; then
 fi
 
 if [[ -e $conf ]]; then
-	log "'$conf' already exists, ignoring related environment variables"
+	log "'$conf' taking precendence over related environment variables"
 	if [[ $plugins ]]; then
 		enabled=true
 	fi
