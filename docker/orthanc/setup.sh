@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+#
+# OVERVIEW
+#
+# Execute a setup procedure for Orthanc.
+#
+# A single setup procedure can optionally write a single Orthanc
+# configuration file ('conf' variable), can optionally enable one or
+# more plugins ('plugin' and 'plugins' variables), and is provided with
+# support facilities like 'log' and 'secret'.
+#
+# EXIT STATUS
+#
+# 1: No setup procedure path given (first argument)
+# 2: No procedure name is defined in setup file ('name' variable)
+# 3: Env-var set but no conf file path defined in setup file ('conf' variable)
+# 4: No configuration generator defined in setup file ('genconf' function)
+# 5: Internal error: trying to enable undefined plugin
+# 6: Procedure attempted to define both 'plugin' and 'plugins' variables
+# 127: A command failed
+
+set -o errexit
+
+if [[ ! $1 ]]; then
+	exit 1
+fi
+
+declare name plugin conf settings
+
+function log {
+	echo -e "$name: $*" >&2
+}
+
+function secret {
+	# shellcheck disable=SC2034
+	local value
+	local variable=${name}_$1 secret file
+	eval value="\$$variable"
+	if [[ $value ]]; then
+		# shellcheck disable=SC2163
+		export -n "$variable"
+		return
+	fi
+	eval secret="\$${variable}_SECRET"
+	file=/run/secrets/${secret:-$variable}
+	if [[ -e $file ]]; then
+		eval "$variable=$(<"$file")"
+	fi
+}
+
+# shellcheck source=/dev/null
+source "$1"
+
+if [[ ! $name ]]; then
+	exit 2
+fi
+
+if [[ $plugin && $plugins ]]; then
+	exit 6
+elif [[ $plugin ]]; then
+	plugins=("$plugin")
+	unset plugin
+fi
+
+if [[ $conf ]]; then
+	conf=/etc/orthanc/$conf.json
+fi
+
+if [[ -e $conf ]]; then
+	log "'$conf' already exists, ignoring related environment variables"
+	if [[ $plugins ]]; then
+		enabled=true
+	fi
+else
+	if [[ $plugins ]]; then
+		eval enabled="\$${name}_ENABLED"
+	fi
+	declare envvar
+	for setting in "${settings[@]}"; do
+		eval envvar="\$${name}_${setting}"
+		if [[ $envvar ]]; then
+			if [[ ! $conf ]]; then
+				exit 3
+			fi
+			if [[ $(type -t genconf) != function ]]; then
+				exit 4
+			fi
+			genconf "$conf"
+			if [[ $plugins ]]; then
+				enabled=true
+			fi
+			break;
+		fi
+	done
+	unset envvar
+fi
+if [[ $enabled ]]; then
+	if [[ ! $plugins ]]; then
+		exit 5
+	fi
+	for plugin in "${plugins[@]}"; do
+		log "Enabling plugin '$plugin'"
+		mv /usr/share/orthanc/plugins{-disabled,}/"$plugin".so
+	done
+fi
