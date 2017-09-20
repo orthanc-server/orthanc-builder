@@ -108,7 +108,7 @@ else
 	fi
 fi
 
-if [[ $enabled ]]; then
+if [[ $enabled == true ]]; then
 	if ! ((${#plugins[@]})); then
 		exit 5
 	fi
