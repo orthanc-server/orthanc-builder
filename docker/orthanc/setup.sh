@@ -59,6 +59,17 @@ fi
 #   Filename of the configuration (filename without path or extension) the
 #   setup procedure is generating.
 #
+# default: Specify whether the bundle settings are used by default or not
+#
+#   Optional.
+#   Requires 'conf' to be set.
+#   If set to "true" and a configuration file is not already present in a
+#   lower-level image layer, then generate the configuration file using the
+#   default parameter values of the bundle (which may be different from the
+#   defaults of Orthanc itself).  If one or more plugins are specified, they
+#   are automatically enabled.  Can be overriden with the BUNDLE_DEFAULTS
+#   setting.
+#
 # settings: List of environment variables used by the setup procedure set
 #
 #   Optional.
@@ -76,7 +87,7 @@ fi
 #   ${NAME}_${SETTING}_SECRET environment variable and will default to
 #   ${NAME}_${SETTING}.
 #
-declare name plugin plugins conf settings secrets
+declare name default plugin plugins conf settings secrets
 
 
 # Simple log output facility.  Can be used in setup procedures, but only after
@@ -181,6 +192,14 @@ for secret in "${secrets[@]}"; do
 done
 
 
+# If the user explicitly defines whether to use bundle defaults or not,
+# respect that wish by overriding the setup procedure 'default' parameter.
+usedefaults=$(getenv BUNDLE_DEFAULTS)
+if [[ $usedefaults ]]; then
+	default=$usedefaults
+fi
+
+
 # Set absolute path of target configuration file if specified.
 if [[ $conf ]]; then
 	conf=/etc/orthanc/$conf.json
@@ -197,8 +216,7 @@ else
 	if ((${#plugins[@]})); then
 		enabled=$(getenv ENABLED)
 	fi
-	forcegen=$(getenv BUNDLE_DEFAULTS)
-	if processenv || [[ $forcegen == true ]]; then
+	if processenv || [[ $default == true ]]; then
 		if [[ ! $conf ]]; then
 			exit 3
 		fi
@@ -222,7 +240,7 @@ fi
 # image layer,
 # - ${NAME}_ENABLED is set to true in the environment,
 # - At least one setup procedure setting is set in the environment,
-# - ${NAME}_BUNDLE_DEFAULTS is set to true in the environment,
+# - The procedure is set to use the default settings of the bundle,
 if [[ $enabled == true ]]; then
 	if ! ((${#plugins[@]})); then
 		exit 5
