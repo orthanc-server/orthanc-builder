@@ -45,15 +45,18 @@ elif [[ $plugin ]]; then
 	unset plugin
 fi
 
+function getenv {
+	eval echo "\$${name}_$1"
+}
+
 function gensecret {
-	local variable=${name}_$1 value secret file
-	eval value="\$$variable"
+	local setting=$1 value secret file
+	variable=${name}_${setting}
+	value=$(getenv "$setting")
 	if [[ $value ]]; then
-		# shellcheck disable=SC2163
-		export -n "$variable"
 		return
 	fi
-	eval secret="\$${variable}_SECRET"
+	secret=$(getenv "${setting}_SECRET")
 	file=/run/secrets/${secret:-$variable}
 	if [[ -e $file ]]; then
 		eval "$variable=$(<"$file")"
@@ -61,11 +64,9 @@ function gensecret {
 }
 
 function processenv {
-	local ret=1 variable value
+	local ret=1 value
 	for setting in "${settings[@]}"; do
-		variable="${name}_${setting}"
-		eval value="\$$variable"
-		unset "$variable"
+		value=$(getenv "$setting")
 		if [[ $value ]]; then
 			eval "$setting=$value"
 			ret=0
@@ -89,7 +90,7 @@ if [[ -e $conf ]]; then
 	fi
 else
 	if ((${#plugins[@]})); then
-		eval enabled="\$${name}_ENABLED"
+		enabled=$(getenv ENABLED)
 	fi
 	if processenv; then
 		if [[ ! $conf ]]; then
