@@ -4,7 +4,7 @@ settings=(CONNECTION_STRING LICENSE_STRING)
 secrets=(CONNECTION_STRING LICENSE_STRING)
 plugin=libOrthancMsSqlIndex
 function genconf {
-	cat <<-EOF >/etc/orthanc/mssql.json
+	cat <<-EOF >"$1"
 	{
 		"MSSQL" : {
 			"EnableIndex": true,

@@ -4,7 +4,7 @@ settings=(ACC_NAME ACC_KEY CONTAINER LICENSE_STRING)
 secrets=(ACC_KEY LICENSE_STRING)
 plugin=libOrthancBlobStorage
 function genconf {
-	cat <<-EOF >$1
+	cat <<-EOF >"$1"
 	{
 		"BlobStorage": {
 			"Enable": true,
