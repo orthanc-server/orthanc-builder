@@ -20,5 +20,3 @@ COPY orthanc/setup.sh /usr/lib/orthanc/
 COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
 COPY binaries/plugins/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
-COPY orthanc/config/*.json /usr/share/orthanc/config/
-RUN ln /usr/share/orthanc/config/{remote-access,plugins,storage}.json /etc/orthanc/
