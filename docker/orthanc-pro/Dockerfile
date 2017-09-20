@@ -1,5 +1,5 @@
 # CHANGE_VERSION
-FROM osimis/orthanc:17.8.0-alpha
+FROM osimis/orthanc:17.9.4-alpha
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
