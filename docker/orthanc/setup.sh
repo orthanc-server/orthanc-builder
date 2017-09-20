@@ -92,7 +92,8 @@ else
 	if ((${#plugins[@]})); then
 		enabled=$(getenv ENABLED)
 	fi
-	if processenv; then
+	forcegen=$(getenv BUNDLE_DEFAULTS)
+	if processenv || [[ $forcegen == true ]]; then
 		if [[ ! $conf ]]; then
 			exit 3
 		fi
