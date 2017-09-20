@@ -6,7 +6,7 @@ plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
 function genconf {
 	if [[ ! $HOST ]]; then
 		log "Missing HOST setting, not generating configuration file"
-		return
+		return 1
 	fi
 	if [[ $PASSWORD ]]; then
 		passwordprop="\"Password\": \"$PASSWORD\","
