@@ -223,7 +223,7 @@ else
 		if [[ $(type -t genconf) != function ]]; then
 			exit 4
 		fi
-		log "Generating '$conf' from environment variables"
+		log "Generating '$conf'..."
 		genconf "$conf"
 		if ((${#plugins[@]})); then
 			enabled=true
