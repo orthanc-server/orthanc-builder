@@ -60,10 +60,6 @@ function gensecret {
 	fi
 }
 
-for secret in "${secrets[@]}"; do
-	gensecret "$secret"
-done
-
 function processenv {
 	local ret=1 variable value
 	for setting in "${settings[@]}"; do
@@ -77,6 +73,10 @@ function processenv {
 	done
 	return $ret
 }
+
+for secret in "${secrets[@]}"; do
+	gensecret "$secret"
+done
 
 if [[ $conf ]]; then
 	conf=/etc/orthanc/$conf.json
