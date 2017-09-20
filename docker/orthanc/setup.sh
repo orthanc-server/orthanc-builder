@@ -224,8 +224,7 @@ else
 			exit 4
 		fi
 		log "Generating '$conf'..."
-		genconf "$conf"
-		if ((${#plugins[@]})); then
+		if genconf "$conf" && ((${#plugins[@]})); then
 			enabled=true
 		fi
 	fi
