@@ -4,6 +4,10 @@ settings=(INDEX STORAGE HOST PORT DB USER PASSWORD LOCK)
 secrets=(PASSWORD)
 plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
 function genconf {
+	if [[ ! $HOST ]]; then
+		log "Missing HOST setting, not generating configuration file"
+		return
+	fi
 	cat <<-EOF >"$1"
 	{
 		"PostgreSQL": {
