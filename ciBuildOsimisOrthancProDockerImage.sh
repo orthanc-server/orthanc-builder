@@ -11,7 +11,7 @@ mkdir --parents binaries/plugins-{pro,deps}
 mssqlPlugin=binaries/plugins-pro/libOrthancMsSqlIndex.so
 if [[ ! -e $mssqlPlugin ]]; then
 	# CHANGE_VERSION
-	wget orthanc.osimis.io/docker-so/mssql/0.4.1/libOrthancMsSqlIndex.so \
+	wget orthanc.osimis.io/docker-so/mssql/0.5.0/libOrthancMsSqlIndex.so \
 		--output-document "$mssqlPlugin"
 fi
 
@@ -23,7 +23,7 @@ function onExit {
 }
 trap onExit EXIT
 
-viewerContainerId=$(docker create osimis/osimis-webviewer-pro:bd0f243) # CHANGE_VERSION
+viewerContainerId=$(docker create osimis/osimis-webviewer-pro:1.0.0.99) # CHANGE_VERSION
 function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
@@ -37,4 +37,4 @@ docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrtha
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libazurestorage.so.3" binaries/plugins-deps/
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libcpprest.so.2.9" binaries/plugins-deps/
 
-docker build --tag=osimis/orthanc-pro:17.7.1 --file=orthanc-pro/Dockerfile . # CHANGE_VERSION
+docker build --tag=osimis/orthanc-pro:17.8.0-alpha --file=orthanc-pro/Dockerfile . # CHANGE_VERSION

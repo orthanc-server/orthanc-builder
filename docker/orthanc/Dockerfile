@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint"]
-CMD ["/etc/orthanc"]
+CMD ["/etc/orthanc", "--unlock"]
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 RUN mkdir --parents /etc/orthanc /usr/lib/orthanc/setup.d
 
 COPY orthanc/docker-entrypoint /
+COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
 COPY binaries/plugins/ /usr/share/orthanc/plugins
 COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
