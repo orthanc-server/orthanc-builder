@@ -7,7 +7,7 @@ function genconf {
 	cat <<-EOF >"$1"
 	{
 		"PostgreSQL": {
-			"EnableIndex": ${INDEX:-false},
+			"EnableIndex": ${INDEX:-true},
 			"EnableStorage": ${STORAGE:-false},
 			"Host": "$HOST",
 			"Port": ${PORT:-5432},
