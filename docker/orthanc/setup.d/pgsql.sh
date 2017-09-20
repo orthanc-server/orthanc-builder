@@ -8,6 +8,9 @@ function genconf {
 		log "Missing HOST setting, not generating configuration file"
 		return
 	fi
+	if [[ $PASSWORD ]]; then
+		passwordprop="\"Password\": \"$PASSWORD\","
+	fi
 	cat <<-EOF >"$1"
 	{
 		"PostgreSQL": {
@@ -17,7 +20,7 @@ function genconf {
 			"Port": ${PORT:-5432},
 			"Database": "${DB:-postgres}",
 			"Username": "${USER:-postgres}",
-			"Password": "$PASSWORD",
+			$passwordprop
 			"Lock": ${LOCK:-false}
 		}
 	}
