@@ -10,14 +10,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	rm --recursive --force /var/lib/apt/lists/* && \
 	locale-gen en_US en_US.UTF-8
 
-RUN mkdir --parents /etc/orthanc /usr/lib/orthanc/setup.d
+RUN mkdir --parents \
+	/etc/orthanc \
+	/usr/lib/orthanc/setup.d \
+	/usr/share/orthanc/plugins
 
 COPY orthanc/docker-entrypoint /
 COPY orthanc/setup.sh /usr/lib/orthanc/
 COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
-COPY binaries/plugins/ /usr/share/orthanc/plugins
-COPY binaries/plugins-disabled/ /usr/share/orthanc/plugins-disabled
+COPY binaries/plugins/ /usr/share/orthanc/plugins-disabled
 COPY binaries/executables/ /usr/bin
-
 COPY orthanc/config/*.json /usr/share/orthanc/config/
 RUN ln /usr/share/orthanc/config/{remote-access,plugins,storage}.json /etc/orthanc/
