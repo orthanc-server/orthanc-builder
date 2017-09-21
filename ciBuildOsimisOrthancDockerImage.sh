@@ -6,7 +6,6 @@ cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker"
 
 mkdir --parents binaries/plugins \
                 binaries/plugins-pro \
-                binaries/plugins-disabled \
                 binaries/executables
 
 function onExit {
@@ -26,7 +25,7 @@ docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrtha
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so" binaries/plugins/
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWSI.so" binaries/plugins/
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so" binaries/plugins/
-docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so" binaries/plugins-disabled/
+docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so" binaries/plugins/
 
 docker cp --follow-link "$orthancContainerId:/usr/local/share/orthanc/plugins/libModalityWorklists.so" binaries/plugins/libModalityWorklists.so
 docker cp --follow-link "$orthancContainerId:/usr/local/share/orthanc/plugins/libServeFolders.so" binaries/plugins/libServeFolders.so
@@ -42,4 +41,4 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/
 
-docker build --tag=osimis/orthanc:17.8.0-alpha --file=orthanc/Dockerfile .  # CHANGE_VERSION
+docker build --tag=osimis/orthanc:17.9.4-alpha --file=orthanc/Dockerfile .  # CHANGE_VERSION
