@@ -134,7 +134,7 @@ function getenv {
 #
 # Will use the corresponding environment variable if available, but users are
 # encouraged to use Docker secrets, which it will then use instead.  The
-# filename of the secret can be set with the ${NAME}_${SETTING_SECRET}
+# filename of the secret can be set with the ${NAME}_${SETTING}_SECRET
 # environment variable, and will default to the same name as the environment
 # variable name of the setting (${NAME}_${SETTING}).
 #
