@@ -7,7 +7,7 @@
 # A single setup procedure can optionally write a single Orthanc
 # configuration file ('conf' variable), can optionally enable one or
 # more plugins ('plugin' and 'plugins' variables), and is provided with
-# support facilities like 'log' and 'secret'.
+# support facilities like 'log'.
 #
 # EXIT STATUS
 #
