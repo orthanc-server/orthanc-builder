@@ -29,7 +29,22 @@ Osimis Web viewer pro plugin (alpha)  prerelease-1.1.0.0
 ```
 
 
-# Settings
+# Configuring your image
+
+### Settings
+
+You may define these environment variables to configure your Orthanc configuration:
+
+- GENERAL_NAME: the "Name" of your Orthanc
+
+- DICOM_AET: the "DicomAet" of Orthanc
+
+
+
+### Plugins
+
+To enable a plugin, set its `_ENABLED` environment variable to true or add a configuration file to your image with the specified name.  In exemple, to enable the PostgreSQL plugin, set the `PG_ENABLED` environment variable to true (and, eventually define other environment variable) or, include a file named `postgresql.json` in the `/etc/orthanc/` folder of your image.
+
 
 #### PostgreSQL Plugin
 

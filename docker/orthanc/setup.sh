@@ -227,6 +227,7 @@ else
 		if genconf "$conf" && ((${#plugins[@]})); then
 			enabled=true
 		fi
+		cat $conf
 	fi
 fi
 
