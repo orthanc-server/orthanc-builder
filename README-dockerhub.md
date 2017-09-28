@@ -1,13 +1,13 @@
 # Orthanc for Docker
 Docker image with [Orthanc](http://www.orthanc-server.com/) and its official plugins. Orthanc is a lightweight, RESTful Vendor Neutral Archive for medical imaging.
 
-Full documentation is available in the [Orthanc Book](http://book.orthanc-server.com/users/docker.html).
+Full documentation is available [here](https://osimis.atlassian.net/wiki/spaces/OOB/pages/26738689/osimis+orthanc+Docker+images).
 
 Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
 
 # packages content
 
-#### 17.9.4
+#### 17.9.4-beta
 ```
 
 component                             version

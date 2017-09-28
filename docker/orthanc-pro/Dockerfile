@@ -1,6 +1,5 @@
+# CHANGE_VERSION
 FROM osimis/orthanc:current
-SHELL ["/bin/bash", "-c"]
-ENTRYPOINT ["/docker-entrypoint"]
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
@@ -23,5 +22,3 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 COPY binaries/plugins-deps/ /usr/local/lib/
 COPY binaries/plugins-pro/ /usr/share/orthanc/plugins-disabled/
-
-CMD ["/etc/orthanc", "--unlock"]

@@ -1,5 +1,5 @@
 name=GENERAL
-conf=general
+conf=orthanc
 settings=(NAME)
 default=true
 function genconf {
