@@ -158,7 +158,7 @@ function gensecret {
 	secret=$(getenv "${setting}_SECRET")
 	file=/run/secrets/${secret:-${name}_${setting}}
 	if [[ -e $file ]]; then
-		eval "${name}_${setting}=\$$(<"$file")"
+		eval "${name}_${setting}=\$(<\"$file\")"
 	fi
 }
 
@@ -176,7 +176,7 @@ function processenv {
 	for setting in "${settings[@]}"; do
 		value=$(getenv "$setting")
 		if [[ $value ]]; then
-			eval "$setting=\$$value"
+			eval "$setting=\$value"
 			ret=0
 		fi
 	done
