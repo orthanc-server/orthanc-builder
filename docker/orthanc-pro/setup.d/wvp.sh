@@ -3,6 +3,11 @@ conf=osimis-webviewer-pro
 settings=(STUDY_DOWNLOAD_ENABLED VIDEO_ENABLED ANNOTATIONS_STORAGE_ENABLED LIVESHARE_ENABLED LICENSE_STRING)
 secrets=(LICENSE_STRING)
 plugin=libOsimisWebViewerPro
+
+if [[ $WVP_ALPHA ]]; then
+	plugin=libOsimisWebViewerProAlpha
+fi
+
 function genconf {
 	cat <<-EOF >"$1"
 	{
