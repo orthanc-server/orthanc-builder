@@ -4,7 +4,7 @@ settings=(STUDY_DOWNLOAD_ENABLED VIDEO_ENABLED ANNOTATIONS_STORAGE_ENABLED LIVES
 secrets=(LICENSE_STRING)
 plugin=libOsimisWebViewerPro
 
-if [[ $WVP_ALPHA ]]; then
+if [[ $WVP_ALPHA == true ]]; then
 	plugin=libOsimisWebViewerProAlpha
 fi
 
