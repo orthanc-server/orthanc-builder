@@ -151,15 +151,14 @@ function getenv {
 #
 function gensecret {
 	local setting=$1 value secret file
-	variable=${name}_${setting}
 	value=$(getenv "$setting")
 	if [[ $value ]]; then
 		return
 	fi
 	secret=$(getenv "${setting}_SECRET")
-	file=/run/secrets/${secret:-$variable}
+	file=/run/secrets/${secret:-${name}_${setting}}
 	if [[ -e $file ]]; then
-		eval "$variable=$(<"$file")"
+		eval "${name}_${setting}=$(<"$file")"
 	fi
 }
 
