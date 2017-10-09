@@ -226,7 +226,9 @@ else
 		if genconf "$conf" && ((${#plugins[@]})); then
 			enabled=true
 		fi
-		cat "$conf"
+		if [[ $BUNDLE_DEBUG == true ]]; then
+			cat "$conf"
+		fi
 	fi
 fi
 
