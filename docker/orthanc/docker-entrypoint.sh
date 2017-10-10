@@ -5,5 +5,9 @@ base=/usr/lib/orthanc
 # call setup.sh on each setup procedure script found in $base/setup.d (one for each plugin).
 find "$base/setup.d" -type f -exec "$base/setup.sh" "{}" ";"
 
-echo "Startup command: Orthanc $@"
-exec Orthanc "$@"
+if [[ $VERBOSE_ENABLED == true ]]; then
+	verbosity=--verbose
+fi
+argv=(Orthanc $verbosity "$@")
+echo "Startup command: ${argv[*]}" >&2
+exec "${argv[@]}"
