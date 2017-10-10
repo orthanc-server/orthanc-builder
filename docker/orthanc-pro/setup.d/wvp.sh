@@ -1,16 +1,21 @@
 name=WVP
-conf=osimis-webviewer
-settings=(STUDY_DOWNLOAD VIDEO ANNOTATIONS_STORAGE LIVESHARE LICENSE_STRING)
+conf=osimis-webviewer-pro
+settings=(STUDY_DOWNLOAD_ENABLED VIDEO_ENABLED ANNOTATIONS_STORAGE_ENABLED LIVESHARE_ENABLED LICENSE_STRING)
 secrets=(LICENSE_STRING)
 plugin=libOsimisWebViewerPro
+
+if [[ $WVP_ALPHA_ENABLED == true ]]; then
+	plugin=libOsimisWebViewerProAlpha
+fi
+
 function genconf {
 	cat <<-EOF >"$1"
 	{
 		"WebViewer": {
-			"StudyDownloadEnabled": ${STUDY_DOWNLOAD:-true},
-			"VideoDisplayEnabled": ${VIDEO:-true},
-			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE:-false},
-			"LiveshareEnabled": ${LIVESHARE:-false},
+			"StudyDownloadEnabled": ${STUDY_DOWNLOAD_ENABLED:-true},
+			"VideoDisplayEnabled": ${VIDEO_ENABLED:-true},
+			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE_ENABLED:-false},
+			"LiveshareEnabled": ${LIVESHARE_ENABLED:-false},
 			"LicenseString": "$LICENSE_STRING"
 		}
 	}

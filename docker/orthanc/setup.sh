@@ -7,7 +7,7 @@
 # A single setup procedure can optionally write a single Orthanc
 # configuration file ('conf' variable), can optionally enable one or
 # more plugins ('plugin' and 'plugins' variables), and is provided with
-# support facilities like 'log' and 'secret'.
+# support facilities like 'log'.
 #
 # EXIT STATUS
 #
@@ -151,15 +151,14 @@ function getenv {
 #
 function gensecret {
 	local setting=$1 value secret file
-	variable=${name}_${setting}
 	value=$(getenv "$setting")
 	if [[ $value ]]; then
 		return
 	fi
 	secret=$(getenv "${setting}_SECRET")
-	file=/run/secrets/${secret:-$variable}
+	file=/run/secrets/${secret:-${name}_${setting}}
 	if [[ -e $file ]]; then
-		eval "$variable=$(<"$file")"
+		eval "${name}_${setting}=\$(<\"$file\")"
 	fi
 }
 
@@ -177,7 +176,7 @@ function processenv {
 	for setting in "${settings[@]}"; do
 		value=$(getenv "$setting")
 		if [[ $value ]]; then
-			eval "$setting=$value"
+			eval "$setting=\$value"
 			ret=0
 		fi
 	done
@@ -227,6 +226,9 @@ else
 		if genconf "$conf" && ((${#plugins[@]})); then
 			enabled=true
 		fi
+		if [[ $BUNDLE_DEBUG == true ]]; then
+			cat "$conf"
+		fi
 	fi
 fi
 
@@ -245,7 +247,7 @@ if [[ $enabled == true ]]; then
 		exit 5
 	fi
 	for plugin in "${plugins[@]}"; do
-		log "Enabling plugin '$plugin'"
+		log "Enabling plugin '$plugin'..."
 		mv /usr/share/orthanc/plugins{-disabled,}/"$plugin".so
 	done
 fi
