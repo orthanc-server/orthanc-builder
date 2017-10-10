@@ -207,7 +207,7 @@ fi
 
 # Optional configuration file generation.
 if [[ -e $conf ]]; then
-	log "'$conf' taking precendence over related environment variables"
+	log "'$conf' taking precendence over related env vars (note: file might have been generated from env vars during a previous start)"
 	if ((${#plugins[@]})); then
 		enabled=true
 	fi
