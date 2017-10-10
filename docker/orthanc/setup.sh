@@ -20,6 +20,9 @@
 # 127: A command failed
 
 set -o errexit
+if [[ $BUNDLE_DEBUG ]]; then
+	set -o xtrace
+fi
 
 # Specifying the target setup procedure path is mandatory
 if [[ ! $1 ]]; then
