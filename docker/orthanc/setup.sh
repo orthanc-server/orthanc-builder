@@ -218,7 +218,7 @@ else
 	if ((${#plugins[@]})); then
 		enabled=$(getenv ENABLED)
 	fi
-	if processenv || [[ $default == true ]] || [[ $enabled == true ]]; then
+	if processenv || [[ $default == true ]]; then
 		if [[ ! $conf ]]; then
 			exit 3
 		fi
