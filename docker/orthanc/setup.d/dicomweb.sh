@@ -6,12 +6,14 @@ function genconf {
 	# TODO use more descriptive settings names
 	cat <<-EOF >"$1"
 	{
-		"Enable": true,
-		"Root": "${ROOT:-/dicom-web/}",
-		"EnableWado": ${WADO_URI_ENABLED:-true},
-		"WadoRoot": "${WADO_URI_ROOT:-/wado}",
-		"Host": "${HOST:-localhost}",
-		"Ssl": ${TLS:-false}
+		"DicomWeb": {
+			"Enable": true,
+			"Root": "${ROOT:-/dicom-web/}",
+			"EnableWado": ${WADO_URI_ENABLED:-true},
+			"WadoRoot": "${WADO_URI_ROOT:-/wado}",
+			"Host": "${HOST:-localhost}",
+			"Ssl": ${TLS:-false}
+		}
 	}
 	EOF
 }
