@@ -6,7 +6,7 @@ function genconf {
 	cat <<-EOF >"$1"
 	{
 		"DicomAet": "${AET:-ORTHANC}",
-		"DicomModalities" : ${MODALITIES:-{}}
+		"DicomModalities": ${MODALITIES:-{}}
 	}
 	EOF
 }
