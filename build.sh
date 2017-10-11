@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
+#
+# build Docker images and eventually pushes them to DockerHub
+# example usage:
+# ./build.sh 17.10.1 true true
+
 set -o errexit
 set -o xtrace
+
 ./ciBuildOrthancBuilderImage.sh
 ./ciBuildOsimisOrthancDockerImage.sh
 ./ciBuildOsimisOrthancProDockerImage.sh
