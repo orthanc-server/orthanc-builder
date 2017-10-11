@@ -1,6 +1,7 @@
 name=WL
 conf=worklists
 settings=(STORAGE_DIR)
+plugin=libModalityWorklists
 function genconf {
 	cat <<-EOF >"$1"
 	{
