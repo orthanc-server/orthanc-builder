@@ -1,5 +1,4 @@
-# CHANGE_VERSION
-FROM osimis/orthanc:current
+FROM osimis/orthanc:latest
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
