@@ -4,6 +4,17 @@ set -o xtrace
 
 cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker"
 
+while getopts "t:" opt; do
+	case "$opt" in
+	t) tag=$OPTARG;;
+	?) exit 1;;
+	esac
+done
+shift $((OPTIND-1))
+if [[ ! $tag ]]; then
+	tag=current
+fi
+
 mkdir --parents binaries/plugins \
                 binaries/plugins-pro \
                 binaries/executables
@@ -41,5 +52,5 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/
 
-docker build --tag=osimis/orthanc:current --file=orthanc/Dockerfile .
+docker build "--tag=osimis/orthanc:$tag" --file=orthanc/Dockerfile .
 

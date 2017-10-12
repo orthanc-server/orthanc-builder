@@ -1,4 +1,3 @@
-# CHANGE_VERSION
 FROM osimis/orthanc:current
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
