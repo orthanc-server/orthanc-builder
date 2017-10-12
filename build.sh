@@ -3,6 +3,10 @@
 # build Docker images and eventually pushes them to DockerHub
 # example usage:
 # ./build.sh 17.10.1 true true
+#
+# build osimis/orthanc with latest tag, no unique tag/version, without
+# building the rest (useful when iterating on setup samples):
+# ./build.sh -nolu
 
 function usage {
 	cat <<-EOF 1>&2
@@ -77,6 +81,7 @@ fi
 function build {
 	local proc=$1 image=$2
 	"./ciBuild$proc.sh" -t "$tag"
+	docker tag "$image:$tag" "$image:current"
 	if [[ $version ]]; then
 		docker tag "$image:$tag" "$image:$version"
 		if [[ $push ]]; then
