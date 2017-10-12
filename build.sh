@@ -11,7 +11,6 @@ set -o xtrace
 ./ciBuildOsimisOrthancDockerImage.sh
 ./ciBuildOsimisOrthancProDockerImage.sh
 
-
 version=$1
 tagLatest=${2:-false}
 push=${3:-false}
@@ -37,5 +36,4 @@ if [[ $tagLatest == true ]]; then
 		docker push osimis/orthanc:latest
 		docker push osimis/orthanc-pro:latest
 	fi
-
 fi
