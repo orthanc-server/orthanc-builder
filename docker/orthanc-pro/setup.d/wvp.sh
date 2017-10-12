@@ -6,6 +6,7 @@ plugin=libOsimisWebViewerPro
 
 if [[ $WVP_ALPHA_ENABLED == true ]]; then
 	plugin=libOsimisWebViewerProAlpha
+	WVP_ENABLED=true
 fi
 
 function genconf {
