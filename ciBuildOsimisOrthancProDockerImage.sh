@@ -4,6 +4,17 @@ set -o xtrace
 
 cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker"
 
+while getopts "t:" opt; do
+	case "$opt" in
+	t) tag=$OPTARG;;
+	?) exit 1;;
+	esac
+done
+shift $((OPTIND-1))
+if [[ ! $tag ]]; then
+	tag=current
+fi
+
 # let's build the 'pro image'
 mkdir --parents binaries/plugins-{pro,deps}
 
@@ -43,4 +54,4 @@ docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrtha
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libazurestorage.so.3" binaries/plugins-deps/
 docker cp --follow-link "$orthancContainerId:/usr/local/lib/libcpprest.so.2.9" binaries/plugins-deps/
 
-docker build --tag=osimis/orthanc-pro:current --file=orthanc-pro/Dockerfile .  # CHANGE_VERSION
+docker build "--tag=osimis/orthanc-pro:$tag" --file=orthanc-pro/Dockerfile .  # CHANGE_VERSION
