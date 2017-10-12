@@ -9,6 +9,10 @@ if [[ $WVP_ALPHA_ENABLED == true ]]; then
 fi
 
 function genconf {
+	if [[ ! $LICENSE_STRING ]]; then
+		log "Missing LICENSE_STRING setting, not generating configuration file"
+		return 1
+	fi
 	cat <<-EOF >"$1"
 	{
 		"WebViewer": {
