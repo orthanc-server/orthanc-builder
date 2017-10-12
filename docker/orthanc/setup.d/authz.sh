@@ -1,3 +1,3 @@
 name=AUTHZ
-conf=authorization.json
+conf=authorization
 plugin=libOrthancAuthorization
