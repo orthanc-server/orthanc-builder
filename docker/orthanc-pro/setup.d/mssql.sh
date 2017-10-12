@@ -1,7 +1,7 @@
 name=MSSQL
 conf=mssql
-settings=(CONNECTION_STRING LICENSE_STRING)
-secrets=(CONNECTION_STRING LICENSE_STRING LOCK)
+settings=(CONNECTION_STRING LICENSE_STRING LOCK)
+secrets=(CONNECTION_STRING LICENSE_STRING)
 plugin=libOrthancMsSqlIndex
 function genconf {
 	cat <<-EOF >"$1"
