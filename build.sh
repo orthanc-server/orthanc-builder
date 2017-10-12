@@ -32,7 +32,6 @@ buildProImage=true
 tag=$(LC_CTYPE=POSIX \
 	tr --complement --delete '[:lower:][:digit:]' </dev/urandom \
 	| head --bytes=12)
-version=$tag
 
 while getopts "nbopt:lurh" opt; do
 	case "$opt" in
@@ -58,15 +57,31 @@ while [[ ${args[0]} && $1 ]]; do
 done
 
 if [[ $noUnique ]]; then
-	tag=$version
+	if [[ $version ]]; then
+		tag=$version
+	elif [[ $tagLatest ]]; then
+		tag=latest
+	else
+		cat <<-EOF >&2
+		ERROR: No usable tag
+
+		Need to at least:
+		- Allow unique tags or,
+		- Specify a version or,
+		- Tag as latest.
+		EOF
+		exit 2
+	fi
 fi
 
 function build {
 	local proc=$1 image=$2
 	"./ciBuild$proc.sh" -t "$tag"
-	docker tag "$image:$tag" "$image:$version"
-	if [[ $push ]]; then
-		docker push "$image:$version"
+	if [[ $version ]]; then
+		docker tag "$image:$tag" "$image:$version"
+		if [[ $push ]]; then
+			docker push "$image:$version"
+		fi
 	fi
 	if [[ $tagLatest ]]; then
 		docker tag "$image:$tag" "$image:latest"
