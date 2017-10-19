@@ -199,7 +199,8 @@ function processenv {
 		fi
 	done
 	for global in "${globals[@]}"; do
-		if [[ $global ]]; then
+		value=$(getglobal "$global")
+		if [[ $value ]]; then
 			ret=0
 			break
 		fi
