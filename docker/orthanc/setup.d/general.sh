@@ -1,5 +1,6 @@
 name=GENERAL
 conf=orthanc
+globals=(NAME)
 function genconf {
 	cat <<-EOF >"$1"
 	{
