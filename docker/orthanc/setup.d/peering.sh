@@ -1,6 +1,6 @@
 name=PEERING
 conf=peering
-settings=(PEERS)
+globals=(PEERS)
 function genconf {
 	cat <<-EOF >"$1"
 	{
