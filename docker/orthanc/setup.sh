@@ -81,6 +81,14 @@ fi
 #
 #   Reserved settings: ENABLED, BUNDLE_DEFAULTS.
 #
+# globals: List of un-prefixed environment variables
+#
+#   Optional.
+#   Names of global environment variables, i.e. special settings that will not
+#   be prefixed with the setup procedure name.
+#
+#   Reserved globals: BUNDLE_DEBUG.
+#
 # secrets: Docker secrets
 #
 #   Optional.
@@ -90,7 +98,7 @@ fi
 #   ${NAME}_${SETTING}_SECRET environment variable and will default to
 #   ${NAME}_${SETTING}.
 #
-declare name default plugin plugins conf settings secrets
+declare name default plugin plugins conf settings globals secrets
 
 
 # Simple log output facility.  Can be used in setup procedures, but only after
@@ -181,6 +189,12 @@ function processenv {
 		if [[ $value ]]; then
 			eval "$setting=\$value"
 			ret=0
+		fi
+	done
+	for global in "${globals[@]}"; do
+		if [[ $global ]]; then
+			ret=0
+			break
 		fi
 	done
 	return $ret
