@@ -141,6 +141,13 @@ function getenv {
 }
 
 
+# getglobal: Outputs the environment variable value for a given global setting
+#
+function getglobal {
+	eval echo "\$$1"
+}
+
+
 # gensecret: Generate a variable for given secret setting.
 #
 # Will use the corresponding environment variable if available, but users are
