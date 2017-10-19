@@ -131,7 +131,7 @@ elif [[ $plugin ]]; then
 fi
 
 
-# getenv: Outputs the environment variable for given setting.
+# getenv: Outputs the environment variable value for given setting.
 #
 # Note that each setting set via the environment for the setup procedure is
 # prefixed with the abbreviated name of the setup procedure set.
