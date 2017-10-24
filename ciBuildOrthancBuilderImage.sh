@@ -4,7 +4,7 @@
 set -x #to debug the script
 set -e #to exit the script at the first failure
 
-root=${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}
+cd "${REPOSITORY_PATH:-$(git rev-parse --show-toplevel)}/docker/builder"
 
 while getopts "t:" opt; do
 	case "$opt" in
@@ -26,8 +26,6 @@ if [[ ! $BITBUCKET_USERINFO ]]; then
 	EOF
 	exit 1
 fi
-
-cd $root/docker/builder
 
 # build the base image (ubuntu + build tools)
 docker build "--tag=osimis/orthanc-builder-base:$tag" base "$@"
