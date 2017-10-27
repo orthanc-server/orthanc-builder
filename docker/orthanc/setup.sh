@@ -98,7 +98,16 @@ fi
 #   ${NAME}_${SETTING}_SECRET environment variable and will default to
 #   ${NAME}_${SETTING}.
 #
-declare name default plugin plugins conf settings globals secrets
+declare \
+	name \
+	default \
+	plugin \
+	plugins \
+	pluginselectors \
+	conf \
+	settings \
+	globals \
+	secrets
 
 
 # Simple log output facility.  Can be used in setup procedures, but only after
