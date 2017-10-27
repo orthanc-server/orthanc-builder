@@ -272,7 +272,9 @@ if [[ $enabled == true ]]; then
 		exit 5
 	fi
 	for plugin in "${plugins[@]}"; do
-		log "Enabling plugin '$plugin'..."
-		mv /usr/share/orthanc/plugins{-disabled,}/"$plugin".so
+		if [[ ! -e /usr/share/orthanc/plugins/$plugin.so ]]; then
+			log "Enabling plugin '$plugin'..."
+			mv /usr/share/orthanc/plugins{-disabled,}/"$plugin".so
+		fi
 	done
 fi
