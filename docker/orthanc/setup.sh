@@ -236,6 +236,18 @@ if processenv; then
 fi
 
 
+# Run setup procedure initialization routine if defined.
+if [[ $(type -t init) == function ]]; then
+	init
+fi
+
+
+# Use setup procedure plugin selection routine if defined.
+if [[ $(type -t selectplugins) == function ]]; then
+	selectplugins
+fi
+
+
 # Optional configuration file generation.
 if [[ -e $conf ]]; then
 	log "'$conf' taking precendence over related env vars (note: file might have been generated from env vars during a previous start)"
