@@ -230,6 +230,12 @@ if [[ $conf ]]; then
 fi
 
 
+# Process environnment variables, determine if at least one is available.
+if processenv; then
+	settingsavailable=true
+fi
+
+
 # Optional configuration file generation.
 if [[ -e $conf ]]; then
 	log "'$conf' taking precendence over related env vars (note: file might have been generated from env vars during a previous start)"
@@ -240,7 +246,7 @@ else
 	if ((${#plugins[@]})); then
 		enabled=$(getenv ENABLED)
 	fi
-	if processenv || [[ $default == true ]]; then
+	if [[ $settingsavailable == true || $default == true ]]; then
 		if [[ ! $conf ]]; then
 			exit 3
 		fi
