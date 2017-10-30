@@ -79,7 +79,7 @@ if [[ $noUnique ]]; then
 fi
 
 function build {
-	local proc=$1 image=$2
+	local proc=$1 image=docker.io/$2
 	"./ciBuild$proc.sh" -t "$tag"
 	docker tag "$image:$tag" "$image:current"
 	if [[ $version ]]; then

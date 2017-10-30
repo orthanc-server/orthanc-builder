@@ -1,4 +1,4 @@
-FROM osimis/orthanc:current
+FROM docker.io/osimis/orthanc:current
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
