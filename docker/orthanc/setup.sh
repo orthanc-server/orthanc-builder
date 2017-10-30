@@ -272,6 +272,7 @@ else
 	fi
 fi
 
+
 # Optional plugin installation.
 #
 # To summarize, the plugin or plugins managed by the setup procedure will be
