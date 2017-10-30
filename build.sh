@@ -97,7 +97,7 @@ function build {
 }
 
 if [[ $runBuilder ]]; then
-	./ciBuildOrthancBuilderImage.sh -t "$tag"
+	./ciBuildOrthancBuilderImage.sh
 fi
 if [[ $buildImage ]]; then
 	build OsimisOrthancDockerImage osimis/orthanc

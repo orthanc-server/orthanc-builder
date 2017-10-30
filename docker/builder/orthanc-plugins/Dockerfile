@@ -1,4 +1,4 @@
-FROM osimis/orthanc-builder
+FROM osimis/orthanc-builder:current
 RUN apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -y install \
 		libgdcm2-dev \

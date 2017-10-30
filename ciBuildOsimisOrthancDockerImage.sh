@@ -27,7 +27,7 @@ function onExit {
 }
 trap onExit EXIT
 
-orthancContainerId=$(docker create osimis/orthanc-builder-plugins)
+orthancContainerId=$(docker create osimis/orthanc-builder-plugins:current)
 function removeOrthancBuilder { docker rm "$orthancContainerId"; }
 exitHandlers+=(removeOrthancBuilder)
 
