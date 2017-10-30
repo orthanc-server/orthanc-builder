@@ -15,8 +15,9 @@
 # 2: No procedure name is defined in setup file ('name' variable)
 # 3: Env-var set but no conf file path defined in setup file ('conf' variable)
 # 4: No configuration generator defined in setup file ('genconf' function)
-# 5: Internal error: trying to enable undefined plugin
+# 5: Obsolete (was: Internal error: trying to enable undefined plugin)
 # 6: Procedure attempted to define both 'plugin' and 'plugins' variables
+# 7: Unknown default marker in plugin selector
 # 127: A command failed
 
 set -o errexit
@@ -55,6 +56,27 @@ fi
 #   Optional.
 #   Can't be used with 'plugin'.
 #   Array of plugin names (see 'plugin').
+#
+# pluginselectors: List of plugin selector descriptors and their default status.
+#
+#   Optional.
+#   Requires 'plugins'.
+#   Each plugin selector descriptor is composed of a name and an optional
+#   default status marker separated by a colon ':'.  They are mapped to each
+#   plugin according to their order in the array, respective of the order of the
+#   corresponding plugins in the 'plugins' array.
+#
+#   The name will be interpreted as an environment variable prefixed with the
+#   setup procedure name and suffixed with _ENABLED.  These environment
+#   variables allow the user to select individal plugins to explicitly enable or
+#   disable within a setup procedure.
+#
+#   The default status marker must be "default" or nothing.  It is only taken
+#   into account when a configuration file is available (either generated or
+#   not).  Otherwise, the user must set the value of the corresponding
+#   environment variable explicitly, or enable all plugins with the ENABLED
+#   setting.  When the plugin is not marked as default, the colon can be
+#   omitted.
 #
 # conf: Orthanc configuration file
 #
@@ -199,7 +221,7 @@ function gensecret {
 # for convenience.
 #
 function processenv {
-	local ret=1 value
+	local ret=1 value pluginname
 	for setting in "${settings[@]}"; do
 		value=$(getenv "$setting")
 		if [[ $value ]]; then
@@ -214,7 +236,54 @@ function processenv {
 			break
 		fi
 	done
+	for selector in "${pluginselectors[@]}"; do
+		pluginname=${selector%:*}
+		value=$(getenv "$pluginname")
+		if [[ $value ]]; then
+			eval "${pluginname}_ENABLED=\$value"
+		fi
+	done
 	return $ret
+}
+
+
+# enableplugin: Enable plugin based on multiple conditions
+#
+# We only enable plugins if a configuration file is available (either provided
+# by the user or auto-generated) and the plugin is marked as a default plugin
+# (in the "plugin selector" descriptor).
+#
+# This can be overridden (both to enable or disable) by explicitly setting the
+# ${NAME}_ENABLED environment variable (implicit setting), and further
+# overridden by setting the corresponding ${NAME}_${PLUGIN}_ENABLED environment
+# variable ("plugin selector" value).
+#
+function enableplugin {
+	local enabled i=$1 plugin selector selected allselected defplugin
+	plugin=${plugins[$i]}
+	selector=${pluginselectors[$i]}
+	selected=$(getenv "${selector%:*}_ENABLED")
+	allselected=$(getenv ENABLED)
+	if [[ -e /usr/share/orthanc/plugins/$plugin.so ]]; then
+		log "Plugin '$plugin' enabled"
+		return
+	fi
+	if [[ $selector =~ : && ${selector#*:} == default ]]; then
+		defplugin=true
+	fi
+	if [[ $confavailable == true && $defplugin == true ]]; then
+		enabled=true
+	fi
+	if [[ $allselected ]]; then
+		enabled=$allselected
+	fi
+	if [[ $selected ]]; then
+		enabled=$selected
+	fi
+	if [[ $enabled == true ]]; then
+		log "Enabling plugin '$plugin'..."
+		mv /usr/share/orthanc/plugins{-disabled,}/"$plugin".so
+	fi
 }
 
 
@@ -248,13 +317,8 @@ fi
 # Optional configuration file generation.
 if [[ -e $conf ]]; then
 	log "'$conf' taking precendence over related env vars (note: file might have been generated from env vars during a previous start)"
-	if ((${#plugins[@]})); then
-		enabled=true
-	fi
+	confavailable=true
 else
-	if ((${#plugins[@]})); then
-		enabled=$(getenv ENABLED)
-	fi
 	if [[ $settingsavailable == true || $default == true ]]; then
 		if [[ ! $conf ]]; then
 			exit 3
@@ -264,7 +328,7 @@ else
 		fi
 		log "Generating '$conf'..."
 		if genconf "$conf" && ((${#plugins[@]})); then
-			enabled=true
+			confavailable=true
 		fi
 		if [[ $BUNDLE_DEBUG == true ]]; then
 			cat "$conf"
@@ -274,23 +338,8 @@ fi
 
 
 # Optional plugin installation.
-#
-# To summarize, the plugin or plugins managed by the setup procedure will be
-# enabled if either:
-#
-# - The corresponding configuration file is already defined in lower-level
-# image layer,
-# - ${NAME}_ENABLED is set to true in the environment,
-# - At least one setup procedure setting is set in the environment,
-# - The procedure is set to use the default settings of the bundle,
-if [[ $enabled == true ]]; then
-	if ! ((${#plugins[@]})); then
-		exit 5
-	fi
-	for plugin in "${plugins[@]}"; do
-		if [[ ! -e /usr/share/orthanc/plugins/$plugin.so ]]; then
-			log "Enabling plugin '$plugin'..."
-			mv /usr/share/orthanc/plugins{-disabled,}/"$plugin".so
-		fi
+if ((${#plugins[@]})); then
+	for i in "${!plugins[@]}"; do
+		enableplugin "$i"
 	done
 fi
