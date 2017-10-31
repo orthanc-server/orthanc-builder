@@ -7,7 +7,7 @@ Sample setups using this image are available [here](https://bitbucket.org/osimis
 
 # packages content
 
-#### 17.10.0
+#### 17.10
 ```
 
 component                             version
