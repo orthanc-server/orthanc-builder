@@ -1,6 +1,6 @@
 name=DW
 conf=dicomweb
-settings=(ROOT WADO_URI_ENABLED WADO_URI_ROOT HOST TLS)
+settings=(ROOT WADO_URI_ENABLED WADO_URI_ROOT HOST TLS SERVERS)
 plugin=libOrthancDicomWeb
 function genconf {
 	# TODO use more descriptive settings names
@@ -12,7 +12,8 @@ function genconf {
 			"EnableWado": ${WADO_URI_ENABLED:-true},
 			"WadoRoot": "${WADO_URI_ROOT:-/wado}",
 			"Host": "${HOST:-localhost}",
-			"Ssl": ${TLS:-false}
+			"Ssl": ${TLS:-false},
+			"Servers": ${SERVERS:-{}}
 		}
 	}
 	EOF
