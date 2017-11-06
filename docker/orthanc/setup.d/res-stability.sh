@@ -1,5 +1,5 @@
 name=RES-STABILITY
-conf=resource-stability.json
+conf=resource-stability
 globals=(STABLE_AGE)
 function genconf {
 	cat <<-EOF >"$1"

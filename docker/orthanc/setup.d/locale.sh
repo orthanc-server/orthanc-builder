@@ -1,5 +1,5 @@
 name=LOCALE
-conf=locale.json
+conf=locale
 globals=(LOCALE)
 function genconf {
 	cat <<-EOF >"$1"
