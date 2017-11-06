@@ -3,7 +3,7 @@ conf=postgresql
 settings=(HOST PORT DB USER PASSWORD LOCK)
 secrets=(PASSWORD)
 plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
-pluginselectors=(INDEX:default STORAGE)
+pluginselectors=(INDEX STORAGE:explicit)
 function genconf {
 	if [[ ! $HOST ]]; then
 		log "Missing HOST setting, not generating configuration file"

@@ -71,12 +71,17 @@ fi
 #   variables allow the user to select individal plugins to explicitly enable or
 #   disable within a setup procedure.
 #
-#   The default status marker must be "default" or nothing.  It is only taken
-#   into account when a configuration file is available (either generated or
-#   not).  Otherwise, the user must set the value of the corresponding
-#   environment variable explicitly, or enable all plugins with the ENABLED
-#   setting.  When the plugin is not marked as default, the colon can be
-#   omitted.
+#   The default status marker must be "explicit" or nothing.  When a plugin
+#   default status is set to "explicit", it won't be implicitly enabled when a
+#   configuration file is available and must be explicitly enabled with an
+#   environment variable.  It is only taken into account when a configuration
+#   file is available (either generated or not).  Otherwise, the user must set
+#   the value of the corresponding environment variable explicitly, or enable
+#   all plugins with the ENABLED setting.  When the plugin is not marked as
+#   explicit, the colon can be omitted.
+#
+#   Note: A plugin is implicitly a default plugin if no corresponding selector
+#   is defined.
 #
 # conf: Orthanc configuration file
 #
@@ -250,8 +255,8 @@ function processenv {
 # enableplugin: Enable plugin based on multiple conditions
 #
 # We only enable plugins if a configuration file is available (either provided
-# by the user or auto-generated) and the plugin is marked as a default plugin
-# (in the "plugin selector" descriptor).
+# by the user or auto-generated) and the plugin is not marked as an explicitly
+# enabled plugin (in the "plugin selector" descriptor).
 #
 # This can be overridden (both to enable or disable) by explicitly setting the
 # ${NAME}_ENABLED environment variable (implicit setting), and further
@@ -268,7 +273,8 @@ function enableplugin {
 		log "Plugin '$plugin' enabled"
 		return
 	fi
-	if [[ $selector =~ : && ${selector#*:} == default ]]; then
+	# Notice: Implicitly a default plugin if no selector is defined.
+	if [[ ! $selector =~ : || ${selector#*:} != explicit ]]; then
 		defplugin=true
 	fi
 	if [[ $confavailable == true && $defplugin == true ]]; then
