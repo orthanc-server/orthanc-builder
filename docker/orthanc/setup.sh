@@ -226,7 +226,7 @@ function gensecret {
 # for convenience.
 #
 function processenv {
-	local ret=1 value pluginname
+	local ret=1 variable value
 	for setting in "${settings[@]}"; do
 		value=$(getenv "$setting")
 		if [[ $value ]]; then
@@ -242,10 +242,10 @@ function processenv {
 		fi
 	done
 	for selector in "${pluginselectors[@]}"; do
-		pluginname=${selector%:*}
-		value=$(getenv "$pluginname")
+		variable=${selector%:*}_ENABLED
+		value=$(getenv "$variable")
 		if [[ $value ]]; then
-			eval "${pluginname}_ENABLED=\$value"
+			eval "$variable=\$value"
 		fi
 	done
 	return $ret
