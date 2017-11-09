@@ -9,6 +9,7 @@ settings=(
 	AET_CHECK_ENABLED
 	CHECK_MODALITY_HOST_ENABLED
 	STRICT_AET_COMPARISON_ENABLED
+	DICOM_ALWAYS_ALLOW_ECHO_ENABLED
 	DICOM_ALWAYS_ALLOW_STORE_ENABLED
 )
 function genconf {
@@ -22,6 +23,7 @@ function genconf {
 		"DicomCheckCalledAet": ${AET_CHECK_ENABLED:-false},
 		"DicomCheckModalityHost": ${CHECK_MODALITY_HOST_ENABLED:-false},
 		"StrictAetComparison": ${STRICT_AET_COMPARISON_ENABLED:-false},
+		"DicomAlwaysAllowEcho": ${DICOM_ALWAYS_ALLOW_ECHO_ENABLED:-true}
 		"DicomAlwaysAllowStore": ${DICOM_ALWAYS_ALLOW_STORE_ENABLED:-true}
 	}
 	EOF
