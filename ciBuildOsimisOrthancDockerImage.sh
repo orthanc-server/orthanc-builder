@@ -52,5 +52,11 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/
 
+wsixContainerId=$(docker create osimis/orthanc-wsi:experimental) # STALE_CACHE
+function removeWsix { docker rm "$wsixContainerId"; }
+exitHandlers+=(removeWsix)
+
+docker cp --follow-link "$wsixContainerId:/usr/share/orthanc/plugins/libOrthancWSI.so" binaries/plugins/libOrthancWSIx.so
+
 docker build "--tag=docker.io/osimis/orthanc:$tag" --file=orthanc/Dockerfile .
 
