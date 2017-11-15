@@ -16,7 +16,7 @@ function genconf {
 	cat <<-EOF >"$1"
 	{
 		"DicomAet": "${AET:-ORTHANC}",
-		"DicomModalities": ${MODALITIES:-{}},
+		"DicomModalities": ${MODALITIES:-"{}"},
 		"DicomPort": ${PORT:-4242},
 		"DicomScpTimeout": ${SCP_TIMEOUT:-30},
 		"DicomScuTimeout": ${SCU_TIMEOUT:-10},

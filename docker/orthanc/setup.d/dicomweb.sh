@@ -13,7 +13,7 @@ function genconf {
 			"WadoRoot": "${WADO_URI_ROOT:-/wado}",
 			"Host": "${HOST:-localhost}",
 			"Ssl": ${TLS:-false},
-			"Servers": ${SERVERS:-{}}
+			"Servers": ${SERVERS:-"{}"}
 		}
 	}
 	EOF

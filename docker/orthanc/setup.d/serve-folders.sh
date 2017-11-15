@@ -10,7 +10,7 @@ function genconf {
 			"AllowCache": ${ALLOW_CACHE:-false},
 			"GenerateETag": ${GENERATE_ETAGS:-true},
 			"Extensions": ${EXTENSIONS:-{}},
-			"Folders": ${FOLDERS:-{}}
+			"Folders": ${FOLDERS:-"{}"}
 		}
 	}
 	EOF

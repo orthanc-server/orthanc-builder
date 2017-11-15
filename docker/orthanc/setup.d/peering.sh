@@ -4,7 +4,7 @@ globals=(PEERS)
 function genconf {
 	cat <<-EOF >"$1"
 	{
-		"OrthancPeers": ${PEERS:-{}}
+		"OrthancPeers": ${PEERS:-"{}"}
 	}
 	EOF
 }
