@@ -7,6 +7,13 @@
 # build osimis/orthanc with latest tag, no unique tag/version, without
 # building the rest (useful when iterating on setup samples):
 # ./build.sh -nolu
+#
+# to build an osimis/orthanc image with the orthanc mainline:
+# change the ORTHANC_VERSION in ciBuildOrthancBuilderImage.sh 
+# (use a commit id and not 'default' or docker might reuse its cache)
+# then call something like:
+# ./build.sh 17.11.2-orthanc-mainline-20171125 true true
+
 
 function usage {
 	cat <<-EOF 1>&2
