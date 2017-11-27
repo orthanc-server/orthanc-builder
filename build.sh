@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 #
-# build Docker images and eventually pushes them to DockerHub
-# example usage:
-# ./build.sh 17.10.1 true true
+# to build osimis/orthanc(and -pro):17.11.2 and tag it as latest and push
+# them to DockerHub
+# ./build.sh -t 17.11.2 -r -l
+#
+# to build an osimis/orthanc image with the orthanc mainline:
+# change the ORTHANC_VERSION in ciBuildOrthancBuilderImage.sh 
+# (use a commit id and not 'default' or docker might reuse its cache)
+# then call:
+# ./build.sh -t 17.11.2-orthanc-mainline-20171125 -r
 #
 # build osimis/orthanc with latest tag, no unique tag/version, without
 # building the rest (useful when iterating on setup samples):
 # ./build.sh -nolu
 #
-# to build an osimis/orthanc image with the orthanc mainline:
-# change the ORTHANC_VERSION in ciBuildOrthancBuilderImage.sh 
-# (use a commit id and not 'default' or docker might reuse its cache)
-# then call something like:
-# ./build.sh 17.11.2-orthanc-mainline-20171125 true true
-
 
 function usage {
 	cat <<-EOF 1>&2
@@ -58,14 +58,7 @@ while getopts "nbopt:lurh" opt; do
 	?) usage; exit 1;;
 	esac
 done
-shift $((OPTIND-1))
 set -o xtrace
-args=(version tagLatest push)
-while [[ ${args[0]} && $1 ]]; do
-	eval "${args[0]}=$1"
-	shift
-	args=("${args[@]:1}")
-done
 
 if [[ $noUnique ]]; then
 	if [[ $version ]]; then
