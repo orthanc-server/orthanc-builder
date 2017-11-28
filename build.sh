@@ -17,7 +17,7 @@
 
 function usage {
 	cat <<-EOF 1>&2
-	Usage: $(basename "$0") [OPTIONS...] [VERSION [LATEST [PUSH]]]
+	Usage: $(basename "$0") [OPTIONS...] [VERSION]
 
 	By default, all images are built and tagged with a random ID.
 	Use -n combined with other switches to only build specific
