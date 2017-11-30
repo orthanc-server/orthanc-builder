@@ -16,7 +16,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win32/viewer/1.0.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "http://orthanc.osimis.io/win32/viewer/release-1.0.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]
