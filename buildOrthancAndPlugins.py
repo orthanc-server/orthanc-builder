@@ -40,7 +40,7 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.3.0', # CHANGE_VERSION
+        'stableBranch': 'Orthanc-1.3.1', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
