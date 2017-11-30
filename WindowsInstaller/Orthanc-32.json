@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.3.0 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
@@ -27,7 +27,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.3.0 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "worklists.json", "Configuration" ]
@@ -38,7 +38,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.3.0 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "serve-folders.json", "Configuration" ]
@@ -88,7 +88,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.3.0 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
