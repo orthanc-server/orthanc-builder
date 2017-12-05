@@ -40,7 +40,7 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewerPro.so" binaries/plugins-pro/
 
-viewerContainerIdAlpha=$(docker create osimis/osimis-webviewer-pro:release-1.1.0.0) # CHANGE_VERSION
+viewerContainerIdAlpha=$(docker create osimis/osimis-webviewer-pro:217d8dc) # CHANGE_VERSION
 function removeOsimisWebViewerAlpha { docker rm "$viewerContainerIdAlpha"; }
 exitHandlers+=(removeOsimisWebViewerAlpha)
 
