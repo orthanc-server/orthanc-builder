@@ -46,7 +46,7 @@ docker cp --follow-link "$orthancContainerId:/usr/local/bin/OrthancWSIDicomToTif
 docker cp --follow-link "$orthancContainerId:/usr/local/bin/OrthancWSIDicomizer" binaries/executables/
 docker cp --follow-link "$orthancContainerId:/usr/local/sbin/Orthanc" binaries/executables/
 
-viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:1.0.0)  # CHANGE_VERSION
+viewerContainerId=$(docker create osimis/orthanc-webviewer-plugin:release-1.0.1)  # CHANGE_VERSION
 function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
