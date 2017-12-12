@@ -271,7 +271,8 @@ def build(branchName, archi, vsVersion, projectName, repository, skipCompilation
             cmakeListsFolderPath = os.path.join(scriptDir,
                                                 repository['localName'],
                                                 build['buildFromFolder'])
-            # thirdPartyDownloadsPath = os.path.join(cmakeListsFolderPath, 'ThirdPartyDownloads')
+            thirdPartyDownloadsPath = os.path.join(cmakeListsFolderPath, 'ThirdPartyDownloads')
+            FileHelpers.makeSurePathDoesNotExists(thirdPartyDownloadsPath)  # cleanup old ThirdPartyDownloads
 
             # FileHelpers.makeSurePathExists(thirdPartyDownloadsPath)
             # # at the Labs, download of 3rd parties from Montefiore website sometimes fails => download them from s3
