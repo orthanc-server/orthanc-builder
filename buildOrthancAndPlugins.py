@@ -271,13 +271,13 @@ def build(branchName, archi, vsVersion, projectName, repository, skipCompilation
             cmakeListsFolderPath = os.path.join(scriptDir,
                                                 repository['localName'],
                                                 build['buildFromFolder'])
-            thirdPartyDownloadsPath = os.path.join(cmakeListsFolderPath, 'ThirdPartyDownloads')
+            # thirdPartyDownloadsPath = os.path.join(cmakeListsFolderPath, 'ThirdPartyDownloads')
 
-            FileHelpers.makeSurePathExists(thirdPartyDownloadsPath)
-            # at the Labs, download of 3rd parties from Montefiore website sometimes fails => download them from s3
-            CmdHelpers.run("Downloading ThirdPartyDownloads",
-                           '{0} s3 --region eu-west-1 sync s3://orthanc.osimis.io/ThirdPartyDownloads {1}'.format(
-                               awsExecutable, thirdPartyDownloadsPath), scriptDir, logger.info)
+            # FileHelpers.makeSurePathExists(thirdPartyDownloadsPath)
+            # # at the Labs, download of 3rd parties from Montefiore website sometimes fails => download them from s3
+            # CmdHelpers.run("Downloading ThirdPartyDownloads",
+            #                '{0} s3 --region eu-west-1 sync s3://orthanc.osimis.io/ThirdPartyDownloads {1}'.format(
+            #                    awsExecutable, thirdPartyDownloadsPath), scriptDir, logger.info)
 
             FileHelpers.makeSurePathDoesNotExists(buildFolder)  # cleanup old build folder
             os.makedirs(buildFolder, exist_ok = True)
