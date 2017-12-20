@@ -5,7 +5,7 @@ CMD ["/etc/orthanc"]
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
-	apt-get --assume-yes install locales && \
+	apt-get --assume-yes install locales ca-certificates && \
 	apt-get --assume-yes clean && \
 	rm --recursive --force /var/lib/apt/lists/* && \
 	locale-gen en_US en_US.UTF-8
