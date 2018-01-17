@@ -42,9 +42,10 @@ elif [[ $branchName == "master" ]]; then
 	# since we are in the master branch, we'll tag the images as "latest" too
 	tagOptions="-t $releaseTag -l"
 else
-	commitCountSinceLastTag=$(git rev-list $(git describe --tags).. --count)
+	lastTag=$(git describe --abbrev=0)
+	commitCountSinceLastTag=$(git rev-list $lastTag.. --count)
 	if [[ $commitCountSinceLastTag == 0 ]]; then
-		releaseTag=$(git describe)
+		releaseTag=$lastTag
 	else
 		releaseTag=$branchName
 	fi
