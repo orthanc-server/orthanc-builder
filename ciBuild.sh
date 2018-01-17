@@ -12,11 +12,14 @@ set -o xtrace
 docker pull ubuntu:16.04
 
 # Retrieve git metadata
-gitLongTag=$(git describe --long --dirty)
+gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
 releaseCommitId=$(git rev-parse --short HEAD)
 
-viewerVersion=$(git describe --tags --long --dirty=-dirty) # version as used in cmake for backend build
+if [[ $gitLongTag =~ dirty ]]; then
+	echo "commit your changes before building"
+	exit -1
+fi
 
 if [[ ! $branchName ]]; then
 	# Exit if detached head
@@ -39,12 +42,12 @@ elif [[ $branchName == "master" ]]; then
 	# since we are in the master branch, we'll tag the images as "latest" too
 	tagOptions="-t $releaseTag -l"
 else
-	# in other branches than master, the versionNumber is the branchName
-	releaseTag=$branchName
-	
-	# if the branch name is something like 'am/WVB-27', the image tag should be 'am-WVB-27'
-	# replace / by -
-	releaseTag=${releaseTag//\//-}
+	commitCountSinceLastTag=$(git rev-list $(git describe --tags).. --count)
+	if [[ $commitCountSinceLastTag == 0 ]]; then
+		releaseTag=$(git describe)
+	else
+		releaseTag=$branchName
+	fi
 
 	tagOptions="-t $releaseTag"
 fi
