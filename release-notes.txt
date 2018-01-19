@@ -1,0 +1,4 @@
+18.1.2
+------
+
+- added WVP_KEY_IMAGE_CAPTURE_ENABLED
