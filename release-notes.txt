@@ -1,4 +1,5 @@
 18.1.4  : - upgraded WVP_ALPHA to 335ab7a (for correct support of KeyImageCaptureEnabled)
 18.1.3  : - added WVB_KEY_IMAGE_CAPTURE_ENABLED
 18.1.2  : - added WVP_KEY_IMAGE_CAPTURE_ENABLED
+18.1.1  : - upgraded WVP_ALPHA to 13ce4ba (to fix the windowingPresets in Lify)
 17.12.2 : - include ca-certificates in image and use them by default for Orthanc HttpClient
