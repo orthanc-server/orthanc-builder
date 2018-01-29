@@ -7,13 +7,13 @@ Sample setups using this image are available [here](https://bitbucket.org/osimis
 
 # packages content
 
-#### 18.1.1
+#### 18.1.6
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.3.1
-Osimis Web viewer plugin              1.0.1
+Osimis Web viewer plugin              1.0.2 *
 Osimis Web viewer plugin (alpha)      prerelease-1.1.0 *
 Modality worklists plugin             1.3.1
 Serve folders plugin                  1.3.1
