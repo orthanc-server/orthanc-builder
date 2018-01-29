@@ -1,3 +1,4 @@
+- upgraded WVP to 1.0.2.0 (Annotation storage hot-fix)
 18.1.5  : - added DW_STOW_MAINSTANCES & DW_STOW_MAX_SIZE
           - upgraded WVP_ALPHA to df1592b (previous build was not available) 
 18.1.4  : - upgraded WVP_ALPHA to 335ab7a (for correct support of KeyImageCaptureEnabled)
