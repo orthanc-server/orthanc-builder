@@ -34,13 +34,13 @@ function onExit {
 }
 trap onExit EXIT
 
-viewerContainerId=$(docker create osimis/osimis-webviewer-pro:release-1.0.1.0) # CHANGE_VERSION
+viewerContainerId=$(docker create osimis/osimis-webviewer-pro:release-1.0.2.0) # CHANGE_VERSION
 function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
 exitHandlers+=(removeOsimisWebViewer)
 
 docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewerPro.so" binaries/plugins-pro/
 
-viewerContainerIdAlpha=$(docker create osimis/osimis-webviewer-pro:217d8dc) # CHANGE_VERSION
+viewerContainerIdAlpha=$(docker create osimis/osimis-webviewer-pro:df1592b) # CHANGE_VERSION
 function removeOsimisWebViewerAlpha { docker rm "$viewerContainerIdAlpha"; }
 exitHandlers+=(removeOsimisWebViewerAlpha)
 
