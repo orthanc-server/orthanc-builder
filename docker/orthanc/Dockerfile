@@ -3,6 +3,10 @@ SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/etc/orthanc"]
 
+# enable lua to find external modules (this list is obtained by running "return package.path" in a lua prompt)
+ENV LUA_PATH="./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua"
+ENV LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;/usr/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so"
+
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
 	apt-get --assume-yes install locales ca-certificates && \
