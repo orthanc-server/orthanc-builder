@@ -1,3 +1,4 @@
+18.3.0  : - upgraded Authorization plugin to 0.2.0 + WVP_ALPHA to 2c43e74 (shortcuts + combined tool + synchronized browsing)
 18.1.6  : - upgraded WVB to 1.0.2 and WVP to 1.0.2.0 (Annotation storage hot-fix)
 18.1.5  : - added DW_STOW_MAINSTANCES & DW_STOW_MAX_SIZE
           - upgraded WVP_ALPHA to df1592b (previous build was not available) 
