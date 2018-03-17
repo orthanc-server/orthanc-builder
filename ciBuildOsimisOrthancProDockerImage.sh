@@ -19,12 +19,7 @@ fi
 mkdir --parents binaries/plugins-{pro,deps}
 
 # fetch mssql so file
-mssqlPlugin=binaries/plugins-pro/libOrthancMsSqlIndex.so
-if [[ ! -e $mssqlPlugin ]]; then
-	# CHANGE_VERSION (MSSQL)
-	wget orthanc.osimis.io/docker-so/mssql/0.6.1/libOrthancMsSqlIndex.so \
-		--output-document "$mssqlPlugin"
-fi
+wget orthanc.osimis.io/docker-so/mssql/0.6.1/libOrthancMsSqlIndex.so --output-document binaries/plugins-pro/libOrthancMsSqlIndex.so #CHANGE_VERSION (MSSQL)
 
 function onExit {
 	local -r numHandlers=${#exitHandlers[@]}
