@@ -41,3 +41,6 @@ RUN ./build-azure-storage-cpp.sh 3.0.0 # CHANGE_VERSION
 
 COPY build-azure-storage-plugin.sh .
 RUN ./build-azure-storage-plugin.sh 0.3.1 # CHANGE_VERSION
+
+# since "recently", MSSQL and Azure Blob storage are looking for certs in /usr/local instead of "/usr/lib"  !?!
+RUN ln -s /usr/lib/ssl /usr/local/ssl
