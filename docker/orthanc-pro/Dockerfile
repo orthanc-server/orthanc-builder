@@ -21,3 +21,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 COPY binaries/plugins-deps/ /usr/local/lib/
 COPY binaries/plugins-pro/ /usr/share/orthanc/plugins-disabled/
+
+# since "recently", MSSQL and Azure Blob storage are looking for certs in /usr/local instead of "/usr/lib"  !?!
+RUN ln -s /usr/lib/ssl /usr/local/ssl
