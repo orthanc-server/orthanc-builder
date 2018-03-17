@@ -44,6 +44,7 @@ cmake \
     -DSTATIC_BUILD=ON \
     -DCMAKE_BUILD_TYPE:STRING=Release \
     -DSTANDALONE_BUILD=ON \
+    -DENABLE_LUA_MODULES=ON \
     -DUSE_DCMTK_361=ON \
     ..
 make -j$COUNT_CORES
