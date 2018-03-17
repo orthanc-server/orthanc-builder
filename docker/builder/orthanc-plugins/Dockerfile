@@ -31,7 +31,7 @@ COPY build-wsi.sh .
 RUN ./build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION
 
 COPY build-authorization.sh .
-RUN ./build-authorization.sh 0.2.0 # CHANGE_VERSION
+RUN ./build-authorization.sh 0.2.1 # CHANGE_VERSION
 
 COPY build-casablanca.sh .
 RUN ./build-casablanca.sh 2.9.1 # CHANGE_VERSION
