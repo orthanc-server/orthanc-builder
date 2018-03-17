@@ -40,4 +40,4 @@ COPY build-azure-storage-cpp.sh .
 RUN ./build-azure-storage-cpp.sh 3.0.0 # CHANGE_VERSION
 
 COPY build-azure-storage-plugin.sh .
-RUN ./build-azure-storage-plugin.sh 0.3.0 # CHANGE_VERSION
+RUN ./build-azure-storage-plugin.sh 0.3.1 # CHANGE_VERSION
