@@ -23,7 +23,7 @@ PostgreSQL plugin                     2.0
 WSI Web viewer plugin                 0.4
 Authorization plugin                  0.2.1 *
 
-MSSql plugin                          0.6.1
+MSSql plugin                          0.5.0
 Azure Storage plugin (using blobs)    0.3.0
 Osimis Web viewer pro plugin          1.0.2.0
 Osimis Web viewer pro plugin (alpha)  prerelease-1.1.0.0 *
