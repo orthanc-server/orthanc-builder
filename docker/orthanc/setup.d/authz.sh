@@ -15,11 +15,11 @@ function genconf {
 	{
 		"Authorization": {
 			"WebService": "$WEBSERVICE",
-			"TokenHttpHeaders": [$TOKEN_HTTP_HEADERS],
-			"TokenGetArguments": [$TOKEN_GET_ARGUMENTS],
-			"UncheckedResources": [$UNCHECKED_RESOURCES],
-			"UncheckedFolders": [$UNCHECKED_FOLDERS],
-			"UncheckedLevels": [$UNCHECKED_LEVELS]
+			"TokenHttpHeaders": ${TOKEN_HTTP_HEADERS:-"[]"},
+			"TokenGetArguments": ${TOKEN_GET_ARGUMENTS:-"[]"},
+			"UncheckedResources": ${UNCHECKED_RESOURCES:-"[]"},
+			"UncheckedFolders": ${UNCHECKED_FOLDERS:-"[]"},
+			"UncheckedLevels": ${UNCHECKED_LEVELS:-"[]"}
 		}
 	}
 	EOF
