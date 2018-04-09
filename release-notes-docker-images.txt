@@ -1,3 +1,4 @@
+        : - added env vars for authorization plugin
 18.3.5  : - added WV{B,P}_KEYBOARD_SHORTCUTS_ENABLED
 18.3.4  : - upgraded WVP_ALPHA to 55390bf (fix Liveshare + some opti)
 18.3.3  : - forget it !
