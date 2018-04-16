@@ -5,7 +5,9 @@ base=/usr/lib/orthanc
 # call setup.sh on each setup procedure script found in $base/setup.d (one for each plugin).
 find "$base/setup.d" -type f -exec "$base/setup.sh" "{}" ";"
 
-if [[ $VERBOSE_ENABLED == true ]]; then
+if [[ $TRACE_ENABLED == true ]]; then
+	verbosity=--trace
+elif [[ $VERBOSE_ENABLED == true ]]; then
 	verbosity=--verbose
 fi
 argv=(Orthanc $verbosity "$@")

@@ -1,3 +1,4 @@
+        : - added TRACE_ENABLED env var
 18.4.1  : - upgraded WVP_ALPHA to 2cfa333 (fix shortcuts in Liveshare + fix default windowing in some RGB images) 
 18.4.0  : - added env vars for authorization plugin
 18.3.5  : - added WV{B,P}_KEYBOARD_SHORTCUTS_ENABLED
