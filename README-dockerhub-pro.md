@@ -15,7 +15,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 component                             version
 ---------------------------------------------
-Orthanc server                        1.3.3
+Orthanc server                        1.3.2
 Osimis Web viewer plugin              1.0.2
 Osimis Web viewer plugin (alpha)      prerelease-1.1.0
 Modality worklists plugin             1.3.2
