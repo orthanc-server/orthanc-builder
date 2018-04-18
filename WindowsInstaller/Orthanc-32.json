@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "17.11.0", "Comment" : "# CHANGE_VERSION",
+  "Version" : "18.4.3", "Comment" : "# CHANGE_VERSION",
   "Architecture" : 32,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.3.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.2 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
@@ -16,7 +16,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win32/viewer/release-1.0.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "http://orthanc.osimis.io/win32/viewer/release-1.0.2/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]
@@ -27,7 +27,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.3.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.2 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "worklists.json", "Configuration" ]
@@ -38,7 +38,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.3.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.2 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "serve-folders.json", "Configuration" ]
@@ -88,7 +88,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.3.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.3.2 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {

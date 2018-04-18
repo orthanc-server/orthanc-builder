@@ -44,8 +44,9 @@ ${ORTHANC_FILES}
 Name: "{group}\Open Orthanc Explorer"; Filename: "http://localhost:8042/app/explorer.html"; IconFilename: "{app}\Orthanc.ico"
 Name: "{group}\Edit Orthanc settings"; Filename: "{app}\Configuration"
 Name: "{group}\Help to use Orthanc"; Filename: "{app}\README.txt";
-Name: "{group}\Open Orthanc Homepage"; Filename: "http://www.orthanc-server.com/"; IconFilename: "{app}\Orthanc.ico"
-Name: "{group}\Open Osimis Homepage"; Filename: "http://osimis.io/"; IconFilename: "{app}\Osimis.ico"
+Name: "{group}\Open Orthanc homepage"; Filename: "http://www.orthanc-server.com/"; IconFilename: "{app}\Orthanc.ico"
+Name: "{group}\Open Osimis homepage"; Filename: "http://osimis.io/"; IconFilename: "{app}\Osimis.ico"
+Name: "{group}\Osimis professional services"; Filename: "http://www.osimis.io/en/services.html"; IconFilename: "{app}\Osimis.ico"
 Name: "{group}\Command prompt for Orthanc tools"; Filename: "cmd.exe"; WorkingDir: "{app}\Tools"
 Name: "{group}\Uninstall Orthanc ${ORTHANC_VERSION}"; Filename: "{uninstallexe}"
 
