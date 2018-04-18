@@ -1,6 +1,5 @@
-18.4.4  : - upgraded Orthanc to 1.3.2
+18.4.3  : - upgraded Orthanc to 1.3.2
           - upgraded MSSQL to 1.0.0
-18.4.3  : - no changes.  Tag was used for Windows Installer
 18.4.2  : - added TRACE_ENABLED env var
 18.4.1  : - upgraded WVP_ALPHA to 2cfa333 (fix shortcuts in Liveshare + fix default windowing in some RGB images) 
 18.4.0  : - added env vars for authorization plugin
