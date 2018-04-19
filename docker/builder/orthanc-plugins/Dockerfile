@@ -25,7 +25,7 @@ COPY build-postgresql.sh .
 RUN ./build-postgresql.sh c2ea179 # mainline CHANGE_VERSION
 
 COPY build-dicomweb.sh .
-RUN ./build-dicomweb.sh 28d017f # mainline # CHANGE_VERSION
+RUN ./build-dicomweb.sh OrthancDicomWeb-0.5.0 # mainline # CHANGE_VERSION
 
 COPY build-wsi.sh .
 RUN ./build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION

@@ -65,7 +65,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': '1adc7c4',  # OrthancDicomWeb-0.3.0' # CHANGE_VERSION
+        'stableBranch': 'OrthancDicomWeb-0.5.0',  # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },

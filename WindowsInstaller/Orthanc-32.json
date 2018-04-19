@@ -57,7 +57,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 0.4 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "DicomWeb 0.5 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "dicomweb.json", "Configuration" ]
