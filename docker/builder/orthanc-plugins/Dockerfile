@@ -19,16 +19,16 @@ ARG BITBUCKET_USERINFO
 WORKDIR /root
 
 COPY build-webviewer.sh .
-RUN ./build-webviewer.sh OrthancWebViewer-2.3 # CHANGE_VERSION
+RUN ./build-webviewer.sh OrthancWebViewer-2.4 # CHANGE_VERSION
 
 COPY build-postgresql.sh .
-RUN ./build-postgresql.sh c2ea179 # mainline CHANGE_VERSION
+RUN ./build-postgresql.sh OrthancPostgreSQL-2.1 # mainline CHANGE_VERSION
 
 COPY build-dicomweb.sh .
-RUN ./build-dicomweb.sh OrthancDicomWeb-0.5.0 # mainline # CHANGE_VERSION
+RUN ./build-dicomweb.sh OrthancDicomWeb-0.5 # mainline # CHANGE_VERSION
 
 COPY build-wsi.sh .
-RUN ./build-wsi.sh OrthancWSI-0.4 # CHANGE_VERSION
+RUN ./build-wsi.sh OrthancWSI-0.5 # CHANGE_VERSION
 
 COPY build-authorization.sh .
 RUN ./build-authorization.sh 0.2.1 # CHANGE_VERSION

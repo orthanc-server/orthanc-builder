@@ -65,7 +65,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancDicomWeb-0.5.0',  # CHANGE_VERSION
+        'stableBranch': 'OrthancDicomWeb-0.5',  # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -82,7 +82,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.4', # CHANGE_VERSION
+        'stableBranch': 'OrthancWSI-0.5', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -99,7 +99,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.4', # CHANGE_VERSION
+        'stableBranch': 'OrthancWSI-0.5', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
@@ -118,7 +118,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': '1e2c87b', # OrthancPostgreSQL-2.0', # CHANGE_VERSION
+        'stableBranch': 'OrthancPostgreSQL-2.1', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     }
