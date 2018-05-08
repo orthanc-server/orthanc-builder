@@ -6,6 +6,10 @@ settings=(
 	ANNOTATIONS_STORAGE_ENABLED
 	KEY_IMAGE_CAPTURE_ENABLED
 	KEYBOARD_SHORTCUTS_ENABLED
+	COMBINED_TOOL_ENABLED
+	DEFAULT_SELECTED_TOOL
+	LANGUAGE
+	TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED
 )
 plugin=libOsimisWebViewer
 function genconf {
@@ -16,7 +20,11 @@ function genconf {
 			"VideoDisplayEnabled": ${VIDEO_ENABLED:-true},
 			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE_ENABLED:-false},
 			"KeyImageCaptureEnabled": ${KEY_IMAGE_CAPTURE_ENABLED:-false},
-			"KeyboardShortcutsEnabled": ${KEYBOARD_SHORTCUTS_ENABLED:-true}
+			"KeyboardShortcutsEnabled": ${KEYBOARD_SHORTCUTS_ENABLED:-true},
+			"CombinedToolEnabled": ${COMBINED_TOOL_ENABLED:-true},
+			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-combinedTool}",
+			"DefaultLanguage": "${LANGUAGE:-en}",
+			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-true}
 		}
 	}
 	EOF

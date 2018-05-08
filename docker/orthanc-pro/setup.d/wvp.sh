@@ -8,6 +8,10 @@ settings=(
 	LICENSE_STRING
 	KEY_IMAGE_CAPTURE_ENABLED
 	KEYBOARD_SHORTCUTS_ENABLED
+	COMBINED_TOOL_ENABLED
+	DEFAULT_SELECTED_TOOL
+	LANGUAGE
+	TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED
 )
 secrets=(LICENSE_STRING)
 plugin=libOsimisWebViewerPro
@@ -25,13 +29,18 @@ function genconf {
 	cat <<-EOF >"$1"
 	{
 		"WebViewer": {
+			"LiveshareEnabled": ${LIVESHARE_ENABLED:-false},
+			"LicenseString": "$LICENSE_STRING",
+
 			"StudyDownloadEnabled": ${STUDY_DOWNLOAD_ENABLED:-true},
 			"VideoDisplayEnabled": ${VIDEO_ENABLED:-true},
 			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE_ENABLED:-false},
 			"KeyImageCaptureEnabled": ${KEY_IMAGE_CAPTURE_ENABLED:-false},
 			"KeyboardShortcutsEnabled": ${KEYBOARD_SHORTCUTS_ENABLED:-true},
-			"LiveshareEnabled": ${LIVESHARE_ENABLED:-false},
-			"LicenseString": "$LICENSE_STRING"
+			"CombinedToolEnabled": ${COMBINED_TOOL_ENABLED:-true},
+			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-combinedTool}",
+			"DefaultLanguage": "${LANGUAGE:-en}",
+			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-true}
 		}
 	}
 	EOF
