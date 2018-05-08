@@ -1,10 +1,16 @@
-FROM debian:jessie
+FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN dpkg --add-architecture i386
-RUN sed -i "s/main/main contrib non-free/" etc/apt/sources.list
-RUN apt-get update && apt-get install -yq wine curl unrar unzip build-essential g++-mingw-w64 cmake python mercurial
+RUN apt-get update
+RUN apt-get install -yq curl unrar unzip build-essential g++-mingw-w64 cmake python mercurial wget software-properties-common apt-transport-https
+RUN wget -nc https://dl.winehq.org/wine-builds/Release.key
+RUN apt-key add Release.key
+RUN apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+RUN apt-get update
+# RUN sed -i "s/main/main contrib non-free/" etc/apt/sources.list
+RUN apt-get install -yq wine 
 
 # innosetup
 RUN mkdir innosetup && \
