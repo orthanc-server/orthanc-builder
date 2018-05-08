@@ -21,10 +21,10 @@ function genconf {
 			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE_ENABLED:-false},
 			"KeyImageCaptureEnabled": ${KEY_IMAGE_CAPTURE_ENABLED:-false},
 			"KeyboardShortcutsEnabled": ${KEYBOARD_SHORTCUTS_ENABLED:-true},
-			"CombinedToolEnabled": ${COMBINED_TOOL_ENABLED:-true},
-			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-combinedTool}",
+			"CombinedToolEnabled": ${COMBINED_TOOL_ENABLED:-false},
+			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-zoom}",
 			"DefaultLanguage": "${LANGUAGE:-en}",
-			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-true}
+			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-false}
 		}
 	}
 	EOF
