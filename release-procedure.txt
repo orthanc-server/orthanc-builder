@@ -22,6 +22,7 @@ This procedure is still very manual...  Each time you want to release a new pack
 - trigger a build of the Windows Installer
 - download the Windows Installer and perform a smoke test (make sure it starts correctly)
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page
+- update the links in osimis.io/source/localizable/download.html.erb
 - tag the docker images with `latest`: `docker tag osimis/orthanc:YY.M osimis/orthanc:latest` and `docker tag osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest`
 - push the 4 images to Dockerhub: `docker push [osimis/orthanc:YY.M osimis/orthanc:latest osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest]`
 - connect to Dockerhub and update the documentation manually by copy/pasting the content of `docker/README-dockerhub.txt` into the project description (for both osimis/orthanc and osimis/orthanc-pro images)
