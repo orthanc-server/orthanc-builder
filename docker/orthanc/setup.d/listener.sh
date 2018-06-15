@@ -1,7 +1,6 @@
 name=LISTENER
 conf=listener
 settings=(LISTEN_ALL_ADDR)
-default=true
 function genconf {
 	cat <<-EOF >"$1"
 	{
