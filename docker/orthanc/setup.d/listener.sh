@@ -1,5 +1,5 @@
 name=LISTENER
-conf=remote-access
+conf=listener
 settings=(LISTEN_ALL_ADDR)
 default=true
 function genconf {
