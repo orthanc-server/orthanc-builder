@@ -1,4 +1,4 @@
-name=RES-STABILITY
+name=RES_STABILITY
 conf=resource-stability
 globals=(STABLE_AGE)
 function genconf {
