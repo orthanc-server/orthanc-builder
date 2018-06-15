@@ -143,6 +143,10 @@ function log {
 	echo -e "$name: $*" >&2
 }
 
+function warn {
+	log "WARNING: $*"
+}
+
 
 # The setup procedure is executed in the same shell context (and thus same
 # process) as the setup executor.
