@@ -148,6 +148,20 @@ function warn {
 }
 
 
+# inarray: Utility function to check if an element is contained in an array.
+function inarray {
+	local needle=$1
+	shift
+	local element
+	for element; do
+		if [[ "$element" == "$needle" ]]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+
 # The setup procedure is executed in the same shell context (and thus same
 # process) as the setup executor.
 #
