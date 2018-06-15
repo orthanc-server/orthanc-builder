@@ -125,6 +125,11 @@ fi
 #   ${NAME}_${SETTING}_SECRET environment variable and will default to
 #   ${NAME}_${SETTING}.
 #
+# deprecated: List of deprecated environment variables
+#
+#   Optional.
+#   List of settings that are deprecated.
+#
 declare \
 	name \
 	default \
@@ -134,7 +139,8 @@ declare \
 	conf \
 	settings \
 	globals \
-	secrets
+	secrets \
+	deprecated
 
 
 # Simple log output facility.  Can be used in setup procedures, but only after
