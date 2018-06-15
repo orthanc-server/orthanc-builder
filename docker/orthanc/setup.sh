@@ -256,6 +256,9 @@ function processenv {
 		if [[ $value ]]; then
 			eval "$setting=\$value"
 			ret=0
+			if inarray "$setting" "${deprecated[@]}"; then
+				warn "$setting is deprecated"
+			fi
 		fi
 	done
 	for global in "${globals[@]}"; do
