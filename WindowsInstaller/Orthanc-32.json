@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "18.5.2", "Comment" : "# CHANGE_VERSION",
+  "Version" : "18.6.0", "Comment" : "# CHANGE_VERSION",
   "Architecture" : 32,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [

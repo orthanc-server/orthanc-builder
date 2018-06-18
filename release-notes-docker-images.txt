@@ -1,4 +1,4 @@
-next    : - Deprecated LISTENER_LISTEN_ALL_ADDR
+18.6.0  : - Deprecated LISTENER_LISTEN_ALL_ADDR
           - Introduced access-control setup procedure
 18.5.2  : - upgraded WVP_ALPHA to 1.1.1.0
           - upgraded WVP to 1.1.1.0
