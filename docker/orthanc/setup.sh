@@ -125,6 +125,11 @@ fi
 #   ${NAME}_${SETTING}_SECRET environment variable and will default to
 #   ${NAME}_${SETTING}.
 #
+# deprecated: List of deprecated environment variables
+#
+#   Optional.
+#   List of settings that are deprecated.
+#
 declare \
 	name \
 	default \
@@ -134,13 +139,32 @@ declare \
 	conf \
 	settings \
 	globals \
-	secrets
+	secrets \
+	deprecated
 
 
 # Simple log output facility.  Can be used in setup procedures, but only after
 # the mandatory 'name' parameter is set.
 function log {
 	echo -e "$name: $*" >&2
+}
+
+function warn {
+	log "WARNING: $*"
+}
+
+
+# inarray: Utility function to check if an element is contained in an array.
+function inarray {
+	local needle=$1
+	shift
+	local element
+	for element; do
+		if [[ "$element" == "$needle" ]]; then
+			return 0
+		fi
+	done
+	return 1
 }
 
 
@@ -232,6 +256,9 @@ function processenv {
 		if [[ $value ]]; then
 			eval "$setting=\$value"
 			ret=0
+			if inarray "$setting" "${deprecated[@]}"; then
+				warn "$setting is deprecated"
+			fi
 		fi
 	done
 	for global in "${globals[@]}"; do
