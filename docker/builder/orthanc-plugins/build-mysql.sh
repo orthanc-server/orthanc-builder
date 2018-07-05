@@ -26,7 +26,7 @@ echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 # Clone the repository and switch to the requested branch
 hg clone "--updaterev=$1" \
 	https://bitbucket.org/sjodogne/orthanc-databases/
-cd orthanc-databases/PostgreSQL
+cd orthanc-databases/MySQL
 
 # Build the plugin
 mkdir Build
@@ -36,5 +36,5 @@ cmake -DALLOW_DOWNLOADS=ON \
 	-DCMAKE_BUILD_TYPE=Release \
 	..
 make "--jobs=$COUNT_CORES"
-ln --logical libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins/
-# TODO: reactivate ln --logical libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
+ln --logical libOrthancMySQLIndex.so /usr/share/orthanc/plugins/
+# TODO: reactivate ln --logical libOrthancMySQLStorage.so /usr/share/orthanc/plugins/

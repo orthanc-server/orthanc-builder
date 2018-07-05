@@ -2,7 +2,8 @@ name=PG
 conf=postgresql
 settings=(HOST PORT DB USER PASSWORD LOCK)
 secrets=(PASSWORD)
-plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
+#plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)   TODO: reenable Storage
+plugins=(libOrthancPostgreSQLIndex)
 pluginselectors=(INDEX STORAGE:explicit)
 function genconf {
 	if [[ ! $HOST ]]; then
