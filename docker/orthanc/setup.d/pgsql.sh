@@ -4,7 +4,7 @@ settings=(HOST PORT DB USER PASSWORD LOCK)
 secrets=(PASSWORD)
 #plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)   TODO: reenable Storage
 plugins=(libOrthancPostgreSQLIndex)
-pluginselectors=(INDEX STORAGE:explicit)
+pluginselectors=(INDEX) # TODO STORAGE:explicit)
 function genconf {
 	if [[ ! $HOST ]]; then
 		log "Missing HOST setting, not generating configuration file"
@@ -17,7 +17,7 @@ function genconf {
 	{
 		"PostgreSQL": {
 			"EnableIndex": ${INDEX_ENABLED:-true},
-			"EnableStorage": ${STORAGE_ENABLED:-false},
+			// "EnableStorage": ${STORAGE_ENABLED:-false},  // TODO
 			"Host": "$HOST",
 			"Port": ${PORT:-5432},
 			"Database": "${DB:-postgres}",
