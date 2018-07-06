@@ -22,7 +22,7 @@ COPY build-webviewer.sh .
 RUN ./build-webviewer.sh OrthancWebViewer-2.4 # CHANGE_VERSION
 
 COPY build-postgresql.sh .
-RUN ./build-postgresql.sh default # mainline CHANGE_VERSION
+RUN ./build-postgresql.sh 5a97c68 # mainline CHANGE_VERSION
 
 # COPY build-mysql.sh .
 # RUN ./build-mysql.sh default # mainline CHANGE_VERSION
