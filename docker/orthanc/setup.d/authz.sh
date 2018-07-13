@@ -8,7 +8,7 @@ settings=(
 	UNCHECKED_RESOURCES
 	UNCHECKED_FOLDERS
 	UNCHECKED_LEVELS
-	)
+)
 plugin=libOrthancAuthorization
 function genconf {
 	cat <<-EOF >"$1"
