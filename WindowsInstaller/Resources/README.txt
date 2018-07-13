@@ -17,10 +17,10 @@ Explorer does not support Microsoft Internet Explorer.
 Content of the package 18.6.0
 -----------------------------
 
-Orthanc server                        1.3.2
+Orthanc server                        1.4.0
 Osimis Web viewer plugin              1.1.1
-Modality worklists plugin             1.3.2
-Serve folders plugin                  1.3.2
+Modality worklists plugin             1.4.0
+Serve folders plugin                  1.4.0
 Orthanc Web viewer plugin             2.4
 DICOMweb plugin                       0.5
 PostgreSQL plugin                     2.1
