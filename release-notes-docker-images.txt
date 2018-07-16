@@ -24,7 +24,7 @@
 18.3.1  : - upgraded Authorization plugin to 0.2.1 + MSSQL to 0.6.1 + WVP_ALPHA to ae8b463
 18.3.0  : - upgraded Authorization plugin to 0.2.0 + WVP_ALPHA to 2c43e74 (shortcuts + combined tool + synchronized browsing)
 18.1.6  : - upgraded WVB to 1.0.2 and WVP to 1.0.2.0 (Annotation storage hot-fix)
-18.1.5  : - added DW_STOW_MAINSTANCES & DW_STOW_MAX_SIZE
+18.1.5  : - added DW_STOW_MAX_INSTANCES & DW_STOW_MAX_SIZE
           - upgraded WVP_ALPHA to df1592b (previous build was not available) 
 18.1.4  : - upgraded WVP_ALPHA to 335ab7a (for correct support of KeyImageCaptureEnabled)
 18.1.3  : - added WVB_KEY_IMAGE_CAPTURE_ENABLED
