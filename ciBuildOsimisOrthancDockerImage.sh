@@ -52,6 +52,14 @@ exitHandlers+=(removeOsimisWebViewer)
 
 docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/
 
+viewerContainerIdAlpha=$(docker create osimis/osimis-webviewer-plugin:d77e828) # CHANGE_VERSION
+
+function removeOsimisWebViewerAlpha { docker rm "$viewerContainerIdAlpha"; }
+exitHandlers+=(removeOsimisWebViewerAlpha)
+
+docker cp --follow-link "$viewerContainerIdAlpha:/usr/share/orthanc/plugins/libOsimisWebViewer.so" binaries/plugins/libOsimisWebViewerAlpha.so
+
+
 wsixContainerId=$(docker create osimis/orthanc-wsi:experimental) # STALE_CACHE
 function removeWsix { docker rm "$wsixContainerId"; }
 exitHandlers+=(removeWsix)

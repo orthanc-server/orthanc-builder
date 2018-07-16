@@ -12,6 +12,12 @@ settings=(
 	TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED
 )
 plugin=libOsimisWebViewer
+
+if [[ $WVB_ALPHA_ENABLED == true ]]; then
+	plugin=libOsimisWebViewerAlpha
+	WVB_ENABLED=true
+fi
+
 function genconf {
 	cat <<-EOF >"$1"
 	{
