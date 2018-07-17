@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # Orthanc - A Lightweight, RESTful DICOM Store
-# Copyright (C) 2012-2015 Sebastien Jodogne, Medical Physics
+# Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
 # Department, University Hospital of Liege, Belgium
+# Copyright (C) 2017 Osimis S.A.
 #
 # This program is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License
@@ -25,8 +26,8 @@ echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 
 # Clone the repository and switch to the requested branch
 hg clone "--updaterev=$1" \
-	https://bitbucket.org/sjodogne/orthanc-databases/
-cd orthanc-databases
+	https://bitbucket.org/sjodogne/orthanc-databases/ pgsql
+cd pgsql
 
 # Build the plugin
 mkdir BuildPostgreSQL
