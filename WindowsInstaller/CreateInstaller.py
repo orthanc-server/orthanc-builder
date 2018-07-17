@@ -259,8 +259,8 @@ with open(os.path.join(TARGET, 'Installer.innosetup'), 'w') as g:
 ##
 
 subprocess.check_call([ 'wine',
-                        '/innosetup/ISCC.exe',
-                        #'c:/Program Files (x86)/Inno Setup 5/ISCC.exe',
+                        #'/innosetup/ISCC.exe',
+                        'c:/Program Files (x86)/Inno Setup 5/ISCC.exe',
                         'Installer.innosetup' ],
                       cwd = TARGET)
 

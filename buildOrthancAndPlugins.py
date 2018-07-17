@@ -40,7 +40,7 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.3.2', # CHANGE_VERSION
+        'stableBranch': 'Orthanc-1.4.1', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
@@ -104,8 +104,8 @@ repositories = {
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
     'postgresql': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-postgresql/',
-        'localName': 'orthanc-postgresql.hg',
+        'url': 'https://bitbucket.org/sjodogne/orthanc-databases/',
+        'localName': 'orthanc-databases-postgresql.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS, # it currently does not build with VS2015
         'build': {
@@ -115,12 +115,31 @@ repositories = {
             # in windows: the name of the .sln file with 2 projects: Storage and Index
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
             'buildFromFolder': '.',
-            'buildOutputFolder': '../orthanc-postgresql.hg-build',
+            'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-2.1', # CHANGE_VERSION
+        'stableBranch': 'OrthancPostgreSQL-2.2', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
+    },
+    'mysql': {
+        'url': 'https://bitbucket.org/sjodogne/orthanc-databases/',
+        'localName': 'orthanc-databases-mysql.hg',
+        'tool': 'hg',
+        'platforms': ALL_PLATFORMS, # it currently does not build with VS2015
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancMySQL',
+            'cmakeTargetsOSX': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # 'UnitTests'],
+            # in windows: the name of the .sln file with 2 projects: Storage and Index
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-databases-mysql.hg-build',
+            # don't run unit tests since it requires a mysql server deployed   unitTestsExe': 'UnitTests' 
+        },
+        'stableBranch': 'OrthancMySQL-1.0', # CHANGE_VERSION
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
     }
 }
 

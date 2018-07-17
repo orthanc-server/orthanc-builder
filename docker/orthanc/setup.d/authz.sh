@@ -8,9 +8,13 @@ settings=(
 	UNCHECKED_RESOURCES
 	UNCHECKED_FOLDERS
 	UNCHECKED_LEVELS
-	)
+)
 plugin=libOrthancAuthorization
 function genconf {
+	if [[ ! $WEBSERVICE ]]; then
+		log "Missing WEBSERVICE setting, not generating configuration file"
+		return 1
+	fi
 	cat <<-EOF >"$1"
 	{
 		"Authorization": {

@@ -1,0 +1,24 @@
+{
+    /**
+     * Configuration to use MySQL or MariaDB instead of the default
+     * SQLite back-end of Orthanc. You will have to install the
+     * "orthanc-mysql" package to take advantage of this feature.
+     **/
+    "MySQL" : {
+		// Enable the use of MySQL to store the Orthanc index?
+		"EnableIndex" : false,
+
+		// Enable the use of MySQL to store the DICOM files?
+		"EnableStorage" : false,
+
+		// Parameters of the MySLQ database
+		"Host" : "localhost",
+		"Port" : 3306,
+		"Database" : "orthanc_db",
+		"Username" : "orthanc_user",
+		"Password" : "my_password",
+
+		// Optional: Disable the locking of the MySQL database
+		"Lock" : false
+    }
+}

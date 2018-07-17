@@ -1,4 +1,8 @@
           - Introduced WVB_ALPHA_ENABLED to use alpha version of the Osimis WebViewer plugin
+18.7.1  : - upgraded Orthanc to 1.4.1
+          - upgraded PostgreSQL to 2.2
+          - added MySQL 1.0
+18.7.0  : - upgraded Orthanc to 1.4.0
 18.6.0  : - Deprecated LISTENER_LISTEN_ALL_ADDR
           - Introduced access-control setup procedure
 18.5.2  : - upgraded WVP_ALPHA to 1.1.1.0

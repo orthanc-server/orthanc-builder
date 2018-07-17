@@ -26,19 +26,16 @@ echo "Will use $COUNT_CORES parallel jobs to build Orthanc"
 # Clone the repository and switch to the requested branch
 hg clone "--updaterev=$1" \
 	https://bitbucket.org/sjodogne/orthanc-databases/
-cd orthanc-databases/PostgreSQL
+cd orthanc-databases
 
 # Build the plugin
-mkdir Build
-cd Build
+mkdir BuildPostgreSQL
+cd BuildPostgreSQL
 cmake -DALLOW_DOWNLOADS=ON \
 	-DSTATIC_BUILD=ON \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DORTHANC_SDK_VERSION=framework \
-	..
-
-# TODO: remove once Orthanc 1.4.0 is out -DORTHANC_SDK_VERSION=Framework
+	../PostgreSQL
 
 make "--jobs=$COUNT_CORES"
 ln --logical libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins/
-# TODO: reactivate ln --logical libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
+ln --logical libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
