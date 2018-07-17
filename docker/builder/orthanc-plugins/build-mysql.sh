@@ -29,12 +29,12 @@ hg clone "--updaterev=$1" \
 cd orthanc-databases
 
 # Build the plugin
-mkdir BuildPostgreSQL
-cd BuildPostgreSQL
+mkdir BuildMySQL
+cd BuildMySQL
 cmake -DALLOW_DOWNLOADS=ON \
 	-DSTATIC_BUILD=ON \
 	-DCMAKE_BUILD_TYPE=Release \
-	../PostgreSQL
+	../MySQL
 make "--jobs=$COUNT_CORES"
-ln --logical libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins/
-ln --logical libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins/
+ln --logical libOrthancMySQLIndex.so /usr/share/orthanc/plugins/
+ln --logical libOrthancMySQLStorage.so /usr/share/orthanc/plugins/

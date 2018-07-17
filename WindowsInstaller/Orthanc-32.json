@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "18.7.0", "Comment" : "# CHANGE_VERSION",
+  "Version" : "18.7.1", "Comment" : "# CHANGE_VERSION",
   "Architecture" : 32,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,11 +8,11 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.4.0 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.4.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
-      "Description" : "Osimis Web viewer (AGPL license)",
+      "Description" : "Osimis Web viewer (AGPL license - not compatible with Windows XP SP2)",
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
@@ -27,7 +27,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.4.0 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.4.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "worklists.json", "Configuration" ]
@@ -38,7 +38,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.4.0 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.4.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "serve-folders.json", "Configuration" ]
@@ -68,11 +68,23 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "PostgreSQL 2.1 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION" ],
-        [ "PostgreSQL 2.1 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "PostgreSQL 2.2 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION" ],
+        [ "PostgreSQL 2.2 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "postgresql.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "MySQL backend (AGPL license - not compatible with Windows XP SP2)",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "MySQL 1.0 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION" ],
+        [ "MySQL 1.0 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+      ],
+      "Resources" : [
+        [ "mysql.json", "Configuration" ]
       ]
     },
     {
@@ -88,7 +100,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.4.0 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
+        [ "Orthanc 1.4.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION" ]
       ]
     },
     {
