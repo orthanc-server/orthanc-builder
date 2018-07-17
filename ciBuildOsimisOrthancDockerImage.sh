@@ -33,7 +33,9 @@ exitHandlers+=(removeOrthancBuilder)
 
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancDicomWeb.so" binaries/plugins/
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so" binaries/plugins/
-# TODO docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so" binaries/plugins/
+docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so" binaries/plugins/
+docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancMySQLIndex.so" binaries/plugins/
+docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancMySQLStorage.so" binaries/plugins/
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWSI.so" binaries/plugins/
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so" binaries/plugins/
 docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancWebViewer.so" binaries/plugins/
