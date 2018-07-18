@@ -1,5 +1,7 @@
           - Introduced WVB_ALPHA_ENABLED to use alpha version of the Osimis WebViewer plugin
           - upgraded MySQL to 1.1
+          - upgraded WVP_ALPHA to 73e6b64
+          - upgraded WVB_ALPHA to c3ac8fac
 18.7.1  : - upgraded Orthanc to 1.4.1
           - upgraded PostgreSQL to 2.2
           - added MySQL 1.0
