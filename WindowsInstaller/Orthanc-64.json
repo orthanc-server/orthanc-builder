@@ -80,8 +80,8 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "MySQL 1.0 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION" ],
-        [ "MySQL 1.0 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
+        [ "MySQL 1.1 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION" ],
+        [ "MySQL 1.1 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION" ]
       ],
       "Resources" : [
         [ "mysql.json", "Configuration" ]

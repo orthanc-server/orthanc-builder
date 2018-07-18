@@ -137,7 +137,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-mysql.hg-build',
             # don't run unit tests since it requires a mysql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancMySQL-1.0', # CHANGE_VERSION
+        'stableBranch': 'OrthancMySQL-1.1', # CHANGE_VERSION
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
     }
