@@ -19,22 +19,22 @@ ARG BITBUCKET_USERINFO
 WORKDIR /root
 
 COPY build-webviewer.sh .
-RUN ./build-webviewer.sh OrthancWebViewer-2.4 # CHANGE_VERSION
+RUN ./build-webviewer.sh OrthancWebViewer-2.4 # CHANGE_VERSION_ORTHANC_WEB_VIEWER
 
 COPY build-postgresql.sh .
-RUN ./build-postgresql.sh OrthancPostgreSQL-2.2 # mainline CHANGE_VERSION
+RUN ./build-postgresql.sh OrthancPostgreSQL-2.2 # mainline CHANGE_VERSION_PGSQL
 
 COPY build-mysql.sh .
-RUN ./build-mysql.sh OrthancMySQL-1.1 # mainline CHANGE_VERSION
+RUN ./build-mysql.sh OrthancMySQL-1.1 # mainline CHANGE_VERSION_MYSQL
 
 COPY build-dicomweb.sh .
-RUN ./build-dicomweb.sh OrthancDicomWeb-0.5 # mainline # CHANGE_VERSION
+RUN ./build-dicomweb.sh OrthancDicomWeb-0.5 # mainline # CHANGE_VERSION_DW
 
 COPY build-wsi.sh .
-RUN ./build-wsi.sh OrthancWSI-0.5 # CHANGE_VERSION
+RUN ./build-wsi.sh OrthancWSI-0.5 # CHANGE_VERSION_WSI
 
 COPY build-authorization.sh .
-RUN ./build-authorization.sh 0.2.1 # CHANGE_VERSION
+RUN ./build-authorization.sh 0.2.1 # CHANGE_VERSION_AUTH
 
 COPY build-casablanca.sh .
 RUN ./build-casablanca.sh 2.9.1 # CHANGE_VERSION
@@ -43,4 +43,4 @@ COPY build-azure-storage-cpp.sh .
 RUN ./build-azure-storage-cpp.sh 3.0.0 # CHANGE_VERSION
 
 COPY build-azure-storage-plugin.sh .
-RUN ./build-azure-storage-plugin.sh 0.3.0 # CHANGE_VERSION
+RUN ./build-azure-storage-plugin.sh 0.3.0 # CHANGE_VERSION_AZURE

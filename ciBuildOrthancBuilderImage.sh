@@ -23,7 +23,7 @@ docker build --tag=osimis/orthanc-builder-base:current base "$@"
 docker build --tag=osimis/orthanc-builder:current \
 	--build-arg=ORTHANC_VERSION=Orthanc-1.4.1 \
 	orthanc "$@"
-# CHANGE_VERSION (official version is someting like Orthanc-1.3.0)
+# CHANGE_VERSION_ORTHANC (official version is someting like Orthanc-1.3.0)
 
 # build the orthanc-builder-plugins image
 docker build --tag=osimis/orthanc-builder-plugins:current \
