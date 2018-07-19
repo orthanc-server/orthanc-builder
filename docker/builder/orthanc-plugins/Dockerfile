@@ -36,11 +36,11 @@ RUN ./build-wsi.sh OrthancWSI-0.5 # CHANGE_VERSION_WSI
 COPY build-authorization.sh .
 RUN ./build-authorization.sh 0.2.1 # CHANGE_VERSION_AUTH
 
-COPY build-casablanca.sh .
-RUN ./build-casablanca.sh 2.9.1 # CHANGE_VERSION
+# COPY build-casablanca.sh .
+# RUN ./build-casablanca.sh 2.9.1 # CHANGE_VERSION
 
-COPY build-azure-storage-cpp.sh .
-RUN ./build-azure-storage-cpp.sh 3.0.0 # CHANGE_VERSION
+# COPY build-azure-storage-cpp.sh .
+# RUN ./build-azure-storage-cpp.sh 3.0.0 # CHANGE_VERSION
 
-COPY build-azure-storage-plugin.sh .
-RUN ./build-azure-storage-plugin.sh 0.3.0 # CHANGE_VERSION_AZURE
+# COPY build-azure-storage-plugin.sh .
+# RUN ./build-azure-storage-plugin.sh 0.3.0 # CHANGE_VERSION_AZURE
