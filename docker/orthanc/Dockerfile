@@ -61,10 +61,9 @@ RUN wget http://lsb.orthanc-server.com/whole-slide-imaging/0.5/libOrthancWSI.so 
 RUN wget http://lsb.orthanc-server.com/whole-slide-imaging/0.5/OrthancWSIDicomToTiff --output-document /usr/bin/OrthancWSIDicomToTiff --quiet
 RUN wget http://lsb.orthanc-server.com/whole-slide-imaging/0.5/OrthancWSIDicomizer --output-document /usr/bin/OrthancWSIDicomizer --quiet
 
-# make all download binaries executable
+# CHANGE_VERSION_AUTH
+RUN wget http://orthanc.osimis.io/docker-so/orthanc-authorization/0.2.2/libOrthancAuthorization.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancAuthorization.so --quiet
+
+# make all downloaded binaries executable
 RUN chmod +x /usr/bin/*
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
-
-
-# TODO docker cp --follow-link "$orthancContainerId:/usr/share/orthanc/plugins/libOrthancAuthorization.so" binaries/plugins/
-

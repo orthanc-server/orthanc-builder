@@ -15,40 +15,5 @@ if [[ ! $tag ]]; then
 	tag=current
 fi
 
-# let's build the 'pro image'
-mkdir --parents binaries/plugins-{pro,deps}
-
-# fetch mssql so file
-wget orthanc.osimis.io/docker-so/mssql/1.0.0/libOrthancMsSqlIndex.so --output-document binaries/plugins-pro/libOrthancMsSqlIndex.so #CHANGE_VERSION_MSSQL
-
-# fetch blob storage so files
-wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libOrthancBlobStorage.so --output-document binaries/plugins-pro/libOrthancBlobStorage.so #CHANGE_VERSION_BLOB_STORAGE
-wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libazurestorage.so.3 --output-document binaries/plugins-deps/libazurestorage.so.3 #CHANGE_VERSION_BLOB_STORAGE
-wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libcpprest.so.2.9 --output-document binaries/plugins-deps/libcpprest.so.2.9 #CHANGE_VERSION_BLOB_STORAGE
-
-# get WVP so files from its Docker image
-
-function onExit {
-	local -r numHandlers=${#exitHandlers[@]}
-	for (( idx = numHandlers - 1; idx >= 0; idx-- )); do
-		${exitHandlers[idx]}
-	done
-}
-trap onExit EXIT
-
-viewerContainerId=$(docker create osimis/osimis-webviewer-pro:1.1.1.0) # CHANGE_VERSION_WVP
-function removeOsimisWebViewer { docker rm "$viewerContainerId"; }
-exitHandlers+=(removeOsimisWebViewer)
-
-docker cp --follow-link "$viewerContainerId:/usr/share/orthanc/plugins/libOsimisWebViewerPro.so" binaries/plugins-pro/
-
-viewerContainerIdAlpha=$(docker create osimis/osimis-webviewer-pro:73e6b64) # CHANGE_VERSION_WVP_ALPHA
-
-function removeOsimisWebViewerAlpha { docker rm "$viewerContainerIdAlpha"; }
-exitHandlers+=(removeOsimisWebViewerAlpha)
-
-docker cp --follow-link "$viewerContainerIdAlpha:/usr/share/orthanc/plugins/libOsimisWebViewerPro.so" binaries/plugins-pro/libOsimisWebViewerProAlpha.so
-
 # build the osimis/orthanc-pro image
-
 docker build "--tag=docker.io/osimis/orthanc-pro:$tag" --file=orthanc-pro/Dockerfile .
