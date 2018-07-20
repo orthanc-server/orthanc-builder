@@ -16,10 +16,10 @@ gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
 releaseCommitId=$(git rev-parse --short HEAD)
 
-# if [[ $gitLongTag =~ dirty ]]; then
-# 	echo "commit your changes before building"
-# 	exit -1
-# fi
+if [[ $gitLongTag =~ dirty ]]; then
+	echo "commit your changes before building"
+	exit -1
+fi
 
 if [[ ! $branchName ]]; then
 	# Exit if detached head
