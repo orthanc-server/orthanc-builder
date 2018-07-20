@@ -53,8 +53,4 @@ else
 	tagOptions="-t $releaseTag"
 fi
 
-## if you're assembling specific commits of Orthanc and its plugins, you need to rebuild them here because they are not stored on http://lsb.orthanc-server.com/orthanc/ 
-#./build.sh $tagOptions -r
-
-# if you're assembling official releases of Orthanc and its plugins, you don't need to rebuild them here
 ./build.sh $tagOptions -r

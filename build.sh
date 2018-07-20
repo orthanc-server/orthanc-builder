@@ -44,10 +44,9 @@ tag=$(LC_CTYPE=POSIX \
 	tr --complement --delete '[:lower:][:digit:]' </dev/urandom \
 	| head --bytes=12)
 
-while getopts "nbopt:lurh" opt; do
+while getopts "nopt:lurh" opt; do
 	case "$opt" in
 	n) unset runBuilder buildImage buildProImage;;
-	b) runBuilder=true;;
 	o) buildImage=true;;
 	p) buildProImage=true;;
 	t) version=$OPTARG;;
@@ -96,9 +95,6 @@ function build {
 	fi
 }
 
-if [[ $runBuilder ]]; then
-	./ciBuildOrthancBuilderImage.sh
-fi
 if [[ $buildImage ]]; then
 	build OsimisOrthancDockerImage osimis/orthanc
 fi
