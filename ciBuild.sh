@@ -16,10 +16,10 @@ gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
 releaseCommitId=$(git rev-parse --short HEAD)
 
-if [[ $gitLongTag =~ dirty ]]; then
-	echo "commit your changes before building"
-	exit -1
-fi
+# if [[ $gitLongTag =~ dirty ]]; then
+# 	echo "commit your changes before building"
+# 	exit -1
+# fi
 
 if [[ ! $branchName ]]; then
 	# Exit if detached head
@@ -53,4 +53,8 @@ else
 	tagOptions="-t $releaseTag"
 fi
 
+## if you're assembling specific commits of Orthanc and its plugins, you need to rebuild them here because they are not stored on http://lsb.orthanc-server.com/orthanc/ 
+#./build.sh $tagOptions -r
+
+# if you're assembling official releases of Orthanc and its plugins, you don't need to rebuild them here
 ./build.sh $tagOptions -r
