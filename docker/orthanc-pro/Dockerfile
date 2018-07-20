@@ -1,3 +1,14 @@
+# CHANGE_VERSION_WVP
+FROM osimis/osimis-webviewer-pro:1.1.1.0 as wvp
+
+# CHANGE_VERSION_WVP_ALPHA
+FROM osimis/osimis-webviewer-pro:73e6b64 as wvp-alpha
+
+# CHANGE_VERSION_WSI_EXPERIMENTAL
+FROM osimis/orthanc-wsi:experimental as wsix
+
+
+
 FROM docker.io/osimis/orthanc:current
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -19,5 +30,22 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	rm --recursive --force /var/lib/apt/lists/* /etc/apt/sources.list.d/mssql-release.list
 
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
-COPY binaries/plugins-deps/ /usr/local/lib/
-COPY binaries/plugins-pro/ /usr/share/orthanc/plugins-disabled/
+
+
+COPY --from=wvp /usr/share/orthanc/plugins/libOsimisWebViewerPro.so /usr/share/orthanc/plugins-disabled/
+RUN mv /usr/share/orthanc/plugins-disabled/libOsimisWebViewerPro.so /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so
+
+COPY --from=wvp-alpha /usr/share/orthanc/plugins/libOsimisWebViewerPro.so /usr/share/orthanc/plugins-disabled/
+
+COPY --from=wsix /usr/share/orthanc/plugins/libOrthancWSI.so /tmp
+RUN mv /tmp/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/libOrthancWSIx.so
+
+
+#CHANGE_VERSION_MSSQL
+RUN wget orthanc.osimis.io/docker-so/mssql/1.0.0/libOrthancMsSqlIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so --quiet
+
+#CHANGE_VERSION_BLOB_STORAGE
+RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libazurestorage.so.3 --output-document /usr/local/lib/libazurestorage.so.3 --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libcpprest.so.2.9 --output-document /usr/local/lib/libcpprest.so.2.9 --quiet
+

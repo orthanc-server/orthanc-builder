@@ -1,3 +1,8 @@
+          - upgraded Authorization plugin to 0.2.2
+          - internal: the build has been optimized and is now just a matter of assembling
+            binaries that have been produced by other build-systems.  Note that we use LSB binaries
+            for Orthanc and some of its plugins: OrthancViewer, ModalityWorklist, DicomWeb,
+            PostgreSQL, MySQL, WSI.
 18.7.3  : - added env var DICOM_UNKNOWN_SOP_CLASS_ACCEPTED
 18.7.2  : - Introduced WVB_ALPHA_ENABLED to use alpha version of the Osimis WebViewer plugin
           - upgraded MySQL to 1.1

@@ -25,5 +25,5 @@ DICOMweb plugin                       0.5
 PostgreSQL plugin                     2.2
 MySQL plugin                          1.1
 WSI Web viewer plugin                 0.5
-Authorization plugin                  0.2.1
+Authorization plugin                  0.2.2
 ```
