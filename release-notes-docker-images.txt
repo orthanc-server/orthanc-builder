@@ -3,6 +3,7 @@
             binaries that have been produced by other build-systems.  Note that we use LSB binaries
             for Orthanc and some of its plugins: OrthancViewer, ModalityWorklist, DicomWeb,
             PostgreSQL, MySQL, WSI.
+          - Add WVB_OPEN_ALL_PATIENT_STUDIES and WVP_OPEN_ALL_PATIENT_STUDIES settings
 18.7.3  : - added env var DICOM_UNKNOWN_SOP_CLASS_ACCEPTED
 18.7.2  : - Introduced WVB_ALPHA_ENABLED to use alpha version of the Osimis WebViewer plugin
           - upgraded MySQL to 1.1
