@@ -10,6 +10,7 @@ settings=(
 	DEFAULT_SELECTED_TOOL
 	LANGUAGE
 	TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED
+	OPEN_ALL_PATIENT_STUDIES
 )
 plugin=libOsimisWebViewer
 
@@ -30,7 +31,8 @@ function genconf {
 			"CombinedToolEnabled": ${COMBINED_TOOL_ENABLED:-false},
 			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-zoom}",
 			"DefaultLanguage": "${LANGUAGE:-en}",
-			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-false}
+			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-false},
+			"OpenAllPatientStudies": ${OPEN_ALL_PATIENT_STUDIES:-true}
 		}
 	}
 	EOF
