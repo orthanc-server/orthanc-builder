@@ -1,9 +1,10 @@
-          - upgraded Authorization plugin to 0.2.2
+18.8.1  : - upgraded Authorization plugin to 0.2.2
+          - Add WVB_OPEN_ALL_PATIENT_STUDIES and WVP_OPEN_ALL_PATIENT_STUDIES settings
+          - upgraded WVP_ALPHA to 9c6b4d3 (fix for print + JP2K display)
           - internal: the build has been optimized and is now just a matter of assembling
             binaries that have been produced by other build-systems.  Note that we use LSB binaries
             for Orthanc and some of its plugins: OrthancViewer, ModalityWorklist, DicomWeb,
             PostgreSQL, MySQL, WSI.
-          - Add WVB_OPEN_ALL_PATIENT_STUDIES and WVP_OPEN_ALL_PATIENT_STUDIES settings
 18.7.3  : - added env var DICOM_UNKNOWN_SOP_CLASS_ACCEPTED
 18.7.2  : - Introduced WVB_ALPHA_ENABLED to use alpha version of the Osimis WebViewer plugin
           - upgraded MySQL to 1.1
