@@ -37,7 +37,7 @@ COPY --from=wvb /usr/share/orthanc/plugins/libOsimisWebViewer.so /usr/share/orth
 
 
 # CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.4.1/Orthanc --output-document /usr/bin/Orthanc --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/d88970f1ffbf/Orthanc --output-document /usr/bin/Orthanc --quiet
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.4.1/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.4.1/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.4.1/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
