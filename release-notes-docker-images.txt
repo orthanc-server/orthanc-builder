@@ -1,4 +1,4 @@
-18.8.2  : - upgraded WVP_ALPHA to 7090062 (fix copy-paste in Live-Share)
+18.9.1  : - upgraded WVP_ALPHA to 7090062 (fix copy-paste in Live-Share)
           - Bug fix: in 18.8.1: WVP and WVP_ALPHA were inverted
 18.8.1  : - upgraded Authorization plugin to 0.2.2
           - Add WVB_OPEN_ALL_PATIENT_STUDIES and WVP_OPEN_ALL_PATIENT_STUDIES settings
