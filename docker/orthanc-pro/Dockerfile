@@ -2,7 +2,7 @@
 FROM osimis/osimis-webviewer-pro:1.1.1.0 as wvp
 
 # CHANGE_VERSION_WVP_ALPHA
-FROM osimis/osimis-webviewer-pro:9c6b4d3 as wvp-alpha
+FROM osimis/osimis-webviewer-pro:7090062 as wvp-alpha
 
 # CHANGE_VERSION_WSI_EXPERIMENTAL
 FROM osimis/orthanc-wsi:experimental as wsix
