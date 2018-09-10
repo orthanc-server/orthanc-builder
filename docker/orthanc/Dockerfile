@@ -2,7 +2,7 @@
 FROM osimis/orthanc-webviewer-plugin:1.1.1 as wvb
 
 # CHANGE_VERSION_WVB_ALPHA
-FROM osimis/orthanc-webviewer-plugin:c3ac8fac as wvb-alpha
+FROM osimis/orthanc-webviewer-plugin:090cd828 as wvb-alpha
 
 
 
