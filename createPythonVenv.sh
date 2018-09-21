@@ -14,9 +14,15 @@ pythonVersion=$(python3 --version)
 if [[ $pythonVersion == *"3.4"* ]]; then
   echo "using python version 3.4 ($pythonVersion)"
   pathToPythonPath=env/lib/python3.4/site-packages/path.pth
-else
+else if [[ $pythonVersion == *"3.5"* ]]; then
   echo "using python version 3.5 ($pythonVersion)"
   pathToPythonPath=env/lib/python3.5/site-packages/path.pth
+else if [[ $pythonVersion == *"3.6"* ]]; then
+  echo "using python version 3.6 ($pythonVersion)"
+  pathToPythonPath=env/lib/python3.6/site-packages/path.pth
+else
+  echo "update createPythonVenv.sh to support your python version"
+  exit 1
 fi
 
 #add the current dir to the python path (the path where we started the script from .. you should start it from the pythonToolbox directory, not the script directory)
