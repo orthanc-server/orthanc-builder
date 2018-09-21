@@ -114,7 +114,7 @@ repositories = {
             'cmakeTargetsOSX': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # 'UnitTests'],
             # in windows: the name of the .sln file with 2 projects: Storage and Index
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
-            'buildFromFolder': '.',
+            'buildFromFolder': 'PostgreSQL',
             'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
@@ -133,7 +133,7 @@ repositories = {
             'cmakeTargetsOSX': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # 'UnitTests'],
             # in windows: the name of the .sln file with 2 projects: Storage and Index
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
-            'buildFromFolder': '.',
+            'buildFromFolder': 'MySQL',
             'buildOutputFolder': '../orthanc-databases-mysql.hg-build',
             # don't run unit tests since it requires a mysql server deployed   unitTestsExe': 'UnitTests' 
         },
