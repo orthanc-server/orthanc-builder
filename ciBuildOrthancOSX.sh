@@ -16,6 +16,8 @@ export PATH=$PATH:/usr/local/bin   #such that pyvenv works
 source createPythonVenv.sh
 source env/bin/activate
 pip install -r requirements.txt
+# we need a more recent version of awscli than the one referenced by the pythonToolbox 4.8 (and I don't want to upgrade the python toolbox now !)
+pip install awscli --upgrade
 
 #display all SDKs supports by this version of xcode
 xcodebuild -showsdks
