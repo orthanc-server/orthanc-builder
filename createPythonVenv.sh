@@ -14,10 +14,10 @@ pythonVersion=$(python3 --version)
 if [[ $pythonVersion == *"3.4"* ]]; then
   echo "using python version 3.4 ($pythonVersion)"
   pathToPythonPath=env/lib/python3.4/site-packages/path.pth
-else if [[ $pythonVersion == *"3.5"* ]]; then
+elif [[ $pythonVersion == *"3.5"* ]]; then
   echo "using python version 3.5 ($pythonVersion)"
   pathToPythonPath=env/lib/python3.5/site-packages/path.pth
-else if [[ $pythonVersion == *"3.6"* ]]; then
+elif [[ $pythonVersion == *"3.6"* ]]; then
   echo "using python version 3.6 ($pythonVersion)"
   pathToPythonPath=env/lib/python3.6/site-packages/path.pth
 else
