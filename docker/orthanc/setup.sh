@@ -365,7 +365,7 @@ else
 			confavailable=true
 		fi
 		if [[ $BUNDLE_DEBUG == true ]]; then
-			cat "$conf"
+			cat "$conf" >&2
 		fi
 	fi
 fi
