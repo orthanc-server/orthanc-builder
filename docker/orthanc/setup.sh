@@ -77,7 +77,8 @@ fi
 #   environment variable.  It is only taken into account when a configuration
 #   file is available (either generated or not).  Otherwise, the user must set
 #   the value of the corresponding environment variable explicitly, or enable
-#   all plugins with the ENABLED setting.  When the plugin is not marked as
+#   all plugins with the setup procedure set wide ENABLED setting (i.e.
+#   ${NAME}_ENABLED environment variable).  When the plugin is not marked as
 #   explicit, the colon can be omitted.
 #
 #   Note: A plugin is implicitly a default plugin if no corresponding selector
@@ -108,7 +109,7 @@ fi
 #
 #   Reserved settings: ENABLED, BUNDLE_DEFAULTS.
 #
-# globals: List of un-prefixed environment variables
+# globals: List of non-prefixed environment variables
 #
 #   Optional.
 #   Names of global environment variables, i.e. special settings that will not
@@ -349,7 +350,7 @@ fi
 
 # Optional configuration file generation.
 if [[ -e $conf ]]; then
-	log "'$conf' taking precendence over related env vars (note: file might have been generated from env vars during a previous start)"
+	log "'$conf' taking precendence over related env vars (file might have been generated from env vars during a previous run)"
 	confavailable=true
 else
 	if [[ $settingsavailable == true || $default == true ]]; then
