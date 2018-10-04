@@ -1,3 +1,6 @@
+18.9.5  : - Fix double prefix issue for DICOM_ALWAYS_ALLOW_ECHO_ENABLED and DICOM_ALWAYS_ALLOW_STORE_ENABLED
+          - Add DICOM_SYNCHRONOUS_CMOVE setting
+18.9.4  : - Add IMPORT_OVERWRITE_INSTANCES setting
 18.9.3  : - upgraded Orthanc to 1.4.2
 18.9.2  : - upgraded WVB_ALPHA to 090cd828 (improved synchronization)
 18.9.1  : - upgraded WVP_ALPHA to 7090062 (fix copy-paste in Live-Share)
