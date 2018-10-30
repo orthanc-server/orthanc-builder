@@ -1,4 +1,4 @@
-          - upgraded Orthanc to mainline (d88970f)
+          - upgraded Orthanc to mainline (2a504fef4ed7)
 18.9.5  : - Fix double prefix issue for DICOM_ALWAYS_ALLOW_ECHO_ENABLED and DICOM_ALWAYS_ALLOW_STORE_ENABLED
           - Add DICOM_SYNCHRONOUS_CMOVE setting
 18.9.4  : - Add IMPORT_OVERWRITE_INSTANCES setting
