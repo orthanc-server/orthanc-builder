@@ -33,14 +33,15 @@ elif [[ $branchName == "master" ]]; then
 	if [[ $gitLongTag =~ [0-9]+.[0-9]+.[0-9]+-0-[0-9a-g]{8}$ ]]; then 
 
 		releaseTag=$(echo $gitLongTag | sed -r "s/([0-9]+\.[0-9]+\.[0-9]+)-[0-9]+-.+/\1/")
+		# since we are in the master branch and on a tag, we'll tag the images as "latest" too
+		tagOptions="-t $releaseTag -l"
 	else
 
-		echo "Invalid tag on the master branch.  Make sure you have just tagged the master branch with something like '17.11.3' and that there has been no commit after the tag."
-		exit -1	
+		echo "No tag found on the master branch -> will be tagged as 'master' and will not be tagges as 'latest'."
+		releaseTag=$branchName
+		tagOptions="-t $releaseTag"
 	fi
 
-	# since we are in the master branch, we'll tag the images as "latest" too
-	tagOptions="-t $releaseTag -l"
 else
 	lastTag=$(git describe --abbrev=0)
 	commitCountSinceLastTag=$(git rev-list $lastTag.. --count)

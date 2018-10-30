@@ -21,6 +21,8 @@ parser.add_argument('--target',
                     help = 'Working directory')
 parser.add_argument('--force', help = 'Reuse the working directory if it already exists',
                     action = 'store_true')
+parser.add_argument('--from-docker', help = 'In Docker, ISCC.exe is in /innosetup insteald of C:\Program Files (x86)',
+                    action = 'store_true')
 
 args = parser.parse_args()
 
@@ -258,9 +260,13 @@ with open(os.path.join(TARGET, 'Installer.innosetup'), 'w') as g:
 ## Run InnoSetup
 ##
 
+innoSetupPath = 'c:/Program Files (x86)/Inno Setup 5/ISCC.exe'
+if args.from_docker:
+    innoSetupPath = '/innosetup/ISCC.exe'
+
+
 subprocess.check_call([ 'wine',
-                        #'/innosetup/ISCC.exe',
-                        'c:/Program Files (x86)/Inno Setup 5/ISCC.exe',
+                        innoSetupPath,
                         'Installer.innosetup' ],
                       cwd = TARGET)
 
