@@ -1,9 +1,3 @@
-# CHANGE_VERSION_WVP
-FROM osimis/osimis-webviewer-pro:1.1.1.0 as wvp
-
-# CHANGE_VERSION_WVP_ALPHA
-FROM osimis/osimis-webviewer-pro:7090062 as wvp-alpha
-
 # CHANGE_VERSION_WSI_EXPERIMENTAL
 FROM osimis/orthanc-wsi:experimental as wsix
 
@@ -31,9 +25,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 
-COPY --from=wvp-alpha /usr/share/orthanc/plugins/libOsimisWebViewerPro.so /usr/share/orthanc/plugins-disabled/
-RUN mv /usr/share/orthanc/plugins-disabled/libOsimisWebViewerPro.so /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so
-COPY --from=wvp /usr/share/orthanc/plugins/libOsimisWebViewerPro.so /usr/share/orthanc/plugins-disabled/
+
+# CHANGE_VERSION_WVP
+# RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/releases/1.2.0/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerPro.so --quiet
+
+# CHANGE_VERSION_WVP_ALPHA
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/commits/0677f85/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so --quiet
 
 COPY --from=wsix /usr/share/orthanc/plugins/libOrthancWSI.so /tmp
 RUN mv /tmp/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/libOrthancWSIx.so
