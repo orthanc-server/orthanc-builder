@@ -1,6 +1,5 @@
 name=AUTHZ
 conf=authorization
-plugin=libOrthancAuthorization
 settings=(
 	WEBSERVICE
 	TOKEN_HTTP_HEADERS
