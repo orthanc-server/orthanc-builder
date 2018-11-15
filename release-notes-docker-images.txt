@@ -1,3 +1,4 @@
+next    : - DICOM_SYNCHRONOUS_CMOVE now set to "true" by default
 18.9.5  : - Fix double prefix issue for DICOM_ALWAYS_ALLOW_ECHO_ENABLED and DICOM_ALWAYS_ALLOW_STORE_ENABLED
           - Add DICOM_SYNCHRONOUS_CMOVE setting
 18.9.4  : - Add IMPORT_OVERWRITE_INSTANCES setting

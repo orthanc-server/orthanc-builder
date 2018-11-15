@@ -28,7 +28,7 @@ function genconf {
 		"DicomAlwaysAllowEcho": ${DICOM_ALWAYS_ALLOW_ECHO_ENABLED:-true},
 		"DicomAlwaysAllowStore": ${DICOM_ALWAYS_ALLOW_STORE_ENABLED:-true},
 		"UnknownSopClassAccepted": ${UNKNOWN_SOP_CLASS_ACCEPTED:-false},
-		"SynchronousCMove": ${SYNCHRONOUS_CMOVE:-false}
+		"SynchronousCMove": ${SYNCHRONOUS_CMOVE:-true}
 	}
 	EOF
 }
