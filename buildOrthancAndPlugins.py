@@ -47,7 +47,7 @@ repositories = {
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
-        'stableBranch': '1.1.1', # CHANGE_VERSION_WVB
+        'stableBranch': '1.2.0', # CHANGE_VERSION_WVB
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
