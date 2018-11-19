@@ -1,11 +1,3 @@
-# CHANGE_VERSION_WVB
-FROM osimis/orthanc-webviewer-plugin:1.1.1 as wvb
-
-# CHANGE_VERSION_WVB_ALPHA
-FROM osimis/orthanc-webviewer-plugin:090cd828 as wvb-alpha
-
-
-
 FROM ubuntu:16.04
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
@@ -25,16 +17,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 RUN mkdir --parents \
 	/etc/orthanc \
 	/usr/lib/orthanc/setup.d \
-	/usr/share/orthanc/plugins
+	/usr/share/orthanc/plugins \
+  /usr/share/orthanc/plugins-disabled
 
 COPY orthanc/docker-entrypoint.sh /
 COPY orthanc/setup.sh /usr/lib/orthanc/
 COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
 
-COPY --from=wvb-alpha /usr/share/orthanc/plugins/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/
-RUN mv /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so 
-COPY --from=wvb /usr/share/orthanc/plugins/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/
+# CHANGE_VERSION_WVB
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 
+# CHANGE_VERSION_WVB_ALPHA
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.4.2/Orthanc --output-document /usr/bin/Orthanc --quiet
