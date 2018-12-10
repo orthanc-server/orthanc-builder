@@ -30,7 +30,7 @@ COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/releases/1.2.0.0/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerPro.so --quiet
 
 # CHANGE_VERSION_WVP_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/releases/1.2.0.0/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/commits/68ad0db/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so --quiet
 
 COPY --from=wsix /usr/share/orthanc/plugins/libOrthancWSI.so /tmp
 RUN mv /tmp/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/libOrthancWSIx.so
