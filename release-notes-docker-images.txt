@@ -1,3 +1,4 @@
+          - upgraded blob storage plugin to 0.3.2 (previous version was not compatible with ubuntu 16.04)
 18.12.0 : - upgraded Orthanc to 1.5.0
           - upgraded WVP_ALPHA to 68ad0db
 18.11.1 : - upgraded WVB to 1.2.0
