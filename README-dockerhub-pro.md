@@ -10,7 +10,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 18.12.0
+#### 18.12.1
 ```
 
 component                             version
@@ -28,7 +28,7 @@ WSI Web viewer plugin                 0.5
 Authorization plugin                  0.2.2
 
 MSSql plugin                          1.0.0
-Azure Storage plugin (using blobs)    0.3.0
+Azure Storage plugin (using blobs)    0.3.2
 Osimis Web viewer pro plugin          1.2.0.0
 Osimis Web viewer pro plugin (alpha)  68ad0db
 ```
