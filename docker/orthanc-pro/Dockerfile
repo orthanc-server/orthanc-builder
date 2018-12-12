@@ -40,7 +40,9 @@ RUN mv /tmp/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/libOrthancWSIx.
 RUN wget orthanc.osimis.io/docker-so/mssql/1.0.0/libOrthancMsSqlIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so --quiet
 
 #CHANGE_VERSION_BLOB_STORAGE
-RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
-RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libazurestorage.so.3 --output-document /usr/local/lib/libazurestorage.so.3 --quiet
-RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.0/libcpprest.so.2.9 --output-document /usr/local/lib/libcpprest.so.2.9 --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/dev/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/dev/libazurestorage.so.3 --output-document /usr/local/lib/libazurestorage.so.3 --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/dev/libcpprest.so.2.9 --output-document /usr/local/lib/libcpprest.so.2.9 --quiet
 
+# configure SSL for azure rest sdk
+ENV SSL_CERT_DIR=/etc/ssl/certs
