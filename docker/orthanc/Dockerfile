@@ -28,7 +28,7 @@ COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/7c4d1a44/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.0/Orthanc --output-document /usr/bin/Orthanc --quiet
