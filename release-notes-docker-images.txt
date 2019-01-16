@@ -1,3 +1,4 @@
+next    : - Add HTTP_KEEP_ALIVE setting
 18.12.3 : - upgraded Orthanc to 1.5.1
 18.12.2 : - upgraded WVB_ALPHA to 7c4d1a44 (Cross-Hair)
           - upgraded WVP_ALPHA to 6b11ef5 (Cross-Hair)
