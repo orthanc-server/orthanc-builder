@@ -1,5 +1,9 @@
-next    : - Add HTTP_KEEP_ALIVE setting
+next    : - upgraded Orthanc to 1.5.3
+          - upgraded PostgreSQL to 3.0
+          - upgraded MySQL to 2.0
+          - Add HTTP_KEEP_ALIVE setting
           - Add TCP_NODELAY setting
+          - Add SAVE_JOBS setting
 18.12.3 : - upgraded Orthanc to 1.5.1
 18.12.2 : - upgraded WVB_ALPHA to 7c4d1a44 (Cross-Hair)
           - upgraded WVP_ALPHA to 6b11ef5 (Cross-Hair)

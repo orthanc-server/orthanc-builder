@@ -31,21 +31,21 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/lib
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/7c4d1a44/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.1/Orthanc --output-document /usr/bin/Orthanc --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.1/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.1/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.1/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.3/Orthanc --output-document /usr/bin/Orthanc --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.3/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.3/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.3/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
 
 # CHANGE_VERSION_DW
 RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/0.5/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
 
 # CHANGE_VERSION_PG
-RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/2.2/libOrthancPostgreSQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLIndex.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/2.2/libOrthancPostgreSQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLStorage.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.0/libOrthancPostgreSQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLIndex.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.0/libOrthancPostgreSQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLStorage.so --quiet
 
 # CHANGE_VERSION_MY_SQL
-RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/1.1/libOrthancMySQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLIndex.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/1.1/libOrthancMySQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLStorage.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/2.0/libOrthancMySQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLIndex.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/2.0/libOrthancMySQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLStorage.so --quiet
 
 # CHANGE_VERSION_ORTHANC_WEB_VIEWER
 RUN wget http://orthanc.osimis.io/lsb/plugin-webviewer/releases/2.4/libOrthancWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWebViewer.so --quiet
