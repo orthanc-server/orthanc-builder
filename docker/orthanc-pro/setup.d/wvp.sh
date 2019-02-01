@@ -13,6 +13,7 @@ settings=(
 	LANGUAGE
 	TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED
 	OPEN_ALL_PATIENT_STUDIES
+	SERIES_TO_IGNORE
 )
 secrets=(LICENSE_STRING)
 plugin=libOsimisWebViewerPro
@@ -42,7 +43,8 @@ function genconf {
 			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-zoom}",
 			"DefaultLanguage": "${LANGUAGE:-en}",
 			"ToggleOverlayTextButtonEnabled": ${TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED:-false},
-			"OpenAllPatientStudies": ${OPEN_ALL_PATIENT_STUDIES:-true}
+			"OpenAllPatientStudies": ${OPEN_ALL_PATIENT_STUDIES:-true},
+			"SeriesToIgnore": ${SERIES_TO_IGNORE:-"{}"}
 		}
 	}
 	EOF
