@@ -40,7 +40,7 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.5.3', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.5.4', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
@@ -118,7 +118,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-3.0', # CHANGE_VERSION_PG
+        'stableBranch': 'OrthancPostgreSQL-3.1', # CHANGE_VERSION_PG
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     },
