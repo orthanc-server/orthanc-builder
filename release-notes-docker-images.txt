@@ -1,3 +1,4 @@
+19.2.2 :  - Upgraded Orthanc to 1.5.5
 19.2.1 :  - Upgraded Orthanc to 1.5.4
           - Upgraded PostgreSQL to 3.1
           - Add SERIES_TO_IGNORE setting (WVB and WBP)
