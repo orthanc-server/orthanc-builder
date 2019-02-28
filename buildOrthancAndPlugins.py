@@ -34,7 +34,7 @@ repositories = {
             'cmakeTargetsOSX': ['Orthanc', 'ServeFolders', 'ModalityWorklists', 'UnitTests'],
             # in osx: the names of the 2 targets in the xcodeproj
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON',
-                             '-DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF', '-DBOOST_LOCALE_BACKEND=icu'],
+                             '-DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF', '-DBOOST_LOCALE_BACKEND=icu', '-DUSE_LEGACY_LIBICU=ON'],
             # www.montefiore.ulg.ac.be not always accessible from the labs => remove these tests
             'buildFromFolder': '.',
             'buildOutputFolder': '../orthanc.hg-build',
