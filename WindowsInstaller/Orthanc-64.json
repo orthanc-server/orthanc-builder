@@ -49,7 +49,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WebViewer 2.4 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
+        [ "WebViewer 2.5 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
       ]
     },
     {
@@ -57,7 +57,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 0.5 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 0.6 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "Resources" : [
         [ "dicomweb.json", "Configuration" ]
@@ -92,7 +92,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WSI 0.5 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI" ]
+        [ "WSI 0.6 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI" ]
       ]
     },
     {
@@ -109,8 +109,8 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "WSI 0.5 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
-        [ "WSI 0.5 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
+        [ "WSI 0.6 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
+        [ "WSI 0.6 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
       ]
     },
     {

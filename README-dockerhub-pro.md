@@ -20,11 +20,11 @@ Osimis Web viewer plugin              1.2.0
 Osimis Web viewer plugin (alpha)      7c4d1a44
 Modality worklists plugin             1.5.5
 Serve folders plugin                  1.5.5
-Orthanc Web viewer plugin             2.4
-DICOMweb plugin                       0.5
+Orthanc Web viewer plugin             2.5
+DICOMweb plugin                       0.6
 PostgreSQL plugin                     3.1
 MySQL plugin                          2.0
-WSI Web viewer plugin                 0.5
+WSI Web viewer plugin                 0.6
 Authorization plugin                  0.2.2
 
 MSSql plugin                          1.0.0

@@ -37,7 +37,7 @@ RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.5/libModalityWorklist
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.5/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
 
 # CHANGE_VERSION_DW
-RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/0.5/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/0.6/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
 
 # CHANGE_VERSION_PG
 RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.1/libOrthancPostgreSQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLIndex.so --quiet
@@ -48,12 +48,12 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/2.0/libOrthancMySQLI
 RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/2.0/libOrthancMySQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLStorage.so --quiet
 
 # CHANGE_VERSION_ORTHANC_WEB_VIEWER
-RUN wget http://orthanc.osimis.io/lsb/plugin-webviewer/releases/2.4/libOrthancWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWebViewer.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-webviewer/releases/2.5/libOrthancWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWebViewer.so --quiet
 
 # CHANGE_VERSION_ORTHANC_WSI
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.5/libOrthancWSI.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWSI.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.5/OrthancWSIDicomToTiff --output-document /usr/bin/OrthancWSIDicomToTiff --quiet
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.5/OrthancWSIDicomizer --output-document /usr/bin/OrthancWSIDicomizer --quiet
+RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/libOrthancWSI.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWSI.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/OrthancWSIDicomToTiff --output-document /usr/bin/OrthancWSIDicomToTiff --quiet
+RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/OrthancWSIDicomizer --output-document /usr/bin/OrthancWSIDicomizer --quiet
 
 # CHANGE_VERSION_AUTH   # note: lsb build does not work for 0.2.2 !
 RUN wget http://orthanc.osimis.io/docker-so/orthanc-authorization/0.2.2/libOrthancAuthorization.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancAuthorization.so --quiet

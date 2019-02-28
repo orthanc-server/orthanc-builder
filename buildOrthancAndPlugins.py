@@ -65,7 +65,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancDicomWeb-0.5',  # CHANGE_VERSION_DW
+        'stableBranch': 'OrthancDicomWeb-0.6',  # CHANGE_VERSION_DW
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -82,7 +82,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.5', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-0.6', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -99,7 +99,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.5', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-0.6', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
