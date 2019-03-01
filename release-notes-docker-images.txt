@@ -1,4 +1,21 @@
-          - upgraded Orthanc to 750de70b3603
+          - upgraded Orthanc to 1.5.5+ (4b1017928fc4)
+          - upgraded PG to 2d2b268799a2
+next :    - upgraded Orthanc Web viewer to 2.5
+          - upgraded DICOMweb plugin to 0.6
+          - upgraded WSI plugin to 0.6
+19.2.2 :  - Upgraded Orthanc to 1.5.5
+19.2.1 :  - Upgraded Orthanc to 1.5.4
+          - Upgraded PostgreSQL to 3.1
+          - Add SERIES_TO_IGNORE setting (WVB and WBP)
+          - Add NO_JOBS setting to add the --no-jobs option at Orthanc command line
+          - Add UNLOCK setting to add the --unlock option at Orthanc command line
+19.1.1  : - upgraded Orthanc to 1.5.3
+          - upgraded PostgreSQL to 3.0
+          - upgraded MySQL to 2.0
+          - Add HTTP_KEEP_ALIVE setting
+          - Add TCP_NODELAY setting
+          - Add SCHED_SAVE_JOBS and SCHED_MAX_JOBS settings
+18.12.3 : - upgraded Orthanc to 1.5.1
 18.12.2 : - upgraded WVB_ALPHA to 7c4d1a44 (Cross-Hair)
           - upgraded WVP_ALPHA to 6b11ef5 (Cross-Hair)
 18.12.1 : - upgraded blob storage plugin to 0.3.2 (previous version was not compatible with ubuntu 16.04)
@@ -43,7 +60,7 @@
           - upgraded WVB to 1.1.0
 18.4.4  : - upgraded DicomWeb to 0.5
           - upgraded PostgreSQL to 2.1
-          - upgraded Web viewer to 2.4
+          - upgraded Orthanc Web viewer to 2.4
           - upgraded WSI to 0.5
 18.4.3  : - upgraded Orthanc to 1.3.2
           - upgraded MSSQL to 1.0.0

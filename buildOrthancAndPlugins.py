@@ -34,13 +34,13 @@ repositories = {
             'cmakeTargetsOSX': ['Orthanc', 'ServeFolders', 'ModalityWorklists', 'UnitTests'],
             # in osx: the names of the 2 targets in the xcodeproj
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON',
-                             '-DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF'],
+                             '-DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF', '-DBOOST_LOCALE_BACKEND=icu', '-DUSE_LEGACY_LIBICU=ON'],
             # www.montefiore.ulg.ac.be not always accessible from the labs => remove these tests
             'buildFromFolder': '.',
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.5.0', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.5.5', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
@@ -65,7 +65,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancDicomWeb-0.5',  # CHANGE_VERSION_DW
+        'stableBranch': 'OrthancDicomWeb-0.6',  # CHANGE_VERSION_DW
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -82,7 +82,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.5', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-0.6', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -99,7 +99,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.5', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-0.6', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
@@ -118,7 +118,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-2.2', # CHANGE_VERSION_PG
+        'stableBranch': 'OrthancPostgreSQL-3.1', # CHANGE_VERSION_PG
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     },
@@ -137,7 +137,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-mysql.hg-build',
             # don't run unit tests since it requires a mysql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancMySQL-1.1', # CHANGE_VERSION_MYSQL
+        'stableBranch': 'OrthancMySQL-2.0', # CHANGE_VERSION_MYSQL
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
     }

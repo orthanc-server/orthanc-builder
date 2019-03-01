@@ -1,6 +1,6 @@
 name=PG
 conf=postgresql
-settings=(HOST PORT DB USER PASSWORD LOCK)
+settings=(HOST PORT DB USER PASSWORD SSL LOCK)
 secrets=(PASSWORD)
 plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
 pluginselectors=(INDEX STORAGE:explicit)
@@ -21,6 +21,7 @@ function genconf {
 			"Port": ${PORT:-5432},
 			"Database": "${DB:-postgres}",
 			"Username": "${USER:-postgres}",
+			"EnableSsl": ${SSL:-false},
 			$passwordprop
 			"Lock": ${LOCK:-false}
 		}

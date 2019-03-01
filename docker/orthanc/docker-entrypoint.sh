@@ -10,6 +10,17 @@ if [[ $TRACE_ENABLED == true ]]; then
 elif [[ $VERBOSE_ENABLED == true ]]; then
 	verbosity=--verbose
 fi
-argv=(Orthanc $verbosity "$@")
+
+jobs=""
+if [[ $NO_JOBS == true ]]; then
+	jobs=--no-jobs
+fi
+
+unlock=""
+if [[ $UNLOCK == true ]]; then
+	unlock=--unlock
+fi
+
+argv=(Orthanc $verbosity $jobs $unlock "$@")
 echo "Startup command: ${argv[*]}" >&2
 exec "${argv[@]}"
