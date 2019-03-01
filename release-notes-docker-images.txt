@@ -1,4 +1,6 @@
-next :    - upgraded Orthanc Web viewer to 2.5
+19.3.1 :  - upgraded Orthanc to 1.5.6
+          - upgraded PostgreSQL plugins to 3.2
+          - upgraded Orthanc Web viewer to 2.5
           - upgraded DICOMweb plugin to 0.6
           - upgraded WSI plugin to 0.6
 19.2.2 :  - Upgraded Orthanc to 1.5.5
