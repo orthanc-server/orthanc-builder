@@ -20,10 +20,6 @@ RUN mkdir --parents \
 	/usr/share/orthanc/plugins \
   /usr/share/orthanc/plugins-disabled
 
-COPY orthanc/docker-entrypoint.sh /
-COPY orthanc/setup.sh /usr/lib/orthanc/
-COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
-
 # CHANGE_VERSION_WVB
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 
@@ -58,6 +54,13 @@ RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/OrthancWS
 # CHANGE_VERSION_AUTH   # note: lsb build does not work for 0.2.2 !
 RUN wget http://orthanc.osimis.io/docker-so/orthanc-authorization/0.2.2/libOrthancAuthorization.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancAuthorization.so --quiet
 
+# CHANGE_VERSION_TRANSFERS
+RUN wget http://orthanc.osimis.io/lsb/plugin-transfers/releases/1.0/libOrthancTransfers.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancTransfers.so --quiet
+
 # make all downloaded binaries executable
 RUN chmod +x /usr/bin/*
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
+
+COPY orthanc/docker-entrypoint.sh /
+COPY orthanc/setup.sh /usr/lib/orthanc/
+COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/

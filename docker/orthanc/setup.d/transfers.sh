@@ -9,7 +9,7 @@ function genconf {
 	{
 		"Transfers": {
 			"Threads" : ${THREADS:-6},
-			"MaxHttpRetries" : ${RETRIES:0}
+			"MaxHttpRetries" : ${RETRIES:-0}
 		}
 	}
 	EOF

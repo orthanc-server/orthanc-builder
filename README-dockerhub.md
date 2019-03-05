@@ -26,4 +26,5 @@ PostgreSQL plugin                     3.2
 MySQL plugin                          2.0
 WSI Web viewer plugin                 0.6
 Authorization plugin                  0.2.2
+Transfers accelerator plugin          1.0
 ```

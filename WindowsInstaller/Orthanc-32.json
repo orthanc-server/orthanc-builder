@@ -96,6 +96,17 @@
       ]
     },
     {
+      "Description" : "Transfers accelerator (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Transfers 1.0 - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS" ]
+      ],
+      "Resources" : [
+        [ "transfers.json", "Configuration" ]
+      ]
+    },
+    {
       "Description" : "Maintenance tool to recover files compressed by Orthanc",
       "Mandatory" : false,
       "Category" : "tools",

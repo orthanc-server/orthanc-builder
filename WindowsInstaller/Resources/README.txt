@@ -26,6 +26,7 @@ DICOMweb plugin                       0.6
 PostgreSQL plugin                     3.2
 MySQL plugin                          2.0
 WSI Web viewer plugin                 0.6
+Transfers accelerator plugin          1.0
 
 
 Folders

@@ -140,6 +140,24 @@ repositories = {
         'stableBranch': 'OrthancMySQL-2.0', # CHANGE_VERSION_MYSQL
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
+    },
+    'transfers': {
+        'url': 'https://bitbucket.org/sjodogne/orthanc-transfers',
+        'localName': 'orthanc-transfers.hg',
+        'tool': 'hg',
+        'platforms': ALL_PLATFORMS,
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancTransfers',
+            'cmakeTargetsOSX': ['OrthancTransfers', 'UnitTests'],
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-transfers.hg-build',
+            'unitTestsExe': 'UnitTests'
+        },
+        'stableBranch': 'OrthancTransfers-1.0',  # CHANGE_VERSION_DW
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancTransfers'],
     }
 }
 
