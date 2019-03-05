@@ -9,9 +9,9 @@ OutputDir=.
 ; OutputBaseFilename=OrthancInstaller-Win${ORTHANC_ARCHITECTURE}-${ORTHANC_VERSION}.${MERCURIAL_REVISION}
 OutputBaseFilename=OrthancInstaller-Win${ORTHANC_ARCHITECTURE}-${ORTHANC_VERSION}
 DefaultDirName={pf}\Orthanc Server
-DefaultGroupName=Orthanc
+DefaultGroupName=Orthanc by Osimis
 LicenseFile=Resources/License.rtf
-UninstallDisplayName=Orthanc ${ORTHANC_VERSION}
+UninstallDisplayName=Orthanc ${ORTHANC_VERSION} by Osimis
 ; VersionInfoVersion=${ORTHANC_VERSION}.${MERCURIAL_REVISION}
 VersionInfoVersion=${ORTHANC_VERSION}
 
