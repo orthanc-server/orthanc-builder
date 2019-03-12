@@ -5,7 +5,7 @@ globals=(USERMETADATA)
 function genconf {
 	cat <<-EOF >"$1"
 	{
-		"UserMetadata": "${USERMETADATA:-"{}"}"
+		"UserMetadata": ${USERMETADATA:-"{}"}
 	}
 	EOF
 }
