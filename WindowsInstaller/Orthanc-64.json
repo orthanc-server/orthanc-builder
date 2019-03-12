@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "19.3.2", "Comment": "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "19.3.3", "Comment": "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
