@@ -15,4 +15,4 @@ python buildOrthancZipPackage.py $stableOrNightly --config WindowsInstaller\Orth
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
 
 python buildOrthancZipPackage.py $stableOrNightly --config WindowsInstaller\Orthanc-64.json --clearBefore
-f ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
