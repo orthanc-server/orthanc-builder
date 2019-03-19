@@ -1,3 +1,4 @@
+19.3.4 :  - upgraded WVP_ALPHA to cd1ad9a
 19.3.3 :  - Add USERMETADATA setting
 19.3.2 :  - added transfers accelerator plugin 1.0
 19.3.1 :  - upgraded Orthanc to 1.5.6
