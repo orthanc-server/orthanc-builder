@@ -11,8 +11,8 @@ pip install --upgrade boto3
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
 
 
-python buildOrthancAndPlugins.py $stableOrNightly --config WindowsInstaller\Orthanc-32.json --clearBefore
+python buildOrthancZipPackage.py $stableOrNightly --config WindowsInstaller\Orthanc-32.json --clearBefore
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
 
-python buildOrthancAndPlugins.py $stableOrNightly --config WindowsInstaller\Orthanc-64.json --clearBefore
+python buildOrthancZipPackage.py $stableOrNightly --config WindowsInstaller\Orthanc-64.json --clearBefore
 f ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE}
