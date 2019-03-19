@@ -9,6 +9,9 @@
       "Mandatory" : true,
       "Artifacts" : [
         [ "Orthanc 1.5.6 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "Orthanc mainline - VC2015-64 Release/Orthanc.exe", "", "Comment:" ]
       ]
     },
 
@@ -18,6 +21,9 @@
       "Category" : "osimis",
       "Downloads" : [
         [ "http://orthanc.osimis.io/win64/viewer/1.2.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
+      ],
+      "NightlyDownloads" : [
+        [ "http://orthanc.osimis.io/win64/viewer/dev/OsimisWebViewer.dll", "Plugins", "Comment:" ]
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]
@@ -42,6 +48,9 @@
       "Artifacts" : [
         [ "Transfers 1.0 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS" ]
       ],
+      "NightlyArtifacts" : [
+        [ "Transfers mainline - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment:" ]
+      ],
       "Resources" : [
         [ "transfers.json", "Configuration" ]
       ]
@@ -54,6 +63,9 @@
       "Artifacts" : [
         [ "Orthanc 1.5.6 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
+      "NightlyArtifacts" : [
+        [ "Orthanc mainline - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
+      ],
       "Resources" : [
         [ "worklists.json", "Configuration" ]
       ]
@@ -65,6 +77,9 @@
       "Artifacts" : [
         [ "Orthanc 1.5.6 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
+      "NightlyArtifacts" : [
+        [ "Orthanc mainline - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment:" ]
+      ],
       "Resources" : [
         [ "serve-folders.json", "Configuration" ]
       ]
@@ -75,6 +90,9 @@
       "Category" : "plugins",
       "Artifacts" : [
         [ "WebViewer 2.5 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "WebViewer mainline - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment:" ]
       ]
     },
     {
@@ -83,6 +101,9 @@
       "Category" : "plugins",
       "Artifacts" : [
         [ "DicomWeb 0.6 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
       ],
       "Resources" : [
         [ "dicomweb.json", "Configuration" ]
@@ -106,6 +127,9 @@
       "Category" : "plugins",
       "Artifacts" : [
         [ "WSI 0.6 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "WSI mainline - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment:" ]
       ]
     },
 
@@ -115,6 +139,9 @@
       "Category" : "tools",
       "Artifacts" : [
         [ "Orthanc 1.5.6 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "Orthanc mainline - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]
       ]
     },
     {
@@ -125,6 +152,10 @@
       "Artifacts" : [
         [ "WSI 0.6 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
         [ "WSI 0.6 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "WSI mainline - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:" ],
+        [ "WSI mainline - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment:" ]
       ]
     },
     {

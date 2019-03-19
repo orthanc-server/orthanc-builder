@@ -4,6 +4,7 @@ import platform
 import os
 import shutil
 import sys
+import json
 from helpers import *
 
 LogHelpers.configureLogging(logging.INFO)
@@ -16,6 +17,10 @@ if platform.system() == 'Windows':
     awsExecutable = 'aws.cmd'
 elif platform.system() == 'Darwin':
     awsExecutable = 'aws'
+
+
+
+
 
 WINDOWS = 'Windows'
 OSX = 'Darwin'
@@ -44,6 +49,10 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
+        'buildbotSource' : {
+            'win32' : '',
+            'win64' : 'http://buildbot.orthanc-server.com/artifacts/Binaries/Orthanc%201.5.6%20-%20VC2015-64%20Release/'
+        }
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
@@ -393,6 +402,7 @@ if __name__ == '__main__':
                              default = False)
     buildParser.add_argument('--skipCheckout', help = 'actually skip the SCM checkout phase', action = 'store_true',
                              default = False)
+    buildParser.add_argument('--publishSource', help = 'buildbot, orthanc.osimis.io', default = 'buildbot')
     buildParser.add_argument('--archi', help = 'name of the architecture to build {win32,win64}', default = 'win64')
     buildParser.add_argument('-u', '--user', required = False, help = 'Bitbucket username (if not using SSH key)')
     buildParser.add_argument('-p', '--password', required = False, help = 'Bitbucket password (if not using SSH key)')
