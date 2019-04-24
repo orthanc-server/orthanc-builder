@@ -60,7 +60,7 @@ repositories = {
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
-    'orthanc-webviewer': {
+    'orthancwebviewer': {
         'platforms': ALL_PLATFORMS,
         'stableBranch': '2.5', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
         'nightlyBranch': 'default',
