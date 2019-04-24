@@ -60,6 +60,29 @@ repositories = {
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
+    'orthanc-webviewer': {
+        'platforms': ALL_PLATFORMS,
+        'stableBranch': '2.5', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancWebViewer'],
+
+        'url': 'https://bitbucket.org/sjodogne/orthanc-webviewer',
+        'localName': 'orthanc-webviewer.hg',
+        'tool': 'hg',
+        'platforms': ALL_PLATFORMS,
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancWebViewer',
+            'cmakeTargetsOSX': ['OrthancWebViewer', 'UnitTests'],
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-webviewer.hg-build',
+            'unitTestsExe': 'UnitTests'
+        },
+        'stableBranch': 'OrthancWebViewer-2.5',  # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancWebViewer'],        
+    },
     'dicomweb': {
         'url': 'https://bitbucket.org/sjodogne/orthanc-dicomweb',
         'localName': 'orthanc-dicomweb.hg',
