@@ -2,8 +2,8 @@
 FROM osimis/orthanc-wsi:experimental as wsix
 
 
-
-FROM docker.io/osimis/orthanc:current
+ARG BASE_IMAGE_TAG=curent
+FROM docker.io/osimis/orthanc:$BASE_IMAGE_TAG
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
