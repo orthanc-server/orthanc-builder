@@ -1,6 +1,11 @@
-          - upgraded Orthanc to 1.5.5+ (4b1017928fc4)
-          - upgraded PG to 2d2b268799a2
-next :    - upgraded Orthanc Web viewer to 2.5
+          - upgraded Orthanc to 1.5.6+ (974e12006b7d)
+19.4.1 :  - upgraded WVP_ALPHA to d4b6c4b
+19.3.4 :  - upgraded WVP_ALPHA to cd1ad9a
+19.3.3 :  - Add USERMETADATA setting
+19.3.2 :  - added transfers accelerator plugin 1.0
+19.3.1 :  - upgraded Orthanc to 1.5.6
+          - upgraded PostgreSQL plugins to 3.2
+          - upgraded Orthanc Web viewer to 2.5
           - upgraded DICOMweb plugin to 0.6
           - upgraded WSI plugin to 0.6
 19.2.2 :  - Upgraded Orthanc to 1.5.5

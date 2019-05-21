@@ -4,6 +4,7 @@ import platform
 import os
 import shutil
 import sys
+import json
 from helpers import *
 
 LogHelpers.configureLogging(logging.INFO)
@@ -16,6 +17,10 @@ if platform.system() == 'Windows':
     awsExecutable = 'aws.cmd'
 elif platform.system() == 'Darwin':
     awsExecutable = 'aws'
+
+
+
+
 
 WINDOWS = 'Windows'
 OSX = 'Darwin'
@@ -40,16 +45,43 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.5.5', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.5.6', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
+        'buildbotSource' : {
+            'win32' : '',
+            'win64' : 'http://buildbot.orthanc-server.com/artifacts/Binaries/Orthanc%201.5.6%20-%20VC2015-64%20Release/'
+        }
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
         'stableBranch': '1.2.0', # CHANGE_VERSION_WVB
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
+    },
+    'orthancwebviewer': {
+        'platforms': ALL_PLATFORMS,
+        'stableBranch': '2.5', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancWebViewer'],
+
+        'url': 'https://bitbucket.org/sjodogne/orthanc-webviewer',
+        'localName': 'orthanc-webviewer.hg',
+        'tool': 'hg',
+        'platforms': ALL_PLATFORMS,
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancWebViewer',
+            'cmakeTargetsOSX': ['OrthancWebViewer', 'UnitTests'],
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-webviewer.hg-build',
+            'unitTestsExe': 'UnitTests'
+        },
+        'stableBranch': 'OrthancWebViewer-2.5',  # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancWebViewer'],        
     },
     'dicomweb': {
         'url': 'https://bitbucket.org/sjodogne/orthanc-dicomweb',
@@ -118,7 +150,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-3.1', # CHANGE_VERSION_PG
+        'stableBranch': 'OrthancPostgreSQL-3.2', # CHANGE_VERSION_PG
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     },
@@ -140,6 +172,24 @@ repositories = {
         'stableBranch': 'OrthancMySQL-2.0', # CHANGE_VERSION_MYSQL
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
+    },
+    'transfers': {
+        'url': 'https://bitbucket.org/sjodogne/orthanc-transfers',
+        'localName': 'orthanc-transfers.hg',
+        'tool': 'hg',
+        'platforms': ALL_PLATFORMS,
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancTransfers',
+            'cmakeTargetsOSX': ['OrthancTransfers', 'UnitTests'],
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-transfers.hg-build',
+            'unitTestsExe': 'UnitTests'
+        },
+        'stableBranch': 'OrthancTransfers-1.0',  # CHANGE_VERSION_DW
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancTransfers'],
     }
 }
 
@@ -375,6 +425,7 @@ if __name__ == '__main__':
                              default = False)
     buildParser.add_argument('--skipCheckout', help = 'actually skip the SCM checkout phase', action = 'store_true',
                              default = False)
+    buildParser.add_argument('--publishSource', help = 'buildbot, orthanc.osimis.io', default = 'buildbot')
     buildParser.add_argument('--archi', help = 'name of the architecture to build {win32,win64}', default = 'win64')
     buildParser.add_argument('-u', '--user', required = False, help = 'Bitbucket username (if not using SSH key)')
     buildParser.add_argument('-p', '--password', required = False, help = 'Bitbucket password (if not using SSH key)')

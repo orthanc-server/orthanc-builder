@@ -1,0 +1,14 @@
+{
+    /**
+     * The following options control the configuration of the
+     * transfers accelerator plugin for Orthanc.
+     **/
+
+  "Transfers" : {
+    "Threads" : 4,             // Number of worker threads for one transfer
+    "BucketSize" : 4096,       // Optimal size for a bucket (in KB)
+    "CacheSize" : 128,         // Size of the memory cache to process DICOM files (in MB)
+    "MaxPushTransactions" : 4, // Maximum number of simultaneous receptions in push mode
+    "MaxHttpRetries" : 0       // Maximum number of HTTP retries for one bucket
+  }
+}
