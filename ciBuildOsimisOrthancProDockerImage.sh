@@ -16,4 +16,4 @@ if [[ ! $tag ]]; then
 fi
 
 # build the osimis/orthanc-pro image
-docker build --build-arg BASE_IMAGE_TAG=$tag "--tag=docker.io/osimis/orthanc-pro:$tag" --file=orthanc-pro/Dockerfile .
+docker build --build-arg BASE_ORTHANC_IMAGE_TAG=$tag "--tag=docker.io/osimis/orthanc-pro:$tag" --file=orthanc-pro/Dockerfile .
