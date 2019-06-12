@@ -12,6 +12,7 @@ settings=(
 	TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED
 	OPEN_ALL_PATIENT_STUDIES
 	SERIES_TO_IGNORE
+	DOWNLOAD_AS_JPEG_ENABLED
 )
 plugin=libOsimisWebViewer
 
@@ -25,6 +26,7 @@ function genconf {
 	{
 		"WebViewer": {
 			"StudyDownloadEnabled": ${STUDY_DOWNLOAD_ENABLED:-true},
+			"DownloadAsJpegEnabled": ${DOWNLOAD_AS_JPEG_ENABLED:-false},
 			"VideoDisplayEnabled": ${VIDEO_ENABLED:-true},
 			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE_ENABLED:-false},
 			"KeyImageCaptureEnabled": ${KEY_IMAGE_CAPTURE_ENABLED:-false},
