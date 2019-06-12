@@ -10,14 +10,14 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 19.4.1
+#### 19.6.0
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.5.6
 Osimis Web viewer plugin              1.2.0
-Osimis Web viewer plugin (alpha)      d4b6c4b
+Osimis Web viewer plugin (alpha)      c9110211
 Modality worklists plugin             1.5.6
 Serve folders plugin                  1.5.6
 Orthanc Web viewer plugin             2.5
@@ -31,5 +31,5 @@ Transfers accelerator plugin          1.0
 MSSql plugin                          1.0.0
 Azure Storage plugin (using blobs)    0.3.2
 Osimis Web viewer pro plugin          1.2.0.0
-Osimis Web viewer pro plugin (alpha)  6b11ef5
+Osimis Web viewer pro plugin (alpha)  84de39e
 ```
