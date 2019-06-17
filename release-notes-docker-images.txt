@@ -1,6 +1,6 @@
-          - upgraded WVB_ALPHA to 45f6d268 (fix Download as jpeg + fix synchronized browsing)
-          - upgraded WVP_ALPHA to 03093e6 (fix Download as jpeg + fix synchronized browsing)
           - upgraded Orthanc to 1.5.6+ (974e12006b7d)
+19.6.1 :  - upgraded WVB_ALPHA to 45f6d268 (fix Download as jpeg + fix synchronized browsing)
+          - upgraded WVP_ALPHA to 03093e6 (fix Download as jpeg + fix synchronized browsing)
 19.6.0 :  - upgraded WVB_ALPHA to c9110211 (Download as jpeg)
           - upgraded WVP_ALPHA to 84de39e (Download as jpeg)
 19.4.1 :  - upgraded WVP_ALPHA to d4b6c4b
