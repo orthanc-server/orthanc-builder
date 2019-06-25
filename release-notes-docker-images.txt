@@ -1,3 +1,4 @@
+          - upgraded WVB_ALPHA to 0bfaa40e (query args passed as HTTP headers to backend)
 19.6.1 :  - upgraded WVB_ALPHA to 45f6d268 (fix Download as jpeg + fix synchronized browsing)
           - upgraded WVP_ALPHA to 03093e6 (fix Download as jpeg + fix synchronized browsing)
 19.6.0 :  - upgraded WVB_ALPHA to c9110211 (Download as jpeg)
