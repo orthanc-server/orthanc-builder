@@ -1,4 +1,4 @@
-          - upgraded WVB_ALPHA to 0bfaa40e (query args passed as HTTP headers to backend)
+          - upgraded WVB_ALPHA to 3a7e0f38 (query args passed as HTTP headers to backend)
 19.6.2 :  - upgraded Orthanc to 1.5.7
           - upgraded DICOMweb to 1.0
           - added Google Cloud Platform plugin 1.0
