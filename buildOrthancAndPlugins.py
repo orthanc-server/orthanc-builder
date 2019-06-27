@@ -49,10 +49,6 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
-        'buildbotSource' : {
-            'win32' : '',
-            'win64' : 'http://buildbot.orthanc-server.com/artifacts/Binaries/Orthanc%201.5.7%20-%20VC2015-64%20Release/'
-        }
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
