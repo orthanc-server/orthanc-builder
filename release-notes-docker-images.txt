@@ -1,5 +1,5 @@
-          - upgraded WVP_ALPHA to 6838c52 (query args passed as HTTP headers to backend + language query arg)
-          - upgraded WVB_ALPHA to 3a7e0f38 (query args passed as HTTP headers to backend + language query arg)
+          - upgraded WVP_ALPHA to acf5875 (query args passed as HTTP headers to backend + language query arg)
+          - upgraded WVB_ALPHA to 4431bea9 (query args passed as HTTP headers to backend + language query arg)
           - added WVB_PRINT_ENABLED & WVP_PRINT_ENABLED settings
           - added WVB_DOWNLOAD_AS_JPEG_ENABLED & WVP_DOWNLOAD_AS_JPEG_ENABLED settings
 19.6.2 :  - upgraded Orthanc to 1.5.7
