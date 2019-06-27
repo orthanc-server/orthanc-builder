@@ -1,3 +1,5 @@
+19.6.4 :  - upgraded WVP_ALPHA to e3b6a91 (fix query args)
+          - upgraded WVB_ALPHA to 4419b1b8 (fix query args)
 19.6.3 :  - upgraded WVP_ALPHA to acf5875 (query args passed as HTTP headers to backend + language query arg)
           - upgraded WVB_ALPHA to 4431bea9 (query args passed as HTTP headers to backend + language query arg)
           - added WVB_PRINT_ENABLED & WVP_PRINT_ENABLED settings
