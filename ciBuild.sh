@@ -9,7 +9,7 @@ set -o errexit
 set -o xtrace
 
 # make sure we use the latest ubuntu image (which is the base of everything we build)
-docker pull ubuntu:16.04
+docker pull ubuntu:18.04
 
 # Retrieve git metadata
 gitLongTag=$(git describe --long --dirty=-dirty)

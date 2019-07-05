@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/etc/orthanc"]
@@ -9,10 +9,16 @@ ENV LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
-	apt-get --assume-yes install locales ca-certificates wget && \
+	apt-get --assume-yes install locales ca-certificates wget lsb-core tzdata && \
 	apt-get --assume-yes clean && \
 	rm --recursive --force /var/lib/apt/lists/* && \
 	locale-gen en_US en_US.UTF-8
+
+# after that, you must run 'dpkg-reconfigure tzdata' once to enter real time zone manualy.  Let's automate it !  TODO: check how we can allow users to set their time zone themselves
+RUN ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+RUN dpkg-reconfigure -f noninteractive tzdata
+
+RUN ln -s /lib64/ld-linux-x86-64.so.2 /lib/ld-linux-x86-64.so.2
 
 RUN mkdir --parents \
 	/etc/orthanc \
