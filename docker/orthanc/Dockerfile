@@ -9,16 +9,10 @@ ENV LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
-	apt-get --assume-yes install locales ca-certificates wget lsb-core tzdata && \
+	apt-get --assume-yes install locales ca-certificates wget tzdata && \
 	apt-get --assume-yes clean && \
 	rm --recursive --force /var/lib/apt/lists/* && \
 	locale-gen en_US en_US.UTF-8
-
-# after that, you must run 'dpkg-reconfigure tzdata' once to enter real time zone manualy.  Let's automate it !  TODO: check how we can allow users to set their time zone themselves
-RUN ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime
-RUN dpkg-reconfigure -f noninteractive tzdata
-
-RUN ln -s /lib64/ld-linux-x86-64.so.2 /lib/ld-linux-x86-64.so.2
 
 RUN mkdir --parents \
 	/etc/orthanc \
@@ -33,10 +27,10 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/lib
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/871b22f4/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/Orthanc --output-document /usr/bin/Orthanc --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/Orthanc --output-document /usr/bin/Orthanc --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
 
 # CHANGE_VERSION_DW
 RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.0/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
