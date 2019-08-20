@@ -5,11 +5,11 @@ secrets=(CONNECTION_STRING LICENSE_STRING)
 plugin=libOrthancMsSqlIndex
 function genconf {
 	if [[ ! $CONNECTION_STRING ]]; then
-		log "Missing CONNECTION_STRING setting, not generating configuration file"
+		err "Missing CONNECTION_STRING setting"
 		return 1
 	fi
 	if [[ ! $LICENSE_STRING ]]; then
-		log "Missing LICENSE_STRING setting, not generating configuration file"
+		err "Missing LICENSE_STRING setting"
 		return 2
 	fi
 	cat <<-EOF >"$1"

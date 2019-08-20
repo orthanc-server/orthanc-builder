@@ -367,6 +367,8 @@ else
 		log "Generating '$conf'..."
 		if genconf "$conf" && ((${#plugins[@]})); then
 			confavailable=true
+		else
+			warn "Not generating configuration file"
 		fi
 		if [[ $BUNDLE_DEBUG == true ]]; then
 			cat "$conf" >&2
