@@ -154,6 +154,10 @@ function warn {
 	log "WARNING: $*"
 }
 
+function err {
+	log "ERROR: $*"
+}
+
 
 # inarray: Utility function to check if an element is contained in an array.
 function inarray {
