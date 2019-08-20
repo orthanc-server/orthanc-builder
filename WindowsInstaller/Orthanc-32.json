@@ -60,7 +60,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        [ "GoogleCloud 1.0 - VC2015-32 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS" ]
+        [ "GoogleCloud 1.0 - VC2015-32 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment: # CHANGE_VERSION_GOOGLE" ]
       ],
       "NightlyArtifacts" : [
         [ "GoogleCloud mainline - VC2015-32 Debug/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment:" ]

@@ -187,18 +187,18 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancTransfers'],
     },
-    'transfers': {
+    'google': {
         'url': 'https://bitbucket.org/osimis/orthanc-gcp',
         'localName': 'orthanc-gcp.hg',
         'tool': 'hg',
         'platforms': [WINDOWS, LINUX],
         'build': {
             'type': 'cmake',
-            'cmakeTarget': 'OrthancTransfers',
-            #'cmakeTargetsOSX': ['OrthancTransfers'],  # No support for OS X
+            'cmakeTarget': 'OrthancGoogleCloudPlatform',
+            #'cmakeTargetsOSX': ['OrthancGoogleCloudPlatform'],  # No support for OS X
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
             'buildFromFolder': '.',
-            'buildOutputFolder': '../orthanc-transfers.hg-build',
+            'buildOutputFolder': '../orthanc-gcp.hg-build',
             # No unit test
         },
         'stableBranch': 'OrthancGoogleCloudPlatform-1.0',  # CHANGE_VERSION_GOOGLE
