@@ -27,7 +27,7 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/lib
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/2b16a5e6/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/Orthanc --output-document /usr/bin/Orthanc --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7db879b014ff/Orthanc --output-document /usr/bin/Orthanc --quiet
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
