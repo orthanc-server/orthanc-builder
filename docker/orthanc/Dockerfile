@@ -9,7 +9,7 @@ ENV LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
-	apt-get --assume-yes install locales ca-certificates wget && \
+	apt-get --assume-yes install locales ca-certificates wget tzdata && \
 	apt-get --assume-yes clean && \
 	rm --recursive --force /var/lib/apt/lists/* && \
 	locale-gen en_US en_US.UTF-8
