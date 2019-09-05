@@ -1,4 +1,5 @@
-next:     - upgraded WVP_ALPHA to 136f6137 (new pickableStudyIds & selectedStudyIds query args)
+next:     - base ubuntu:16.04 image has been updated.  The tzdata package is now installed explicitely.
+          - upgraded WVP_ALPHA to 136f6137 (new pickableStudyIds & selectedStudyIds query args)
           - upgraded WVB_ALPHA to 2b16a5e6 (new pickableStudyIds & selectedStudyIds query args)
 19.7.1 :  - upgraded WVP_ALPHA to f63878c (uuid in annotations)
           - upgraded WVB_ALPHA to 871b22f4 (uuid in annotations)
