@@ -45,14 +45,10 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.5.6', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.5.7', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
-        'buildbotSource' : {
-            'win32' : '',
-            'win64' : 'http://buildbot.orthanc-server.com/artifacts/Binaries/Orthanc%201.5.6%20-%20VC2015-64%20Release/'
-        }
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
@@ -97,7 +93,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancDicomWeb-0.6',  # CHANGE_VERSION_DW
+        'stableBranch': 'OrthancDicomWeb-1.0',  # CHANGE_VERSION_DW
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -190,6 +186,24 @@ repositories = {
         'stableBranch': 'OrthancTransfers-1.0',  # CHANGE_VERSION_DW
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancTransfers'],
+    },
+    'google': {
+        'url': 'https://bitbucket.org/osimis/orthanc-gcp',
+        'localName': 'orthanc-gcp.hg',
+        'tool': 'hg',
+        'platforms': [WINDOWS, LINUX],
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancGoogleCloudPlatform',
+            #'cmakeTargetsOSX': ['OrthancGoogleCloudPlatform'],  # No support for OS X
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-gcp.hg-build',
+            # No unit test
+        },
+        'stableBranch': 'OrthancGoogleCloudPlatform-1.0',  # CHANGE_VERSION_GOOGLE
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancGoogleCloudPlatform'],
     }
 }
 

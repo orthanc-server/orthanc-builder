@@ -1,14 +1,14 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "19.3.3", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "19.6.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 32,
-  "CIS" : "http://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
+  "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
     {
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.5.6 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.7 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/Orthanc.exe", "", "Comment:" ]
@@ -55,13 +55,24 @@
         [ "transfers.json", "Configuration" ]
       ]
     },
+    {
+      "Description" : "Google Cloud Platform (not compatible with Windows XP SP2)",
+      "Mandatory" : false,
+      "Category" : "osimis",
+      "Artifacts" : [
+        [ "GoogleCloud 1.0 - VC2015-32 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment: # CHANGE_VERSION_GOOGLE" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "GoogleCloud mainline - VC2015-32 Debug/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment:" ]
+      ]
+    },    
 
     {
       "Description" : "Modality worklists",
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.5.6 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.7 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
@@ -75,7 +86,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.5.6 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.7 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment:" ]
@@ -100,7 +111,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 0.6 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 1.0 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "NightlyArtifacts" : [
         [ "DicomWeb mainline - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
@@ -138,7 +149,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.5.6 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.7 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]

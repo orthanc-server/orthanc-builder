@@ -1,4 +1,16 @@
-          - upgraded Orthanc to 1.5.6+ (974e12006b7d)
+next:     - upgraded WVP_ALPHA to 136f6137 (new pickableStudyIds & selectedStudyIds query args)
+          - upgraded WVB_ALPHA to 2b16a5e6 (new pickableStudyIds & selectedStudyIds query args)
+19.7.1 :  - upgraded WVP_ALPHA to f63878c (uuid in annotations)
+          - upgraded WVB_ALPHA to 871b22f4 (uuid in annotations)
+19.6.4 :  - upgraded WVP_ALPHA to e3b6a91 (fix query args)
+          - upgraded WVB_ALPHA to 4419b1b8 (fix query args)
+19.6.3 :  - upgraded WVP_ALPHA to acf5875 (query args passed as HTTP headers to backend + language query arg)
+          - upgraded WVB_ALPHA to 4431bea9 (query args passed as HTTP headers to backend + language query arg)
+          - added WVB_PRINT_ENABLED & WVP_PRINT_ENABLED settings
+          - added WVB_DOWNLOAD_AS_JPEG_ENABLED & WVP_DOWNLOAD_AS_JPEG_ENABLED settings
+19.6.2 :  - upgraded Orthanc to 1.5.7
+          - upgraded DICOMweb to 1.0
+          - added Google Cloud Platform plugin 1.0
 19.6.1 :  - upgraded WVB_ALPHA to 45f6d268 (fix Download as jpeg + fix synchronized browsing)
           - upgraded WVP_ALPHA to 03093e6 (fix Download as jpeg + fix synchronized browsing)
 19.6.0 :  - upgraded WVB_ALPHA to c9110211 (Download as jpeg)

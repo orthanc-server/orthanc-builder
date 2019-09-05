@@ -15,6 +15,7 @@ settings=(
 	OPEN_ALL_PATIENT_STUDIES
 	SERIES_TO_IGNORE
 	DOWNLOAD_AS_JPEG_ENABLED
+	PRINT_ENABLED
 )
 secrets=(LICENSE_STRING)
 plugin=libOsimisWebViewerPro
@@ -37,6 +38,7 @@ function genconf {
 
 			"StudyDownloadEnabled": ${STUDY_DOWNLOAD_ENABLED:-true},
 			"DownloadAsJpegEnabled": ${DOWNLOAD_AS_JPEG_ENABLED:-false},
+			"PrintEnabled": ${PRINT_ENABLED:-true},
 			"VideoDisplayEnabled": ${VIDEO_ENABLED:-true},
 			"AnnotationStorageEnabled": ${ANNOTATIONS_STORAGE_ENABLED:-false},
 			"KeyImageCaptureEnabled": ${KEY_IMAGE_CAPTURE_ENABLED:-false},

@@ -1,9 +1,10 @@
+ARG BASE_ORTHANC_IMAGE_TAG=current
+
 # CHANGE_VERSION_WSI_EXPERIMENTAL
 FROM osimis/orthanc-wsi:experimental as wsix
 
 
-
-FROM docker.io/osimis/orthanc:current
+FROM docker.io/osimis/orthanc:${BASE_ORTHANC_IMAGE_TAG}
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
@@ -30,7 +31,7 @@ COPY orthanc-pro/setup.d/* /usr/lib/orthanc/setup.d/
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/releases/1.2.0.0/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerPro.so --quiet
 
 # CHANGE_VERSION_WVP_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/commits/03093e6/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/commits/136f6137/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so --quiet
 
 COPY --from=wsix /usr/share/orthanc/plugins/libOrthancWSI.so /tmp
 RUN mv /tmp/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/libOrthancWSIx.so
