@@ -1,4 +1,5 @@
-next:     - added AC_AUTHENTICATION_ENABLED setting (default = false)
+19.9.1 :  - added AC_AUTHENTICATION_ENABLED setting (default = false).  Warning, in future releases (featuring Orthanc 1.5.8,
+            this setting will be set to true by default)
           - base ubuntu:16.04 image has been updated.  The tzdata package is now installed explicitely.
           - upgraded WVP_ALPHA to 136f6137 (new pickableStudyIds & selectedStudyIds query args)
           - upgraded WVB_ALPHA to 2b16a5e6 (new pickableStudyIds & selectedStudyIds query args)
