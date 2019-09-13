@@ -1,4 +1,6 @@
 
+19.9.3 :  - added WVB_REFERENCE_LINES_ENABLED, WVB_CROSS_HAIR_ENABLED, WVB_SYNCHRONIZED_BROWSING_ENABLED settings
+          - added WVP_REFERENCE_LINES_ENABLED, WVP_CROSS_HAIR_ENABLED, WVP_SYNCHRONIZED_BROWSING_ENABLED settings
 19.9.2 :  - upgraded WVP_ALPHA to adf96ee7 (3 new settings in config file - this is also a 1.3.0.0 release candidate)
           - upgraded WVB_ALPHA to b80cd32a (3 new settings in config file - this is also a 1.3.0 release candidate)
 19.9.1 :  - added AC_AUTHENTICATION_ENABLED setting (default = false).  Warning, in future releases (featuring Orthanc 1.5.8,
