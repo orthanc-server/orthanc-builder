@@ -1,3 +1,8 @@
+          - BREAKING CHANGE: added EXECUTE_LUA_ENABLED settings (default = false).
+            This options, when set to false, disables the /tools/execute-script Rest API route.
+            If you decide to set EXECUTE_LUA_ENABLED to true, make sure that you know what you're
+            doing and that this API route is protected from the outside world or secured by another mean.
+            Anyone could execute any code on your machine from this route !
           - BREAKING CHANGE: added AC_AUTHENTICATION_ENABLED setting (default = true).  
             It means that you'll need a login/pwd to access orthanc !  These login/pwd shall be defined 
             in AC_REGISTERED_USERS.  If no login/pwd are defined, one default password will be generated
