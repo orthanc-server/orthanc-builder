@@ -1,3 +1,5 @@
+19.10.1 : - upgraded WVB_ALPHA to 7aff3d60 (PatientBirthDate in overlay + small fixes)
+          - upgraded WVP_ALPHA to aa6dbe8f (PatientBirthDate in overlay + small fixes)
 19.9.4  : - upgraded WVB to 1.3.0
           - upgraded WVB_ALPHA to 1.3.0
           - upgraded WVP to 1.3.0.0
