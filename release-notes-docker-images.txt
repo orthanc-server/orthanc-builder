@@ -5,10 +5,12 @@
             Anyone could execute any code on your machine from this route !
           - BREAKING CHANGE: added AC_AUTHENTICATION_ENABLED setting (default = true).  
             It means that you'll need a login/pwd to access orthanc !  These login/pwd shall be defined 
-            in AC_REGISTERED_USERS.  If no login/pwd are defined, one default password will be generated
-            at each startup; check the container logs to retrieve the password.
+            in AC_REGISTERED_USERS.  If no login/pwd are defined, Orthanc will generate a default user (orthanc:orthanc)
+            and will display a warning in the Orthanc Explorer stating that your setup is insecure.
             If you decide to set AC_AUTHENTICATION_ENABLED to false, make sure that you know what you're
             doing and that your Orthanc is either not accessible from the outside world or secured by another mean.
+            Note that if AC_AUTHENTICATION_ENABLED is false, Orthanc Explorer will display a warning stating that your
+            setup is insecure.
           - upgraded Orthanc to 1.5.7+ (7db879b014ff)
           - base ubuntu:16.04 image has been updated.  The tzdata package is now installed explicitely.
           - upgraded WVP_ALPHA to 136f6137 (new pickableStudyIds & selectedStudyIds query args)
