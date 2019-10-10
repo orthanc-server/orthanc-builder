@@ -11,7 +11,8 @@ function genconf {
 		"HttpProxy": "$CL_PROXY",
 		"HttpPort": ${PORT:-8042},
 		"KeepAlive": ${KEEP_ALIVE:-true},
-		"TcpNoDelay": ${TCP_NODELAY:-true}
+		"TcpNoDelay": ${TCP_NODELAY:-true},
+		"HttpRequestTimeout": ${REQUEST_TIMEOUT:-30}
 	}
 	EOF
 }
