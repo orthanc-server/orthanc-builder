@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "19.9.4", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "19.10.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 32,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.8 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/Orthanc.exe", "", "Comment:" ]
@@ -72,7 +72,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.8 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
@@ -86,7 +86,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.8 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment:" ]
@@ -149,7 +149,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.5.8 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]

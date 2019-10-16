@@ -27,10 +27,10 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.0/lib
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/7aff3d60/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/Orthanc --output-document /usr/bin/Orthanc --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.7/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/Orthanc --output-document /usr/bin/Orthanc --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
 
 # CHANGE_VERSION_DW
 RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.0/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
