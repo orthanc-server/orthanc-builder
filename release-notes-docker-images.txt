@@ -1,4 +1,17 @@
 19.10.2 : - upgraded Orthanc to 1.5.8
+          - BREAKING CHANGE: added EXECUTE_LUA_ENABLED settings (default = false).
+            This options, when set to false, disables the /tools/execute-script Rest API route.
+            If you decide to set EXECUTE_LUA_ENABLED to true, make sure that you know what you're
+            doing and that this API route is protected from the outside world or secured by another mean.
+            Anyone could execute any code on your machine from this route !
+          - BREAKING CHANGE: added AC_AUTHENTICATION_ENABLED setting (default = true).  
+            It means that you'll need a login/pwd to access orthanc !  These login/pwd shall be defined 
+            in AC_REGISTERED_USERS.  If no login/pwd are defined, Orthanc will generate a default user (orthanc:orthanc)
+            and will display a warning in the Orthanc Explorer stating that your setup is insecure.
+            If you decide to set AC_AUTHENTICATION_ENABLED to false, make sure that you know what you're
+            doing and that your Orthanc is either not accessible from the outside world or secured by another mean.
+            Note that if AC_AUTHENTICATION_ENABLED is false, Orthanc Explorer will display a warning stating that your
+            setup is insecure.
 19.10.1 : - upgraded WVB_ALPHA to 7aff3d60 (PatientBirthDate in overlay + small fixes)
           - upgraded WVP_ALPHA to aa6dbe8f (PatientBirthDate in overlay + small fixes)
 19.9.4  : - upgraded WVB to 1.3.0
