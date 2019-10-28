@@ -30,7 +30,7 @@ fi
 
 function genconf {
 	if [[ ! $LICENSE_STRING ]]; then
-		log "Missing LICENSE_STRING setting, not generating configuration file"
+		err "Missing LICENSE_STRING setting"
 		return 1
 	fi
 	cat <<-EOF >"$1"

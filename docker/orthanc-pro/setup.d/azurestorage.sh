@@ -5,19 +5,19 @@ secrets=(ACC_KEY LICENSE_STRING)
 plugin=libOrthancBlobStorage
 function genconf {
 	if [[ ! $ACC_NAME ]]; then
-		log "Missing ACC_NAME setting, not generating configuration file"
+		err "Missing ACC_NAME setting"
 		return 1
 	fi
 	if [[ ! $ACC_KEY ]]; then
-		log "Missing ACC_KEY setting, not generating configuration file"
+		err "Missing ACC_KEY setting"
 		return 2
 	fi
 	if [[ ! $LICENSE_STRING ]]; then
-		log "Missing LICENSE_STRING setting, not generating configuration file"
+		err "Missing LICENSE_STRING setting"
 		return 3
 	fi
 	if [[ ! $CONTAINER ]]; then
-		log "Missing CONTAINER setting, not generating configuration file"
+		err "Missing CONTAINER setting"
 		return 4
 	fi
 	cat <<-EOF >"$1"
