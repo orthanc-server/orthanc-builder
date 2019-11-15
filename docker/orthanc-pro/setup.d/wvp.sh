@@ -8,6 +8,7 @@ settings=(
 	CROSS_HAIR_ENABLED
 	DEFAULT_SELECTED_TOOL
 	DOWNLOAD_AS_JPEG_ENABLED
+	INSTANCE_INFO_CACHE_ENABLED
 	KEY_IMAGE_CAPTURE_ENABLED
 	KEYBOARD_SHORTCUTS_ENABLED
 	LANGUAGE
@@ -45,6 +46,7 @@ function genconf {
 			"DefaultLanguage": "${LANGUAGE:-en}",
 			"DefaultSelectedTool": "${DEFAULT_SELECTED_TOOL:-zoom}",
 			"DownloadAsJpegEnabled": ${DOWNLOAD_AS_JPEG_ENABLED:-false},
+			"InstanceInfoCacheEnabled": ${INSTANCE_INFO_CACHE_ENABLED:-false},
 			"KeyImageCaptureEnabled": ${KEY_IMAGE_CAPTURE_ENABLED:-false},
 			"KeyboardShortcutsEnabled": ${KEYBOARD_SHORTCUTS_ENABLED:-true},
 			"OpenAllPatientStudies": ${OPEN_ALL_PATIENT_STUDIES:-true},
