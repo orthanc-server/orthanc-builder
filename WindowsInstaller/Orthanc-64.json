@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "19.10.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "20.1.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -20,7 +20,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win64/viewer/1.3.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
+        [ "http://orthanc.osimis.io/win64/viewer/1.3.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
       ],
       "NightlyDownloads" : [
         [ "http://orthanc.osimis.io/win64/viewer/dev/OsimisWebViewer.dll", "Plugins", "Comment:" ]

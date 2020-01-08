@@ -21,10 +21,10 @@ RUN mkdir --parents \
   /usr/share/orthanc/plugins-disabled
 
 # CHANGE_VERSION_WVB
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/7aff3d60/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/Orthanc --output-document /usr/bin/Orthanc --quiet
