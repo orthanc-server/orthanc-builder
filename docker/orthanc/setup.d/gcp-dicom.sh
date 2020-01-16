@@ -49,7 +49,7 @@ function genconf {
 		err "Cannot set both ACCOUNTS and single-account mode settings"
 		return 1
 	fi
-	if (($(auth_methods_used) > 1)); then
+	if ((auth_methods_used > 1)); then
 		err "Must use only one authentication method"
 		return 2
 	fi
