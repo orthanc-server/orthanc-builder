@@ -260,6 +260,9 @@ with open(os.path.join(TARGET, 'Installer.innosetup'), 'w') as g:
 ## Run InnoSetup
 ##
 
+# WARNING: Inno Setup 6 is *not* compatible with Windows XP and
+# shouldn't be used
+
 innoSetupPath = 'c:/Program Files (x86)/Inno Setup 5/ISCC.exe'
 if args.from_docker:
     innoSetupPath = '/innosetup/ISCC.exe'

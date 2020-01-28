@@ -17,6 +17,7 @@
 
     {
       "Description" : "Osimis Web viewer (AGPL license)",
+      "Name" : "osimis_web_viewer",
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
@@ -31,6 +32,7 @@
     },
     {
       "Description" : "MySQL backend (AGPL license)",
+      "Name" : "mysql",
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
@@ -57,6 +59,7 @@
     },
     {
       "Description" : "Google Cloud Platform",
+      "Name" : "gcp",
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
