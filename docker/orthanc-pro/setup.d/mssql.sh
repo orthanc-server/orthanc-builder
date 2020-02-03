@@ -1,6 +1,6 @@
 name=MSSQL
 conf=mssql
-settings=(CONNECTION_STRING LICENSE_STRING LOCK)
+settings=(CONNECTION_STRING LICENSE_STRING LOCK MAXIMUM_CONNECTION_RETRIES CONNECTION_RETRY_INTERVAL)
 secrets=(CONNECTION_STRING LICENSE_STRING)
 plugin=libOrthancMsSqlIndex
 function genconf {
@@ -19,7 +19,9 @@ function genconf {
 			"EnableStorage": false,
 			"ConnectionString": "$CONNECTION_STRING",
 			"LicenseString": "$LICENSE_STRING",
-			"Lock": ${LOCK:-false}
+			"Lock": ${LOCK:-false},
+			"MaximumConnectionRetries": ${MAXIMUM_CONNECTION_RETRIES:-10},
+			"ConnectionRetryInterval": ${CONNECTION_RETRY_INTERVAL:-5}
 		}
 	}
 	EOF

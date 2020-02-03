@@ -38,7 +38,7 @@ RUN mv /tmp/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/libOrthancWSIx.
 
 
 #CHANGE_VERSION_MSSQL
-RUN wget orthanc.osimis.io/docker-so/mssql/1.0.0/libOrthancMsSqlIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so --quiet
+RUN wget orthanc.osimis.io/docker-so/mssql/1.1.0/libOrthancMsSqlIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so --quiet
 
 #CHANGE_VERSION_BLOB_STORAGE
 RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.2/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
