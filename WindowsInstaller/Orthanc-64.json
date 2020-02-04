@@ -99,6 +99,17 @@
       ]
     },
     {
+      "Description" : "Connectivity checks",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Orthanc 1.5.8 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "Orthanc mainline - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment:" ]
+      ]
+    },
+    {
       "Description" : "Web Viewer of medical images (AGPL license)",
       "Mandatory" : false,
       "Category" : "plugins",
