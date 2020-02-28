@@ -1,3 +1,5 @@
+next    : - Added SCHED_MAX_QUEUED_JOBS and SCHED_MAX_CONCURRENT_JOBS.
+        : - Deprecated SCHED_MAX_JOBS.
 20.2.0  : - upgraded MSSQL to 1.1.0, added MSSQL_MAXIMUM_CONNECTION_RETRIES & MSSQL_CONNECTION_RETRY_INTERVAL
 20.1.0  : - Introduced gcp-dicom setup procedure
           - upgraded WVB to 1.3.1
