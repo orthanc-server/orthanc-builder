@@ -125,10 +125,10 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 1.0 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 1.1 - VC2015-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "NightlyArtifacts" : [
-        [ "DicomWeb mainline - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
+        [ "DicomWeb mainline - VC2015-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
       ],
       "Resources" : [
         [ "dicomweb.json", "Configuration" ]

@@ -33,7 +33,7 @@ RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/libModalityWorklist
 RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.5.8/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
 
 # CHANGE_VERSION_DW
-RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.0/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.1/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
 
 # CHANGE_VERSION_PG
 RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.2/libOrthancPostgreSQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLIndex.so --quiet
