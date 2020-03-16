@@ -33,6 +33,11 @@
   "LuaScripts" : [
   ],
 
+  // String representation of a JSON object/array containing the
+  // options to use in the LUA scripts. Typically used to provide
+  // dynamic values from the environment
+  "LuaOptions" : {},
+
   // List of paths to the plugins that are to be loaded into this
   // instance of Orthanc (e.g. "./libPluginTest.so" for Linux, or
   // "./PluginTest.dll" for Windows). These paths can refer to
