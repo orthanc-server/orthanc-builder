@@ -1,11 +1,12 @@
 name=LUA
 conf=lua
-settings=(SCRIPTS)
+settings=(SCRIPTS OPTIONS)
 default=false
 function genconf {
 	cat <<-EOF >"$1"
 	{
-		"LuaScripts": ${SCRIPTS:-"[]"}
+		"LuaScripts": ${SCRIPTS:-"[]"},
+		"LuaOptions" : ${OPTIONS:-"{}"}
 	}
 	EOF
 }
