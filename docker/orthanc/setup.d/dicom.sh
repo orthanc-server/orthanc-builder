@@ -31,7 +31,7 @@ function genconf {
 		"DicomAlwaysAllowStore": ${DICOM_ALWAYS_ALLOW_STORE_ENABLED:-true},
 		"UnknownSopClassAccepted": ${UNKNOWN_SOP_CLASS_ACCEPTED:-false},
 		"SynchronousCMove": ${SYNCHRONOUS_CMOVE:-true},
-		"QueryRetrieveSize": ${QUERY_RETRIEVE_SIZE:-10},
+		"QueryRetrieveSize": ${QUERY_RETRIEVE_SIZE:-100},
 		"Dictionary": ${DICTIONARY:-"{}"}
 	}
 	EOF
