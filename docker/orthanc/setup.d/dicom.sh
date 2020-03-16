@@ -13,6 +13,8 @@ settings=(
 	ALWAYS_ALLOW_STORE_ENABLED
 	UNKNOWN_SOP_CLASS_ACCEPTED
 	SYNCHRONOUS_CMOVE
+	QUERY_RETRIEVE_SIZE
+	DICTIONARY
 )
 function genconf {
 	cat <<-EOF >"$1"
@@ -28,7 +30,9 @@ function genconf {
 		"DicomAlwaysAllowEcho": ${DICOM_ALWAYS_ALLOW_ECHO_ENABLED:-true},
 		"DicomAlwaysAllowStore": ${DICOM_ALWAYS_ALLOW_STORE_ENABLED:-true},
 		"UnknownSopClassAccepted": ${UNKNOWN_SOP_CLASS_ACCEPTED:-false},
-		"SynchronousCMove": ${SYNCHRONOUS_CMOVE:-true}
+		"SynchronousCMove": ${SYNCHRONOUS_CMOVE:-true},
+		"QueryRetrieveSize": ${QUERY_RETRIEVE_SIZE:-10},
+		"Dictionary": ${DICTIONARY:-"{}"}
 	}
 	EOF
 }
