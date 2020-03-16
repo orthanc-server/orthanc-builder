@@ -285,5 +285,17 @@
   // multiplicity (0 means arbitrary multiplicity, defaults to 1).
   "Dictionary" : {
     // "0014,1020" : [ "DA", "ValidationExpiryDate", 1, 1 ]
-  }
+  },
+
+  // Performance setting to specify how Orthanc accesses the storage
+  // area during C-FIND. Three modes are available: (1) "Always"
+  // allows Orthanc to read the storage area as soon as it needs an
+  // information that is not present in its database (slowest mode),
+  // (2) "Never" prevents Orthanc from accessing the storage area, and
+  // makes it uses exclusively its database (fastest mode), and (3)
+  // "Answers" allows Orthanc to read the storage area to generate its
+  // answers, but not to filter the DICOM resources (balance between
+  // the two modes). By default, the mode is "Always", which
+  // corresponds to the behavior of Orthanc <= 1.5.0.
+  "StorageAccessOnFind" : "Always"
 }

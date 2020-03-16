@@ -9,6 +9,7 @@ next    : - upgraded DICOMweb to 1.1
           - add TRANSFERS_BUCKET_SIZE env var
           - add TRANSFERS_CACHE_SIZE env var
           - add TRANSFERS_MAX_PUSH_TRANSACTIONS env var
+          - add STORAGE_ACCESS_ON_FIND en var
           - add DICOM_QUERY_RETRIEVE_SIZE env var
           - add DICOM_DICTIONARY env var
 20.2.0  : - upgraded MSSQL to 1.1.0, added MSSQL_MAXIMUM_CONNECTION_RETRIES & MSSQL_CONNECTION_RETRY_INTERVAL
