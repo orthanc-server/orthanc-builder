@@ -5,6 +5,7 @@ next    : - upgraded DICOMweb to 1.1
             in the DW_SERVERS configuration option of the DICOMweb module, if contacting an
             Orthanc server that is equipped with release <= 1.0 of the DICOMweb plugin.
             https://book.orthanc-server.com/plugins/dicomweb.html#client-related-options
+          - add LUA_OPTIONS env var
           - add TRANSFERS_BUCKET_SIZE env var
           - add TRANSFERS_CACHE_SIZE env var
           - add TRANSFERS_MAX_PUSH_TRANSACTIONS env var
