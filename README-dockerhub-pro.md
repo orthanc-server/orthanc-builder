@@ -13,7 +13,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.2.0
+#### 20.3.0
 ```
 
 component                             version
