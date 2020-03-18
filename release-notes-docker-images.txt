@@ -1,3 +1,4 @@
+20.3.1  : - upgraded Orthanc to 1.6.0
 20.3.0  : - upgraded DICOMweb to 1.1
           - Added SCHED_MAX_QUEUED_JOBS and SCHED_MAX_CONCURRENT_JOBS.
           - Deprecated SCHED_MAX_JOBS.
