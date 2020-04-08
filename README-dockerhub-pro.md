@@ -1,8 +1,8 @@
 # Orthanc for Docker
 Docker image with [Orthanc](https://www.orthanc-server.com/) and its official plugins (including commercial plugins). Orthanc is a lightweight, RESTful Vendor Neutral Archive for medical imaging.
 
-Note: the Orthanc version included in this image is exactly the same as the Orthanc version included in the osimis/orthanc and jodogne/orthanc images.  
-This image contains the Osimis commercial plugins requiring a license.  If you don't need a commercial plugin, you should use the osimis/orthanc image.
+Note: the Orthanc version included in this image is exactly the same as the Orthanc version included in the `osimis/orthanc` and `jodogne/orthanc` images.  
+This image contains the Osimis commercial plugins requiring a license.  If you don't need a commercial plugin, you should use the `osimis/orthanc` image.
 
 Full documentation is available [here](https://osimis.atlassian.net/wiki/spaces/OKB/pages/26738689/How+to+use+osimis+orthanc+Docker+images).
 
