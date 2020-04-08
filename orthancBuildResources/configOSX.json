@@ -33,6 +33,11 @@
   "LuaScripts" : [
   ],
 
+  // String representation of a JSON object/array containing the
+  // options to use in the LUA scripts. Typically used to provide
+  // dynamic values from the environment
+  "LuaOptions" : {},
+
   // List of paths to the plugins that are to be loaded into this
   // instance of Orthanc (e.g. "./libPluginTest.so" for Linux, or
   // "./PluginTest.dll" for Windows). These paths can refer to
@@ -240,6 +245,15 @@
   // some job finishes.
   "LimitJobs" : 10,
 
+  // Maximum number of completed jobs that are kept in memory. A
+  // processing job is considered as complete once it is tagged as
+  // "Success" or "Failure". Since Orthanc 1.5.0, a value of "0"
+  // indicates to keep no job in memory (i.e. jobs are removed from
+  // the history as soon as they are completed), which prevents the
+  // use of some features of Orthanc (typically, synchronous mode in
+  // REST API) and should be avoided for non-developers.
+  "JobsHistorySize" : 10,
+
   // If this option is set to "false", Orthanc will not log the
   // resources that are exported to other DICOM modalities of Orthanc
   // peers in the URI "/exports". This is useful to prevent the index
@@ -280,5 +294,17 @@
   // multiplicity (0 means arbitrary multiplicity, defaults to 1).
   "Dictionary" : {
     // "0014,1020" : [ "DA", "ValidationExpiryDate", 1, 1 ]
-  }
+  },
+
+  // Performance setting to specify how Orthanc accesses the storage
+  // area during C-FIND. Three modes are available: (1) "Always"
+  // allows Orthanc to read the storage area as soon as it needs an
+  // information that is not present in its database (slowest mode),
+  // (2) "Never" prevents Orthanc from accessing the storage area, and
+  // makes it uses exclusively its database (fastest mode), and (3)
+  // "Answers" allows Orthanc to read the storage area to generate its
+  // answers, but not to filter the DICOM resources (balance between
+  // the two modes). By default, the mode is "Always", which
+  // corresponds to the behavior of Orthanc <= 1.5.0.
+  "StorageAccessOnFind" : "Always"
 }

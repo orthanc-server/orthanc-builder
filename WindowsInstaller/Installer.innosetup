@@ -129,6 +129,7 @@ begin
         // https://stackoverflow.com/a/10284086
         if ((pos('MySQL', WizardForm.ComponentsList.ItemCaption[i]) <> 0) or
             (pos('Osimis Web viewer', WizardForm.ComponentsList.ItemCaption[i]) <> 0) or
+            (pos('DICOMweb', WizardForm.ComponentsList.ItemCaption[i]) <> 0) or
             (pos('Google', WizardForm.ComponentsList.ItemCaption[i]) <> 0)) then begin
           WizardForm.ComponentsList.Checked[i] := False;
         end;
@@ -140,7 +141,7 @@ begin
         //WizardForm.ComponentsList.Checked[Index] := False;
       //end;
         
-      MsgBox('You are running a pre-Vista version of Windows. Some incompatible plugins have been automatically unselected (MySQL, Google Cloud Platform, Osimis Web viewer).', mbInformation, MB_OK);
+      MsgBox('You are running a pre-Vista version of Windows. Some incompatible plugins have been automatically unselected (MySQL, Google Cloud Platform, Osimis Web viewer, DICOMweb).', mbInformation, MB_OK);
     end;
   end;
 end;
