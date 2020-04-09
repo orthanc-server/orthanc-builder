@@ -21,7 +21,7 @@ component                             version
 ---------------------------------------------
 Orthanc server                        1.6.0
 Osimis Web viewer plugin              1.3.1
-Osimis Web viewer plugin (alpha)      1.3.1
+Osimis Web viewer plugin (alpha)      35889ad3
 Modality worklists plugin             1.6.0
 Serve folders plugin                  1.6.0
 Orthanc Web viewer plugin             2.5
