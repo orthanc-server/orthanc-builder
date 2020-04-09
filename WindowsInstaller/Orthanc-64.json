@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "19.6.2", "Comment": "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "20.3.1", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.6.0 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/Orthanc.exe", "", "Comment:" ]
@@ -17,10 +17,11 @@
 
     {
       "Description" : "Osimis Web viewer (AGPL license)",
+      "Name" : "osimis_web_viewer",
       "Mandatory" : false,
       "Category" : "osimis",
       "Downloads" : [
-        [ "http://orthanc.osimis.io/win64/viewer/1.2.0/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
+        [ "http://orthanc.osimis.io/win64/viewer/1.3.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
       ],
       "NightlyDownloads" : [
         [ "http://orthanc.osimis.io/win64/viewer/dev/OsimisWebViewer.dll", "Plugins", "Comment:" ]
@@ -31,6 +32,7 @@
     },
     {
       "Description" : "MySQL backend (AGPL license)",
+      "Name" : "mysql",
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
@@ -57,10 +59,11 @@
     },
     {
       "Description" : "Google Cloud Platform",
+      "Name" : "gcp",
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        [ "GoogleCloud 1.0 - VC2015-64 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS" ]
+        [ "GoogleCloud 1.0 - VC2015-64 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment: # CHANGE_VERSION_GOOGLE" ]
       ],
       "NightlyArtifacts" : [
         [ "GoogleCloud mainline - VC2015-64 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment:" ]
@@ -72,7 +75,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.6.0 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
@@ -86,13 +89,24 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.6.0 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment:" ]
       ],
       "Resources" : [
         [ "serve-folders.json", "Configuration" ]
+      ]
+    },
+    {
+      "Description" : "Connectivity checks",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Orthanc 1.6.0 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "Orthanc mainline - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment:" ]
       ]
     },
     {
@@ -111,7 +125,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 1.0 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 1.1 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "NightlyArtifacts" : [
         [ "DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
@@ -149,7 +163,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.5.7 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.6.0 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]

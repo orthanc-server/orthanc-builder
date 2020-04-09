@@ -1,15 +1,15 @@
 name=MSSQL
 conf=mssql
-settings=(CONNECTION_STRING LICENSE_STRING LOCK)
+settings=(CONNECTION_STRING LICENSE_STRING LOCK MAXIMUM_CONNECTION_RETRIES CONNECTION_RETRY_INTERVAL)
 secrets=(CONNECTION_STRING LICENSE_STRING)
 plugin=libOrthancMsSqlIndex
 function genconf {
 	if [[ ! $CONNECTION_STRING ]]; then
-		log "Missing CONNECTION_STRING setting, not generating configuration file"
+		err "Missing CONNECTION_STRING setting"
 		return 1
 	fi
 	if [[ ! $LICENSE_STRING ]]; then
-		log "Missing LICENSE_STRING setting, not generating configuration file"
+		err "Missing LICENSE_STRING setting"
 		return 2
 	fi
 	cat <<-EOF >"$1"
@@ -19,7 +19,9 @@ function genconf {
 			"EnableStorage": false,
 			"ConnectionString": "$CONNECTION_STRING",
 			"LicenseString": "$LICENSE_STRING",
-			"Lock": ${LOCK:-false}
+			"Lock": ${LOCK:-false},
+			"MaximumConnectionRetries": ${MAXIMUM_CONNECTION_RETRIES:-10},
+			"ConnectionRetryInterval": ${CONNECTION_RETRY_INTERVAL:-5}
 		}
 	}
 	EOF

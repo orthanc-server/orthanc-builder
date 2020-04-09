@@ -45,14 +45,14 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.5.7', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.6.0', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
     },
     'viewer': {
         'platforms': ALL_PLATFORMS,
-        'stableBranch': '1.2.0', # CHANGE_VERSION_WVB
+        'stableBranch': '1.3.1', # CHANGE_VERSION_WVB
         'nightlyBranch': 'dev',
         'outputLibs': ['OsimisWebViewer'],
     },
@@ -93,7 +93,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancDicomWeb-1.0',  # CHANGE_VERSION_DW
+        'stableBranch': 'OrthancDicomWeb-1.1',  # CHANGE_VERSION_DW
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -187,18 +187,18 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancTransfers'],
     },
-    'transfers': {
+    'google': {
         'url': 'https://bitbucket.org/osimis/orthanc-gcp',
         'localName': 'orthanc-gcp.hg',
         'tool': 'hg',
         'platforms': [WINDOWS, LINUX],
         'build': {
             'type': 'cmake',
-            'cmakeTarget': 'OrthancTransfers',
-            #'cmakeTargetsOSX': ['OrthancTransfers'],  # No support for OS X
+            'cmakeTarget': 'OrthancGoogleCloudPlatform',
+            #'cmakeTargetsOSX': ['OrthancGoogleCloudPlatform'],  # No support for OS X
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
             'buildFromFolder': '.',
-            'buildOutputFolder': '../orthanc-transfers.hg-build',
+            'buildOutputFolder': '../orthanc-gcp.hg-build',
             # No unit test
         },
         'stableBranch': 'OrthancGoogleCloudPlatform-1.0',  # CHANGE_VERSION_GOOGLE

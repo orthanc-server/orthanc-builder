@@ -106,6 +106,48 @@ end;
 
 
 // =============================================================
+// == Disable plugins incompatible with Windows XP
+// == (for releases greater than 20.1.0)
+// == WARNING: "WizardSelectComponents" is only available in Inno Setup >= 6.0
+// =============================================================
+
+
+procedure CurPageChanged(CurPageID: Integer);
+var
+  windowsVersion: TWindowsVersion;
+  i: Integer;
+
+begin
+  if (CurPageId = wpSelectComponents) then begin
+    GetWindowsVersionEx(windowsVersion);
+    if (windowsVersion.Major = 5) then begin
+      for i := 0 to WizardForm.ComponentsList.Items.Count - 1 do
+      begin
+        // "There is no simple way to get the component name (it is stored
+        // internally as TSetupComponentEntry object in the ItemObject of each
+        // item), only the description" is available.
+        // https://stackoverflow.com/a/10284086
+        if ((pos('MySQL', WizardForm.ComponentsList.ItemCaption[i]) <> 0) or
+            (pos('Osimis Web viewer', WizardForm.ComponentsList.ItemCaption[i]) <> 0) or
+            (pos('DICOMweb', WizardForm.ComponentsList.ItemCaption[i]) <> 0) or
+            (pos('Google', WizardForm.ComponentsList.ItemCaption[i]) <> 0)) then begin
+          WizardForm.ComponentsList.Checked[i] := False;
+        end;
+      end;
+
+      //Index := WizardForm.ComponentsList.Items.IndexOf('osimis\osimis_web_viewer');
+      //if Index <> -1 then
+      //begin
+        //WizardForm.ComponentsList.Checked[Index] := False;
+      //end;
+        
+      MsgBox('You are running a pre-Vista version of Windows. Some incompatible plugins have been automatically unselected (MySQL, Google Cloud Platform, Osimis Web viewer, DICOMweb).', mbInformation, MB_OK);
+    end;
+  end;
+end;
+
+
+// =============================================================
 // == Prompt for Orthanc storage directory
 // == http://www.vincenzo.net/isxkb/index.php?title=Prompt_for_an_additional_folder_for_data
 // =============================================================

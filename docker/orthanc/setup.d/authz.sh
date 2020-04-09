@@ -11,7 +11,7 @@ settings=(
 plugin=libOrthancAuthorization
 function genconf {
 	if [[ ! $WEBSERVICE ]]; then
-		log "Missing WEBSERVICE setting, not generating configuration file"
+		err "Missing WEBSERVICE setting"
 		return 1
 	fi
 	cat <<-EOF >"$1"

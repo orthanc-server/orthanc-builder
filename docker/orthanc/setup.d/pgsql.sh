@@ -6,7 +6,7 @@ plugins=(libOrthancPostgreSQLIndex libOrthancPostgreSQLStorage)
 pluginselectors=(INDEX STORAGE:explicit)
 function genconf {
 	if [[ ! $HOST ]]; then
-		log "Missing HOST setting, not generating configuration file"
+		err "Missing HOST setting"
 		return 1
 	fi
 	if [[ $PASSWORD ]]; then

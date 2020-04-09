@@ -21,19 +21,19 @@ RUN mkdir --parents \
   /usr/share/orthanc/plugins-disabled
 
 # CHANGE_VERSION_WVB
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.2.0/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/871b22f4/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/35889ad3/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 # CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/Orthanc --output-document /usr/bin/Orthanc --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/changesets/7d72e43f4a2d/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/Orthanc --output-document /usr/bin/Orthanc --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
 
 # CHANGE_VERSION_DW
-RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.0/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.1/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
 
 # CHANGE_VERSION_PG
 RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.2/libOrthancPostgreSQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLIndex.so --quiet

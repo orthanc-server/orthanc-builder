@@ -154,6 +154,10 @@ function warn {
 	log "WARNING: $*"
 }
 
+function err {
+	log "ERROR: $*"
+}
+
 
 # inarray: Utility function to check if an element is contained in an array.
 function inarray {
@@ -363,6 +367,8 @@ else
 		log "Generating '$conf'..."
 		if genconf "$conf" && ((${#plugins[@]})); then
 			confavailable=true
+		else
+			warn "Not generating configuration file"
 		fi
 		if [[ $BUNDLE_DEBUG == true ]]; then
 			cat "$conf" >&2
