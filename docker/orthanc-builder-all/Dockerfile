@@ -128,24 +128,24 @@ RUN mkdir -p /usr/share/orthanc/plugins-disabled/
 RUN mkdir -p /usr/share/orthanc/plugins/
 
 COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
-COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orhtanc/plugins-disabled/
+COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-disabled/
 # RUN ldd /usr/bin/Orthanc
 
-COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-wsi /build/OrthancWSIDicomToTiff /usr/local/bin/
-COPY --from=build-plugin-wsi /build/OrthancWSIDicomizer /usr/local/bin/
-COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orhtanc/plugins-disabled/
-COPY --from=build-plugin-gcp /build/libOrthancGoogleCloudPlatform.so /usr/share/orhtanc/plugins-disabled/
+COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
+# currently not built COPY --from=build-plugin-wsi /build/OrthancWSIDicomToTiff /usr/local/bin/
+# currently not built COPY --from=build-plugin-wsi /build/OrthancWSIDicomizer /usr/local/bin/
+COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-gcp /build/libOrthancGoogleCloudPlatform.so /usr/share/orthanc/plugins-disabled/
 
 # CHANGE_VERSION_WVB
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
@@ -154,7 +154,10 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/35889ad3/l
 
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
 
-
 SHELL ["/bin/bash", "-c"]
-ENTRYPOINT ["/usr/local/bin/Orthanc"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/etc/orthanc"]
+
+COPY orthanc/docker-entrypoint.sh /
+COPY orthanc/setup.sh /usr/lib/orthanc/
+COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
