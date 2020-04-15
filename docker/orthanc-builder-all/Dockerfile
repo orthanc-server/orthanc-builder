@@ -28,7 +28,10 @@ RUN make -j 4
 FROM osimis/orthanc-builder-base:current as build-plugin-mysql
 
 RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install libmariadb-dev
+# on recent Debian, the libmysql-dev package is not available anymore
+# and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
+RUN apt-get --assume-yes install default-libmysqlclient-dev
+# RUN apt-get --assume-yes install libmariadb-dev
 
 # CHANGE_VERSION_MY_SQL
 RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-2.0" /sources
