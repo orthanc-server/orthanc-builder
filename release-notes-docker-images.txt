@@ -1,3 +1,5 @@
+          - upgraded WVB_ALPHA to ffb6a998
+          - upgraded WVP_ALPHA to 68fa1f85
 20.4.0  : - upgraded WVB_ALPHA to 35889ad3
           - upgraded WVP_ALPHA to 5eccd29d
 20.3.1  : - upgraded Orthanc to 1.6.0
