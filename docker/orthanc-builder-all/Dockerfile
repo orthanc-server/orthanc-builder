@@ -28,7 +28,7 @@ RUN make -j 4
 FROM osimis/orthanc-builder-base:current as build-plugin-mysql
 
 RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install libmysqlclient-dev
+RUN apt-get --assume-yes install libmariadb-dev
 
 # CHANGE_VERSION_MY_SQL
 RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-2.0" /sources
@@ -119,16 +119,11 @@ RUN make -j 4
 
 ################################# the image that will run Orthanc dynamicaly linked
 FROM osimis/orthanc-runner-base:current
-RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install apt-transport-https
-RUN apt-get --assume-yes install uuid
-RUN apt-get --assume-yes install liblua5.1-0
 
 RUN mkdir -p /etc/orthanc
 RUN mkdir -p /usr/share/orthanc/plugins-disabled/
 RUN mkdir -p /usr/share/orthanc/plugins/
 
-COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
 COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
 COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orhtanc/plugins-disabled/
 COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orhtanc/plugins-disabled/

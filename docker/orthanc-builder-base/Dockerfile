@@ -2,7 +2,6 @@
 FROM osimis/orthanc-runner-base:current
 
 RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install vim
 RUN apt-get --assume-yes install wget
 RUN apt-get --assume-yes install build-essential
 RUN apt-get --assume-yes install unzip
