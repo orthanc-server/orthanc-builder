@@ -1,0 +1,59 @@
+{
+  "Authorization" : {
+    "section" : "Authorization",
+    "enablingEnvVar" : "AUTHORIZATION_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "AUTHZ_ENABLED",
+    "enablingEnvVarIsRequired": false,
+    "libs" : ["libOrthancAuthorization.so"]
+  },
+  "ConnectivityChecks" : {
+    "section" : null,
+    "enablingEnvVar" : "CONNECTIVITY_CHECKS_PLUGIN_ENABLED",
+    "enablingEnvVarIsRequired": false,
+    "libs" : ["libConnectivityChecks.so"]
+  },
+  "DicomWeb" : {
+    "section" : "DicomWeb",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "DICOM_WEB_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "DW_ENABLED",
+    "enablingEnvVarIsRequired": true,
+    "libs" : ["libOrthancDicomWeb.so"]
+  },
+
+  "OrthancWebViewer" : {
+    "section" : "WebViewer",
+    "enablingEnvVar" : "ORTHANC_VIEWER_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "OWV_ENABLED",
+    "enablingEnvVarIsRequired": true,
+    "libs" : ["libOrthancWebViewer.so"]
+  },
+  "OsimisWebViewerBasic" : {
+    "section" : "WebViewer",
+    "enablingEnvVar" : "OSIMIS_VIEWER1_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "WVB_ENABLED",
+    "enablingEnvVarIsRequired": true,
+    "libs" : ["libOsimisWebViewer.so"]
+  },
+  "OsimisWebViewerBasicAlpha" : {
+    "section" : "WebViewer",
+    "enablingEnvVar" : "OSIMIS_VIEWER1_ALPHA_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "WVB__ALPHA_ENABLED",
+    "enablingEnvVarIsRequired": true,
+    "libs" : ["libOsimisWebViewerAlpha.so"]
+  },
+  "Worklists" : {
+    "section" : "Worklists",
+    "nonStandardDefaults" : {
+      "Enable" : true,
+      "Database" : "/var/lib/orthanc/worklists"
+    },
+    "enablingEnvVar" : "WORKLISTS_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "WL_ENABLED",
+    "enablingEnvVarIsRequired": true,
+    "libs" : ["libModalityWorklists.so"]
+  }
+
+}

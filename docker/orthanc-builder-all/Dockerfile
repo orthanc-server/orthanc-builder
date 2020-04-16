@@ -156,8 +156,10 @@ RUN chmod +x /usr/share/orthanc/plugins-disabled/*
 
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/etc/orthanc"]
+CMD ["/tmp/orthanc.json"]
 
-COPY orthanc/docker-entrypoint.sh /
-COPY orthanc/setup.sh /usr/lib/orthanc/
-COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
+COPY orthanc-builder-all/docker-entrypoint.sh /
+# COPY orthanc/setup.sh /usr/lib/orthanc/
+# COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
+COPY orthanc-builder-all/*.json /startup/ 
+COPY orthanc-builder-all/*.py /startup/

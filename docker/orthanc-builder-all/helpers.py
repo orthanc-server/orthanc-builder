@@ -5,14 +5,31 @@ import json
 import typing
 
 
+verboseEnabled = False
+
+def enableVerboseModeForConfigGeneration():
+  global verboseEnabled
+  verboseEnabled = True
+
 def logInfo(text: str):
-  print(text)
+  global verboseEnabled
+  if verboseEnabled:
+    print(text)
 
 def logWarning(text: str):
   print("WARNING: " + text)
 
 def logError(text: str):
   print("ERROR: " + text)
+
+
+def isEnvVarDefinedEmptyOrTrue(envVar: str) -> bool:
+  return envVar in os.environ and (os.environ.get(envVar) == "" or os.environ.get(envVar) == "true")
+
+def isEnvVarTrue(envVar: str) -> bool:
+  return os.environ.get(envVar, "false") == "true"
+
+
 
 def removeCppCommentsFromJson(text: str):
     def replacer(match):

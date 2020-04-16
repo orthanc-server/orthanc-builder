@@ -3,19 +3,35 @@ import re
 import glob
 import json
 import typing
+import tempfile
+import subprocess
 
-from helpers import OrthancConfigurator, logInfo, logWarning, logError, removeCppCommentsFromJson
+from helpers import OrthancConfigurator, logInfo, logWarning, logError, removeCppCommentsFromJson, isEnvVarDefinedEmptyOrTrue, enableVerboseModeForConfigGeneration
 
-os.environ["ORTHANC__QUERY_RETRIEVE_SIZE"] = "1"
-os.environ["ORTHANC__DICOM_AET"] = "ORTHANC_ENV"
-os.environ["ORTHANC__CASE_SENSITIVE_PN"] = "false"
-os.environ["ORTHANC__PKCS11__MODULE"] = "tutu"
-os.environ["AZSTOR_ACC_NAME"] = "tito"
-os.environ["WL_ENABLED"] = "true"
-os.environ["WVB_ALPHA_ENABLED"] = "true"
-os.environ["ORTHANC__WEB_VIEWER__CACHE_ENABLED"] = "true"
+# os.environ["DEBUG"]="true"
+if os.environ.get("DEBUG", "false") == "true":  # for dev only -> to remove
+  os.environ["VERBOSE_STARTUP"] = "true"
 
-errors = False
+  os.environ["ORTHANC__QUERY_RETRIEVE_SIZE"] = "1"
+  os.environ["ORTHANC__DICOM_AET"] = "ORTHANC_ENV"
+  os.environ["ORTHANC__CASE_SENSITIVE_PN"] = "false"
+  # os.environ["ORTHANC__PKCS11__MODULE"] = "tutu"
+  os.environ["AZSTOR_ACC_NAME"] = "tito"
+  os.environ["WL_ENABLED"] = ""
+  os.environ["WVB_ALPHA_ENABLED"] = ""
+  os.environ["ORTHANC__WEB_VIEWER__CACHE_ENABLED"] = "true"
+  os.environ["DW_HOST"] = ""
+
+if isEnvVarDefinedEmptyOrTrue("VERBOSE_STARTUP"):
+  enableVerboseModeForConfigGeneration()
+
+if isEnvVarDefinedEmptyOrTrue("BUNDLE_DEBUG"):
+  logWarning("You're using a deprecated env-var, you should use VERBOSE_STARTUP instead of BUNDLE_DEBUG")
+  enableVerboseModeForConfigGeneration()
+  
+hasErrors = False
+hasDeprecatedSettings = False
+
 configurator = OrthancConfigurator()
 
 nonStandardEnvVarNames = {
@@ -42,11 +58,26 @@ nonStandardEnvVarNames = {
   "AC_AUTHENTICATION_ENABLED" : "AuthenticationEnabled",
   "AC_REGISTERED_USERS" : "RegisteredUsers",
 
+  "AUTHZ_WEBSERVICE" : "Authorization.WebService",
+  "AUTHZ_TOKEN_HTTP_HEADERS" : "Authorization.TokenHttpHeaders",
+  "AUTHZ_TOKEN_GET_ARGUMENTS" : "Authorization.TokenGetArguments",
+  "AUTHZ_UNCHECKED_RESOURCES" : "Authorization.UncheckedResources",
+  "AUTHZ_UNCHECKED_FOLDERS" : "Authorization.UncheckedFolders",
+  "AUTHZ_UNCHECKED_LEVELS" : "Authorization.UncheckedLevels",
+
+  "DW_ROOT" : "DicomWeb.Root",
+  "DW_WADO_URI_ENABLED" : "DicomWeb.EnableWado",
+  "DW_WADO_URI_ROOT" : "DicomWeb.WadoRoot",
+  "DW_HOST" : "DicomWeb.Host",
+  "DW_TLS" : "DicomWeb.Ssl",
+  "DW_SERVERS" : "DicomWeb.Servers",
+  "DW_STOW_MAX_INSTANCES" : "DicomWeb.StowMaxInstances",
+  "DW_STOW_MAX_SIZE" : "DicomWeb.StowMaxSize",
+
   "LUA_OPTIONS" : "LuaOptions",
 
   "AZSTOR_ACC_NAME": "BlobStorage.AccountName",
   "WL_STORAGE_DIR": "Worklists.Database",
-  "WL_ENABLED": "Worklists.Enable",
 
   "WVB_ANNOTATIONS_STORAGE_ENABLED" : "WebViewer.AnnotationStorageEnabled",
   "WVB_COMBINED_TOOL_ENABLED" : "WebViewer.CombinedToolEnabled",
@@ -128,68 +159,59 @@ for filePath in configFiles:
 
 ################# read all environment variables ################################
 
+secretsFiles = {}
+
 for envKey, envValue in os.environ.items():
   if envKey.startswith("ORTHANC__") or envKey in nonStandardEnvVarNames:
+    if envKey in nonStandardEnvVarNames:
+      logWarning("You're using a deprecated environment variable name: " + envKey)
+
     jsonPath = getJsonPathFromEnvVarName(envKey)
     configurator.setConfig(jsonPath=jsonPath, value=envValue, source="env-var:" + envKey)
+  if envKey.endswith("_SECRET"):  # these env var defines the file in which we'll find the value of their env var !
+    envVarName = envKey[:len("_SECRET")]
+    fileName = os.environ.get(envKey)
+    secretsFiles[fileName] = envVarName
 
 ################# read all secrets ################################
 
-# TODO:
-# parse all files in /run/secrets whose filename looks like an env-variable (i.e MYSQL_PASSWORD)
-# skip the var whose name is in legacySecretsEnvVars
-# read its content and consider it's the value of the env-var
+def readSecret(path: str, envKey: str):
+  global configurator
+  jsonPath = getJsonPathFromEnvVarName(envKey)
+  configurator.setConfig(jsonPath=jsonPath, value=envValue, source="secret:" + envKey)
 
-################# read all secrets (backward-compatibility) ################################
 
-legacySecretsEnvVars = {
-  "MYSQL_PASSWORD_SECRET" : "MYSQL_PASSWORD"
-}
+# parse all files in /run/secrets whose filename looks like an env-variable (i.e ORTHANC__MYSQL__PASSWORD)
+envVarLikeName = re.compile("[A-Z\_]*")
+legacySecret = re.compile("[A-Z\_]*_SECRET$")
 
-# TODO:
-# get value of each of these legacySecretsEnvVars
-# if found, read the file in /run/secrets/ and consider it's the value of the env-var
+for secretPath in glob.glob("/run/secrets/*"):
+  relativeSecretPath = secretPath[len("/run/secrets/"):]
+  
+  if relativeSecretPath in secretsFiles:
+    readSecret(secretPath, secretsFiles[relativeSecretPath])
+  
+  elif relativeSecretPath.startswith("ORTHANC__") or relativeSecretPath in nonStandardEnvVarNames:
+  
+    if relativeSecretPath in nonStandardEnvVarNames:
+      logWarning("You're using a deprecated secret name: " + relativeSecretPath)
+
+    readSecret(secretPath, relativeSecretPath)
 
 ################# apply defaults that have not been set yet ################################
 
-orthancNonStandardDefaults = {
-  "StorageDirectory" : "/var/lib/orthanc/db",
-  "IndexDirectory" : "/var/lib/orthanc/db",
-
-  "RemoteAccessAllowed": True,
-  "AuthenticationEnabled": True,
-
-
-  "Plugins" : ["/usr/share/orthanc/plugins/"]
-}
-
-plugins = {
-  "Worklists" : {
-    "nonStandardDefaults" : {
-      "Enable" : True,
-      "Database" : "/var/lib/orthanc/worklists"
-    },
-    "libs" : ["libModalityWorklists.so"]
-  },
-  "OrthancWebViewer" : {
-    "section" : "WebViewer",
-    "enablingEnvVars" : ["OWV_ENABLED", "ORTHANC_VIEWER_ENABLED"],  # only for plugins who share a section with other plugins !
-    "libs" : ["libOrthancWebViewer.so"],
-
-  },
-  "OsimisWebViewerBasic" : {
-    "section" : "WebViewer",
-    "enablingEnvVars" : ["WVB_ENABLED", "OSIMIS_VIEWER_ENABLED"],  # only for plugins who share a section with other plugins !
-    "libs" : ["libOsimisWebViewer.so"]
-  },
-  "OsimisWebViewerBasicAlpha" : {
-    "section" : "WebViewer",
-    "enablingEnvVars" : ["WVB_ALPHA_ENABLED", "OSIMIS_VIEWER_ALPHA_ENABLED"],  # only for plugins who share a section with other plugins !
-    "libs" : ["libOsimisWebViewerAlpha.so"]
-  }
-}
+# orthanc defaults
+with open(os.path.dirname(os.path.realpath(__file__)) + "/orthanc-defaults.json") as fp:
+  orthancNonStandardDefaults = json.load(fp)
 
 configurator.mergeConfigFromDefaults(orthancNonStandardDefaults, "orthanc")
+
+
+################# enable plugins and apply their defaults ################################
+
+with open(os.path.dirname(os.path.realpath(__file__)) + "/plugins-def.json") as fp:
+  plugins = json.load(fp)
+
 
 for pluginName, pluginDef in plugins.items():
   
@@ -198,24 +220,39 @@ for pluginName, pluginDef in plugins.items():
   else:
     section = pluginName
 
-  # if at least one setting of the plugin section has been defined, apply the plugin defaults
-  # and copy the plugin in the right directory
   enabled = section in configurator.configuration
 
-  # however, multiple plugins can have the same section (i.e: the web-viewers)
+  # multiple plugins can have the same section (i.e: the web-viewers)
   # so they need to have one of their enabling env var set to true
-  if "enablingEnvVars" in pluginDef:
+  if pluginDef["enablingEnvVarIsRequired"]:
     enabled = False
-    for envVar in pluginDef["enablingEnvVars"]:
-      if os.environ.get(envVar, "false") == "true":
-        enabled = True
+  else:
+    # for other plugins, if at least one setting of the plugin section has been defined,
+    # it is considered as enabled
+    enabled = section in configurator.configuration
+
+  if "enablingEnvVar" in pluginDef and isEnvVarDefinedEmptyOrTrue(pluginDef["enablingEnvVar"]):
+    enabled = True
+  if "enablingEnvVarLegacy" in pluginDef and isEnvVarDefinedEmptyOrTrue(pluginDef["enablingEnvVarLegacy"]):
+    enabled = True
+    logWarning("You're using a deprecated env-var to enable the {p} plugin, you should use {n} instead of {o}".format(
+      p=pluginName,
+      n=pluginDef["enablingEnvVar"],
+      o=pluginDef["enablingEnvVarLegacy"]
+    ))
+    hasDeprecatedSettings = True
 
   if enabled:
+    # copy defaults config and move the plugin.so into the right folder
 
     logInfo("Enabling {p} plugin".format(p = pluginName))
     
     if "nonStandardDefaults" in plugins[pluginName]:
-      configurator.mergeConfigFromDefaults(plugins[pluginName]["nonStandardDefaults"], section)
+
+      pluginDefaultConfig = {
+        section: plugins[pluginName]["nonStandardDefaults"]
+      }
+      configurator.mergeConfigFromDefaults(pluginDefaultConfig, pluginName)
     
     if "libs" in pluginDef:
       for lib in pluginDef["libs"]:
@@ -223,14 +260,39 @@ for pluginName, pluginDef in plugins.items():
           os.rename("/usr/share/orthanc/plugins-disabled/" + lib, "/usr/share/orthanc/plugins/" + lib)
         except:
           logError("failed to move {l} file".format(l = lib))
-          errors = True
+          hasErrors = True
   else:
     logInfo("{p} won't be enabled, no configuration found for this plugin".format(p = pluginName))
 
-print(json.dumps(configurator.configuration, indent=2))
+logInfo("generated configuration file: " + json.dumps(configurator.configuration, indent=2))
 
-if not errors:
-  # launch Orthanc
-  pass
-else:
+if hasDeprecatedSettings:
+  logWarning("************* you are using deprecated settings, these deprecated settings will be removed in June 2021 *************")
+
+if hasErrors:
   logError("There were some errors while preparing Orthanc to start.")
+#  exit(-1)
+
+
+configFilePath="/tmp/orthanc.json"
+logInfo("generating temporary configuration file in " + configFilePath)
+with open(configFilePath, "w+t") as fp:
+  json.dump(configurator.configuration, fp=fp, indent=2)
+
+
+# cmd = ["Orthanc"]
+# if isEnvVarDefinedEmptyOrTrue("TRACE_ENABLED"):
+#   cmd.append("--trace")
+# elif isEnvVarDefinedEmptyOrTrue("VERBOSE_ENABLED"):
+#   cmd.append("--verbose")
+  
+
+# cmd.append(tmpConfigFile.name)
+  
+# orthancProcess = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+# orthancProcess.wait()
+# for line in orthancProcess.stdout:
+#   print(line)
+# print(orthancProcess.returncode)
+#orthancProcess = subprocess.run(cmd, capture_output=True)
+

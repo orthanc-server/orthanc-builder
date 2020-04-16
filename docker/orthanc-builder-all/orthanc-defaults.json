@@ -1,0 +1,10 @@
+{
+  "StorageDirectory" : "/var/lib/orthanc/db",
+
+  "RemoteAccessAllowed": true,
+  "AuthenticationEnabled": true,
+  
+  "HttpsCACertificates" : "/etc/ssl/certs/ca-certificates.crt",
+
+  "Plugins" : ["/usr/share/orthanc/plugins/"]
+}
