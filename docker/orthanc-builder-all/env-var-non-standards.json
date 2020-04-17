@@ -1,0 +1,14 @@
+{
+  "ORTHANC__CASE_SENSITIVE_PN": "CaseSensitivePN",
+
+  "ORTHANC__POSTGRESQL__ENABLE_INDEX": "PostgreSQL.EnableIndex",
+  "ORTHANC__POSTGRESQL__ENABLE_STORAGE": "PostgreSQL.EnableStorage",
+  "ORTHANC__POSTGRESQL__HOST": "PostgreSQL.Host",
+  "ORTHANC__POSTGRESQL__PORT": "PostgreSQL.Port",
+  "ORTHANC__POSTGRESQL__DATABASE": "PostgreSQL.Database",
+  "ORTHANC__POSTGRESQL__USERNAME": "PostgreSQL.Username",
+  "ORTHANC__POSTGRESQL__PASSWORD": "PostgreSQL.Password",
+  "ORTHANC__POSTGRESQL__ENABLE_SSL": "PostgreSQL.EnableSsl"
+
+
+}

@@ -6,15 +6,18 @@ import typing
 import tempfile
 import subprocess
 
-from helpers import OrthancConfigurator, logInfo, logWarning, logError, removeCppCommentsFromJson, isEnvVarDefinedEmptyOrTrue, enableVerboseModeForConfigGeneration
+from helpers import OrthancConfigurator, JsonPath, logInfo, logWarning, logError, removeCppCommentsFromJson, isEnvVarDefinedEmptyOrTrue, enableVerboseModeForConfigGeneration
 
-# os.environ["DEBUG"]="true"
+os.environ["DEBUG"]="true"
 if os.environ.get("DEBUG", "false") == "true":  # for dev only -> to remove
   os.environ["VERBOSE_STARTUP"] = "true"
 
   os.environ["ORTHANC__QUERY_RETRIEVE_SIZE"] = "1"
   os.environ["ORTHANC__DICOM_AET"] = "ORTHANC_ENV"
   os.environ["ORTHANC__CASE_SENSITIVE_PN"] = "false"
+  os.environ["PG_PASSWORD"] = "pg-password"
+  os.environ["PG_HOST"] = "host"
+
   # os.environ["ORTHANC__PKCS11__MODULE"] = "tutu"
   os.environ["AZSTOR_ACC_NAME"] = "tito"
   os.environ["WL_ENABLED"] = ""
@@ -34,89 +37,15 @@ hasDeprecatedSettings = False
 
 configurator = OrthancConfigurator()
 
-nonStandardEnvVarNames = {
-  # orthanc variables not following the conversion rule
-  "ORTHANC__CASE_SENSITIVE_PN": "CaseSensitivePN",
+# load non standard env-vars
+nonStandardEnvVarNames = {}
 
-  # osimis/orthanc backward compatibility
-  "DICOM_AET" : "DicomAet",
-  "DICOM_MODALITIES" : "DicomModalities",
-  "DICOM_PORT" : "DicomPort",
-  "DICOM_SCP_TIMEOUT" : "DicomScpTimeout",
-  "DICOM_SCU_TIMEOUT" : "DicomScuTimeout",
-  "DICOM_AET_CHECK_ENABLED" : "DicomCheckCalledAet",
-  "DICOM_CHECK_MODALITY_HOST_ENABLED" : "DicomCheckModalityHost",
-  "DICOM_STRICT_AET_COMPARISON_ENABLED" : "StrictAetComparison",
-  "DICOM_DICOM_ALWAYS_ALLOW_ECHO_ENABLED" : "DicomAlwaysAllowEcho",
-  "DICOM_DICOM_ALWAYS_ALLOW_STORE_ENABLED" : "DicomAlwaysAllowStore",
-  "DICOM_UNKNOWN_SOP_CLASS_ACCEPTED" : "UnknownSopClassAccepted",
-  "DICOM_SYNCHRONOUS_CMOVE" : "SynchronousCMove",
-  "DICOM_QUERY_RETRIEVE_SIZE" : "QueryRetrieveSize",
-  "DICOM_DICTIONARY" : "Dictionary",
+with open(os.path.dirname(os.path.realpath(__file__)) + "/env-var-legacy.json") as fp:
+  nonStandardEnvVarNames = json.load(fp)
 
-  "AC_ALLOW_REMOTE" : "RemoteAccessAllowed",
-  "AC_AUTHENTICATION_ENABLED" : "AuthenticationEnabled",
-  "AC_REGISTERED_USERS" : "RegisteredUsers",
-
-  "AUTHZ_WEBSERVICE" : "Authorization.WebService",
-  "AUTHZ_TOKEN_HTTP_HEADERS" : "Authorization.TokenHttpHeaders",
-  "AUTHZ_TOKEN_GET_ARGUMENTS" : "Authorization.TokenGetArguments",
-  "AUTHZ_UNCHECKED_RESOURCES" : "Authorization.UncheckedResources",
-  "AUTHZ_UNCHECKED_FOLDERS" : "Authorization.UncheckedFolders",
-  "AUTHZ_UNCHECKED_LEVELS" : "Authorization.UncheckedLevels",
-
-  "DW_ROOT" : "DicomWeb.Root",
-  "DW_WADO_URI_ENABLED" : "DicomWeb.EnableWado",
-  "DW_WADO_URI_ROOT" : "DicomWeb.WadoRoot",
-  "DW_HOST" : "DicomWeb.Host",
-  "DW_TLS" : "DicomWeb.Ssl",
-  "DW_SERVERS" : "DicomWeb.Servers",
-  "DW_STOW_MAX_INSTANCES" : "DicomWeb.StowMaxInstances",
-  "DW_STOW_MAX_SIZE" : "DicomWeb.StowMaxSize",
-
-  "LUA_OPTIONS" : "LuaOptions",
-
-  "AZSTOR_ACC_NAME": "BlobStorage.AccountName",
-  "WL_STORAGE_DIR": "Worklists.Database",
-
-  "WVB_ANNOTATIONS_STORAGE_ENABLED" : "WebViewer.AnnotationStorageEnabled",
-  "WVB_COMBINED_TOOL_ENABLED" : "WebViewer.CombinedToolEnabled",
-  "WVB_CROSS_HAIR_ENABLED" : "WebViewer.CrossHairEnabled",
-  "WVB_LANGUAGE" : "WebViewer.DefaultLanguage",
-  "WVB_DEFAULT_SELECTED_TOOL" : "WebViewer.DefaultSelectedTool",
-  "WVB_DOWNLOAD_AS_JPEG_ENABLED" : "WebViewer.DownloadAsJpegEnabled",
-  "WVB_INSTANCE_INFO_CACHE_ENABLED" : "WebViewer.InstanceInfoCacheEnabled",
-  "WVB_KEY_IMAGE_CAPTURE_ENABLED" : "WebViewer.KeyImageCaptureEnabled",
-  "WVB_KEYBOARD_SHORTCUTS_ENABLED" : "WebViewer.KeyboardShortcutsEnabled",
-  "WVB_OPEN_ALL_PATIENT_STUDIES" : "WebViewer.OpenAllPatientStudies",
-  "WVB_PRINT_ENABLED" : "WebViewer.PrintEnabled",
-  "WVB_REFERENCE_LINES_ENABLED" : "WebViewer.ReferenceLinesEnabled",
-  "WVB_SERIES_TO_IGNORE" : "WebViewer.SeriesToIgnore",
-  "WVB_STUDY_DOWNLOAD_ENABLED" : "WebViewer.StudyDownloadEnabled",
-  "WVB_SYNCHRONIZED_BROWSING_ENABLED" : "WebViewer.SynchronizedBrowsingEnabled",
-  "WVB_TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED" : "WebViewer.ToggleOverlayTextButtonEnabled",
-  "WVB_VIDEO_ENABLED" : "WebViewer.VideoDisplayEnabled",
-
-  "WVP_LICENSE_STRING" : "WebViewer.LicenseString",
-  "WVP_LIVESHARE_ENABLED" : "WebViewer.LiveshareEnabled",
-  "WVP_ANNOTATIONS_STORAGE_ENABLED" : "WebViewer.AnnotationStorageEnabled",
-  "WVP_COMBINED_TOOL_ENABLED" : "WebViewer.CombinedToolEnabled",
-  "WVP_CROSS_HAIR_ENABLED" : "WebViewer.CrossHairEnabled",
-  "WVP_LANGUAGE" : "WebViewer.DefaultLanguage",
-  "WVP_DEFAULT_SELECTED_TOOL" : "WebViewer.DefaultSelectedTool",
-  "WVP_DOWNLOAD_AS_JPEG_ENABLED" : "WebViewer.DownloadAsJpegEnabled",
-  "WVP_INSTANCE_INFO_CACHE_ENABLED" : "WebViewer.InstanceInfoCacheEnabled",
-  "WVP_KEY_IMAGE_CAPTURE_ENABLED" : "WebViewer.KeyImageCaptureEnabled",
-  "WVP_KEYBOARD_SHORTCUTS_ENABLED" : "WebViewer.KeyboardShortcutsEnabled",
-  "WVP_OPEN_ALL_PATIENT_STUDIES" : "WebViewer.OpenAllPatientStudies",
-  "WVP_PRINT_ENABLED" : "WebViewer.PrintEnabled",
-  "WVP_REFERENCE_LINES_ENABLED" : "WebViewer.ReferenceLinesEnabled",
-  "WVP_SERIES_TO_IGNORE" : "WebViewer.SeriesToIgnore",
-  "WVP_STUDY_DOWNLOAD_ENABLED" : "WebViewer.StudyDownloadEnabled",
-  "WVP_SYNCHRONIZED_BROWSING_ENABLED" : "WebViewer.SynchronizedBrowsingEnabled",
-  "WVP_TOGGLE_OVERLAY_TEXT_BUTTON_ENABLED" : "WebViewer.ToggleOverlayTextButtonEnabled",
-  "WVP_VIDEO_ENABLED" : "WebViewer.VideoDisplayEnabled",
-}
+# orthanc variables not following the standard conversion rule
+with open(os.path.dirname(os.path.realpath(__file__)) + "/env-var-non-standards.json") as fp:
+  nonStandardEnvVarNames.update(json.load(fp))
 
 # transforms QUERY_RETRIEVE_SIZE into QueryRetrieveSize
 def envVarToCamelCase(envVarName: str) -> str:
@@ -125,27 +54,32 @@ def envVarToCamelCase(envVarName: str) -> str:
     name = name + word[0] + word.lower()[1:]
   return name
 
-def getJsonPathFromEnvVarName(envVarName: str) -> typing.List[str]:
+def getJsonPathFromEnvVarName(envVarName: str) -> JsonPath:
   if envVarName in nonStandardEnvVarNames:
-    return nonStandardEnvVarNames[envVarName].split(".")
+    return JsonPath(nonStandardEnvVarNames[envVarName])
 
-  envVarTokens = envVarName[len("ORTHANC__"):].split("__")
-  path = []
-  for envVarToken in envVarTokens:
-    path.append(envVarToCamelCase(envVarToken))
+  elif envVarName.startswith("ORTHANC__"):
+    envVarTokens = envVarName[len("ORTHANC__"):].split("__")
+    jsonPath = JsonPath()
+    for envVarToken in envVarTokens:
+      jsonPath.append(envVarToCamelCase(envVarToken))
 
-  return path
+    return jsonPath
 
+  raise ValueError("unhandled env-var name: " + envVarName)
 
 ################# read all configuration files ################################
 configFiles = []
 
+logInfo("Discovering configuration files from /etc/orthanc/*.json")
 for filePath in glob.glob("/etc/orthanc/*.json"):
   configFiles.append(filePath)
 
+logInfo("Discovering configuration files from /run/secrets/*.json")
 for filePath in glob.glob("/run/secrets/*.json"):
   configFiles.append(filePath)
 
+logInfo("TODO REMOVE Discovering configuration files from ./docker/orthanc-builder-all/tmp/*.json")
 for filePath in glob.glob("./docker/orthanc-builder-all/tmp/*.json"):
   configFiles.append(filePath)
 
@@ -161,23 +95,35 @@ for filePath in configFiles:
 
 secretsFiles = {}
 
+logInfo("Analyzing environment variables")
 for envKey, envValue in os.environ.items():
-  if envKey.startswith("ORTHANC__") or envKey in nonStandardEnvVarNames:
+  if envKey.endswith("_SECRET"):  # these env var defines the file in which we'll find the value of their env var !
+    envVarName = envKey[:-len("_SECRET")]
+    fileName = os.environ.get(envKey)
+    logInfo("secret-key-file: " + envVarName + " / " + fileName)
+    secretsFiles[fileName] = envVarName
+  elif envKey.startswith("ORTHANC__") or envKey in nonStandardEnvVarNames:
     if envKey in nonStandardEnvVarNames:
       logWarning("You're using a deprecated environment variable name: " + envKey)
 
     jsonPath = getJsonPathFromEnvVarName(envKey)
     configurator.setConfig(jsonPath=jsonPath, value=envValue, source="env-var:" + envKey)
-  if envKey.endswith("_SECRET"):  # these env var defines the file in which we'll find the value of their env var !
-    envVarName = envKey[:len("_SECRET")]
-    fileName = os.environ.get(envKey)
-    secretsFiles[fileName] = envVarName
 
 ################# read all secrets ################################
 
 def readSecret(path: str, envKey: str):
   global configurator
-  jsonPath = getJsonPathFromEnvVarName(envKey)
+
+  try:
+    jsonPath = getJsonPathFromEnvVarName(envKey)
+  except ValueError as e:
+    logInfo("secret won't be read: " + envKey)
+    return
+  
+  with open(path, "r") as fp:
+    envValue = fp.read()
+
+  logInfo("readSecret: from {s} into {e} will go into json {j}".format(s=path, e=envKey, j=jsonPath))
   configurator.setConfig(jsonPath=jsonPath, value=envValue, source="secret:" + envKey)
 
 
@@ -186,6 +132,7 @@ envVarLikeName = re.compile("[A-Z\_]*")
 legacySecret = re.compile("[A-Z\_]*_SECRET$")
 
 for secretPath in glob.glob("/run/secrets/*"):
+  logInfo("secret: " + secretPath)
   relativeSecretPath = secretPath[len("/run/secrets/"):]
   
   if relativeSecretPath in secretsFiles:
@@ -233,6 +180,7 @@ for pluginName, pluginDef in plugins.items():
 
   if "enablingEnvVar" in pluginDef and isEnvVarDefinedEmptyOrTrue(pluginDef["enablingEnvVar"]):
     enabled = True
+  
   if "enablingEnvVarLegacy" in pluginDef and isEnvVarDefinedEmptyOrTrue(pluginDef["enablingEnvVarLegacy"]):
     enabled = True
     logWarning("You're using a deprecated env-var to enable the {p} plugin, you should use {n} instead of {o}".format(
@@ -270,7 +218,7 @@ if hasDeprecatedSettings:
   logWarning("************* you are using deprecated settings, these deprecated settings will be removed in June 2021 *************")
 
 if hasErrors:
-  logError("There were some errors while preparing Orthanc to start.")
+  logError("There were some errors while preparing the configuration file for Orthanc.")
 #  exit(-1)
 
 

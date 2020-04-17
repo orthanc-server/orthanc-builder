@@ -44,6 +44,24 @@
     "enablingEnvVarIsRequired": true,
     "libs" : ["libOsimisWebViewerAlpha.so"]
   },
+  "PostgreSQL" : {
+    "section" : "PostgreSQL",
+    "enablingEnvVar" : "POSTGRESQL_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "PG_ENABLED",
+    "enablingEnvVarIsRequired": true,
+    "nonStandardDefaults" : {
+      "EnableIndex": true,
+      "EnableStorage": false,
+      "Port": 5432,
+      "Host": "HOST MUST BE DEFINED",
+      "Database": "postgres",
+      "Username": "postgres",
+      "Password": "postgres",
+      "EnableSsl": false,
+      "Lock": false
+    },
+    "libs" : ["libOrthancPostgreSQLIndex.so", "libOrthancPostgreSQLStorage.so"]
+  },
   "Worklists" : {
     "section" : "Worklists",
     "nonStandardDefaults" : {
