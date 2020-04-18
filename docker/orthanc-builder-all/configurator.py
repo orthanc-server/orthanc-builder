@@ -12,7 +12,6 @@ class OrthancConfigurator:
   def __init__(self):
     self.configurationSource = {}
     self.configuration = {}
-    self.enabledPlugins = []
 
     self.hasErrors = False
     self.hasDeprecatedSettings = False
@@ -113,7 +112,7 @@ class OrthancConfigurator:
   def _mergeConfigFromDefaults(self, config: dict, defaultsGroup: str):
     self.configuration = self._mergeConfigs(first=self.configuration, second=config, secondSource="defaults:" + defaultsGroup, jsonPath=JsonPath(), overwrite=False)
 
-  def mergeConfigFromDefaults(self, moveSoFiles: bool):
+  def mergeConfigFromDefaults(self, moveSoFiles: bool = False):
     
     self._mergeConfigFromDefaults(self.orthancNonStandardDefaults, "orthanc")
 
@@ -148,7 +147,7 @@ class OrthancConfigurator:
   
     if envKey.endswith("_SECRET"):  # these env var defines the file in which we'll find the value of their env var !
       envVarName = envKey[:-len("_SECRET")]
-      fileName = os.environ.get(envKey)
+      fileName = envValue
       logInfo("secret-key-file: " + envVarName + " / " + fileName)
       self.secretsFiles[fileName] = envVarName
 
@@ -182,15 +181,15 @@ class OrthancConfigurator:
     # this is one secret file that has been defined in i.e ORTHANC__POSTGRESQL_PASSWORD_SECRET env-var
     # that defines the file in which ORTHANC__POSTRESQL_PASSWORD will be stored
     if relativeSecretPath in self.secretsFiles:
-      readSecret(secretPath, content, self.secretsFiles[relativeSecretPath])
+      self.readSecret(secretPath, content, self.secretsFiles[relativeSecretPath])
     
     # else this is a secret whose name is i.e ORTHANC__POSTRESQL_PASSWORD
-    elif relativeSecretPath.startswith("ORTHANC__") or relativeSecretPath in nonStandardEnvVarNames:
+    elif relativeSecretPath.startswith("ORTHANC__") or relativeSecretPath in self.nonStandardEnvVarNames:
     
-      if relativeSecretPath in nonStandardEnvVarNames:
+      if relativeSecretPath in self.nonStandardEnvVarNames:
         logWarning("You're using a deprecated secret name: " + relativeSecretPath)
 
-      readSecret(secretPath, content, relativeSecretPath)
+      self.readSecret(secretPath, content, relativeSecretPath)
 
 
   def readSecret(self, path: str, content: str, envKey: str):

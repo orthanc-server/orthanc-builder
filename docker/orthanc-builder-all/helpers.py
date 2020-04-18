@@ -71,6 +71,13 @@ def isEnvVarTrue(envVar: str) -> bool:
   return os.environ.get(envVar, "false") == "true"
 
 
+# transforms QUERY_RETRIEVE_SIZE into QueryRetrieveSize
+def envVarToCamelCase(envVarName: str) -> str:
+  name = ""
+  for word in envVarName.split("_"):
+    name = name + word[0] + word.lower()[1:]
+  return name
+
 
 def removeCppCommentsFromJson(text: str):
     def replacer(match):
@@ -97,51 +104,3 @@ def insertInDict(jsonPath: JsonPath, value: any) -> dict:
     return output
 
 
-class OrthancConfigurator:
-
-  def __init__(self):
-    self.configurationSource = {}
-    self.configuration = {}
-
-  def _mergeConfigs(self, first: dict, second: dict, secondSource: str, jsonPath: JsonPath, overwrite: bool) -> dict:
-    
-    apply = True
-    for k, v in second.items():
-      keyPath = jsonPath.clone()
-      keyPath.append(k)
-
-      if isinstance(v, dict) and k in first:
-        self._mergeConfigs(first[k], second[k], secondSource, keyPath, overwrite)
-        apply = False
-      elif k in first and str(keyPath) in self.configurationSource:
-        if overwrite:
-          logWarning("{k} has already been defined in {cs}; it will be overwritten by the value defined in {s}".format(k = str(keyPath), cs = self.configurationSource[str(keyPath)], s = secondSource))
-        else:
-          apply = False
-
-      if apply:
-        self.configurationSource[str(keyPath)] = secondSource
-        first[k] = v
-    
-    return first
-
-  def mergeConfigFromFile(self, config: dict, configFilePath: str):
-    self.configuration = self._mergeConfigs(first=self.configuration, second=config, secondSource="file:" + configFilePath, jsonPath=JsonPath(), overwrite=True)
-
-  def mergeConfigFromDefaults(self, config: dict, defaultsGroup: str):
-    self.configuration = self._mergeConfigs(first=self.configuration, second=config, secondSource="defaults:" + defaultsGroup, jsonPath=JsonPath(), overwrite=False)
-
-  def setConfig(self, jsonPath: JsonPath, value: str, source: str, overwrite: bool = True):
-    try:
-      jsonValue = json.loads(value) # will work for number, booleans and json but not for strings
-    except ValueError as e:
-      jsonValue = value
-
-    configFromEnvVar = insertInDict(jsonPath, jsonValue)
-    return self._mergeConfigs(first=self.configuration, second=configFromEnvVar, secondSource=source, jsonPath=JsonPath(), overwrite=overwrite)
-
-  # def setDefault(self, path: str, value: any):
-  #   jsonPath = path.split(".")
-
-  #   configFromDefault = insertInDict(jsonPath, value)
-  #   return self._mergeConfigs(first=self.configuration, second=configFromDefault, secondSource="defaults", jsonPath=jsonPath, overwrite=False)

@@ -2,7 +2,7 @@ import unittest
 from configurator import OrthancConfigurator
 
 
-class LegacyTest(unittest.TestCase):
+class CurrentTest(unittest.TestCase):
   
   def test_default_config(self):
     c = OrthancConfigurator()
@@ -11,10 +11,28 @@ class LegacyTest(unittest.TestCase):
     self.assertTrue(c.configuration["RemoteAccessAllowed"])
     self.assertTrue(c.configuration["AuthenticationEnabled"])
 
+  def test_multiple_files(self):
+    c = OrthancConfigurator()
+    worklistsConfig = {
+      "Worklists" : {
+        "Database" : "tutu"
+      }
+    }
+    pgConfig = {
+      "PostgreSQL" : {
+        "Host" : "host"
+      }
+    }
+
+    c.mergeConfigFromFile(worklistsConfig, "worklists.json")
+    c.mergeConfigFromFile(pgConfig, "pg.json")
+
+    self.assertIn("Worklists", c.getEnabledPlugins())
+    self.assertIn("PostgreSQL", c.getEnabledPlugins())
 
   def test_simple_env_vars_to_enable_plugin(self):
     c = OrthancConfigurator()
-    c.mergeConfigFromEnvVar("WL_ENABLED", "true")
+    c.mergeConfigFromEnvVar("WORKLISTS_PLUGIN_ENABLED", "true")
 
     self.assertIn("Worklists", c.getEnabledPlugins())
 
@@ -34,7 +52,7 @@ class LegacyTest(unittest.TestCase):
 
   def test_direct_secret(self):
     c = OrthancConfigurator()
-    c.mergeConfigFromSecret("/run/secrets/PG_PASSWORD", "pg-password")
+    c.mergeConfigFromSecret("/run/secrets/ORTHANC__POSTGRESQL__PASSWORD", "pg-password")
 
     self.assertIn("PostgreSQL", c.configuration)
     self.assertIn("PostgreSQL", c.getEnabledPlugins())
@@ -42,7 +60,7 @@ class LegacyTest(unittest.TestCase):
 
   def test_indirect_secret(self):
     c = OrthancConfigurator()
-    c.mergeConfigFromEnvVar("PG_PASSWORD_SECRET", "pg-password-file")
+    c.mergeConfigFromEnvVar("ORTHANC__POSTGRESQL__PASSWORD_SECRET", "pg-password-file")
     c.mergeConfigFromSecret("/run/secrets/pg-password-file", "pg-password")
 
     self.assertIn("PostgreSQL", c.configuration)
