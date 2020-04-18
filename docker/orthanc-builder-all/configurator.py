@@ -86,17 +86,20 @@ class OrthancConfigurator:
 
   def _mergeConfigs(self, first: dict, second: dict, secondSource: str, jsonPath: JsonPath, overwrite: bool) -> dict:
     
-    apply = True
     for k, v in second.items():
+      apply = True
       keyPath = jsonPath.clone()
       keyPath.append(k)
 
       if isinstance(v, dict) and k in first:
         self._mergeConfigs(first[k], second[k], secondSource, keyPath, overwrite)
         apply = False
-      elif k in first and str(keyPath) in self.configurationSource:
+      elif k in first:
         if overwrite:
-          logWarning("{k} has already been defined in {cs}; it will be overwritten by the value defined in {s}".format(k = str(keyPath), cs = self.configurationSource[str(keyPath)], s = secondSource))
+          if str(keyPath) in self.configurationSource:
+            logWarning("{k} has already been defined in {cs}; it will be overwritten by the value defined in {s}".format(k = str(keyPath), cs = self.configurationSource[str(keyPath)], s = secondSource))
+          else:
+            logWarning("{k} has already been defined; it will be overwritten by the value defined in {s}".format(k = str(keyPath), s = secondSource))
         else:
           apply = False
 
@@ -134,10 +137,11 @@ class OrthancConfigurator:
         }
         self._mergeConfigFromDefaults(pluginDefaultConfig, pluginName)
 
-      if "libs" in pluginDef:
+      if moveSoFiles and "libs" in pluginDef:
         for lib in pluginDef["libs"]:
           try:
-            os.rename("/usr/share/orthanc/plugins-disabled/" + lib, "/usr/share/orthanc/plugins/" + lib)
+            if not os.path.isfile("/usr/share/orthanc/plugins/" + lib): # the file might already be there (in case of container restart)
+              os.rename("/usr/share/orthanc/plugins-disabled/" + lib, "/usr/share/orthanc/plugins/" + lib)
           except:
             logError("failed to move {l} file".format(l = lib))
             self.hasErrors = True
@@ -145,7 +149,17 @@ class OrthancConfigurator:
 
   def mergeConfigFromEnvVar(self, envKey: str, envValue:str):
   
-    if envKey.endswith("_SECRET"):  # these env var defines the file in which we'll find the value of their env var !
+    if envKey == "ORTHANC_JSON":
+      try:
+        config = json.loads(removeCppCommentsFromJson(envValue))
+      except:
+        logError("Unable to parse the ORTHANC_JSON env-var, probably due to an invalid JSON syntax")
+        self.hasErrors = True
+        return
+
+      self.configuration = self._mergeConfigs(first=self.configuration, second=config, secondSource="env-var: ORTHANC_JSON", jsonPath=JsonPath(), overwrite=True)        
+
+    elif envKey.endswith("_SECRET"):  # these env var defines the file in which we'll find the value of their env var !
       envVarName = envKey[:-len("_SECRET")]
       fileName = envValue
       logInfo("secret-key-file: " + envVarName + " / " + fileName)

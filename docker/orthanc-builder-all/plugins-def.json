@@ -20,21 +20,21 @@
   "OrthancWebViewer" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
-    "enablingEnvVar" : "ORTHANC_VIEWER_PLUGIN_ENABLED",
+    "enablingEnvVar" : "ORTHANC_WEB_VIEWER_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "OWV_ENABLED",
     "libs" : ["libOrthancWebViewer.so"]
   },
   "OsimisWebViewerBasic" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
-    "enablingEnvVar" : "OSIMIS_VIEWER1_PLUGIN_ENABLED",
+    "enablingEnvVar" : "OSIMIS_WEB_VIEWER1_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WVB_ENABLED",
     "libs" : ["libOsimisWebViewer.so"]
   },
   "OsimisWebViewerBasicAlpha" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
-    "enablingEnvVar" : "OSIMIS_VIEWER1_ALPHA_PLUGIN_ENABLED",
+    "enablingEnvVar" : "OSIMIS_WEB_VIEWER1_ALPHA_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WVB__ALPHA_ENABLED",
     "libs" : ["libOsimisWebViewerAlpha.so"]
   },

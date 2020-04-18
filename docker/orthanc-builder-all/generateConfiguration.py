@@ -9,7 +9,7 @@ import subprocess
 from helpers import JsonPath, logInfo, logWarning, logError, removeCppCommentsFromJson, isEnvVarDefinedEmptyOrTrue, enableVerboseModeForConfigGeneration
 from configurator import OrthancConfigurator
 
-os.environ["DEBUG"]="true"
+#os.environ["DEBUG"]="true"
 if os.environ.get("DEBUG", "false") == "true":  # for dev only -> to remove
   os.environ["VERBOSE_STARTUP"] = "true"
 
@@ -45,10 +45,6 @@ for filePath in glob.glob("/etc/orthanc/*.json"):
 
 logInfo("Discovering configuration files from /run/secrets/*.json")
 for filePath in glob.glob("/run/secrets/*.json"):
-  configFiles.append(filePath)
-
-logInfo("TODO REMOVE Discovering configuration files from ./docker/orthanc-builder-all/tmp/*.json")
-for filePath in glob.glob("./docker/orthanc-builder-all/tmp/*.json"):
   configFiles.append(filePath)
 
 for filePath in configFiles:
@@ -91,61 +87,6 @@ for secretPath in glob.glob("/run/secrets/*"):
 configurator.mergeConfigFromDefaults(moveSoFiles=True)
 
 
-################# enable plugins and apply their defaults ################################
-
-
-# for pluginName, pluginDef in plugins.items():
-  
-#   if "section" in pluginDef:
-#     section = pluginDef["section"]
-#   else:
-#     section = pluginName
-
-#   enabled = section in configurator.configuration
-
-#   # multiple plugins can have the same section (i.e: the web-viewers)
-#   # so they need to have one of their enabling env var set to true
-#   if pluginDef["enablingEnvVarIsRequired"]:
-#     enabled = False
-#   else:
-#     # for other plugins, if at least one setting of the plugin section has been defined,
-#     # it is considered as enabled
-#     enabled = section in configurator.configuration
-
-#   if "enablingEnvVar" in pluginDef and isEnvVarDefinedEmptyOrTrue(pluginDef["enablingEnvVar"]):
-#     enabled = True
-  
-#   if "enablingEnvVarLegacy" in pluginDef and isEnvVarDefinedEmptyOrTrue(pluginDef["enablingEnvVarLegacy"]):
-#     enabled = True
-#     logWarning("You're using a deprecated env-var to enable the {p} plugin, you should use {n} instead of {o}".format(
-#       p=pluginName,
-#       n=pluginDef["enablingEnvVar"],
-#       o=pluginDef["enablingEnvVarLegacy"]
-#     ))
-#     hasDeprecatedSettings = True
-
-#   if enabled:
-#     # copy defaults config and move the plugin.so into the right folder
-
-#     logInfo("Enabling {p} plugin".format(p = pluginName))
-    
-#     if "nonStandardDefaults" in plugins[pluginName]:
-
-#       pluginDefaultConfig = {
-#         section: plugins[pluginName]["nonStandardDefaults"]
-#       }
-#       configurator.mergeConfigFromDefaults(pluginDefaultConfig, pluginName)
-    
-#     if "libs" in pluginDef:
-#       for lib in pluginDef["libs"]:
-#         try:
-#           os.rename("/usr/share/orthanc/plugins-disabled/" + lib, "/usr/share/orthanc/plugins/" + lib)
-#         except:
-#           logError("failed to move {l} file".format(l = lib))
-#           hasErrors = True
-#   else:
-#     logInfo("{p} won't be enabled, no configuration found for this plugin".format(p = pluginName))
-
 logInfo("generated configuration file: " + json.dumps(configurator.configuration, indent=2))
 
 if configurator.hasDeprecatedSettings:
@@ -153,28 +94,10 @@ if configurator.hasDeprecatedSettings:
 
 if configurator.hasErrors:
   logError("There were some errors while preparing the configuration file for Orthanc.")
-#  exit(-1)
+  exit(-1)
 
 
 configFilePath="/tmp/orthanc.json"
 logInfo("generating temporary configuration file in " + configFilePath)
 with open(configFilePath, "w+t") as fp:
   json.dump(configurator.configuration, fp=fp, indent=2)
-
-
-# cmd = ["Orthanc"]
-# if isEnvVarDefinedEmptyOrTrue("TRACE_ENABLED"):
-#   cmd.append("--trace")
-# elif isEnvVarDefinedEmptyOrTrue("VERBOSE_ENABLED"):
-#   cmd.append("--verbose")
-  
-
-# cmd.append(tmpConfigFile.name)
-  
-# orthancProcess = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-# orthancProcess.wait()
-# for line in orthancProcess.stdout:
-#   print(line)
-# print(orthancProcess.returncode)
-#orthancProcess = subprocess.run(cmd, capture_output=True)
-

@@ -1,4 +1,5 @@
 import unittest
+import json
 from configurator import OrthancConfigurator
 
 
@@ -30,11 +31,41 @@ class CurrentTest(unittest.TestCase):
     self.assertIn("Worklists", c.getEnabledPlugins())
     self.assertIn("PostgreSQL", c.getEnabledPlugins())
 
+
+  def test_file_in_env_var(self):
+    c = OrthancConfigurator()
+    worklistsConfig = {
+      "Worklists" : {
+        "Database" : "tutu"
+      }
+    }
+    configFileInString = json.dumps(worklistsConfig, indent=2)
+
+    c.mergeConfigFromEnvVar("ORTHANC_JSON", configFileInString)
+
+    self.assertIn("Worklists", c.getEnabledPlugins())
+    self.assertEqual("tutu", c.configuration["Worklists"]["Database"])
+
   def test_simple_env_vars_to_enable_plugin(self):
     c = OrthancConfigurator()
     c.mergeConfigFromEnvVar("WORKLISTS_PLUGIN_ENABLED", "true")
 
     self.assertIn("Worklists", c.getEnabledPlugins())
+
+  def test_file_not_overwritten_by_plugin_default(self):
+    c = OrthancConfigurator()
+    pgConfig = {
+      "PostgreSQL" : {
+        "Password" : "pg-password",
+        "Host" : "host"
+      }
+    }
+    c.mergeConfigFromFile(pgConfig, "pg.json")
+    c.mergeConfigFromDefaults()
+
+    self.assertEqual("host", c.configuration["PostgreSQL"]["Host"])
+    self.assertEqual("pg-password", c.configuration["PostgreSQL"]["Password"])
+    self.assertEqual("postgres", c.configuration["PostgreSQL"]["Username"])
 
 
   def test_simple_section_to_enable_plugin(self):
