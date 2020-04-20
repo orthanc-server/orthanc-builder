@@ -1,0 +1,36 @@
+{
+  "MSSQL" : {
+    "enablingEnvVar" : "MSSQL_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "MSSQL_ENABLED",
+    "nonStandardDefaults" : {
+      "EnableIndex": true,
+      "EnableStorage": false,
+      "ConnectionString": "SHOULD BE DEFINED BY YOU",
+      "LicenseString": "SHOULD BE DEFINED BY YOU"
+    },
+    "libs" : ["libOrthancMSSQLIndex.so"]
+  },
+
+  "OsimisWebViewerPro" : {
+    "section" : "WebViewer",
+    "enablingEnvVarIsRequired": true,
+    "enablingEnvVar" : "OSIMIS_WEB_VIEWER1_PRO_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "WVP_ENABLED",
+    "nonStandardDefaults" : {
+      "LicenseString": "SHOULD BE DEFINED BY YOU"
+    },
+    "libs" : ["libOsimisWebViewerPro.so"]
+  },
+  
+  "OsimisWebViewerProAlpha" : {
+    "section" : "WebViewer",
+    "enablingEnvVarIsRequired": true,
+    "enablingEnvVar" : "OSIMIS_WEB_VIEWER1_PRO_ALPHA_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "WVP_ALPHA_ENABLED",
+    "nonStandardDefaults" : {
+      "LicenseString": "SHOULD BE DEFINED BY YOU"
+    },
+    "libs" : ["libOsimisWebViewerProAlpha.so"]
+  }
+
+}

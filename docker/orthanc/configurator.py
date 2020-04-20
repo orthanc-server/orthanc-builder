@@ -54,20 +54,23 @@ class OrthancConfigurator:
   def loadSettings(self):
 
     # load non standard env-vars
-    with open(os.path.dirname(os.path.realpath(__file__)) + "/env-var-legacy.json") as fp:
-      self.nonStandardEnvVarNames = json.load(fp)
+    for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/env-var-legacy*.json"):
+      with open(filePath) as fp:
+        self.nonStandardEnvVarNames.update(json.load(fp))
 
     # orthanc variables not following the standard conversion rule
-    with open(os.path.dirname(os.path.realpath(__file__)) + "/env-var-non-standards.json") as fp:
-      self.nonStandardEnvVarNames.update(json.load(fp))
+    for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/env-var-non-standards*.json"):
+      with open(filePath) as fp:
+        self.nonStandardEnvVarNames.update(json.load(fp))
 
     # orthanc defaults
     with open(os.path.dirname(os.path.realpath(__file__)) + "/orthanc-defaults.json") as fp:
       self.orthancNonStandardDefaults = json.load(fp)
 
     # plugins def
-    with open(os.path.dirname(os.path.realpath(__file__)) + "/plugins-def.json") as fp:
-      self.pluginsDef = json.load(fp)
+    for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/plugins-def*.json"):
+      with open(filePath) as fp:
+        self.pluginsDef = json.load(fp)
 
   def getJsonPathFromEnvVarName(self, envVarName: str) -> JsonPath:
     if envVarName in self.nonStandardEnvVarNames:
