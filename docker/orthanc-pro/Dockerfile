@@ -2,6 +2,12 @@ ARG BASE_ORTHANC_IMAGE_TAG=current
 
 FROM docker.io/osimis/orthanc:${BASE_ORTHANC_IMAGE_TAG}
 
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get --assume-yes update && \
+		apt-get --assume-yes install gnupg2 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update && \
@@ -11,9 +17,6 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 
-# RUN export DEBIAN_FRONTEND=noninteractive && \
-# 	apt-get --assume-yes update && \
-# 		apt-get --assume-yes install gnupg2
 
 # RUN export DEBIAN_FRONTEND=noninteractive && \
 # 	apt-get --assume-yes update && \
