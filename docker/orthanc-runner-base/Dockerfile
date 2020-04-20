@@ -9,11 +9,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes install wget && \
   apt-get --assume-yes install curl && \
   apt-get --assume-yes install python3.7 && \
+  apt-get --assume-yes install python3.7-pip && \
 	apt-get --assume-yes install ca-certificates && \
 	apt-get --assume-yes install tzdata && \
 	apt-get --assume-yes install locales && \
 	apt-get --assume-yes install libdcmtk14 && \
-	apt-get --assume-yes install libboost-filesystem1.67.0 libboost-locale1.67.0 libboost-regex1.67.0 libboost-system1.67.0 libboost-thread1.67.0 && \
+	apt-get --assume-yes install libboost-log1.67.0 libboost-filesystem1.67.0 libboost-locale1.67.0 libboost-regex1.67.0 libboost-system1.67.0 libboost-thread1.67.0 && \
 	apt-get --assume-yes install libjpeg62-turbo && \
 	apt-get --assume-yes install libjsoncpp1 && \
 	apt-get --assume-yes install liblua5.1-0 && \
