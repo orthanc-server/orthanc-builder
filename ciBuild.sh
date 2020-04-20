@@ -9,17 +9,17 @@ set -o errexit
 set -o xtrace
 
 # make sure we use the latest ubuntu image (which is the base of everything we build)
-docker pull ubuntu:18.04
+# docker pull debian:buster
 
 # Retrieve git metadata
 gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
 releaseCommitId=$(git rev-parse --short HEAD)
 
-if [[ $gitLongTag =~ dirty ]]; then
-	echo "commit your changes before building"
-	exit -1
-fi
+# if [[ $gitLongTag =~ dirty ]]; then
+# 	echo "commit your changes before building"
+# 	exit -1
+# fi
 
 if [[ ! $branchName ]]; then
 	# Exit if detached head

@@ -1,69 +1,163 @@
-FROM ubuntu:18.04
-SHELL ["/bin/bash", "-c"]
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/etc/orthanc"]
+########################## Orthanc
 
-# enable lua to find external modules (this list is obtained by running "return package.path" in a lua prompt)
-ENV LUA_PATH="./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua"
-ENV LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;/usr/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so"
+FROM osimis/orthanc-builder-base:current as build-orthanc
 
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get --assume-yes update && \
-	apt-get --assume-yes install locales ca-certificates wget tzdata && \
-	apt-get --assume-yes clean && \
-	rm --recursive --force /var/lib/apt/lists/* && \
-	locale-gen en_US en_US.UTF-8
+# CHANGE_VERSION_ORTHANC
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.6.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources
+RUN make -j 4
+RUN /build/UnitTests
 
-RUN mkdir --parents \
-	/etc/orthanc \
-	/usr/lib/orthanc/setup.d \
-	/usr/share/orthanc/plugins \
-  /usr/share/orthanc/plugins-disabled
+########################## Orthanc PG
+
+FROM osimis/orthanc-builder-base:current as build-plugin-pg
+
+RUN apt-get --assume-yes update
+RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
+
+# CHANGE_VERSION_PG
+RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancPostgreSQL-3.2" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/PostgreSQL
+RUN make -j 4
+# disabled: needs a PG server # RUN /build/UnitTests
+
+########################## Orthanc MySQL
+
+FROM osimis/orthanc-builder-base:current as build-plugin-mysql
+
+RUN apt-get --assume-yes update
+# on recent Debian, the libmysql-dev package is not available anymore
+# and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
+RUN apt-get --assume-yes install default-libmysqlclient-dev
+# RUN apt-get --assume-yes install libmariadb-dev
+
+# CHANGE_VERSION_MY_SQL
+RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-2.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/MySQL
+RUN make -j 4
+# disabled: needs a MySQL server # RUN /build/UnitTests
+
+########################## Orthanc Transfers
+
+FROM osimis/orthanc-builder-base:current as build-plugin-transfers
+
+# CHANGE_VERSION_TRANSFERS
+RUN hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "OrthancTransfers-1.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
+RUN /build/UnitTests
+
+########################## Orthanc Dicomweb
+
+FROM osimis/orthanc-builder-base:current as build-plugin-dicomweb
+
+# CHANGE_VERSION_DW
+RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "OrthancDicomWeb-1.1" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_GDCM=OFF /sources
+RUN make -j 4
+RUN /build/UnitTests
+
+########################## Orthanc WSI
+
+FROM osimis/orthanc-builder-base:current as build-plugin-wsi
+
+# CHANGE_VERSION_ORTHANC_WSI
+RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-0.6" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF /sources/ViewerPlugin
+RUN make -j 4
+# disabled: no unit tests: # RUN /build/UnitTests
+
+########################## Orthanc Webviewer
+
+FROM osimis/orthanc-builder-base:current as build-plugin-owv
+
+# CHANGE_VERSION_ORTHANC_WEB_VIEWER
+RUN hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r "OrthancWebViewer-2.5" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_GDCM=OFF /sources
+RUN make -j 4
+RUN /build/UnitTests
+
+########################## Orthanc authorization
+
+FROM osimis/orthanc-builder-base:current as build-plugin-auth
+
+# CHANGE_VERSION_AUTH
+RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r "0.2.3" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
+# disabled: no unit tests: # RUN /build/UnitTests
+
+########################## Orthanc GCP
+
+FROM osimis/orthanc-builder-base:current as build-plugin-gcp
+
+# CHANGE_VERSION_GOOGLE
+RUN hg clone https://hg.orthanc-server.com/orthanc-gcp/ -r "OrthancGoogleCloudPlatform-1.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
+# disabled: no unit tests: # RUN /build/UnitTests
+
+########################## Orthanc Python
+
+FROM osimis/orthanc-builder-base:current as build-plugin-python
+
+RUN apt-get --assume-yes update
+RUN apt-get --assume-yes install python3.7-dev
+
+# CHANGE_VERSION_ORTHANC_PYTHON
+RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r "OrthancPython-1.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.7 /sources
+RUN make -j 4
+# disabled: no unit tests: # RUN /build/UnitTests
+
+################################# the image that will run Orthanc dynamicaly linked
+FROM osimis/orthanc-runner-base:current
+
+RUN mkdir -p /etc/orthanc
+RUN mkdir -p /usr/share/orthanc/plugins-disabled/
+RUN mkdir -p /usr/share/orthanc/plugins/
+
+COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
+COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-disabled/
+# RUN ldd /usr/bin/Orthanc
+
+COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
+# currently not built COPY --from=build-plugin-wsi /build/OrthancWSIDicomToTiff /usr/local/bin/
+# currently not built COPY --from=build-plugin-wsi /build/OrthancWSIDicomizer /usr/local/bin/
+COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-gcp /build/libOrthancGoogleCloudPlatform.so /usr/share/orthanc/plugins-disabled/
 
 # CHANGE_VERSION_WVB
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
-
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/ffb6a998/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/35889ad3/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
-# CHANGE_VERSION_ORTHANC
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/Orthanc --output-document /usr/bin/Orthanc --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/OrthancRecoverCompressedFile --output-document /usr/bin/OrthancRecoverCompressedFile --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/libModalityWorklists.so --output-document /usr/share/orthanc/plugins-disabled/libModalityWorklists.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/orthanc/releases/1.6.0/libServeFolders.so --output-document /usr/share/orthanc/plugins-disabled/libServeFolders.so --quiet
-
-# CHANGE_VERSION_DW
-RUN wget http://orthanc.osimis.io/lsb/plugin-dicomweb/releases/1.1/libOrthancDicomWeb.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancDicomWeb.so --quiet
-
-# CHANGE_VERSION_PG
-RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.2/libOrthancPostgreSQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLIndex.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/plugin-postgresql/releases/3.2/libOrthancPostgreSQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancPostgreSQLStorage.so --quiet
-
-# CHANGE_VERSION_MY_SQL
-RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/2.0/libOrthancMySQLIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLIndex.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/plugin-mysql/releases/2.0/libOrthancMySQLStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMySQLStorage.so --quiet
-
-# CHANGE_VERSION_ORTHANC_WEB_VIEWER
-RUN wget http://orthanc.osimis.io/lsb/plugin-webviewer/releases/2.5/libOrthancWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWebViewer.so --quiet
-
-# CHANGE_VERSION_ORTHANC_WSI
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/libOrthancWSI.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancWSI.so --quiet
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/OrthancWSIDicomToTiff --output-document /usr/bin/OrthancWSIDicomToTiff --quiet
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/0.6/OrthancWSIDicomizer --output-document /usr/bin/OrthancWSIDicomizer --quiet
-
-# CHANGE_VERSION_AUTH   # note: lsb build does not work for 0.2.2 !
-RUN wget http://orthanc.osimis.io/docker-so/orthanc-authorization/0.2.2/libOrthancAuthorization.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancAuthorization.so --quiet
-
-# CHANGE_VERSION_TRANSFERS
-RUN wget http://orthanc.osimis.io/lsb/plugin-transfers/releases/1.0/libOrthancTransfers.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancTransfers.so --quiet
-
-# CHANGE_VERSION_GOOGLE
-RUN wget http://orthanc.osimis.io/lsb/plugin-gcp/releases/1.0/libOrthancGoogleCloudPlatform.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancGoogleCloudPlatform.so --quiet
-
-# make all downloaded binaries executable
-RUN chmod +x /usr/bin/*
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
 
-COPY orthanc/docker-entrypoint.sh /
-COPY orthanc/setup.sh /usr/lib/orthanc/
-COPY orthanc/setup.d/* /usr/lib/orthanc/setup.d/
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/tmp/orthanc.json"]
+
+COPY orthanc-builder-all/docker-entrypoint.sh /
+COPY orthanc-builder-all/*.json /startup/ 
+COPY orthanc-builder-all/*.py /startup/

@@ -95,6 +95,9 @@ function build {
 	fi
 }
 
+docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
+docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
+
 if [[ $buildImage ]]; then
 	build OsimisOrthancDockerImage osimis/orthanc
 fi
