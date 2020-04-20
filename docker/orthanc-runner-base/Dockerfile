@@ -9,7 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes install wget && \
   apt-get --assume-yes install curl && \
   apt-get --assume-yes install python3.7 && \
-  apt-get --assume-yes install python3.7-pip && \
+  apt-get --assume-yes install python3-pip && \
 	apt-get --assume-yes install ca-certificates && \
 	apt-get --assume-yes install tzdata && \
 	apt-get --assume-yes install locales && \
