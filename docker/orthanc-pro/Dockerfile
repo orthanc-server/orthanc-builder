@@ -47,12 +47,12 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/releases/1.3.1
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer-pro/commits/68fa1f85/libOsimisWebViewerPro.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerProAlpha.so --quiet
 
 #CHANGE_VERSION_MSSQL
-RUN wget orthanc.osimis.io/docker-so/mssql/1.1.0/libOrthancMsSqlIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so --quiet
+RUN wget orthanc.osimis.io/docker-so/mssql/debian-buster/dyn-build/libOrthancMsSqlIndex.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancMsSqlIndex.so --quiet
 
 #CHANGE_VERSION_BLOB_STORAGE
-RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.2/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
-RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.2/libazurestorage.so.3 --output-document /usr/local/lib/libazurestorage.so.3 --quiet
-RUN wget orthanc.osimis.io/docker-so/blob-storage/0.3.2/libcpprest.so.2.9 --output-document /usr/local/lib/libcpprest.so.2.9 --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libazurestorage.so.3 --output-document /usr/local/lib/libazurestorage.so.3 --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libcpprest.so.2.9 --output-document /usr/local/lib/libcpprest.so.2.9 --quiet
 
 # configure SSL for azure rest sdk
 ENV SSL_CERT_DIR=/etc/ssl/certs
