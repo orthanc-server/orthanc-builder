@@ -8,7 +8,7 @@
       "ConnectionString": "SHOULD BE DEFINED BY YOU",
       "LicenseString": "SHOULD BE DEFINED BY YOU"
     },
-    "libs" : ["libOrthancMSSQLIndex.so"]
+    "libs" : ["libOrthancMsSqlIndex.so"]
   },
 
   "OsimisWebViewerPro" : {
@@ -21,7 +21,7 @@
     },
     "libs" : ["libOsimisWebViewerPro.so"]
   },
-  
+
   "OsimisWebViewerProAlpha" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
