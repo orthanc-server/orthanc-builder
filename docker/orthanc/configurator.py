@@ -16,7 +16,9 @@ class OrthancConfigurator:
     self.hasErrors = False
     self.hasDeprecatedSettings = False
 
-    self.nonStandardEnvVarNames = {}
+    self.nonStandardEnvVars = {}
+    self.legacyEnvVars = {}
+    self.aliasEnvVars = {}
     self.orthancNonStandardDefaults = {}
     self.pluginsDef = {}
     self.secretsFiles = {}
@@ -45,6 +47,11 @@ class OrthancConfigurator:
         # it is considered as enabled
         enabled = (section in self.configuration) or (pluginName in self.pluginsEnabledByEnvVar)
 
+        # right now, the python plugin does not have its own section but can be enabled as 
+        # soon as you add a python script
+        if "enablingRootSetting" in pluginDef:
+          enabled = ("enablingRootSetting" in self.configuration) or enabled
+
       if enabled:
         enabledPlugins.append(pluginName)
 
@@ -56,12 +63,15 @@ class OrthancConfigurator:
     # load non standard env-vars
     for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/env-var-legacy*.json"):
       with open(filePath) as fp:
-        self.nonStandardEnvVarNames.update(json.load(fp))
+        self.legacyEnvVars.update(json.load(fp))
 
     # orthanc variables not following the standard conversion rule
     for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/env-var-non-standards*.json"):
       with open(filePath) as fp:
-        self.nonStandardEnvVarNames.update(json.load(fp))
+        self.aliasEnvVars.update(json.load(fp))
+
+    self.nonStandardEnvVars = self.legacyEnvVars.copy()
+    self.nonStandardEnvVars.update(self.aliasEnvVars)
 
     # orthanc defaults
     with open(os.path.dirname(os.path.realpath(__file__)) + "/orthanc-defaults.json") as fp:
@@ -73,8 +83,8 @@ class OrthancConfigurator:
         self.pluginsDef = json.load(fp)
 
   def getJsonPathFromEnvVarName(self, envVarName: str) -> JsonPath:
-    if envVarName in self.nonStandardEnvVarNames:
-      return JsonPath(self.nonStandardEnvVarNames[envVarName])
+    if envVarName in self.nonStandardEnvVars:
+      return JsonPath(self.nonStandardEnvVars[envVarName])
 
     elif envVarName.startswith("ORTHANC__"):
       envVarTokens = envVarName[len("ORTHANC__"):].split("__")
@@ -168,10 +178,11 @@ class OrthancConfigurator:
       logInfo("secret-key-file: " + envVarName + " / " + fileName)
       self.secretsFiles[fileName] = envVarName
 
-    elif envKey.startswith("ORTHANC__") or envKey in self.nonStandardEnvVarNames:
+    elif envKey.startswith("ORTHANC__") or envKey in self.nonStandardEnvVars:
 
-      if envKey in self.nonStandardEnvVarNames:
+      if envKey in self.legacyEnvVars:
         logWarning("You're using a deprecated environment variable name: " + envKey)
+        self.hasDeprecatedSettings = True
 
       jsonPath = self.getJsonPathFromEnvVarName(envKey)
       self.setConfig(jsonPath=jsonPath, value=envValue, source="env-var:" + envKey)
@@ -201,10 +212,11 @@ class OrthancConfigurator:
       self.readSecret(secretPath, content, self.secretsFiles[relativeSecretPath])
     
     # else this is a secret whose name is i.e ORTHANC__POSTRESQL_PASSWORD
-    elif relativeSecretPath.startswith("ORTHANC__") or relativeSecretPath in self.nonStandardEnvVarNames:
+    elif relativeSecretPath.startswith("ORTHANC__") or relativeSecretPath in self.nonStandardEnvVars:
     
-      if relativeSecretPath in self.nonStandardEnvVarNames:
+      if relativeSecretPath in self.legacyEnvVars:
         logWarning("You're using a deprecated secret name: " + relativeSecretPath)
+        self.hasDeprecatedSettings = True
 
       self.readSecret(secretPath, content, relativeSecretPath)
 
@@ -230,8 +242,3 @@ class OrthancConfigurator:
     configFromEnvVar = insertInDict(jsonPath, jsonValue)
     return self._mergeConfigs(first=self.configuration, second=configFromEnvVar, secondSource=source, jsonPath=JsonPath(), overwrite=overwrite)
 
-  # def setDefault(self, path: str, value: any):
-  #   jsonPath = path.split(".")
-
-  #   configFromDefault = insertInDict(jsonPath, value)
-  #   return self._mergeConfigs(first=self.configuration, second=configFromDefault, secondSource="defaults", jsonPath=jsonPath, overwrite=False)

@@ -66,6 +66,12 @@
     "libs" : ["libOrthancPostgreSQLIndex.so", "libOrthancPostgreSQLStorage.so"]
   },
 
+  "Python" : {
+    "enablingRootSetting": "PythonScript",
+    "enablingEnvVar" : "PYTHON_PLUGIN_ENABLED",
+    "libs" : ["libOrthancPython.so"]
+  },
+
   "ServeFolders" : {
     "enablingEnvVar" : "SERVE_FOLDERS_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "SERVEFOLDERS_ENABLED",
