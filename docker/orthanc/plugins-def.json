@@ -89,8 +89,8 @@
   },
 
   "Wsi": {
-    "enablingEnvVar" : "SWI_PLUGIN_ENABLED",
-    "enablingEnvVarLegacy" : "SWI_ENABLED",
+    "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "WSI_ENABLED",
     "libs" : ["libOrthancWSI.so"]
   }
 

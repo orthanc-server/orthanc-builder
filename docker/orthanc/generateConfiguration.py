@@ -9,22 +9,6 @@ import subprocess
 from helpers import JsonPath, logInfo, logWarning, logError, removeCppCommentsFromJson, isEnvVarDefinedEmptyOrTrue, enableVerboseModeForConfigGeneration
 from configurator import OrthancConfigurator
 
-#os.environ["DEBUG"]="true"
-if os.environ.get("DEBUG", "false") == "true":  # for dev only -> to remove
-  os.environ["VERBOSE_STARTUP"] = "true"
-
-  os.environ["ORTHANC__QUERY_RETRIEVE_SIZE"] = "1"
-  os.environ["ORTHANC__DICOM_AET"] = "ORTHANC_ENV"
-  os.environ["ORTHANC__CASE_SENSITIVE_PN"] = "false"
-  os.environ["PG_PASSWORD"] = "pg-password"
-  os.environ["PG_HOST"] = "host"
-
-  # os.environ["ORTHANC__PKCS11__MODULE"] = "tutu"
-  os.environ["AZSTOR_ACC_NAME"] = "tito"
-  os.environ["WL_ENABLED"] = ""
-  os.environ["WVB_ALPHA_ENABLED"] = ""
-  os.environ["ORTHANC__WEB_VIEWER__CACHE_ENABLED"] = "true"
-  os.environ["DW_HOST"] = ""
 
 configurator = OrthancConfigurator()
 
@@ -101,3 +85,10 @@ configFilePath="/tmp/orthanc.json"
 logInfo("generating temporary configuration file in " + configFilePath)
 with open(configFilePath, "w+t") as fp:
   json.dump(configurator.configuration, fp=fp, indent=2)
+
+
+############### setting other system environment variabes #####################################
+
+if not "MALLOC_ARENA_MAX" in os.environ:
+  logInfo("setting MALLOC_ARENA_MAX environment variable to 5 since it has not be defined")
+  os.environ["MALLOC_ARENA_MAX"] = "5"
