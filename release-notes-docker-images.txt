@@ -1,8 +1,9 @@
           - Startup completely rewritten in python.  New environment variables for all settings.
             Check the new documentation https://book.orthanc-server.com/users/docker-osimis.html#docker-osimis.
+          - added the python plugin (with python3.7 already installed in the image)
+          - new base image is now Debian:buster-slim instead of ubuntu:16.04
           - BREAKING CHANGE: backward compatibility of GoogleCloudPlatform plugin environment variables could not be maintained.
             A JSON section must now be provided for each "Accounts"
-          - added the python plugin
           - upgraded WVB_ALPHA to ffb6a998
           - upgraded WVP_ALPHA to 68fa1f85
 20.4.0  : - upgraded WVB_ALPHA to 35889ad3

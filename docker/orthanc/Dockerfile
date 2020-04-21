@@ -146,6 +146,9 @@ COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-
 COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-gcp /build/libOrthancGoogleCloudPlatform.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-disabled/
+
+
 
 # CHANGE_VERSION_WVB
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
