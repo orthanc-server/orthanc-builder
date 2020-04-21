@@ -50,7 +50,7 @@ class OrthancConfigurator:
         # right now, the python plugin does not have its own section but can be enabled as 
         # soon as you add a python script
         if "enablingRootSetting" in pluginDef:
-          enabled = ("enablingRootSetting" in self.configuration) or enabled
+          enabled = (pluginDef["enablingRootSetting"] in self.configuration) or enabled
 
       if enabled:
         enabledPlugins.append(pluginName)
