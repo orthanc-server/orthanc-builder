@@ -66,6 +66,22 @@
     "libs" : ["libOrthancPostgreSQLIndex.so", "libOrthancPostgreSQLStorage.so"]
   },
 
+  "MySQL" : {
+    "enablingEnvVar" : "MYSQL_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "MYSQL_ENABLED",
+    "nonStandardDefaults" : {
+      "EnableIndex": true,
+      "EnableStorage": false,
+      "Port": 3306,
+      "Host": "HOST MUST BE DEFINED",
+      "Database": "mysql",
+      "Username": "root",
+      "Password": "mysql",
+      "Lock": false
+    },
+    "libs" : ["libOrthancMySQLIndex.so", "libOrthancMySQLStorage.so"]
+  },
+
   "Python" : {
     "enablingRootSetting": "PythonScript",
     "enablingEnvVar" : "PYTHON_PLUGIN_ENABLED",
