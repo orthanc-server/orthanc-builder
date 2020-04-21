@@ -4,10 +4,12 @@
     "enablingEnvVarLegacy" : "AUTHZ_ENABLED",
     "libs" : ["libOrthancAuthorization.so"]
   },
+
   "ConnectivityChecks" : {
     "enablingEnvVar" : "CONNECTIVITY_CHECKS_PLUGIN_ENABLED",
     "libs" : ["libConnectivityChecks.so"]
   },
+
   "DicomWeb" : {
     "nonStandardDefaults" : {
       "Enable" : true
@@ -17,6 +19,12 @@
     "libs" : ["libOrthancDicomWeb.so"]
   },
 
+  "GoogleCloudPlatform" : {
+    "enablingEnvVar" : "GOOGLE_CLOUD_PLATFORM_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "GCP_ENABLED",
+    "libs" : ["libOrthancGoogleCloudPlatform.so"]
+  },
+
   "OrthancWebViewer" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
@@ -24,6 +32,7 @@
     "enablingEnvVarLegacy" : "OWV_ENABLED",
     "libs" : ["libOrthancWebViewer.so"]
   },
+
   "OsimisWebViewerBasic" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
@@ -31,6 +40,7 @@
     "enablingEnvVarLegacy" : "WVB_ENABLED",
     "libs" : ["libOsimisWebViewer.so"]
   },
+
   "OsimisWebViewerBasicAlpha" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
@@ -38,6 +48,7 @@
     "enablingEnvVarLegacy" : "WVB_ALPHA_ENABLED",
     "libs" : ["libOsimisWebViewerAlpha.so"]
   },
+
   "PostgreSQL" : {
     "enablingEnvVar" : "POSTGRESQL_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "PG_ENABLED",
@@ -54,6 +65,19 @@
     },
     "libs" : ["libOrthancPostgreSQLIndex.so", "libOrthancPostgreSQLStorage.so"]
   },
+
+  "ServeFolders" : {
+    "enablingEnvVar" : "SERVE_FOLDERS_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "SERVEFOLDERS_ENABLED",
+    "libs" : ["libServeFolders.so"]
+  },
+
+  "Transfers" : {
+    "enablingEnvVar" : "TRANSFERS_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "TRANSFERS_ENABLED",
+    "libs" : ["libOrthancTransfers.so"]
+  },
+
   "Worklists" : {
     "nonStandardDefaults" : {
       "Enable" : true,
@@ -62,6 +86,12 @@
     "enablingEnvVar" : "WORKLISTS_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WL_ENABLED",
     "libs" : ["libModalityWorklists.so"]
+  },
+
+  "Wsi": {
+    "enablingEnvVar" : "SWI_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "SWI_ENABLED",
+    "libs" : ["libOrthancWSI.so"]
   }
 
 }

@@ -1,4 +1,17 @@
 {
+  "BlobStorage" : {
+    "enablingEnvVar" : "BLOB_STORAGE_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy" : "AZSTOR_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable": true,
+      "AccountKey": "MUST BE DEFINED BY YOU",
+      "AccountName": "MUST BE DEFINED BY YOU",
+      "ContainerName": "MUST BE DEFINED BY YOU",
+      "LicenseString": "MUST BE DEFINED BY YOU"
+    },
+    "libs" : ["libOrthancBlobStorage.so"]
+  },
+
   "MSSQL" : {
     "enablingEnvVar" : "MSSQL_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "MSSQL_ENABLED",

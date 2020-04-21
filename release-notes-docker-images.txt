@@ -1,3 +1,5 @@
+          - backward compatibility of GoogleCloudPlatform plugin environment variables could not be maintained.
+            A JOSN section must now be provided for each "Accounts"
           - upgraded WVB_ALPHA to ffb6a998
           - upgraded WVP_ALPHA to 68fa1f85
 20.4.0  : - upgraded WVB_ALPHA to 35889ad3
