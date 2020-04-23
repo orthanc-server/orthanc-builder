@@ -1,2 +1,0 @@
-name=OWV
-plugin=libOrthancWebViewer

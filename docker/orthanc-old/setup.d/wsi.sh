@@ -1,2 +1,0 @@
-name=WSI
-plugin=libOrthancWSI

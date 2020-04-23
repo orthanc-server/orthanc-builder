@@ -1,2 +1,0 @@
-name=WSIX
-plugin=libOrthancWSIx
