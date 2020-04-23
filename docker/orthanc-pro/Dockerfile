@@ -12,7 +12,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update && \
   ACCEPT_EULA=Y apt-get install -y msodbcsql17 unixodbc-dev && \
-  DEBIAN_FRONTEND=noninteractive apt-get -y install libcpprest-dev && \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install libcpprest && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
@@ -27,9 +27,9 @@ RUN wget orthanc.osimis.io/docker-so/mssql/debian-buster/dyn-build/libOrthancMsS
 
 #CHANGE_VERSION_BLOB_STORAGE
 RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
-RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libazurestorage.so.3 --output-document /usr/local/lib/libazurestorage.so.3 --quiet
-RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libcpprest.so.2.9 --output-document /usr/local/lib/libcpprest.so.2.9 --quiet
+RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libazurestorage.so.7 --output-document /usr/lib/x86_64-linux-gnu/libazurestorage.so.7 --quiet
 
+RUN ldd /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so
 # configure SSL for azure rest sdk
 ENV SSL_CERT_DIR=/etc/ssl/certs
 
