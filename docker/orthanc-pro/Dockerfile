@@ -29,7 +29,6 @@ RUN wget orthanc.osimis.io/docker-so/mssql/debian-buster/dyn-build/libOrthancMsS
 RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libOrthancBlobStorage.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so --quiet
 RUN wget orthanc.osimis.io/docker-so/blob-storage/debian-buster/dyn-build/libazurestorage.so.7 --output-document /usr/lib/x86_64-linux-gnu/libazurestorage.so.7 --quiet
 
-RUN ldd /usr/share/orthanc/plugins-disabled/libOrthancBlobStorage.so
 # configure SSL for azure rest sdk
 ENV SSL_CERT_DIR=/etc/ssl/certs
 
