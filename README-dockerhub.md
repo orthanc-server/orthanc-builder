@@ -5,7 +5,7 @@ Note: the Orthanc version included in this image is exactly the same as the Orth
 this image contain the Osimis Web Viewer plugin which is not included in the `jodogne/orthanc-plugins` image.  Furthermore,
 this image provides an easy configuration through environment variables which is not the case of the `jodogne/orthanc` image.
 
-Full documentation is available [here](https://osimis.atlassian.net/wiki/spaces/OKB/pages/26738689/How+to+use+osimis+orthanc+Docker+images).
+Full documentation is available [here](https://book.orthanc-server.com/users/docker-osimis.html).
 
 Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
 
@@ -14,14 +14,14 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.4.1
+#### 20.4.2
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.6.1
 Osimis Web viewer plugin              1.3.1
-Osimis Web viewer plugin (alpha)      35889ad3
+Osimis Web viewer plugin (alpha)      ffb6a998
 Modality worklists plugin             1.6.1
 Serve folders plugin                  1.6.1
 Orthanc Web viewer plugin             2.5
@@ -29,7 +29,7 @@ DICOMweb plugin                       1.1
 PostgreSQL plugin                     3.2
 MySQL plugin                          2.0
 WSI Web viewer plugin                 0.6
-Authorization plugin                  0.2.2
+Authorization plugin                  0.2.3
 Transfers accelerator plugin          1.0
 Google Cloud Platform plugin          1.0
 ```
