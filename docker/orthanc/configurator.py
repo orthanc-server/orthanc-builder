@@ -80,7 +80,7 @@ class OrthancConfigurator:
     # plugins def
     for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/plugins-def*.json"):
       with open(filePath) as fp:
-        self.pluginsDef = json.load(fp)
+        self.pluginsDef.update(json.load(fp))
 
   def getJsonPathFromEnvVarName(self, envVarName: str) -> JsonPath:
     if envVarName in self.nonStandardEnvVars:
