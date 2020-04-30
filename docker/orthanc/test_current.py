@@ -80,6 +80,15 @@ class CurrentTest(unittest.TestCase):
     self.assertIn("Worklists", c.configuration)
     self.assertIn("Worklists", c.getEnabledPlugins())
 
+  def test_python_plugin_with_root_setting(self):
+    c = OrthancConfigurator()
+    config = {
+      "PythonScript" : "tutu.py"
+    }
+    c.mergeConfigFromFile(config, "config.json")
+
+    self.assertIn("Python", c.getEnabledPlugins())
+
 
   def test_direct_secret(self):
     c = OrthancConfigurator()

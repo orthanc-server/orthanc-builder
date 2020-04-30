@@ -54,17 +54,14 @@ for envKey, envValue in os.environ.items():
 
 logInfo("Analyzing secrets")
 
-# parse all files in /run/secrets whose filename looks like an env-variable (i.e ORTHANC__MYSQL__PASSWORD)
-envVarLikeName = re.compile("[A-Z\_]*")
-legacySecret = re.compile("[A-Z\_]*_SECRET$")
-
 for secretPath in glob.glob("/run/secrets/*"):
   logInfo("secret: " + secretPath)
 
-  with open(secretPath, "r") as fp:
-    secretValue = fp.read()
+  if os.path.isfile(secretPath):
+    with open(secretPath, "r") as fp:
+      secretValue = fp.read()
 
-  configurator.mergeConfigFromSecret(secretPath, secretValue)
+    configurator.mergeConfigFromSecret(secretPath, secretValue)
 
 ################# apply defaults that have not been set yet (from Orthanc and plugins) ################################
 

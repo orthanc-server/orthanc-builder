@@ -132,18 +132,21 @@ class OrthancConfigurator:
     
     self._mergeConfigFromDefaults(self.orthancNonStandardDefaults, "orthanc")
 
+    logInfo("going through all enabled plugins")
+
     for pluginName in self.getEnabledPlugins():
+      logInfo(pluginName + " is enabled")
       
       pluginDef = self.pluginsDef[pluginName]
 
-      if "section" in pluginDef:
-        section = pluginDef["section"]
-      else:
-        section = pluginName
-      
       if "nonStandardDefaults" in pluginDef:
 
         logInfo("Applying defaults for {p} plugin".format(p = pluginName))
+
+        if "section" in pluginDef:
+          section = pluginDef["section"]
+        else:
+          section = pluginName
 
         pluginDefaultConfig = {
           section: pluginDef["nonStandardDefaults"]
@@ -151,6 +154,8 @@ class OrthancConfigurator:
         self._mergeConfigFromDefaults(pluginDefaultConfig, pluginName)
 
       if moveSoFiles and "libs" in pluginDef:
+        logInfo("Moving .so file for {p} plugin".format(p = pluginName))
+
         for lib in pluginDef["libs"]:
           try:
             if not os.path.isfile("/usr/share/orthanc/plugins/" + lib): # the file might already be there (in case of container restart)
