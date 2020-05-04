@@ -1,3 +1,4 @@
+20.5.0  : - tag used only for windows installers; not Docker images
 20.4.3  : - fix errors when there's a directory in /run/secrets/
 20.4.2  : - Startup completely rewritten in python.  New environment variables for all settings.
             Check the new documentation https://book.orthanc-server.com/users/docker-osimis.html.
