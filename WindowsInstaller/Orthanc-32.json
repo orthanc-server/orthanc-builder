@@ -58,6 +58,17 @@
       ]
     },
     {
+      "Description" : "Advanced authorization plugin (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "osimis",
+      "Artifacts" : [
+        [ "Authorization 0.2.3 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "Authorization 0.2.3 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment:" ]
+      ]
+    },
+    {
       "Description" : "Google Cloud Platform",
       "Name" : "gcp",
       "Mandatory" : false,
