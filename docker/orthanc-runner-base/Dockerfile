@@ -17,7 +17,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes install libboost-log1.67.0 libboost-filesystem1.67.0 libboost-locale1.67.0 libboost-regex1.67.0 libboost-system1.67.0 libboost-thread1.67.0 && \
 	apt-get --assume-yes install libjpeg62-turbo && \
 	apt-get --assume-yes install libjsoncpp1 && \
-	apt-get --assume-yes install liblua5.1-0 && \
+	apt-get --assume-yes install liblua5.3 && \
 	apt-get --assume-yes install libpng16-16 && \
 	apt-get --assume-yes install libpugixml1v5 && \
 	apt-get --assume-yes install libsqlite3-0 && \
