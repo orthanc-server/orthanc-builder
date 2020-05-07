@@ -11,7 +11,7 @@ RUN apt-get --assume-yes install apt-utils
 RUN apt-get --assume-yes install libcurl4-openssl-dev
 RUN apt-get --assume-yes install curl
 RUN apt-get --assume-yes install apt-transport-https
-RUN apt-get --assume-yes install liblua5.1-0-dev
+RUN apt-get --assume-yes install liblua5.3-dev
 RUN apt-get --assume-yes install libgtest-dev
 RUN apt-get --assume-yes install libpng-dev
 RUN apt-get --assume-yes install libsqlite3-dev
