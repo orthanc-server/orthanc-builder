@@ -23,6 +23,7 @@ class OrthancConfigurator:
     self.pluginsDef = {}
     self.secretsFiles = {}
     self.pluginsEnabledByEnvVar = set()
+    self.pluginsDisabledByEnvVar = set()
 
     self.loadSettings()
 
@@ -51,6 +52,14 @@ class OrthancConfigurator:
         # soon as you add a python script
         if "enablingRootSetting" in pluginDef:
           enabled = (pluginDef["enablingRootSetting"] in self.configuration) or enabled
+
+      # some plugins can also be enabled by default
+      if "enabledByDefault" in pluginDef and pluginDef["enabledByDefault"]:
+        enabled = True
+
+      # but you can still disable any plugin by setting its env var to false
+      if pluginName in self.pluginsDisabledByEnvVar:
+        enabled = False
 
       if enabled:
         enabledPlugins.append(pluginName)
@@ -195,11 +204,18 @@ class OrthancConfigurator:
     else:
       # check if the env var is one that is enabling a plugin
       for pluginName, pluginDef in self.pluginsDef.items():
-        if "enablingEnvVar" in pluginDef and pluginDef["enablingEnvVar"] == envKey and envValue != "false":
-          self.pluginsEnabledByEnvVar.add(pluginName)
+        if "enablingEnvVar" in pluginDef and pluginDef["enablingEnvVar"] == envKey:
+          if envValue != "false":
+            self.pluginsEnabledByEnvVar.add(pluginName)
+          else:
+            self.pluginsDisabledByEnvVar.add(pluginName)
         
-        if "enablingEnvVarLegacy" in pluginDef and pluginDef["enablingEnvVarLegacy"] == envKey and envValue != "false":
-          self.pluginsEnabledByEnvVar.add(pluginName)
+        if "enablingEnvVarLegacy" in pluginDef and pluginDef["enablingEnvVarLegacy"] == envKey:
+          if envValue != "false":
+            self.pluginsEnabledByEnvVar.add(pluginName)
+          else:
+            self.pluginsDisabledByEnvVar.add(pluginName)
+            
           logWarning("You're using a deprecated env-var to enable the {p} plugin, you should use {n} instead of {o}".format(
             p=pluginName,
             n=pluginDef["enablingEnvVar"],

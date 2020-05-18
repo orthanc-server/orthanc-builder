@@ -3,9 +3,20 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.6.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "41eec97c23ef" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources
+RUN make -j 4
+RUN /build/UnitTests
+
+########################## Orthanc GDCM
+
+FROM osimis/orthanc-builder-base:current as build-gdcm
+
+# CHANGE_VERSION_GDCM
+RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "cfceeebf12a5" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
 RUN make -j 4
 RUN /build/UnitTests
 

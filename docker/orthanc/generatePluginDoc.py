@@ -44,10 +44,12 @@ for pluginName, pluginDef in configurator.pluginsDef.items():
   else:
     section = pluginName
 
-  cell0 = "**" + pluginName + "**"
-  cell1 = "``" + pluginDef["enablingEnvVar"] + "``"
-  cell3 = [".. code-block:: json", ""] 
+  cell0 = ["**" + pluginName + "**"]
+  cell1 = ["``" + pluginDef["enablingEnvVar"] + "``"]
+  cell2 = [".. code-block:: json", ""] 
 
+  if "enabledByDefault" in pluginDef and pluginDef["enabledByDefault"]:
+    cell1.append("Note: enabled by default")
 
   if "nonStandardDefaults" in pluginDef:
     defaultSettings = {
@@ -56,15 +58,17 @@ for pluginName, pluginDef in configurator.pluginsDef.items():
     jsonString = json.dumps(defaultSettings, indent=2)
 
     for jsonLine in jsonString.split("\n"):
-      cell3.append("  " + jsonLine)
+      cell2.append("  " + jsonLine)
 
   else:
-    cell3 = [""]
+    cell2 = [""]
 
-  for l3 in cell3:
-    printContentLine([cell0, cell1, l3])
-    cell0 = ""
-    cell1 = ""
+  for l in range(max(len(c) for c in [cell0, cell1, cell2])):
+    c0 = cell0[l] if l < len(cell0) else ""
+    c1 = cell1[l] if l < len(cell1) else ""
+    c2 = cell2[l] if l < len(cell2) else ""
+
+    printContentLine([c0, c1, c2])
 
   printSeparatorLine("-")
 
