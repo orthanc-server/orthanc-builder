@@ -27,6 +27,15 @@
 
   "Gdcm" : {
     "enabledByDefault": true,
+    "nonStandardDefaults" : {
+      "Throttling" : 4,
+      "RestrictTransferSyntaxes" : [
+        "1.2.840.10008.1.2.4.90",
+        "1.2.840.10008.1.2.4.91",
+        "1.2.840.10008.1.2.4.92",
+        "1.2.840.10008.1.2.4.93" 
+      ]
+    },
     "enablingEnvVar" : "GDCM_PLUGIN_ENABLED",
     "libs" : ["libOrthancGdcm.so"]
   },
