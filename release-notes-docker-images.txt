@@ -1,3 +1,4 @@
+20.5.2  : - upgraded Orthanc to 1.7.0
 20.5.1  : - updated Lua to 5.3 (was 5.1)
 20.5.0  : - tag used only for windows installers; not Docker images
 20.4.3  : - fix errors when there's a directory in /run/secrets/

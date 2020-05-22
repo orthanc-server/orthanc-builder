@@ -3,7 +3,7 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.6.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.7.0" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources
 RUN make -j 4
