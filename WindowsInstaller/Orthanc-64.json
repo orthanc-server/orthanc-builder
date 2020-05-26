@@ -121,11 +121,22 @@
       ]
     },
     {
+      "Description" : "GDCM decoder/transcoder",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "GDCM 1.0 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "GDCM mainline - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment:" ]
+      ]
+    },
+    {
       "Description" : "Web Viewer of medical images (AGPL license)",
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WebViewer 2.5 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
+        [ "WebViewer 2.6 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
       ],
       "NightlyArtifacts" : [
         [ "WebViewer mainline - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment:" ]
@@ -136,7 +147,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 1.1 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 1.2 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "NightlyArtifacts" : [
         [ "DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
@@ -162,7 +173,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WSI 0.6 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI" ]
+        [ "WSI 0.7 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI" ]
       ],
       "NightlyArtifacts" : [
         [ "WSI mainline - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment:" ]
@@ -186,8 +197,8 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "WSI 0.6 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
-        [ "WSI 0.6 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
+        [ "WSI 0.7 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
+        [ "WSI 0.7 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
       ],
       "NightlyArtifacts" : [
         [ "WSI mainline - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:" ],
