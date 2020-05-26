@@ -107,5 +107,16 @@ class CurrentTest(unittest.TestCase):
     self.assertIn("PostgreSQL", c.getEnabledPlugins())
     self.assertEqual("pg-password", c.configuration["PostgreSQL"]["Password"])
 
+  def test_gdcm_enabled_by_default(self):
+    c = OrthancConfigurator()
+
+    self.assertIn("Gdcm", c.getEnabledPlugins())
+
+  def test_disable_gdcm_by_env_var(self):
+    c = OrthancConfigurator()
+    c.mergeConfigFromEnvVar("GDCM_PLUGIN_ENABLED", "false")
+
+    self.assertNotIn("Gdcm", c.getEnabledPlugins())
+
 if __name__ == '__main__':
     unittest.main()

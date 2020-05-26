@@ -9,6 +9,17 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BU
 RUN make -j 4
 RUN /build/UnitTests
 
+########################## Orthanc GDCM
+
+FROM osimis/orthanc-builder-base:current as build-gdcm
+
+# CHANGE_VERSION_GDCM
+RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "cfceeebf12a5" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
+RUN make -j 4
+RUN /build/UnitTests
+
 ########################## Orthanc PG
 
 FROM osimis/orthanc-builder-base:current as build-plugin-pg
