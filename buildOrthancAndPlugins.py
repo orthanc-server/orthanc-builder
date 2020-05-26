@@ -29,7 +29,7 @@ ALL_PLATFORMS = [WINDOWS, OSX, LINUX]
 
 repositories = {
     'orthanc': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc',
+        'url': 'https://hg.orthanc-server.com/orthanc',
         'localName': 'orthanc.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS,
@@ -62,7 +62,7 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWebViewer'],
 
-        'url': 'https://bitbucket.org/sjodogne/orthanc-webviewer',
+        'url': 'https://hg.orthanc-server.com/orthanc-webviewer',
         'localName': 'orthanc-webviewer.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS,
@@ -80,7 +80,7 @@ repositories = {
         'outputLibs': ['OrthancWebViewer'],        
     },
     'dicomweb': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-dicomweb',
+        'url': 'https://hg.orthanc-server.com/orthanc-dicomweb',
         'localName': 'orthanc-dicomweb.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS,
@@ -98,7 +98,7 @@ repositories = {
         'outputLibs': ['OrthancDicomWeb'],
     },
     'wsiplugin': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-wsi',
+        'url': 'https://hg.orthanc-server.com/orthanc-wsi',
         'localName': 'orthanc-wsi-plugin.hg',
         'tool': 'hg',
         'platforms': [WINDOWS],
@@ -115,7 +115,7 @@ repositories = {
         'outputLibs': ['OrthancWSI'],
     },
     'wsiapps': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-wsi',
+        'url': 'https://hg.orthanc-server.com/orthanc-wsi',
         'localName': 'orthanc-wsi-apps.hg',
         'tool': 'hg',
         'platforms': [WINDOWS],
@@ -132,7 +132,7 @@ repositories = {
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
     'postgresql': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-databases/',
+        'url': 'https://hg.orthanc-server.com/orthanc-databases/',
         'localName': 'orthanc-databases-postgresql.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS, # it currently does not build with VS2015
@@ -151,7 +151,7 @@ repositories = {
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     },
     'mysql': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-databases/',
+        'url': 'https://hg.orthanc-server.com/orthanc-databases/',
         'localName': 'orthanc-databases-mysql.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS, # it currently does not build with VS2015
@@ -170,7 +170,7 @@ repositories = {
         'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
     },
     'transfers': {
-        'url': 'https://bitbucket.org/sjodogne/orthanc-transfers',
+        'url': 'https://hg.orthanc-server.com/orthanc-transfers',
         'localName': 'orthanc-transfers.hg',
         'tool': 'hg',
         'platforms': ALL_PLATFORMS,
@@ -188,7 +188,7 @@ repositories = {
         'outputLibs': ['OrthancTransfers'],
     },
     'google': {
-        'url': 'https://bitbucket.org/osimis/orthanc-gcp',
+        'url': 'https://hg.orthanc-server.com/orthanc-gcp',
         'localName': 'orthanc-gcp.hg',
         'tool': 'hg',
         'platforms': [WINDOWS, LINUX],
