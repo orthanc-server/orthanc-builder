@@ -1,3 +1,5 @@
+          - upgraded base image to debian:buster-20200514-slim
+          - added orthanc-gdcm plugin
 20.5.2  : - upgraded Orthanc to 1.7.0
 20.5.1  : - updated Lua to 5.3 (was 5.1)
 20.5.0  : - tag used only for windows installers; not Docker images
