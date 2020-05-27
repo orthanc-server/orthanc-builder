@@ -1,3 +1,7 @@
+20.5.3  : - upgraded Orthanc to 1.7.1
+          - upgraded Orthanc Web viewer to 2.6
+          - upgraded DICOMweb to 1.2
+          - upgraded WSI to 0.7
           - upgraded base image to debian:buster-20200514-slim
           - added orthanc-gdcm plugin
 20.5.2  : - upgraded Orthanc to 1.7.0

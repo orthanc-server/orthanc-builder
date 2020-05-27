@@ -45,7 +45,7 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.7.0', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.7.1', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
@@ -58,7 +58,7 @@ repositories = {
     },
     'orthancwebviewer': {
         'platforms': ALL_PLATFORMS,
-        'stableBranch': '2.5', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'stableBranch': '2.6', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWebViewer'],
 
@@ -75,7 +75,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-webviewer.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancWebViewer-2.5',  # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'stableBranch': 'OrthancWebViewer-2.6',  # CHANGE_VERSION_ORTHANC_WEB_VIEWER
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWebViewer'],        
     },
@@ -93,7 +93,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-dicomweb.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancDicomWeb-1.1',  # CHANGE_VERSION_DW
+        'stableBranch': 'OrthancDicomWeb-1.2',  # CHANGE_VERSION_DW
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancDicomWeb'],
     },
@@ -110,7 +110,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.6', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-0.7', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -127,7 +127,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.6', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-0.7', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
@@ -204,6 +204,24 @@ repositories = {
         'stableBranch': 'OrthancGoogleCloudPlatform-1.0',  # CHANGE_VERSION_GOOGLE
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancGoogleCloudPlatform'],
+    },
+    'gdcm': {
+        'url': 'https://hg.orthanc-server.com/orthanc-gdcm',
+        'localName': 'orthanc-gdcm.hg',
+        'tool': 'hg',
+        'platforms': [WINDOWS, LINUX],
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancGdcm',
+            #'cmakeTargetsOSX': ['OrthancGdcm'],  # No support for OS X
+            'cmakeOptions': ['-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': '.',
+            'buildOutputFolder': '../orthanc-gdcm.hg-build',
+            # No unit test
+        },
+        'stableBranch': 'OrthancGdcm-1.0',  # CHANGE_VERSION_GDCM
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancGdcm'],
     }
 }
 

@@ -3,7 +3,7 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.7.0" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.7.1" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources
 RUN make -j 4
@@ -66,7 +66,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-plugin-dicomweb
 
 # CHANGE_VERSION_DW
-RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "OrthancDicomWeb-1.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "OrthancDicomWeb-1.2" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_GDCM=OFF /sources
 RUN make -j 4
@@ -77,7 +77,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-plugin-wsi
 
 # CHANGE_VERSION_ORTHANC_WSI
-RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-0.6" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-0.7" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF /sources/ViewerPlugin
 RUN make -j 4
@@ -88,7 +88,7 @@ RUN make -j 4
 FROM osimis/orthanc-builder-base:current as build-plugin-owv
 
 # CHANGE_VERSION_ORTHANC_WEB_VIEWER
-RUN hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r "OrthancWebViewer-2.5" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r "OrthancWebViewer-2.6" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_GDCM=OFF /sources
 RUN make -j 4
