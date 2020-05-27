@@ -157,6 +157,7 @@ COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/ortha
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-gcp /build/libOrthancGoogleCloudPlatform.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disabled/
 
 
 
