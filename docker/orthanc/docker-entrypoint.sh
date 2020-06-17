@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -o errexit
 
+if [[ $# -ne 1 ]]; then
+	echo "FATAL ERROR: docker-entrypoint.sh expects a single parameter: the path to the configuration files(s)"
+	exit 2
+fi
+
 # generate the configuration file
 cd /startup
 python3.7 generateConfiguration.py
