@@ -13,6 +13,9 @@ set -o xtrace
 # instead of pulling, update the tag in docker\orthanc-runner-base\Dockerfile
 # docker pull debian:buster
 
+git submodule init
+git submodule update
+
 # Retrieve git metadata
 gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
