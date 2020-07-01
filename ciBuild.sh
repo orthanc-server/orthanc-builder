@@ -64,8 +64,8 @@ docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
 docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
 docker push osimis/orthanc-builder-base:20.4.0
 
-docker build -t osimis/orthanc:current -f ./orthanc/Dockerfile docker/orthanc/
-docker build -t osimis/orthanc-pro:current -f ./orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+docker build -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
+docker build -t osimis/orthanc-pro:current -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
 
 docker tag osimis/orthanc:current osimis/orthanc:$releaseTag
 docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
