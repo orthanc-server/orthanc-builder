@@ -23,13 +23,8 @@ function usage {
 	Use -n combined with other switches to only build specific
 	images.
 
-	 -n             Don't build all images
-	 -b             Build builder image
-	 -o             Build osimis/orthanc image
-	 -p             Build osimis/orthanc-pro image
 	 -t             Version
 	 -l             Tag the build as latest
-	 -u             Don't use unique tags
 	 -r             Push to registry
 	 -h             Display help
 	EOF
@@ -46,12 +41,8 @@ tag=$(LC_CTYPE=POSIX \
 
 while getopts "nopt:lurh" opt; do
 	case "$opt" in
-	n) unset runBuilder buildImage buildProImage;;
-	o) buildImage=true;;
-	p) buildProImage=true;;
 	t) version=$OPTARG;;
 	l) tagLatest=true;;
-	u) noUnique=true;;
 	r) push=true;;
 	h) usage; exit 0;;
 	?) usage; exit 1;;
@@ -59,22 +50,20 @@ while getopts "nopt:lurh" opt; do
 done
 set -o xtrace
 
-if [[ $noUnique ]]; then
-	if [[ $version ]]; then
-		tag=$version
-	elif [[ $tagLatest ]]; then
-		tag=latest
-	else
-		cat <<-EOF >&2
-		ERROR: No usable tag
+if [[ $version ]]; then
+	tag=$version
+elif [[ $tagLatest ]]; then
+	tag=latest
+else
+	cat <<-EOF >&2
+	ERROR: No usable tag
 
-		Need to at least:
-		- Allow unique tags or,
-		- Specify a version or,
-		- Tag as latest.
-		EOF
-		exit 2
-	fi
+	Need to at least:
+	- Allow unique tags or,
+	- Specify a version or,
+	- Tag as latest.
+	EOF
+	exit 2
 fi
 
 function build {

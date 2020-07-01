@@ -7,5 +7,5 @@ set -ex
 
 docker build -t osimis/orthanc-runner-base:current ./orthanc-runner-base/
 docker build -t osimis/orthanc-builder-base:current ./orthanc-builder-base/
-docker build -t osimis/orthanc:current -f ./orthanc/Dockerfile ./
-docker build -t osimis/orthanc-pro:current -f ./orthanc-pro/Dockerfile ./
+docker build -t osimis/orthanc:current -f ./orthanc/Dockerfile ./orthanc/
+docker build -t osimis/orthanc-pro:current -f ./orthanc-pro-builder/Dockerfile ./orthanc-pro-builder/

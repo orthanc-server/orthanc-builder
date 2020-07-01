@@ -17,6 +17,7 @@ set -o xtrace
 gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
 releaseCommitId=$(git rev-parse --short HEAD)
+isLatest=false
 
 if [[ $gitLongTag =~ dirty ]]; then
 	echo "commit your changes before building"
@@ -36,15 +37,15 @@ elif [[ $branchName == "master" ]]; then
 
 		releaseTag=$(echo $gitLongTag | sed -r "s/([0-9]+\.[0-9]+\.[0-9]+)-[0-9]+-.+/\1/")
 		# since we are in the master branch and on a tag, we'll tag the images as "latest" too
-		tagOptions="-t $releaseTag -l"
+		isLatest=true
 	else
 
 		echo "No tag found on the master branch -> will be tagged as 'master' and will not be tagges as 'latest'."
 		releaseTag=$branchName
-		tagOptions="-t $releaseTag"
 	fi
 
 else
+
 	lastTag=$(git describe --abbrev=0)
 	commitCountSinceLastTag=$(git rev-list $lastTag.. --count)
 	if [[ $commitCountSinceLastTag == 0 ]]; then
@@ -53,7 +54,30 @@ else
 		releaseTag=$branchName
 	fi
 
-	tagOptions="-t $releaseTag"
 fi
 
-./build.sh $tagOptions -r
+docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
+docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
+
+# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
+# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
+docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
+docker push osimis/orthanc-builder-base:20.4.0
+
+docker build -t osimis/orthanc:current -f ./orthanc/Dockerfile ./orthanc/
+docker build -t osimis/orthanc-pro:current -f ./orthanc-pro-builder/Dockerfile ./orthanc-pro-builder/
+
+docker tag osimis/orthanc:current osimis/orthanc:$releaseTag
+docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
+
+docker push osimis/orthanc:$releaseTag
+docker push osimis/orthanc-pro:$releaseTag
+
+if [[ $isLatest ]]; then
+  docker tag osimis/orthanc:current osimis/orthanc:latest
+  docker tag osimis/orthanc-pro:current osimis/orthanc-pro:latest
+
+  docker push osimis/orthanc:latest
+  docker push osimis/orthanc-pro:latest
+fi
+

@@ -172,6 +172,6 @@ SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/tmp/orthanc.json"]
 
-COPY orthanc/docker-entrypoint.sh /
-COPY orthanc/*.json /startup/ 
-COPY orthanc/*.py /startup/
+COPY docker-entrypoint.sh /
+COPY *.json /startup/ 
+COPY *.py /startup/
