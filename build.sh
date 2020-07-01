@@ -97,6 +97,9 @@ function build {
 
 docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
 docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
+
+# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
+# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
 docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
 docker push osimis/orthanc-builder-base:20.4.0
 
