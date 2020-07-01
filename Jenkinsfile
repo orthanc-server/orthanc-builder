@@ -5,6 +5,7 @@ try {
 	        node('master && docker') { wrap([$class: 'AnsiColorBuildWrapper']) {
               docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-jenkinsosimis') {
 	                checkout scm
+									sh 'git submodule update --init'
 
 	                sh './ciBuild.sh ${BRANCH_NAME}'
               }
