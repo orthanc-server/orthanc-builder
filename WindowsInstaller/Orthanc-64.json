@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "20.5.3", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "20.7.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -68,19 +68,7 @@
         [ "Authorization 0.2.3 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment:" ]
       ]
     },
-    {
-      "Description" : "Google Cloud Platform",
-      "Name" : "gcp",
-      "Mandatory" : false,
-      "Category" : "osimis",
-      "Artifacts" : [
-        [ "GoogleCloud 1.0 - VC2015-64 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment: # CHANGE_VERSION_GOOGLE" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "GoogleCloud mainline - VC2015-64 Release/OrthancGoogleCloudPlatform.dll", "Plugins", "Comment:" ]
-      ]
-    },
-    
+   
     {
       "Description" : "Modality worklists",
       "Mandatory" : false,

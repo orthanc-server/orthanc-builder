@@ -31,7 +31,6 @@
   "DW_STOW_MAX_INSTANCES": "DicomWeb.StowMaxInstances",
   "DW_STOW_MAX_SIZE": "DicomWeb.StowMaxSize",
   "EXECUTE_LUA_ENABLED": "ExecuteLuaEnabled",
-  "GCP_BASE_URL": "GoogleCloudPlatform.BaseUrl",
   "HTTP_CL_TIMEOUT": "HttpTimeout",
   "HTTP_CL_VERIFY_PEERS": "HttpsVerifyPeers",
   "HTTP_CL_CA_CERTS": "HttpsCACertificates",
