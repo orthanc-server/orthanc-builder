@@ -1,4 +1,9 @@
-          - MSSQL plugin "Lock" now defaults to false
+          - moved GoogleCloudPlatform plugin to the orthanc-pro image (https://www.osimis.io/en/services.html#cloud-plugins)
+          - orthanc-pro: Added Aws S3 plugin 
+          - orthanc-pro: Added Azure Blob Storage plugin 
+          - orthanc-pro: Added Google Cloud Storage plugin
+          - orthanc-pro: Removed previous Azure Storage plugin (v 0.3.2)
+          - orthanc-pro: MSSQL plugin "Lock" now defaults to false
           - INTERNAL: docker-entrypoint.sh will not start if not passed a single argument: the path to the configuration file(s)
 20.5.3  : - upgraded Orthanc to 1.7.1
           - upgraded Orthanc Web viewer to 2.6

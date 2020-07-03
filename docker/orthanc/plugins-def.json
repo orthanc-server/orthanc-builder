@@ -19,12 +19,6 @@
     "libs" : ["libOrthancDicomWeb.so"]
   },
 
-  "GoogleCloudPlatform" : {
-    "enablingEnvVar" : "GOOGLE_CLOUD_PLATFORM_PLUGIN_ENABLED",
-    "enablingEnvVarLegacy" : "GCP_ENABLED",
-    "libs" : ["libOrthancGoogleCloudPlatform.so"]
-  },
-
   "Gdcm" : {
     "enabledByDefault": true,
     "nonStandardDefaults" : {

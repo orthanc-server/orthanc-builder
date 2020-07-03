@@ -105,17 +105,6 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: no unit tests: # RUN /build/UnitTests
 
-########################## Orthanc GCP
-
-FROM osimis/orthanc-builder-base:current as build-plugin-gcp
-
-# CHANGE_VERSION_GOOGLE
-RUN hg clone https://hg.orthanc-server.com/orthanc-gcp/ -r "OrthancGoogleCloudPlatform-1.0" /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
-
 ########################## Orthanc Python
 
 FROM osimis/orthanc-builder-base:current as build-plugin-python
@@ -155,7 +144,6 @@ COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-
 COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-gcp /build/libOrthancGoogleCloudPlatform.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disabled/
 

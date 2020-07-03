@@ -31,13 +31,15 @@ MySQL plugin                          2.0
 WSI Web viewer plugin                 0.7
 Authorization plugin                  0.2.3
 Transfers accelerator plugin          1.0
-Google Cloud Platform plugin          1.0
 GDCM plugin                           1.0
 
 commercial plugins (requiring a license):
 
 MSSql plugin                          1.1.0
-Azure Storage plugin (using blobs)    0.3.2
+AWS S3 plugin                         0.9.0
+Azure Blob Storage plugin             0.9.0
+Google Cloud Storage plugin           0.9.0
+Google Cloud Platform plugin          1.0
 Osimis Web viewer pro plugin          1.3.1.0
 Osimis Web viewer pro plugin (alpha)  68fa1f85
 ```
