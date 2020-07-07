@@ -9,7 +9,7 @@ from helpers import JsonPath, logInfo, logWarning, logError, removeCppCommentsFr
 
 class OrthancConfigurator:
 
-  def __init__(self):
+  def __init__(self, folder = None):
     self.configurationSource = {}
     self.configuration = {}
 
@@ -25,7 +25,10 @@ class OrthancConfigurator:
     self.pluginsEnabledByEnvVar = set()
     self.pluginsDisabledByEnvVar = set()
 
-    self.loadSettings()
+    if folder is None:
+      folder = os.path.dirname(os.path.realpath(__file__))
+
+    self.loadSettings(folder)
 
 
   def getEnabledPlugins(self) -> typing.List[str]:
@@ -67,15 +70,15 @@ class OrthancConfigurator:
     return enabledPlugins
 
 
-  def loadSettings(self):
+  def loadSettings(self, folder):
 
     # load non standard env-vars
-    for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/env-var-legacy*.json"):
+    for filePath in glob.glob(folder + "/env-var-legacy*.json"):
       with open(filePath) as fp:
         self.legacyEnvVars.update(json.load(fp))
 
     # orthanc variables not following the standard conversion rule
-    for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/env-var-non-standards*.json"):
+    for filePath in glob.glob(folder + "/env-var-non-standards*.json"):
       with open(filePath) as fp:
         self.aliasEnvVars.update(json.load(fp))
 
@@ -83,11 +86,12 @@ class OrthancConfigurator:
     self.nonStandardEnvVars.update(self.aliasEnvVars)
 
     # orthanc defaults
-    with open(os.path.dirname(os.path.realpath(__file__)) + "/orthanc-defaults.json") as fp:
-      self.orthancNonStandardDefaults = json.load(fp)
+    if os.path.exists(folder + "/orthanc-defaults.json"):
+      with open(folder + "/orthanc-defaults.json") as fp:
+        self.orthancNonStandardDefaults = json.load(fp)
 
     # plugins def
-    for filePath in glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/plugins-def*.json"):
+    for filePath in glob.glob(folder + "/plugins-def*.json"):
       with open(filePath) as fp:
         self.pluginsDef.update(json.load(fp))
 

@@ -1,4 +1,4 @@
-          - moved GoogleCloudPlatform plugin to the orthanc-pro image (https://www.osimis.io/en/services.html#cloud-plugins)
+20.7.0 :  - moved GoogleCloudPlatform plugin to the orthanc-pro image (rationale: https://www.osimis.io/en/services.html#cloud-plugins)
           - orthanc-pro: Added Aws S3 plugin 
           - orthanc-pro: Added Azure Blob Storage plugin 
           - orthanc-pro: Added Google Cloud Storage plugin

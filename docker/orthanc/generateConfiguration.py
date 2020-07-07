@@ -10,7 +10,7 @@ from helpers import JsonPath, logInfo, logWarning, logError, removeCppCommentsFr
 from configurator import OrthancConfigurator
 
 
-configurator = OrthancConfigurator()
+configurator = OrthancConfigurator(folder = os.path.dirname(os.path.realpath(__file__)))
 
 if isEnvVarDefinedEmptyOrTrue("VERBOSE_STARTUP"):
   enableVerboseModeForConfigGeneration()
