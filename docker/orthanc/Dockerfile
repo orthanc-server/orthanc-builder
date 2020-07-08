@@ -3,9 +3,9 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.7.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.7.2" /sources
 WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources/OrthancServer
 RUN make -j 4
 RUN /build/UnitTests
 
@@ -68,7 +68,7 @@ FROM osimis/orthanc-builder-base:current as build-plugin-dicomweb
 # CHANGE_VERSION_DW
 RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "OrthancDicomWeb-1.2" /sources
 WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_GDCM=OFF /sources
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
 RUN /build/UnitTests
 
@@ -90,7 +90,7 @@ FROM osimis/orthanc-builder-base:current as build-plugin-owv
 # CHANGE_VERSION_ORTHANC_WEB_VIEWER
 RUN hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r "OrthancWebViewer-2.6" /sources
 WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_GDCM=OFF /sources
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
 RUN /build/UnitTests
 
@@ -113,7 +113,7 @@ RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install python3.7-dev
 
 # CHANGE_VERSION_ORTHANC_PYTHON
-RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r "OrthancPython-1.0" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r "OrthancPython-2.0" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.7 /sources
 RUN make -j 4

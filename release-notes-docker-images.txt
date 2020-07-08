@@ -1,3 +1,5 @@
+20.7.1 :  - upgraded Orthanc to 1.7.2
+          - upgraded Python plugin to 2.0
 20.7.0 :  - moved GoogleCloudPlatform plugin to the orthanc-pro image (rationale: https://www.osimis.io/en/services.html#cloud-plugins)
           - orthanc-pro: Added Aws S3 plugin 
           - orthanc-pro: Added Azure Blob Storage plugin 
