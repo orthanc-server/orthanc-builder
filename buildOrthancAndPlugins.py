@@ -187,24 +187,6 @@ repositories = {
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancTransfers'],
     },
-    'google': {
-        'url': 'https://hg.orthanc-server.com/orthanc-gcp',
-        'localName': 'orthanc-gcp.hg',
-        'tool': 'hg',
-        'platforms': [WINDOWS, LINUX],
-        'build': {
-            'type': 'cmake',
-            'cmakeTarget': 'OrthancGoogleCloudPlatform',
-            #'cmakeTargetsOSX': ['OrthancGoogleCloudPlatform'],  # No support for OS X
-            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
-            'buildFromFolder': '.',
-            'buildOutputFolder': '../orthanc-gcp.hg-build',
-            # No unit test
-        },
-        'stableBranch': 'OrthancGoogleCloudPlatform-1.0',  # CHANGE_VERSION_GOOGLE
-        'nightlyBranch': 'default',
-        'outputLibs': ['OrthancGoogleCloudPlatform'],
-    },
     'gdcm': {
         'url': 'https://hg.orthanc-server.com/orthanc-gdcm',
         'localName': 'orthanc-gdcm.hg',
