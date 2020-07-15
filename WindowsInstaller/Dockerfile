@@ -28,4 +28,4 @@ COPY . /tmp
 
 WORKDIR /tmp
 
-RUN python ./CreateInstaller.py --config=$configurationFile  --from-docker
+RUN python -u ./CreateInstaller.py --config=$configurationFile  --from-docker
