@@ -35,9 +35,9 @@ GDCM plugin                           1.0
 
 cloud plugins:
 
-AWS S3 plugin                         0.9.0
-Azure Blob Storage plugin             0.9.0
-Google Cloud Storage plugin           0.9.0
+AWS S3 plugin                         0.9.1
+Azure Blob Storage plugin             0.9.1
+Google Cloud Storage plugin           0.9.1
 Google Cloud Platform plugin          1.0
 
 commercial plugins (requiring a license):
