@@ -1,4 +1,4 @@
-          - upgraded object-storage plugins to 0.9.1
+          - upgraded object-storage plugins to 0.9.2
 20.7.1 :  - upgraded Orthanc to 1.7.2
           - upgraded Python plugin to 2.0
 20.7.0 :  - moved GoogleCloudPlatform plugin to the orthanc-pro image (rationale: https://www.osimis.io/en/services.html#cloud-plugins)
