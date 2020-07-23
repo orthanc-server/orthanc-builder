@@ -152,7 +152,7 @@ COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disab
 # CHANGE_VERSION_WVB
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/ffb6a998/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/09381550/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
 
