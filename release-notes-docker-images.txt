@@ -1,3 +1,5 @@
+20.7.3 :  - upgraded WVB_ALPHA to 2ebaa948
+          - upgraded WVP_ALPHA to f88bb2cf
 20.7.2 :  - upgraded WVP_ALPHA to 564f8a8b (info popup)
           - upgraded WVB_ALPHA to d88d2799 (info popup)
           - upgraded object-storage plugins to 0.9.2
