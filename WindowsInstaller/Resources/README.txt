@@ -29,7 +29,7 @@ MySQL plugin                          2.0
 WSI Web viewer plugin                 0.7
 Transfers accelerator plugin          1.0
 Authorization plugin                  0.2.3
-GDCM decoder/transcoder plugin        1.0
+GDCM decoder/transcoder plugin        1.1
 
 
 Folders

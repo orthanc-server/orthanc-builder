@@ -183,7 +183,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-transfers.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancTransfers-1.0',  # CHANGE_VERSION_DW
+        'stableBranch': 'OrthancTransfers-1.0',  # CHANGE_VERSION_TRANSFERS
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancTransfers'],
     },
@@ -201,7 +201,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-gdcm.hg-build',
             # No unit test
         },
-        'stableBranch': 'OrthancGdcm-1.0',  # CHANGE_VERSION_GDCM
+        'stableBranch': 'OrthancGdcm-1.1',  # CHANGE_VERSION_GDCM
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancGdcm'],
     }

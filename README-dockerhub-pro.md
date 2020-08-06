@@ -31,7 +31,7 @@ MySQL plugin                          2.0
 WSI Web viewer plugin                 0.7
 Authorization plugin                  0.2.3
 Transfers accelerator plugin          1.0
-GDCM plugin                           1.0
+GDCM plugin                           1.1
 
 cloud plugins:
 
