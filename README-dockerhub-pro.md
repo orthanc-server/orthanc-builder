@@ -18,12 +18,12 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 component                             version
 ---------------------------------------------
-Orthanc server                        1.7.2
+Orthanc server                        1.7.3
 Osimis Web viewer plugin              1.3.1
 Osimis Web viewer plugin (alpha)      ffb6a998
-Modality worklists plugin             1.7.2
-Serve folders plugin                  1.7.2
-Connectivity check plugin             1.7.2
+Modality worklists plugin             1.7.3
+Serve folders plugin                  1.7.3
+Connectivity check plugin             1.7.3
 Orthanc Web viewer plugin             2.6
 DICOMweb plugin                       1.2
 PostgreSQL plugin                     3.2

@@ -1,3 +1,4 @@
+20.8.0 :  - upgraded Orthanc to 1.7.3
           - upgraded orthanc-gdcm to 1.1
 20.7.3 :  - upgraded WVB_ALPHA to 2ebaa948
           - upgraded WVP_ALPHA to f88bb2cf
