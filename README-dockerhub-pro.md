@@ -13,7 +13,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.X.X
+#### 20.8.1
 ```
 
 component                             version
@@ -35,9 +35,9 @@ GDCM plugin                           1.1
 
 cloud plugins:
 
-AWS S3 plugin                         0.9.2
-Azure Blob Storage plugin             0.9.2
-Google Cloud Storage plugin           0.9.2
+AWS S3 plugin                         0.9.3
+Azure Blob Storage plugin             0.9.3
+Google Cloud Storage plugin           0.9.3
 Google Cloud Platform plugin          1.0
 
 commercial plugins (requiring a license):
