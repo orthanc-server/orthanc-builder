@@ -1,5 +1,5 @@
-          - added a lua script "filter-http-tools-reset" that is enabled by default in order to 
-            regenerate the /tmp/orthanc.json configuration file when /tools/reset is called
+          - added a lua script in "/lua-scripts/filter-http-tools-reset.lua" in order to 
+            regenerate the /tmp/orthanc.json configuration file when /tools/reset is called (not loaded by default)
 20.8.1 :  - upgraded object-storage plugins to 0.9.3
 20.8.0 :  - upgraded Orthanc to 1.7.3
           - upgraded orthanc-gdcm to 1.1
