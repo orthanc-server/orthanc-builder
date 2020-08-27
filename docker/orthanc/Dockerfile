@@ -163,3 +163,4 @@ CMD ["/tmp/orthanc.json"]
 COPY docker-entrypoint.sh /
 COPY *.json /startup/ 
 COPY *.py /startup/
+COPY *.lua /lua-scripts/

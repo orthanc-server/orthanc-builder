@@ -8,7 +8,7 @@ fi
 
 # generate the configuration file
 cd /startup
-python3.7 generateConfiguration.py
+python3 generateConfiguration.py
 
 if [[ $TRACE_ENABLED == true ]]; then
 	verbosity=--trace
