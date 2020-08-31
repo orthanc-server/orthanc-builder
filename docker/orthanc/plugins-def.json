@@ -123,6 +123,11 @@
     "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WSI_ENABLED",
     "libs" : ["libOrthancWSI.so"]
+  },
+
+  "OsimisCloud": {
+    "enablingEnvVar" : "OSIMIS_CLOUD_PLUGIN_ENABLED",
+    "libs" : ["libOrthancOsimisCloud.so"]
   }
 
 }

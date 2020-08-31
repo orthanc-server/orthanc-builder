@@ -95,6 +95,9 @@ int main()
     std::string storageDir = GetStringRegKeyAnsi
       ("SOFTWARE\\Orthanc\\Orthanc Server", "OrthancDir", "");
 
+    std::string installDir = GetStringRegKeyAnsi
+      ("SOFTWARE\\Orthanc\\Orthanc Server", "InstallDir", "");
+
     std::string configuration;
     ReadFile(configuration, "orthanc.json");
 
@@ -106,8 +109,13 @@ int main()
     configuration = boost::regex_replace(
       configuration,
       boost::regex("\"Plugins\" : \\[\\s*\\]"),
-      "\"Plugins\" : [ \"../Plugins/\" ]");
+      "\"Plugins\" : [ \"" + Escape(installDir + "\\Plugins") + "\" ]");
   
+    configuration = boost::regex_replace(
+      configuration,
+      boost::regex("\"HttpsCACertificates\" : \"\""),
+      "\"HttpsCACertificates\" : \"" + Escape(installDir + "\\Configuration\\ca-certificates.crt") + "\"");
+    
     WriteFile(configuration.c_str(), configuration.size(), "orthanc.json");
     std::cerr << "Successfully patched the default Orthanc configuration" << std::endl;
   

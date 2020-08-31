@@ -69,6 +69,17 @@
       ]
     },
     {
+      "Description" : "Osimis cloud synchronization plugin",
+      "Mandatory" : false,
+      "Category" : "osimis",
+      "Artifacts" : [
+        [ "OsimisCloud mainline - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment: # CHANGE_VERSION_OSIMIS_CLOUD" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "OsimisCloud mainline - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment:" ]
+      ]
+    },
+    {
       "Description" : "Modality worklists",
       "Mandatory" : false,
       "Category" : "plugins",

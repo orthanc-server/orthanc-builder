@@ -38,6 +38,7 @@ Source: "Resources/Orthanc.ico"; DestDir: "{app}"
 Source: "Resources/Osimis.ico"; DestDir: "{app}"
 Source: "Configuration/OrthancService.exe"; DestDir: "{app}"
 Source: "Configuration/PatchDefaultConfiguration.exe"; DestDir: "{app}"
+Source: "Resources/ca-certificates.crt"; DestDir: "{app}\Configuration"
 ${ORTHANC_FILES}
 
 [Icons]
