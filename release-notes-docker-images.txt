@@ -1,4 +1,5 @@
-          - added the "osimis cloud" plugin
+          - upgraded object-storage plugins to 1.0.0
+          - added the "osimis cloud" plugin (beta version)
           - added environment variable OSIMIS_CLOUD_PLUGIN_ENABLED
 20.8.2 :  - added a lua script in "/lua-scripts/filter-http-tools-reset.lua" in order to 
             regenerate the /tmp/orthanc.json configuration file when /tools/reset is called (not loaded by default)

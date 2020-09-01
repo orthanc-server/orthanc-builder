@@ -13,7 +13,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.8.1
+#### 20.9.1
 ```
 
 component                             version
@@ -32,12 +32,13 @@ WSI Web viewer plugin                 0.7
 Authorization plugin                  0.2.3
 Transfers accelerator plugin          1.0
 GDCM plugin                           1.1
+Osimis cloud plugin                   beta
 
 cloud plugins:
 
-AWS S3 plugin                         0.9.3
-Azure Blob Storage plugin             0.9.3
-Google Cloud Storage plugin           0.9.3
+AWS S3 plugin                         1.0.0
+Azure Blob Storage plugin             1.0.0
+Google Cloud Storage plugin           1.0.0
 Google Cloud Platform plugin          1.0
 
 commercial plugins (requiring a license):
