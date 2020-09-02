@@ -36,9 +36,9 @@ Osimis cloud plugin                   beta
 
 cloud plugins:
 
-AWS S3 plugin                         1.0.0
-Azure Blob Storage plugin             1.0.0
-Google Cloud Storage plugin           1.0.0
+AWS S3 plugin                         1.0.1
+Azure Blob Storage plugin             1.0.1
+Google Cloud Storage plugin           1.0.1
 Google Cloud Platform plugin          1.0
 
 commercial plugins (requiring a license):
