@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "20.8.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "20.9.3", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 32,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -73,7 +73,7 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        [ "OsimisCloud mainline - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment: # CHANGE_VERSION_OSIMIS_CLOUD" ]
+        [ "OsimisCloud 0.1 - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment: # CHANGE_VERSION_OSIMIS_CLOUD" ]
       ],
       "NightlyArtifacts" : [
         [ "OsimisCloud mainline - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment:" ]

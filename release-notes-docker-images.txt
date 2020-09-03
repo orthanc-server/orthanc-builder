@@ -1,3 +1,4 @@
+20.9.3  : - upgraded osimis-cloud plugin to 0.1
 20.9.2  : - upgraded object-storage plugins to 1.0.1
 20.9.1  : - upgraded object-storage plugins to 1.0.0
           - added the "osimis cloud" plugin (beta version)

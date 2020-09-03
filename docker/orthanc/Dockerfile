@@ -154,7 +154,7 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.3.1/lib
 # CHANGE_VERSION_WVB_ALPHA
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/commits/2ebaa948/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
 # CHANGE_VERSION_OSIMIS_CLOUD
-RUN wget https://lsb.orthanc-server.com/plugin-osimis-cloud/mainline/libOrthancOsimisCloud.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancOsimisCloud.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-cloud/releases/0.1/libOrthancOsimisCloud.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancOsimisCloud.so --quiet
 
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
 
