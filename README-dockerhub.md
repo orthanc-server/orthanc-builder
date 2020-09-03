@@ -14,14 +14,14 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.9.3
+#### 20.9.4
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.7.3
-Osimis Web viewer plugin              1.3.1
-Osimis Web viewer plugin (alpha)      ffb6a998
+Osimis Web viewer plugin              1.4.0
+Osimis Web viewer plugin (alpha)      1.4.0
 Modality worklists plugin             1.7.3
 Serve folders plugin                  1.7.3
 Connectivity check plugin             1.7.3

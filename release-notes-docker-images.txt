@@ -1,3 +1,7 @@
+20.9.4  : - upgraded WVB to 1.4.0
+          - upgraded WVB_ALPHA to 1.4.0
+          - upgraded WVP to 1.4.0.0 - this viewer is not CE marked anymore 
+          - upgraded WVP_ALPHA to 1.4.0.0 - this viewer is not CE marked anymore
 20.9.3  : - upgraded osimis-cloud plugin to 0.1
 20.9.2  : - upgraded object-storage plugins to 1.0.1
 20.9.1  : - upgraded object-storage plugins to 1.0.0
