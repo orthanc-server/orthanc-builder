@@ -59,7 +59,7 @@ However, since some plugins are available only in the `osimis/orthanc-pro` image
 
 <table>
 <tr><th>Plugin</th><th>Environment variable</th><th>Default configuration</th></tr>
-<tr><td><em>AzureBlobStorage</em></td><td><pre>AZURE_BLOB_STORAGE_PLUGIN_ENABLED</pre></td><td><pre>{
+<tr><td><em>AzureBlobStorage</em></td><td><pre>AZURE_BLOB_STORAGE_PLUGIN_ENABLED</pre></td><td><pre>{    
   "AzureBlobStorage": {
     "ConnectionString": "MUST BE DEFINED BY YOU",
     "ContainerName": "MUST BE DEFINED BY YOU"
@@ -89,14 +89,6 @@ However, since some plugins are available only in the `osimis/orthanc-pro` image
     "LicenseString": "SHOULD BE DEFINED BY YOU"
   }
 }</pre></td></tr>
-<tr><td><em>OsimisWebViewerPro</em></td><td><pre>OSIMIS_WEB_VIEWER1_PRO_PLUGIN_ENABLED</pre></td><td><pre>{
-  "WebViewer": {
-    "LicenseString": "SHOULD BE DEFINED BY YOU"
-  }
-}</pre></td></tr>
-<tr><td><em>OsimisWebViewerProAlpha</em></td><td><pre>OSIMIS_WEB_VIEWER1_PRO_ALPHA_PLUGIN_ENABLED</pre></td><td><pre>{
-  "WebViewer": {
-    "LicenseString": "SHOULD BE DEFINED BY YOU"
-  }
-}</pre></td></tr>
+<tr><td><em>OsimisWebViewerPro</em></td><td><pre>OSIMIS_WEB_VIEWER1_PRO_PLUGIN_ENABLED</pre></td><td><pre></pre></td></tr>
+<tr><td><em>OsimisWebViewerProAlpha</em></td><td><pre>OSIMIS_WEB_VIEWER1_PRO_ALPHA_PLUGIN_ENABLED</pre></td><td><pre></pre></td></tr>
 </table>
