@@ -1,3 +1,4 @@
+20.9.5  : - upgraded object-storage plugins to 1.1.0
 20.9.4  : - upgraded WVB to 1.4.0
           - upgraded WVB_ALPHA to 1.4.0
           - upgraded WVP to 1.4.0.0 - this viewer is not CE marked anymore 
