@@ -22,10 +22,10 @@ elif [[ $pythonVersion == *"3.6"* ]]; then
   pathToPythonPath=env/lib/python3.6/site-packages/path.pth
 elif [[ $pythonVersion == *"3.7"* ]]; then
   echo "using python version 3.7 ($pythonVersion)"
-  pathToPythonPath=env/lib/python3.6/site-packages/path.pth
+  pathToPythonPath=env/lib/python3.7/site-packages/path.pth
 elif [[ $pythonVersion == *"3.8"* ]]; then
   echo "using python version 3.8 ($pythonVersion)"
-  pathToPythonPath=env/lib/python3.6/site-packages/path.pth
+  pathToPythonPath=env/lib/python3.8/site-packages/path.pth
 else
   echo "update createPythonVenv.sh to support your python version"
   exit 1
