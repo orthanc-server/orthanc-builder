@@ -41,7 +41,7 @@ repositories = {
             'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON',
                              '-DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF', '-DBOOST_LOCALE_BACKEND=icu', '-DUSE_LEGACY_LIBICU=ON'],
             # www.montefiore.ulg.ac.be not always accessible from the labs => remove these tests
-            'buildFromFolder': '.',
+            'buildFromFolder': 'OrthancServer',
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
