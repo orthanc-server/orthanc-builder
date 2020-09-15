@@ -24,6 +24,7 @@ Osimis Web viewer plugin (alpha)      1.4.0
 Modality worklists plugin             1.7.3
 Serve folders plugin                  1.7.3
 Connectivity check plugin             1.7.3
+Python plugin                         2.0
 Orthanc Web viewer plugin             2.6
 DICOMweb plugin                       1.2
 PostgreSQL plugin                     3.2
