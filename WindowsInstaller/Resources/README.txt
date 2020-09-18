@@ -14,14 +14,14 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 20.9.4
+Content of the package 20.9.6
 -----------------------------
 
-Orthanc server                        1.7.3
+Orthanc server                        1.7.4
 Osimis Web viewer plugin              1.4.0
-Modality worklists plugin             1.7.3
-Serve folders plugin                  1.7.3
-Connectivity check plugin             1.7.3
+Modality worklists plugin             1.7.4
+Serve folders plugin                  1.7.4
+Connectivity check plugin             1.7.4
 Orthanc Web viewer plugin             2.6
 DICOMweb plugin                       1.2
 PostgreSQL plugin                     3.2
