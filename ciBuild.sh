@@ -76,7 +76,7 @@ if [[ $action == "build" ]]; then
   docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
 fi
 
-if [[ $pushTo == "pushToPublicRepo" ]]; then
+if [[ $action == "pushToPublicRepo" ]]; then
   docker push osimis/orthanc-builder-base:20.4.0
   docker push osimis/orthanc:$releaseTag
   docker push osimis/orthanc-pro:$releaseTag
@@ -90,7 +90,7 @@ if [[ $pushTo == "pushToPublicRepo" ]]; then
 
 fi
 
-if [[ $pushTo == "pushToPrivateRepo" ]]; then
+if [[ $action == "pushToPrivateRepo" ]]; then
   docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
   docker push osimis.azurecr.io/orthanc-pro:$releaseTag
 fi
