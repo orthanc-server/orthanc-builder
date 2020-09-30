@@ -9,6 +9,7 @@ try {
                                              passphraseVariable: '', \
                                              usernameVariable: '')]) {
               docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-jenkinsosimis') {
+                docker.withRegistry('https://osimistest.azurecr.io/v2/', 'jenkins-push-azure-osimistest-cr') {
 	                checkout scm
 
       				    sh '''
@@ -16,8 +17,9 @@ try {
 				             '''
 
 	                sh './ciBuild.sh ${BRANCH_NAME}'
+								  }
+                }
               }
-                                             }
 				  }}
 	    }
 		    // slackSend channel: 'jenkins-orthanc', color: '#FF0000', message: "${env.JOB_NAME} has succeded ${env.JOB_URL}"

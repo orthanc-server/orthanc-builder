@@ -75,6 +75,7 @@ docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
 
 docker push osimis/orthanc:$releaseTag
 docker push osimis/orthanc-pro:$releaseTag
+docker push osimistest.azurecr.io/orthanc-pro:$releaseTag
 
 if [[ $isLatest ]]; then
   docker tag osimis/orthanc:current osimis/orthanc:latest
