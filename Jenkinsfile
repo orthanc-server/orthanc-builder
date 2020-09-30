@@ -2,7 +2,7 @@ try {
 	lock(resource: 'orthanc-bundles', inversePrecedence: false) {
 
 	    stage('Build') {
-	        node('master && docker') { wrap([$class: 'AnsiColorBuildWrapper']) {
+	        node('docker && builder') { wrap([$class: 'AnsiColorBuildWrapper']) {
 
 	        withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'bitbucket-osimis', \
                                              keyFileVariable: 'SSH_KEY_ABC', \
