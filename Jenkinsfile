@@ -21,7 +21,7 @@ try {
                                         sh './ciBuild.sh ${BRANCH_NAME} pushToPublicRepo'
                         }
 
-                        docker.withRegistry('https://osimistest.azurecr.io/v2/', 'jenkins-push-azure-osimistest-cr') {
+                        docker.withRegistry('https://osimis.azurecr.io/v2/', 'jenkins-push-azure-osimis-cr') {
                                         sh './ciBuild.sh ${BRANCH_NAME} pushToPrivateRepo'
                         }
                     }

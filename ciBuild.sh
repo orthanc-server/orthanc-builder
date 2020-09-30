@@ -91,8 +91,8 @@ if [[ $pushTo == "pushToPublicRepo" ]]; then
 fi
 
 if [[ $pushTo == "pushToPrivateRepo" ]]; then
-  docker tag osimis/orthanc-pro:current osimistest.azurecr.io/orthanc-pro:$releaseTag
-  docker push osimistest.azurecr.io/orthanc-pro:$releaseTag
+  docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
+  docker push osimis.azurecr.io/orthanc-pro:$releaseTag
 fi
 
 
