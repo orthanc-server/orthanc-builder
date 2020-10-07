@@ -13,5 +13,3 @@ From July 1st 2020, the osimis/orthanc-pro image has gone [private](https://www.
 on the `osimis/orthanc` image, it is builder code is included as a private git submodule in the `docker/orthanc-pro-builder` folder.
 
 Note for Osimis developers: you might have to run a `git submodule update --init` command the first time you clone the repo.
-
-
