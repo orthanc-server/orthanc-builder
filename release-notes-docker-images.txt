@@ -1,3 +1,4 @@
+          - object-storage plugins now compiled in Release mode
 20.9.6  : - uprgaded Orthanc to 1.7.4
           - removed default values for WVP LicenseString since it's not needed anymore
 20.9.5  : - upgraded object-storage plugins to 1.1.0
