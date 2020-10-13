@@ -19,6 +19,7 @@ git submodule update
 # Retrieve git metadata
 gitLongTag=$(git describe --long --dirty=-dirty)
 branchName=${1:-$(git rev-parse --abbrev-ref HEAD)} #if no argument defined, get the branch name from git
+action=${2:-build}  # build, pushToPublicRepo or pushToPrivateRepo
 releaseCommitId=$(git rev-parse --short HEAD)
 isLatest=false
 
@@ -59,28 +60,39 @@ else
 
 fi
 
-docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
-docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
+if [[ $action == "build" ]]; then
 
-# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
-# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
-docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
-docker push osimis/orthanc-builder-base:20.4.0
+	docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
+	docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
 
-docker build -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
-docker build -t osimis/orthanc-pro:current -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+	# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
+	# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
+	docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
 
-docker tag osimis/orthanc:current osimis/orthanc:$releaseTag
-docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
+  docker build -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
+  docker build -t osimis/orthanc-pro:current -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
 
-docker push osimis/orthanc:$releaseTag
-docker push osimis/orthanc-pro:$releaseTag
-
-if [[ $isLatest ]]; then
-  docker tag osimis/orthanc:current osimis/orthanc:latest
-  docker tag osimis/orthanc-pro:current osimis/orthanc-pro:latest
-
-  docker push osimis/orthanc:latest
-  docker push osimis/orthanc-pro:latest
+  docker tag osimis/orthanc:current osimis/orthanc:$releaseTag
+  docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
 fi
+
+if [[ $action == "pushToPublicRepo" ]]; then
+  docker push osimis/orthanc-builder-base:20.4.0
+  docker push osimis/orthanc:$releaseTag
+  docker push osimis/orthanc-pro:$releaseTag
+
+	if [[ $isLatest ]]; then
+		docker tag osimis/orthanc:current osimis/orthanc:latest
+		docker tag osimis/orthanc-pro:current osimis/orthanc-pro:latest
+
+		docker push osimis/orthanc:latest
+	fi
+
+fi
+
+if [[ $action == "pushToPrivateRepo" ]]; then
+  docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
+  docker push osimis.azurecr.io/orthanc-pro:$releaseTag
+fi
+
 

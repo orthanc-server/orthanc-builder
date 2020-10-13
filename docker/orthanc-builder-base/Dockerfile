@@ -18,9 +18,9 @@ RUN apt-get --assume-yes install libsqlite3-dev
 RUN apt-get --assume-yes install libjpeg-dev zlib1g-dev libdcmtk2-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
 RUN apt-get --assume-yes install git
 RUN apt-get --assume-yes install mercurial
-# RUN apt-get --assume-yes install libcivetweb-devel
+RUN apt-get --assume-yes install zip
 
-# TODO: cleanup apt cache ...
+# no need to clean apt-cache, it's a build image, we don't care about its size
 
 RUN mkdir -p /sources
 RUN mkdir -p /build

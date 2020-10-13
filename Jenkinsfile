@@ -1,29 +1,35 @@
 try {
-	lock(resource: 'orthanc-bundles', inversePrecedence: false) {
+    lock(resource: 'orthanc-bundles', inversePrecedence: false) {
 
-	    stage('Build') {
-	        node('master && docker') { wrap([$class: 'AnsiColorBuildWrapper']) {
+        stage('Build') {
+            node('docker && builder') { 
+                wrap([$class: 'AnsiColorBuildWrapper']) {
 
-	        withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'bitbucket-osimis', \
-                                             keyFileVariable: 'SSH_KEY_ABC', \
-                                             passphraseVariable: '', \
-                                             usernameVariable: '')]) {
-              docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-jenkinsosimis') {
-	                checkout scm
+                    withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'bitbucket-osimis', \
+                                            keyFileVariable: 'SSH_KEY_ABC', \
+                                            passphraseVariable: '', \
+                                            usernameVariable: '')]) {
 
-      				    sh '''
-			      	      GIT_SSH_COMMAND='ssh -i $SSH_KEY_ABC -o IdentitiesOnly=yes' git submodule update --init
-				             '''
+                        checkout scm
+                        sh '''
+                                GIT_SSH_COMMAND='ssh -i $SSH_KEY_ABC -o IdentitiesOnly=yes' git submodule update --init
+                                '''
 
-	                sh './ciBuild.sh ${BRANCH_NAME}'
-              }
-                                             }
-				  }}
-	    }
-		    // slackSend channel: 'jenkins-orthanc', color: '#FF0000', message: "${env.JOB_NAME} has succeded ${env.JOB_URL}"
+                        sh './ciBuild.sh ${BRANCH_NAME} build'
 
-	}
+                        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-jenkinsosimis') {
+                                        sh './ciBuild.sh ${BRANCH_NAME} pushToPublicRepo'
+                        }
 
+                        docker.withRegistry('https://osimis.azurecr.io/v2/', 'jenkins-push-azure-osimis-cr') {
+                                        sh './ciBuild.sh ${BRANCH_NAME} pushToPrivateRepo'
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 }
 catch (e) {
     slackSend channel: 'jenkins-orthanc', color: '#FF0000', message: "${env.JOB_NAME} has failed ${env.JOB_URL}"
