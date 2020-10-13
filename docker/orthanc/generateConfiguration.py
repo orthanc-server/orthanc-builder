@@ -59,7 +59,7 @@ for secretPath in glob.glob("/run/secrets/*"):
 
   if os.path.isfile(secretPath):
     with open(secretPath, "r") as fp:
-      secretValue = fp.read()
+      secretValue = fp.read().rstrip("\n")
 
     configurator.mergeConfigFromSecret(secretPath, secretValue)
 
