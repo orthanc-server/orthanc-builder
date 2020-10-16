@@ -1,6 +1,7 @@
+20.10.2 : - upgraded Orthanc to 1.8.0
 20.10.1 : - now removing EOL of secrets right after reading them
           - object-storage plugins now compiled in Release mode
-20.9.6  : - uprgaded Orthanc to 1.7.4
+20.9.6  : - upgraded Orthanc to 1.7.4
           - removed default values for WVP LicenseString since it's not needed anymore
 20.9.5  : - upgraded object-storage plugins to 1.1.0
 20.9.4  : - upgraded WVB to 1.4.0
