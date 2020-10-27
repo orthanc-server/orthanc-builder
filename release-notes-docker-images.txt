@@ -1,3 +1,4 @@
+          - upgraded DICOMweb to 1.3
 20.10.2 : - upgraded Orthanc to 1.8.0
 20.10.1 : - now removing EOL of secrets right after reading them
           - object-storage plugins now compiled in Release mode
