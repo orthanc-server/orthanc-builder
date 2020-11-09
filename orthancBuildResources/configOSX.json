@@ -44,7 +44,7 @@
   // folders, in which case they will be scanned non-recursively to
   // find shared libraries.
   "Plugins" : [
-  "libOsimisWebViewer.dylib"
+    "."
   ],
 
 
