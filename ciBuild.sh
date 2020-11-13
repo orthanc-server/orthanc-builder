@@ -101,4 +101,18 @@ if [[ $action == "pushToPrivateRepo" ]]; then
 
 fi
 
+if [[ $action == "updateDockerHubDescription" ]]; then
+
+  if [[ $branchName == "master" ]]; then
+
+		docker run -v $PWD:/workspace \
+			-e DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME \
+			-e DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD \
+			-e DOCKERHUB_REPOSITORY='osimis/orthanc' \
+			-e README_FILEPATH='/workspace/README-dockerhub.md' \
+			peterevans/dockerhub-description:2.4.1
+	
+	fi
+fi
+
 

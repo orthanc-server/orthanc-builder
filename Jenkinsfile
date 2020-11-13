@@ -26,6 +26,10 @@ try {
                         docker.withRegistry('https://osimis.azurecr.io/v2/', 'jenkins-push-azure-osimis-cr') {
                             sh './ciBuild.sh ${BRANCH_NAME} pushToPrivateRepo'
                         }
+
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkinsosimis', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                            sh './ciBuild.sh ${BRANCH_NAME} updateDockerHubDescription'
+                        }
                     }
                 }
             }
