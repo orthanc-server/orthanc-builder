@@ -93,6 +93,12 @@ fi
 if [[ $action == "pushToPrivateRepo" ]]; then
   docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
   docker push osimis.azurecr.io/orthanc-pro:$releaseTag
+
+	if [[ $isLatest ]]; then
+		docker tag osimis.azurecr.io/orthanc-pro:$releaseTag osimis.azurecr.io/orthanc-pro:latest
+		docker push osimis.azurecr.io/orthanc-pro:latest
+	fi
+
 fi
 
 
