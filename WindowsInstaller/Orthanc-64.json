@@ -20,11 +20,8 @@
       "Name" : "osimis_web_viewer",
       "Mandatory" : false,
       "Category" : "osimis",
-      "Downloads" : [
-        [ "http://orthanc.osimis.io/win64/viewer/1.4.1/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
-      ],
-      "NightlyDownloads" : [
-        [ "http://orthanc.osimis.io/win64/viewer/1.4.1/OsimisWebViewer.dll", "Plugins", "Comment:" ]
+      "Artifacts" : [
+        "OsimisWebViewer 1.4.1 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]

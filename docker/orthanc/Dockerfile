@@ -149,7 +149,7 @@ COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disab
 
 
 
-# CHANGE_VERSION_WVB
+# CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.1/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
