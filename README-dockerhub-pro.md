@@ -13,14 +13,14 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.10.2
+#### 20.XX.YY
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.8.0
-Osimis Web viewer plugin              1.4.0
-Osimis Web viewer plugin (alpha)      1.4.0
+Osimis Web viewer plugin              1.4.1
+Osimis Web viewer plugin (alpha)      1.4.1
 Modality worklists plugin             1.8.0
 Serve folders plugin                  1.8.0
 Connectivity check plugin             1.8.0
@@ -45,8 +45,8 @@ Google Cloud Platform plugin          1.0
 commercial plugins (requiring a license):
 
 MSSql plugin                          1.1.0
-Osimis Web viewer pro plugin          1.4.0.0
-Osimis Web viewer pro plugin (alpha)  1.4.0.0
+Osimis Web viewer pro plugin          1.4.1.0
+Osimis Web viewer pro plugin (alpha)  1.4.1.0
 ```
 
 # Documentation

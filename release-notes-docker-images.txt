@@ -1,3 +1,7 @@
+20.11.2 : - upgraded WVB to 1.4.1
+          - upgraded WVB_ALPHA to 1.4.1
+          - upgraded WVP to 1.4.1.0
+          - upgraded WVP_ALPHA to 1.4.1.0
 20.11.1 : - upgraded DICOMweb to 1.3
 20.10.2 : - upgraded Orthanc to 1.8.0
 20.10.1 : - now removing EOL of secrets right after reading them
