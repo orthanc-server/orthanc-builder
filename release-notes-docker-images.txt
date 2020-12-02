@@ -1,3 +1,4 @@
+20.12.0 : - added the Stone Web viewer 1.0 plugin
 20.11.2 : - upgraded WVB to 1.4.1
           - upgraded WVB_ALPHA to 1.4.1
           - upgraded WVP to 1.4.1.0

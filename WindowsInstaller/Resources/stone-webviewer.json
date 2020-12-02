@@ -1,0 +1,94 @@
+{
+  "StoneWebViewer" :
+  {
+    /**
+     * Defines how dates are displayed in the UI. If this option is not
+     * set, the DICOM tags will be displayed as such. "DD" will be
+     * replaced by the day, "MM" by the month, and "YYYY" by the year.
+     **/
+    // "DateFormat" : "DD/MM/YYYY",
+
+    /**
+     * This option allows you to define windowing presets.
+     * For each preset, you must provide a name, the window width
+     * and window center.
+     **/
+    "WindowingPresets" : [
+      {"Name" : "CT Lung",    "WindowCenter" : -400, "WindowWidth" : 1600},
+      {"Name" : "CT Abdomen", "WindowCenter" : 60,   "WindowWidth" : 400},
+      {"Name" : "CT Bone",    "WindowCenter" : 300,  "WindowWidth" : 1500},
+      {"Name" : "CT Brain",   "WindowCenter" : 40,   "WindowWidth" : 80},
+      {"Name" : "CT Chest",   "WindowCenter" : 40,   "WindowWidth" : 400},
+      {"Name" : "CT Angio",   "WindowCenter" : 300,  "WindowWidth" : 600}
+    ],
+    
+    /**
+     * Enables/disables the combined tool. This is the default mode
+     * for mouse interactions. The combined tool allows to access the
+     * windowing, zoom and pan from a single mouse configuration. The
+     * behaviour of the combined tool is defined in
+     * CombinedToolBehaviour. The available mouse actions are
+     * "Crosshair", "Windowing", "Pan", "Rotate" and "Zoom".
+     **/
+    "CombinedToolEnabled" : true,
+    "CombinedToolBehaviour" : {
+      "LeftMouseButton" : "Windowing",
+      "MiddleMouseButton" : "Pan",
+      "RightMouseButton" : "Zoom"
+    },
+
+    /**
+     * Enables/disables the print button.
+     **/
+    "PrintEnabled" : true,
+
+    /**
+     * Enables/disables the button to download a screenshot of the
+     * active viewport as a JPEG file.
+     **/
+    "DownloadAsJpegEnabled" : true,
+
+    /**
+     * Enables/disables the button to download the display study.
+     * Only used if "OrthancApiRoot" is properly set.
+     **/
+    "DownloadStudyEnabled" : true,
+
+    /**
+     * The allowed origin for messages corresponding to dynamic actions
+     * triggered by another Web page using "window.postMessage()". The
+     * special value "*" will allow any origin, which is an insecure
+     * value to be used only during development. If this option is not
+     * set, all the requests for dynamic actions will be rejected.
+     * https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+     **/
+    "ExpectedMessageOrigin" : "http://localhost:8042",
+
+    /**
+     * Root path of the DICOMweb server. This option is automatically
+     * set by the Orthanc plugin if missing.
+     **/
+    "DicomWebRoot" : "../dicom-web",
+
+    /**
+     * Set the size of the cache that stores the DICOM files. This
+     * size is expressed in megabytes. The default value of 128MB
+     * should work in most setups, except if very large multiframe
+     * instances are encountered, which might for instance be the case
+     * for mammography. Setting this parameter to zero will disable
+     * the cache, which should only be done for testing.
+     **/
+    "DicomCacheSize" : 128,
+    
+    /**
+     * The following parameter can be set if running the Stone Web
+     * viewer from Orthanc, but without using the associated plugin
+     * (e.g. using the "Serve Folders" sample plugin). Using the
+     * plugin would overwrite this setting. This will enable features
+     * that are only available if the Orthanc REST API is accessible
+     * (download of studies, and playing videos). This option is
+     * typically used by the developers of Stone.
+     **/
+    "OrthancApiRoot" : ".."
+  }
+}

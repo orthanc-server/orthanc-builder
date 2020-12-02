@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "20.11.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "20.12.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 32,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -15,13 +15,14 @@
       ]
     },
     
+    
     {
       "Description" : "Osimis Web viewer (AGPL license)",
       "Name" : "osimis_web_viewer",
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        "OsimisWebViewer 1.4.1 - VC2015-32 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"
+        [ "OsimisWebViewer 1.4.1 - VC2015-32 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
       ],
       "Resources" : [
         [ "webviewer.json", "Configuration" ]
@@ -76,6 +77,20 @@
         [ "OsimisCloud mainline - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment:" ]
       ]
     },
+
+    
+    {
+      "Description" : "Stone Web viewer (AGPL license)",
+      "Name" : "stone_web_viewer",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Stone 1.0 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
+      ],
+      "Resources" : [
+        [ "stone-webviewer.json", "Configuration" ]
+      ]
+    },    
     {
       "Description" : "Modality worklists",
       "Mandatory" : false,

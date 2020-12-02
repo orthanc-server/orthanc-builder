@@ -42,12 +42,19 @@
     "libs" : ["libOrthancWebViewer.so"]
   },
 
+  "StoneWebViewer" : {
+    "section" : "WebViewer",
+    "enablingEnvVarIsRequired": true,
+    "enablingEnvVar" : "STONE_WEB_VIEWER_PLUGIN_ENABLED",
+    "libs" : ["libStoneWebViewer.so"]
+  },
+
   "OsimisWebViewerBasic" : {
     "section" : "WebViewer",
     "enablingEnvVarIsRequired": true,
     "enablingEnvVar" : "OSIMIS_WEB_VIEWER1_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WVB_ENABLED",
-    "libs" : ["libOsimisWebViewer.so"]
+    "libs" : ["libStoneWebViewer.so"]
   },
 
   "OsimisWebViewerBasicAlpha" : {
