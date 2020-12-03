@@ -40,6 +40,7 @@ wget "${URL}/PostgreSQL 3.2 - OS X Release/libOrthancPostgreSQLIndex.dylib"
 wget "${URL}/PostgreSQL 3.2 - OS X Release/libOrthancPostgreSQLStorage.dylib"
 wget "${URL}/Transfers 1.0 - OS X Release/libOrthancTransfers.dylib"
 wget "${URL}/WebViewer 2.6 - OS X Release/libOrthancWebViewer.dylib"
+wget "${URL}/Stone 1.0 - OS X Release/libStoneWebViewer.dylib"
 
 # Create the archive
 cd ${TARGET}
