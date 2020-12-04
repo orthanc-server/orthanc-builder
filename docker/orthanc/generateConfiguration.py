@@ -82,10 +82,3 @@ configFilePath="/tmp/orthanc.json"
 logInfo("generating temporary configuration file in " + configFilePath)
 with open(configFilePath, "w+t") as fp:
   json.dump(configurator.configuration, fp=fp, indent=2)
-
-
-############### setting other system environment variabes #####################################
-
-if not "MALLOC_ARENA_MAX" in os.environ:
-  logInfo("setting MALLOC_ARENA_MAX environment variable to 5 since it has not be defined")
-  os.environ["MALLOC_ARENA_MAX"] = "5"
