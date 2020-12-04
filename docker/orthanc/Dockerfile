@@ -164,7 +164,7 @@ SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/tmp/orthanc.json"]
 
-ENV MALLOC_ARENA_MAX=8
+ENV MALLOC_ARENA_MAX=5
 COPY docker-entrypoint.sh /
 COPY *.json /startup/ 
 COPY *.py /startup/
