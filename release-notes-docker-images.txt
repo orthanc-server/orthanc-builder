@@ -1,3 +1,4 @@
+20.12.3 : - upgraded Orthanc to 1.8.1
 20.12.2 : - set default value for MALLOC_ARENA_MAX=5 (default value was not set before)
 20.12.1 : - fixed conflicts between OsimisViewerBasic config and StoneViewer config
 20.12.0 : - added the Stone Web viewer 1.0 plugin

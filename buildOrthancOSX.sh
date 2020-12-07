@@ -25,9 +25,9 @@ cp ${SCRIPTPATH}/orthancBuildResources/readmeOSX.txt readme.txt
 cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
 
 # Orthanc core
-wget "${URL}/Orthanc 1.8.0 - OS X Release/Orthanc"
-wget "${URL}/Orthanc 1.8.0 - OS X Release/libModalityWorklists.dylib"
-wget "${URL}/Orthanc 1.8.0 - OS X Release/libServeFolders.dylib"
+wget "${URL}/Orthanc 1.8.1 - OS X Release/Orthanc"
+wget "${URL}/Orthanc 1.8.1 - OS X Release/libModalityWorklists.dylib"
+wget "${URL}/Orthanc 1.8.1 - OS X Release/libServeFolders.dylib"
 
 chmod +x ./Orthanc
 
