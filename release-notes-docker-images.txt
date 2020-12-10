@@ -1,3 +1,4 @@
+20.12.4 : - upgraded osimis-cloud plugin to 0.2
 20.12.3 : - upgraded Orthanc to 1.8.1
 20.12.2 : - set default value for MALLOC_ARENA_MAX=5 (default value was not set before)
 20.12.1 : - fixed conflicts between OsimisViewerBasic config and StoneViewer config

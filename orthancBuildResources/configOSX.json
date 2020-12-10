@@ -192,7 +192,7 @@
   // option): "Tells curl to use the specified certificate file to
   // verify the peers. The file may contain multiple CA
   // certificates. The certificate(s) must be in PEM format."
-  "HttpsCACertificates" : "",
+  "HttpsCACertificates" : "./ca-certificates.crt",
 
 
 
