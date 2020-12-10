@@ -99,7 +99,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-plugin-auth
 
 # CHANGE_VERSION_AUTH
-RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r "0.2.3" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r "0.2.4" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4

@@ -32,7 +32,7 @@ DICOMweb plugin                       1.3
 PostgreSQL plugin                     3.2
 MySQL plugin                          2.0
 WSI Web viewer plugin                 0.7
-Authorization plugin                  0.2.3
+Authorization plugin                  0.2.4
 Transfers accelerator plugin          1.0
 GDCM plugin                           1.1
 Osimis cloud synchronization plugin   0.2

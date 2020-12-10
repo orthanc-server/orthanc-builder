@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "20.12.4", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "20.12.5", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -60,10 +60,10 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        [ "Authorization 0.2.3 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH" ]
+        [ "Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH" ]
       ],
       "NightlyArtifacts" : [
-        [ "Authorization 0.2.3 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment:" ]
+        [ "Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment:" ]
       ]
     },
     {
