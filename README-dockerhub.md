@@ -14,7 +14,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 20.12.4
+#### 20.12.5
 ```
 
 component                             version
@@ -35,5 +35,5 @@ WSI Web viewer plugin                 0.7
 Authorization plugin                  0.2.3
 Transfers accelerator plugin          1.0
 GDCM plugin                           1.1
-Osimis cloud synchronization plugin   0.1
+Osimis cloud synchronization plugin   0.2
 ```
