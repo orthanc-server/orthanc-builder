@@ -58,7 +58,7 @@ repositories = {
     },
     'orthancwebviewer': {
         'platforms': ALL_PLATFORMS,
-        'stableBranch': '2.6', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'stableBranch': '2.7', # CHANGE_VERSION_ORTHANC_WEB_VIEWER
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWebViewer'],
 
@@ -75,7 +75,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-webviewer.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'OrthancWebViewer-2.6',  # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+        'stableBranch': 'OrthancWebViewer-2.7',  # CHANGE_VERSION_ORTHANC_WEB_VIEWER
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWebViewer'],        
     },

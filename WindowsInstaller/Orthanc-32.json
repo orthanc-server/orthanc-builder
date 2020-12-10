@@ -146,7 +146,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WebViewer 2.6 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
+        [ "WebViewer 2.7 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
       ],
       "NightlyArtifacts" : [
         [ "WebViewer mainline - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment:" ]

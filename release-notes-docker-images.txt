@@ -1,3 +1,4 @@
+          - upgraded Orthanc Web viewer to 2.7
           - upgraded advanced authorization plugin to 0.2.4 (now deprecated)
 20.12.5 : - upgraded WVB_ALPHA to e38953e
           - upgraded WVP_ALPHA to 8448639
