@@ -146,7 +146,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-3.2', # CHANGE_VERSION_PG
+        'stableBranch': 'OrthancPostgreSQL-3.3', # CHANGE_VERSION_PG
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     },

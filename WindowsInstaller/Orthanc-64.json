@@ -171,8 +171,8 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "PostgreSQL 3.2 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ],
-        [ "PostgreSQL 3.2 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ]
+        [ "PostgreSQL 3.3 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ],
+        [ "PostgreSQL 3.3 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ]
       ],
       "Resources" : [
         [ "postgresql.json", "Configuration" ]
