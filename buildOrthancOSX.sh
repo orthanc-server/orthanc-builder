@@ -34,8 +34,8 @@ chmod +x ./Orthanc
 
 # Plugins
 wget "${URL}/DicomWeb 1.3 - OS X Release/libOrthancDicomWeb.dylib"
-wget "${URL}/MySQL 2.0 - OS X Release/libOrthancMySQLIndex.dylib"
-wget "${URL}/MySQL 2.0 - OS X Release/libOrthancMySQLStorage.dylib"
+wget "${URL}/MySQL 3.0 - OS X Release/libOrthancMySQLIndex.dylib"
+wget "${URL}/MySQL 3.0 - OS X Release/libOrthancMySQLStorage.dylib"
 wget "${URL}/OsimisWebViewer 1.4.1 - OS X Release/libOsimisWebViewer.dylib"
 wget "${URL}/PostgreSQL 3.3 - OS X Release/libOrthancPostgreSQLIndex.dylib"
 wget "${URL}/PostgreSQL 3.3 - OS X Release/libOrthancPostgreSQLStorage.dylib"

@@ -1,3 +1,4 @@
+          - upgraded MySQL plugins to 3.0
           - upgraded PostgreSQL plugins to 3.3
           - upgraded Python plugin to 3.0
           - upgraded Orthanc Web viewer to 2.7
