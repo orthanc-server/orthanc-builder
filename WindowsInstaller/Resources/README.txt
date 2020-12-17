@@ -30,7 +30,7 @@ MySQL plugin                          3.0
 WSI Web viewer plugin                 0.7
 Transfers accelerator plugin          1.0
 Authorization plugin                  0.2.4
-GDCM decoder/transcoder plugin        1.1
+GDCM decoder/transcoder plugin        1.2
 Osimis cloud synchronization plugin   0.2
 
 

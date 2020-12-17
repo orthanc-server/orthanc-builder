@@ -34,6 +34,6 @@ MySQL plugin                          3.0
 WSI Web viewer plugin                 0.7
 Authorization plugin                  0.2.4
 Transfers accelerator plugin          1.0
-GDCM plugin                           1.1
+GDCM plugin                           1.2
 Osimis cloud synchronization plugin   0.2
 ```
