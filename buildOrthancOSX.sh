@@ -33,7 +33,7 @@ wget "${URL}/Orthanc 1.8.1 - OS X Release/libServeFolders.dylib"
 chmod +x ./Orthanc
 
 # Plugins
-wget "${URL}/DicomWeb 1.3 - OS X Release/libOrthancDicomWeb.dylib"
+wget "${URL}/DicomWeb 1.4 - OS X Release/libOrthancDicomWeb.dylib"
 wget "${URL}/MySQL 3.0 - OS X Release/libOrthancMySQLIndex.dylib"
 wget "${URL}/MySQL 3.0 - OS X Release/libOrthancMySQLStorage.dylib"
 wget "${URL}/OsimisWebViewer 1.4.1 - OS X Release/libOsimisWebViewer.dylib"

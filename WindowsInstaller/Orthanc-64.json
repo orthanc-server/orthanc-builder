@@ -157,7 +157,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 1.3 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 1.4 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "NightlyArtifacts" : [
         [ "DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]

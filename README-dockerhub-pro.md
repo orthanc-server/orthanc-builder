@@ -27,7 +27,7 @@ Serve folders plugin                  1.8.1
 Connectivity check plugin             1.8.1
 Python plugin                         3.0
 Orthanc Web viewer plugin             2.7
-DICOMweb plugin                       1.3
+DICOMweb plugin                       1.4
 PostgreSQL plugin                     3.3
 MySQL plugin                          3.0
 WSI Web viewer plugin                 0.7

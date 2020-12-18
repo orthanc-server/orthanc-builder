@@ -1,3 +1,4 @@
+          - upgraded DICOMweb plugin to 1.4
           - upgraded GDCM plugin to 1.2
           - upgraded MySQL plugins to 3.0
           - upgraded PostgreSQL plugins to 3.3
