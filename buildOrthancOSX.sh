@@ -26,9 +26,10 @@ cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
 cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
 
 # Orthanc core
-wget "${URL}/Orthanc 1.8.1 - OS X Release/Orthanc"
-wget "${URL}/Orthanc 1.8.1 - OS X Release/libModalityWorklists.dylib"
-wget "${URL}/Orthanc 1.8.1 - OS X Release/libServeFolders.dylib"
+wget "${URL}/Orthanc 1.8.2 - OS X Release/Orthanc"
+wget "${URL}/Orthanc 1.8.2 - OS X Release/libModalityWorklists.dylib"
+wget "${URL}/Orthanc 1.8.2 - OS X Release/libServeFolders.dylib"
+wget "${URL}/Orthanc 1.8.2 - OS X Release/libConnectivityChecks.dylib"
 
 chmod +x ./Orthanc
 
@@ -43,6 +44,8 @@ wget "${URL}/Transfers 1.0 - OS X Release/libOrthancTransfers.dylib"
 wget "${URL}/WebViewer 2.7 - OS X Release/libOrthancWebViewer.dylib"
 wget "${URL}/Stone 1.0 - OS X Release/libStoneWebViewer.dylib"
 wget "${URL}/OsimisCloud 0.2 - OS X Release/libOrthancOsimisCloud.dylib"
+wget "${URL}/Gdcm 1.2 - OS X Release/libOrthancGdcm.dylib"
+wget "${URL}/WSI 0.7 - OS X Release/libOrthancWSI.dylib"
 
 # Create the archive
 cd ${TARGET}
