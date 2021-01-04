@@ -1,3 +1,5 @@
+21.1.1  : - upgraded WVB to 1.4.2
+          - upgraded WVB_ALPHA to 1.4.2
 20.12.7 : - linking the Azure blob storage plugin with a new version of cpprestsdk to avoid a leap year bug
 20.12.6 : - upgraded Orthanc to 1.8.2
           - upgraded DICOMweb plugin to 1.4

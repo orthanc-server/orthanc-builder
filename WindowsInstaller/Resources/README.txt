@@ -19,7 +19,7 @@ Content of the package 20.12.6
 
 Orthanc server                        1.8.2
 Stone Web viewer plugin               1.0
-Osimis Web viewer plugin              1.4.1
+Osimis Web viewer plugin              1.4.1  upgraded to 1.4.2 in next package (not released yet)
 Modality worklists plugin             1.8.2
 Serve folders plugin                  1.8.2
 Connectivity check plugin             1.8.2
