@@ -45,7 +45,7 @@ wget "${URL}/WebViewer 2.7 - OS X Release/libOrthancWebViewer.dylib"
 wget "${URL}/Stone 1.0 - OS X Release/libStoneWebViewer.dylib"
 wget "${URL}/OsimisCloud 0.3 - OS X Release/libOrthancOsimisCloud.dylib"
 wget "${URL}/Gdcm 1.2 - OS X Release/libOrthancGdcm.dylib"
-wget "${URL}/WSI 0.7 - OS X Release/libOrthancWSI.dylib"
+wget "${URL}/WSI 1.0 - OS X Release/libOrthancWSI.dylib"
 
 # Create the archive
 cd ${TARGET}

@@ -77,7 +77,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-plugin-wsi
 
 # CHANGE_VERSION_ORTHANC_WSI
-RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-0.7" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-1.0" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF /sources/ViewerPlugin
 RUN make -j 4

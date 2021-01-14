@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "21.1.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "21.1.3", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 32,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -183,7 +183,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "WSI 0.7 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"  ]
+        [ "WSI 1.0 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"  ]
       ],
       "NightlyArtifacts" : [
         [ "WSI mainline - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment:"  ]
@@ -207,8 +207,8 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "WSI 0.7 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
-        [ "WSI 0.7 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
+        [ "WSI 1.0 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
+        [ "WSI 1.0 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
       ],
       "NightlyArtifacts" : [
         [ "WSI mainline - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:" ],

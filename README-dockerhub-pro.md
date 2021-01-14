@@ -13,7 +13,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 21.1.2
+#### 21.1.3
 ```
 
 component                             version
@@ -30,7 +30,7 @@ Orthanc Web viewer plugin             2.7
 DICOMweb plugin                       1.4
 PostgreSQL plugin                     3.3
 MySQL plugin                          3.0
-WSI Web viewer plugin                 0.7
+WSI Web viewer plugin                 1.0
 Authorization plugin                  0.2.4
 Transfers accelerator plugin          1.0
 GDCM plugin                           1.2

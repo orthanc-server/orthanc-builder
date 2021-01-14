@@ -110,7 +110,7 @@ repositories = {
             'buildFromFolder': 'ViewerPlugin',
             'buildOutputFolder': '../orthanc-wsi-plugin.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.7', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-1.0', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancWSI'],
     },
@@ -127,7 +127,7 @@ repositories = {
             'buildFromFolder': 'Applications',
             'buildOutputFolder': '../orthanc-wsi-apps.hg-build'
         },
-        'stableBranch': 'OrthancWSI-0.7', # CHANGE_VERSION_WSI
+        'stableBranch': 'OrthancWSI-1.0', # CHANGE_VERSION_WSI
         'nightlyBranch': 'default',
         'outputExes': ['OrthancWSIDicomizer', 'OrthancWSIDicomToTiff'],
     },
