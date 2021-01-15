@@ -273,12 +273,27 @@ public:
   {
     if (processHandle_ != NULL)
     {
-      if (AttachConsole(processId_))
+      /**
+       * We don't kill "Orthanc.exe" from "OrthancService.exe" in the
+       * case of Windows shutdown. Indeed, in this case, Windows sends
+       * CTRL-C by itself. If we send CTRL-C again, the second CTRL-C
+       * will immediately cancel the stopping process of
+       * "Orthanc.exe", preventing Orthanc to reach the "Orthanc has
+       * stopped" log message.
+       **/
+      if (!isWindowsShutdown &&
+          AttachConsole(processId_))
       {
         // Prevent the main process "OrthancService.exe" from being
         // killed together with "Orthanc.exe" by disabling the
         // handling of CTRL-C
         SetConsoleCtrlHandler(NULL, true);
+
+        // From "WinSW": "Don't call GenerateConsoleCtrlEvent
+        // immediately after SetConsoleCtrlHandler. A delay was
+        // observed as of Windows 10, version 2004 and Windows Server
+        // 2019." -> NOT VALIDATED, unsure whether this is needed
+        Sleep(100);
         
         // Send CTRL-C to the entire process group (which includes
         // both "Orthanc.exe" and "OrthancService.exe")
@@ -427,7 +442,7 @@ void ServiceMain(int argc, char** argv)
      * Windows we're still making progress.
      **/
     ReportStopPendingProgress();
-    Sleep(1000);    
+    Sleep(1000);
   }
 
   /* The service has stopped */

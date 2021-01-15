@@ -24,7 +24,7 @@ WizardImageStretch=no
 ${ORTHANC_SETUP}
 
 ; Uncomment the next line to speed-up the building of the installer
-Compression=none
+; Compression=none
 
 
 [Components]
