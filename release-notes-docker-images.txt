@@ -1,4 +1,4 @@
-          - fix Orthanc issue 48 (Windows service not stopped properly on system shutdown or restart)
+          - partial fix of Orthanc issue 48 (uninstaller waits for Orthanc service termination)
 21.1.3 :  - upgraded WSI to 1.0
 21.1.2 :  - upgraded osimis-cloud plugin to 0.3
 21.1.1  : - upgraded WVB to 1.4.2
