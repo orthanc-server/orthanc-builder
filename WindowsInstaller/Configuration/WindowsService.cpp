@@ -273,24 +273,21 @@ public:
   {
     if (processHandle_ != NULL)
     {
-      if (isWindowsShutdown)
-      {
-        // On Windows shutdown, the CTRL-C event is automatically sent
-        // by Windows to "Orthanc.exe"
-      }
-      else
+      if (AttachConsole(processId_))
       {
         // Prevent the main process "OrthancService.exe" from being
         // killed together with "Orthanc.exe" by disabling the
         // handling of CTRL-C
         SetConsoleCtrlHandler(NULL, true);
-
+        
         // Send CTRL-C to the entire process group (which includes
         // both "Orthanc.exe" and "OrthancService.exe")
         GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
-
+        
         // Restore the callback
         SetConsoleCtrlHandler(NULL, false);
+
+        FreeConsole();
       }
 
       /**
@@ -341,21 +338,6 @@ void ControlHandler(DWORD request)
 
 void ServiceMain(int argc, char** argv) 
 { 
-  /**
-   * http://msdn.microsoft.com/en-us/library/windows/desktop/ms683155(v=vs.85).aspx
-   * "GenerateConsoleCtrlEvent() requires the calling code to be a
-   * console application as well as the target.  This is further
-   * complicated when using it in a Windows Service, as services do
-   * not seem to have consoles even if the EXE is marked as a Console
-   * application. Thus, I kept getting ERROR_INVALID_HANDLE when
-   * trying to call GenerateConsoleCtrlEvent(). I fixed it by forcing
-   * console creation in the service with AllocConsole()."
-   **/
-  if (!AllocConsole())
-  {
-    return;
-  }
-
   serviceStatus_.dwServiceType = SERVICE_WIN32_OWN_PROCESS; 
   serviceStatus_.dwCurrentState = SERVICE_START_PENDING; 
   serviceStatus_.dwControlsAccepted = 0;
