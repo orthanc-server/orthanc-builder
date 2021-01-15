@@ -14,91 +14,15 @@ public:
   {
   }
 
-  virtual void Start() = 0;
-
-  virtual void Stop() = 0;
-
-  virtual bool HasFailed() = 0;
-};
-
-
-
-class IThreadedService
-{
-public:
-  virtual ~IThreadedService()
-  {
-  }
-
   virtual bool Initialize() = 0;
 
-  virtual bool Step() = 0;
+  // Returns "true" iff. the service is still running
+  virtual bool IsRunning() = 0;
 
-  virtual void Finalize() = 0;
+  // Start the shutdown of the service, check "IsRunning()" to monitor when
+  // the service is actually stopped
+  virtual void Kill(bool isWindowsShutdown) = 0;
 };
-
-
-class ThreadedServiceWrapper : public IService
-{
-private:
-  IThreadedService* service_;
-  bool continue_;
-  bool failure_;
-  boost::thread thread_;
-
-  static void Worker(ThreadedServiceWrapper* that)                     
-  {
-    if (!that->service_->Initialize())
-    {
-      that->failure_ = true;
-      return;
-    }
-
-    while (that->continue_)
-    {
-      if (!that->service_->Step())
-      {
-        that->failure_ = true;
-        break;
-      }
-
-      Sleep(1000);
-    }
-
-    that->service_->Finalize();
-  }
-
-public:
-  ThreadedServiceWrapper(IThreadedService* service) :  // takes the ownership
-  service_(service),
-  continue_(true),
-  failure_(false)
-  {
-  }
-
-  virtual ~ThreadedServiceWrapper()
-  {
-    Stop();
-    delete service_;
-  }
-
-  virtual void Start()
-  {
-    thread_ = boost::thread(Worker, this);
-  }
-
-  virtual void Stop()
-  {
-    continue_ = false;
-    thread_.join();
-  }
-
-  virtual bool HasFailed()
-  {
-    return failure_;
-  }
-};
-
 
 
 static void QuoteArgument(std::wstring& commandLine,
@@ -188,19 +112,23 @@ static void QuoteArgument(std::wstring& commandLine,
 }
 
 
-class CommandLineService : public IThreadedService
+class CommandLineService : public IService
 {
 private:
   std::wstring workingDir_;
   std::wstring commandLine_;
   HANDLE processHandle_;
   DWORD processId_;
-  bool ctrlC_;
   int restartCounter_;
   int maxRestartCount_;
 
   bool Spawn()
   {
+    if (processHandle_ != NULL)
+    {
+      return false;  // Cannot start twice the service
+    }
+    
     PROCESS_INFORMATION pi;
     STARTUPINFOW si;
 
@@ -209,10 +137,45 @@ private:
     ZeroMemory(&pi, sizeof(pi));
 
     DWORD creationFlags = 0;
-    if (ctrlC_)
-    {
-      creationFlags |= CREATE_NEW_PROCESS_GROUP;
-    }
+
+    /**
+     * **NEVER USE** the following flag (that was in use in installers
+     * <= 21.1.2):
+     * 
+     * creationFlags |= CREATE_NEW_PROCESS_GROUP;
+     *
+     * If this flag is present, Windows shutdown doesn't work. Indeed,
+     * the "Orthanc.exe" is created in another process group than
+     * "OrthancService.exe": As "Orthanc.exe" does not handle
+     * "SERVICE_CONTROL_SHUTDOWN", it does receives CTRL-BREAK, but it
+     * has not the time to finalize its termination as it cannot
+     * report the "SERVICE_STOP_PENDING" per se. This leads to issue
+     * 48 "Windows service not stopped properly on system shutdown or
+     * restart" (https://bugs.orthanc-server.com/show_bug.cgi?id=48).
+     *
+     * Unfortunately, if "Orthanc.exe" is in the same process group
+     * than "OrthancService.exe", Windows shutdown works, but the
+     * command
+     * "GenerateConsoleCtrlEvent(CTRL_BREAK_EVENT,processId_);" (which
+     * was in use in installers <= 21.1.2) cannot be used to manually
+     * stop the service: "Orthanc.exe" never receives the "CTRL-BREAK"
+     * signal. I am unsure why, but explanations might be found at:
+     * https://docs.microsoft.com/en-us/windows/console/generateconsolectrlevent
+     *
+     * To stop "Orthanc.exe", we send "CTRL-C" to the entire process
+     * group (that includes both "OrthancService.exe" and
+     * "Orthanc.exe"), but we protect "OrthancService.exe" from being
+     * killed by CTRL-C by temporarily disabling the CTRL-C handler
+     * using "SetConsoleCtrlHandler()".
+     * 
+     * Altogether, the trick is thus to disambiguate between "Windows
+     * shutdowns" (no need to kill "Orthanc.exe") and "manual service
+     * stop" (need to send CTRL-C to "Orthanc.exe"). This is
+     * implemented in the "Kill()" function.
+     *
+     * Link to the earlier, incorrect implementation:
+     * https://bitbucket.org/osimis/orthanc-builder/src/cc47276ba9ba02835e957f500c40978cd57628eb/WindowsInstaller/Configuration/WindowsService.cpp
+     **/
 
     if (!CreateProcessW(NULL,   // No module name (use command line)
                         const_cast<wchar_t*>(commandLine_.c_str()),
@@ -236,11 +199,12 @@ private:
   }
 
 
-  bool IsAlive()
+  bool IsStillActive()
   {
     DWORD code;
 
-    if (GetExitCodeProcess(processHandle_, &code) == 0)  // Failure
+    if (processHandle_ == NULL ||
+        GetExitCodeProcess(processHandle_, &code) == 0)  // Failure
     {
       return false; 
     }
@@ -249,31 +213,12 @@ private:
   }
 
 
-  void Kill()
-  {
-    if (ctrlC_)
-    {
-      GenerateConsoleCtrlEvent(CTRL_BREAK_EVENT, processId_);
-    }
-    else
-    {
-      TerminateProcess(processHandle_, 0);
-    }
-    
-    // Wait until the child process exits (TerminateProcess is asynchronous)
-    WaitForSingleObject(processHandle_, INFINITE);
-
-    CloseHandle(processHandle_);
-  }
-
-
 public:
   CommandLineService(const std::vector<std::wstring>& arguments,
                      const std::wstring& workingDir,
-                     bool ctrlC,
                      int maxRestartCount) : 
     workingDir_(workingDir),
-    ctrlC_(ctrlC),
+    processHandle_(NULL),
     restartCounter_(0),
     maxRestartCount_(maxRestartCount)
   {
@@ -293,14 +238,22 @@ public:
     }
   }
 
+  virtual ~CommandLineService()
+  {
+    if (processHandle_ != NULL)
+    {
+      CloseHandle(processHandle_);
+    }
+  }
+
   virtual bool Initialize()
   {
     return Spawn();
   }
 
-  virtual bool Step()
+  virtual bool IsRunning()
   {
-    if (IsAlive())
+    if (IsStillActive())
     {
       return true;
     }
@@ -316,44 +269,73 @@ public:
     }
   }
 
-  virtual void Finalize()
+  virtual void Kill(bool isWindowsShutdown)
   {
-    Kill();
+    if (processHandle_ != NULL)
+    {
+      if (isWindowsShutdown)
+      {
+        // On Windows shutdown, the CTRL-C event is automatically sent
+        // by Windows to "Orthanc.exe"
+      }
+      else
+      {
+        // Prevent the main process "OrthancService.exe" from being
+        // killed together with "Orthanc.exe" by disabling the
+        // handling of CTRL-C
+        SetConsoleCtrlHandler(NULL, true);
+
+        // Send CTRL-C to the entire process group (which includes
+        // both "Orthanc.exe" and "OrthancService.exe")
+        GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+
+        // Restore the callback
+        SetConsoleCtrlHandler(NULL, false);
+      }
+
+      /**
+       * For an abrupt termination of "Orthanc.exe" (NOT RECOMMENDED),
+       * use the following line instead (this was the purpose of the
+       * "ctrlC_" in installers <= 21.1.2):
+       *
+       * TerminateProcess(processHandle_, 0);
+       **/
+    }    
   }
 };
 
 
 
-std::auto_ptr<IService> service_;
+std::unique_ptr<IService> service_;
 SERVICE_STATUS serviceStatus_; 
-SERVICE_STATUS_HANDLE statusHandle_; 
+SERVICE_STATUS_HANDLE statusHandle_;
+HANDLE shutdownEvent_;
+bool isWindowsShutdown_ = false;
+
+
+void ReportStopPendingProgress()
+{
+  serviceStatus_.dwCurrentState = SERVICE_STOP_PENDING;
+  serviceStatus_.dwCheckPoint += 1;
+  serviceStatus_.dwWaitHint = 10000;
+  SetServiceStatus(statusHandle_, &serviceStatus_);
+}
 
 
 void ControlHandler(DWORD request) 
 { 
-  switch (request) 
+  if (request == SERVICE_CONTROL_STOP ||
+      request == SERVICE_CONTROL_SHUTDOWN)
+  {
+    isWindowsShutdown_ = (request == SERVICE_CONTROL_SHUTDOWN);
+    ReportStopPendingProgress();
+    SetEvent(shutdownEvent_);
+  }
+  else
   { 
-    case SERVICE_CONTROL_STOP: 
-    case SERVICE_CONTROL_SHUTDOWN: 
-      if (service_.get() != NULL)
-      {
-        service_->Stop();
-        service_.reset(NULL);
-      }
-
-      serviceStatus_.dwWin32ExitCode = 0; 
-      serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
-      SetServiceStatus (statusHandle_, &serviceStatus_);
-      return; 
- 
-    default:
-      break;
-  } 
- 
-  /* Report current status */
-  SetServiceStatus(statusHandle_, &serviceStatus_);
- 
-  return; 
+    /* Everything is fine, continue reporting the same status */
+    SetServiceStatus(statusHandle_, &serviceStatus_);
+  }
 }
 
 
@@ -374,12 +356,12 @@ void ServiceMain(int argc, char** argv)
     return;
   }
 
-  serviceStatus_.dwServiceType = SERVICE_WIN32; 
+  serviceStatus_.dwServiceType = SERVICE_WIN32_OWN_PROCESS; 
   serviceStatus_.dwCurrentState = SERVICE_START_PENDING; 
-  serviceStatus_.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
-  serviceStatus_.dwWin32ExitCode = 0; 
+  serviceStatus_.dwControlsAccepted = 0;
+  serviceStatus_.dwWin32ExitCode = NO_ERROR; 
   serviceStatus_.dwServiceSpecificExitCode = 0; 
-  serviceStatus_.dwCheckPoint = 0; 
+  serviceStatus_.dwCheckPoint = 0;
   serviceStatus_.dwWaitHint = 0; 
  
   statusHandle_ = RegisterServiceCtrlHandler(SERVICE_NAME, 
@@ -388,15 +370,21 @@ void ServiceMain(int argc, char** argv)
   { 
     /* Registering Control Handler failed */
     return; 
-  }  
+  }
+
+  shutdownEvent_ = CreateEventW(NULL, TRUE, FALSE, NULL);
+  if (shutdownEvent_ == NULL)
+  {
+    /* Initialization failed */
+    serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
+    serviceStatus_.dwWin32ExitCode = -1; 
+    SetServiceStatus(statusHandle_, &serviceStatus_);
+    return;
+  }
 
   /* Initialize Service */
-  //service_.reset(new Tutu);
-  //service_.reset(new ThreadedServiceWrapper(new Toto));
-
   std::wstring installDir = GetStringRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"InstallDir", L"");
   bool verbose = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Verbose", 0) == 1;
-  bool unlock = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Unlock", 1) == 1; // always try to unlock the DB when starting the Service (unless disabled in the registry)
   int maxRestartCount = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"MaxRestartCount", 5);
 
   std::vector<std::wstring> a;
@@ -407,18 +395,16 @@ void ServiceMain(int argc, char** argv)
     a.push_back(L"--verbose");
   }
 
-  if (unlock) 
-  {
-    a.push_back(L"--unlock");
-  }
-
   a.push_back(L"--logdir=Logs");
   a.push_back(L"Configuration");
-  service_.reset(new ThreadedServiceWrapper(new CommandLineService(a, installDir, true, maxRestartCount)));
+  service_.reset(new CommandLineService(a, installDir, maxRestartCount));
 
-  if (service_.get() == NULL)
+  /* Start the service */
+  if (service_.get() == NULL ||
+      !service_->Initialize())
   {
     /* Initialization failed */
+    CloseHandle(shutdownEvent_);
     serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
     serviceStatus_.dwWin32ExitCode = -1; 
     SetServiceStatus(statusHandle_, &serviceStatus_); 
@@ -427,24 +413,44 @@ void ServiceMain(int argc, char** argv)
 
   /* We report the running status to SCM. */
   serviceStatus_.dwCurrentState = SERVICE_RUNNING; 
+  serviceStatus_.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
   SetServiceStatus (statusHandle_, &serviceStatus_);
  
-  /* The worker loop of a service */
-  service_->Start();
-
   while (serviceStatus_.dwCurrentState == SERVICE_RUNNING)
   {
-    if (service_->HasFailed())
+    // Has the underlying service crashed?
+    if (!service_->IsRunning())
     {
+      CloseHandle(shutdownEvent_);
       serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
       serviceStatus_.dwWin32ExitCode = -1; 
       SetServiceStatus(statusHandle_, &serviceStatus_);
       return;
     }
 
-    /* TODO Improve this with a condition variable? */
-    Sleep(1000);
+    /* Wait 1 second, or immediately awake if "ControlHandler()" receives a stop/shutdown event */
+    WaitForSingleObject(shutdownEvent_, 1000);
   }
+  
+  CloseHandle(shutdownEvent_);
+  
+  /* ControlHandler() has changed the status, stop the service */
+  service_->Kill(isWindowsShutdown_);
+
+  while (service_->IsRunning())
+  {
+    /**
+     * The service is still in the shutdown phase, keep Windows
+     * informed. We increment the check point counter to convince
+     * Windows we're still making progress.
+     **/
+    ReportStopPendingProgress();
+    Sleep(1000);    
+  }
+
+  /* The service has stopped */
+  serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
+  SetServiceStatus(statusHandle_, &serviceStatus_);  
 }
 
 

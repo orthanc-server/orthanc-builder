@@ -245,6 +245,9 @@ end;
 #include "AppProcessMessages.iss"
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  counter: Integer;
+
 begin
   // https://stackoverflow.com/a/3219486/881731
   if CurUninstallStep = usUninstall then begin
@@ -253,10 +256,19 @@ begin
     
     StopService('Orthanc');
 
-    while IsServiceRunning('Orthanc') do
+    counter := 0;
+
+    // Wait up to 20 seconds to stop the service
+    while (counter < 20 * 10) AND IsServiceRunning('Orthanc') do
     begin
       AppProcessMessages();  // Don't freeze the GUI, continue processing messages
-      Sleep(50);
+      counter := counter + 1;
+      Sleep(100);
+    end;
+
+    if IsServiceRunning('Orthanc') then
+    begin
+      MsgBox('The Orthanc service took too much time to stop, forcing the removal of the service.', mbConfirmation, MB_OK); 
     end;
 
     UninstallProgressForm.StatusLabel.Caption := 'Removing the Orthanc service...';
