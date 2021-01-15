@@ -255,6 +255,13 @@ installer = installer.replace('${ORTHANC_SETUP}',
 with open(os.path.join(TARGET, 'Installer.innosetup'), 'w') as g:
     g.write(installer)
 
+shutil.copyfile(os.path.join(SOURCE, 'ServiceControl.iss'),
+                os.path.join(TARGET, 'ServiceControl.iss'))
+
+shutil.copyfile(os.path.join(SOURCE, 'AppProcessMessages.iss'),
+                os.path.join(TARGET, 'AppProcessMessages.iss'))
+
+
 
 ##
 ## Run InnoSetup

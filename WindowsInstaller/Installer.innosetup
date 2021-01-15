@@ -77,10 +77,6 @@ Filename: "sc"; Parameters: "create Orthanc start= auto binPath= ""\""{app}\Orth
 Filename: "sc"; Parameters: "description Orthanc ""Lightweight, RESTful DICOM server"""; Flags: runhidden
 Filename: "sc"; Parameters: "start Orthanc"; Flags: runhidden
 
-[UninstallRun]
-Filename: "sc"; Parameters: "stop Orthanc"; Flags: runhidden
-Filename: "sc"; Parameters: "delete Orthanc"; Flags: runhidden
-
 [Code]
 
 // =============================================================
@@ -235,4 +231,37 @@ function GetOrthancDir(Param: String): String;
 begin
   { Return the selected OrthancDir }
   Result := OrthancDirPage.Values[0];
+end;
+
+
+
+
+// =============================================================
+// == Wait for Orthanc service to be actually stopped and 
+// == removed during uninstall. Introduced in releases > 21.1.2
+// =============================================================
+
+#include "ServiceControl.iss"
+#include "AppProcessMessages.iss"
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  // https://stackoverflow.com/a/3219486/881731
+  if CurUninstallStep = usUninstall then begin
+    // https://jrsoftware.org/ishelp/index.php?topic=scriptclasses
+    UninstallProgressForm.StatusLabel.Caption := 'Stopping the Orthanc service...';
+    
+    StopService('Orthanc');
+
+    while IsServiceRunning('Orthanc') do
+    begin
+      AppProcessMessages();  // Don't freeze the GUI, continue processing messages
+      Sleep(50);
+    end;
+
+    UninstallProgressForm.StatusLabel.Caption := 'Removing the Orthanc service...';
+    RemoveService('Orthanc');
+
+    UninstallProgressForm.StatusLabel.Caption := 'Uninstalling the files...';    
+  end;
 end;
