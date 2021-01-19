@@ -1,6 +1,7 @@
-          - partial fix of Orthanc issue 48 (uninstaller waits for Orthanc service termination)
-21.1.3 :  - upgraded WSI to 1.0
-21.1.2 :  - upgraded osimis-cloud plugin to 0.3
+          - WIN-INSTALLER: partial fix of Orthanc issue 48 (uninstaller waits for Orthanc service termination)
+21.1.4  : - upgraded WVP_ALPHA to 4a4a657
+21.1.3  : - upgraded WSI to 1.0
+21.1.2  : - upgraded osimis-cloud plugin to 0.3
 21.1.1  : - upgraded WVB to 1.4.2
           - upgraded WVB_ALPHA to 1.4.2
 20.12.7 : - linking the Azure blob storage plugin with a new version of cpprestsdk to avoid a leap year bug

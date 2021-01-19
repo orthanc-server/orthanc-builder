@@ -13,7 +13,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 21.1.3
+#### 21.1.4
 ```
 
 component                             version
@@ -47,7 +47,7 @@ commercial plugins (requiring a license):
 
 MSSql plugin                          1.1.0
 Osimis Web viewer pro plugin          1.4.1.0
-Osimis Web viewer pro plugin (alpha)  8448639
+Osimis Web viewer pro plugin (alpha)  4a4a657
 ```
 
 # Documentation

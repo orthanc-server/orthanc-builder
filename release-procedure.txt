@@ -16,8 +16,9 @@ Each time you want to release a new package (which means you'll upgrade the vers
 - update the docker/README-dockerhub.txt with the new version numbers (keep the previous version package list in the readme)
 - update the docker/README-dockerhub-pro.txt with the new version numbers (keep the previous version package list in the readme)
 - update the release-notes-docker-images.txt
-- if you have modified the orthanc-pro git submodule, first go in this folder, commit your change and push then, go back to the root directory of this repo
-- at this stage, you may commit and tag as explained before and let Jenkins build the Docker images OR you may build manually with the commands below
+- if you have modified the orthanc-pro-builder git submodule, first go in this folder, commit your change and push then, go back to the root directory of this repo
+- at this stage, you may commit and tag as explained before and let Jenkins build the Docker images OR you may build manually with the commands below.  Note:
+  after an update of the orthanc-pro-builder git submodule, Jenkins regularly fails the first build.  Just retry the build ...
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page
 - update the links in osimis.io/source/localizable/download.html.erb
 
