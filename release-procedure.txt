@@ -1,9 +1,14 @@
 
-The docker images and Windows installers are official releases and shall be versioned consistently (they should share the same package numbers and same content).  These packages are numberd by YY.M[.r] where YY is the year, M is the month and r is the release counter for this month.  When r is zero, it is not included in Docker images and in communication.
+The docker images and Windows installers are official releases and shall be versioned consistently (they should share the same package numbers and same content).  
+These packages are numberd by YY.M[.r] where YY is the year, M is the month and r is the release counter for this month (starting at 1).  
+
+# prerequisites:
+Note for Osimis developers: you might have to run a `git submodule update --init` command the first time you clone the repo.
+
 
 # Upgrading packages
 
-This procedure is still very manual (except for the steps marked JENKINS)...  Each time you want to release a new package (which means you'll upgrade the version of at least one component):
+Each time you want to release a new package (which means you'll upgrade the version of at least one component):
 
 - search for `CHANGE_VERSION` in the whole repo and look for lines containing the component(s) you're upgrading -> upgrade the versions
 - search for `CHANGE_VERSION` in the whole repo and look for the package version numbers -> upgrade with YY.M[.r]
@@ -11,17 +16,20 @@ This procedure is still very manual (except for the steps marked JENKINS)...  Ea
 - update the docker/README-dockerhub.txt with the new version numbers (keep the previous version package list in the readme)
 - update the docker/README-dockerhub-pro.txt with the new version numbers (keep the previous version package list in the readme)
 - update the release-notes-docker-images.txt
-- at this stage, you may commit and tag as explained before and let Jenkins build the Docker images or you may build manually with the below commands
-- JENKINS: build the osimis/orthanc image: `ciBuildOsimisOrthancDockerImage.sh --no-cache`
-- JENKINS: build the osimis/orthanc-pro image: `ciBuildOsimisOrthancProDockerImage.sh --no-cache`
-- make sure the Docker image can be started `docker run --rm -p 8042:8042 osimis/orthanc:YY.M`
-- commit your changes
-- tag the repo with the package version `git tag -a YY.M -m "YY.M"`
-- JENKINS: push to bitbucket (including the tag: `git push --follow-tags`)
-- trigger a build of the Windows Installer
-- download the Windows Installer and perform a smoke test (make sure it starts correctly)
+- if you have modified the orthanc-pro git submodule, first go in this folder, commit your change and push then, go back to the root directory of this repo
+- at this stage, you may commit and tag as explained before and let Jenkins build the Docker images OR you may build manually with the commands below
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page
 - update the links in osimis.io/source/localizable/download.html.erb
-- JENKINS: tag the docker images with `latest`: `docker tag osimis/orthanc:YY.M osimis/orthanc:latest` and `docker tag osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest`
-- JENKINS: push the 4 images to Dockerhub: `docker push [osimis/orthanc:YY.M osimis/orthanc:latest osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest]`
+
+Manual release:
+- build the osimis/orthanc image: `ciBuildOsimisOrthancDockerImage.sh --no-cache`
+- build the osimis/orthanc-pro image: `ciBuildOsimisOrthancProDockerImage.sh --no-cache`
+- make sure the Docker image can be started `docker run --rm -p 8042:8042 osimis/orthanc:current`
+- commit your changes
+- tag the repo with the package version `git tag -a YY.M.r -m "YY.M.r"`
+- push to bitbucket (including the tag: `git push --follow-tags`)
+- tag the docker images with `latest`: `docker tag osimis/orthanc:YY.M osimis/orthanc:latest` and `docker tag osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest`
+- push the 4 images to Dockerhub: `docker push [osimis/orthanc:YY.M osimis/orthanc:latest osimis/orthanc-pro:YY.M osimis/orthanc-pro:latest]`
+- trigger a build of the Windows Installer (Jenkins)
+- download the Windows Installer and perform a smoke test (make sure it starts correctly)
 - connect to Dockerhub and update the documentation manually by copy/pasting the content of `docker/README-dockerhub.txt` into the project description (for both osimis/orthanc and osimis/orthanc-pro images)
