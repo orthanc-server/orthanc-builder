@@ -1,3 +1,4 @@
+21.1.7  : - upgraded Orthanc to 1.9.0
 21.1.6  : - upgraded DICOMweb plugin to 1.5
 21.1.5  : - upgraded Python plugin to 3.1
           - WIN-INSTALLER: partial fix of Orthanc issue 48 (uninstaller waits for Orthanc service termination)
