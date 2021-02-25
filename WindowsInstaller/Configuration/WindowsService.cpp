@@ -19,6 +19,24 @@
  **/
 
 
+
+/**
+
+   Useful command-line tools to debug Windows services:
+   
+   $ eventvwr
+   
+   $ services.msc
+   
+   $ sc queryex orthanc
+   
+   $ sc qfailure orthanc
+
+ **/
+
+
+
+
 #include <memory>
 #include <windows.h> 
 #include <stdio.h>
@@ -26,6 +44,15 @@
 #include <stdexcept>
 
 #include "Toolbox.h"
+
+
+
+enum ServiceStatus
+{
+  ServiceStatus_Running,
+  ServiceStatus_Crash,
+  ServiceStatus_Stopped
+};
 
 
 class IService
@@ -37,8 +64,7 @@ public:
 
   virtual bool Initialize() = 0;
 
-  // Returns "true" iff. the service is still running
-  virtual bool IsRunning() = 0;
+  virtual ServiceStatus GetStatus() = 0;
 
   // Start the shutdown of the service, check "IsRunning()" to monitor when
   // the service is actually stopped
@@ -220,17 +246,30 @@ private:
   }
 
 
-  bool IsStillActive()
+  ServiceStatus GetStatusInternal()
   {
     DWORD code;
 
-    if (processHandle_ == NULL ||
-        GetExitCodeProcess(processHandle_, &code) == 0)  // Failure
+    if (processHandle_ == NULL)
     {
-      return false; 
+      return ServiceStatus_Stopped;
     }
-
-    return code == STILL_ACTIVE;
+    else if (GetExitCodeProcess(processHandle_, &code) == 0)  // Failure
+    {
+      return ServiceStatus_Crash;
+    }
+    else if (code == STILL_ACTIVE)
+    {
+      return ServiceStatus_Running;
+    }
+    else if (code != 0)
+    {
+      return ServiceStatus_Crash;
+    }
+    else
+    {
+      return ServiceStatus_Stopped;
+    }
   }
 
 
@@ -272,21 +311,36 @@ public:
     return Spawn();
   }
 
-  virtual bool IsRunning()
+  virtual ServiceStatus GetStatus()
   {
-    if (IsStillActive())
+    switch (GetStatusInternal())
     {
-      return true;
-    }
-    else if (maxRestartCount_ == 0 || restartCounter_ < maxRestartCount_)
-    {
-      restartCounter_++;
-      Sleep(restartCounter_ * 1000); // wait more and more before it restarts
-      return Spawn();
-    }
-    else
-    {
-      return false;
+      case ServiceStatus_Running:
+        return ServiceStatus_Running;
+
+      case ServiceStatus_Crash:
+
+#if 0
+        // The "maxRestartCount_" is disabled since Orthanc 1.9.1
+        if (maxRestartCount_ == 0 ||
+            restartCounter_ < maxRestartCount_)
+        {
+          restartCounter_++;
+          Sleep(restartCounter_ * 1000); // wait more and more before it restarts
+          if (Spawn())
+          {
+            return ServiceStatus_Running;
+          }
+        }
+#endif
+
+        return ServiceStatus_Crash;
+
+      case ServiceStatus_Stopped:
+        return ServiceStatus_Stopped;
+
+      default:
+        return ServiceStatus_Crash;  // Should never occur
     }
   }
 
@@ -346,11 +400,39 @@ HANDLE shutdownEvent_;
 bool isWindowsShutdown_ = false;
 
 
+void ReportStopped()
+{
+  serviceStatus_.dwCurrentState = SERVICE_STOPPED;
+  SetServiceStatus(statusHandle_, &serviceStatus_);
+}
+
+
 void ReportStopPendingProgress()
 {
   serviceStatus_.dwCurrentState = SERVICE_STOP_PENDING;
   serviceStatus_.dwCheckPoint += 1;
   serviceStatus_.dwWaitHint = 10000;
+  SetServiceStatus(statusHandle_, &serviceStatus_);
+}
+
+
+void ReportCrash()
+{
+  /**
+   * VERY IMPORTANT: If reporting "SERVICE_STOPPED", Windows reports
+   * an error in the event log (""), but will NOT restart the service!
+   * On must set "SERVICE_RUNNING" with a non-zero "dwWin32ExitCode".
+   **/
+  
+#if 0
+  serviceStatus_.dwCurrentState = SERVICE_STOPPED;
+  serviceStatus_.dwWin32ExitCode = ERROR_SERVICE_SPECIFIC_ERROR;
+  serviceStatus_.dwServiceSpecificExitCode = -1;
+#else
+  serviceStatus_.dwCurrentState = SERVICE_RUNNING;
+  serviceStatus_.dwWin32ExitCode = ERROR_INTERNAL_ERROR;
+#endif
+
   SetServiceStatus(statusHandle_, &serviceStatus_);
 }
 
@@ -394,16 +476,14 @@ void ServiceMain(int argc, char** argv)
   if (shutdownEvent_ == NULL)
   {
     /* Initialization failed */
-    serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
-    serviceStatus_.dwWin32ExitCode = -1; 
-    SetServiceStatus(statusHandle_, &serviceStatus_);
+    ReportCrash();
     return;
   }
 
   /* Initialize Service */
   std::wstring installDir = GetStringRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"InstallDir", L"");
   bool verbose = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"Verbose", 0) == 1;
-  int maxRestartCount = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"MaxRestartCount", 5);
+  int maxRestartCount = GetDWordRegKey(L"SOFTWARE\\Orthanc\\Orthanc Server", L"MaxRestartCount", 5);  // Not used anymore
 
   std::vector<std::wstring> a;
   a.push_back(L"Orthanc.exe");
@@ -423,9 +503,7 @@ void ServiceMain(int argc, char** argv)
   {
     /* Initialization failed */
     CloseHandle(shutdownEvent_);
-    serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
-    serviceStatus_.dwWin32ExitCode = -1; 
-    SetServiceStatus(statusHandle_, &serviceStatus_); 
+    ReportCrash();
     return; 
   } 
 
@@ -437,12 +515,20 @@ void ServiceMain(int argc, char** argv)
   while (serviceStatus_.dwCurrentState == SERVICE_RUNNING)
   {
     // Has the underlying service crashed?
-    if (!service_->IsRunning())
+    ServiceStatus s = service_->GetStatus();
+
+    if (s != ServiceStatus_Running)
     {
       CloseHandle(shutdownEvent_);
-      serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
-      serviceStatus_.dwWin32ExitCode = -1; 
-      SetServiceStatus(statusHandle_, &serviceStatus_);
+
+      if (s == ServiceStatus_Crash)
+      {
+        ReportCrash();
+      }
+      else
+      {
+        ReportStopped();
+      }
       return;
     }
 
@@ -455,7 +541,7 @@ void ServiceMain(int argc, char** argv)
   /* ControlHandler() has changed the status, stop the service */
   service_->Kill(isWindowsShutdown_);
 
-  while (service_->IsRunning())
+  while (service_->GetStatus() == ServiceStatus_Running)
   {
     /**
      * The service is still in the shutdown phase, keep Windows
@@ -467,8 +553,7 @@ void ServiceMain(int argc, char** argv)
   }
 
   /* The service has stopped */
-  serviceStatus_.dwCurrentState = SERVICE_STOPPED; 
-  SetServiceStatus(statusHandle_, &serviceStatus_);  
+  ReportStopped();
 }
 
 
