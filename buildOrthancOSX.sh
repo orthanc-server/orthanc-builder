@@ -26,10 +26,10 @@ cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
 cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
 
 # Orthanc core
-wget "${URL}/Orthanc 1.9.0 - OS X Release/Orthanc"
-wget "${URL}/Orthanc 1.9.0 - OS X Release/libModalityWorklists.dylib"
-wget "${URL}/Orthanc 1.9.0 - OS X Release/libServeFolders.dylib"
-wget "${URL}/Orthanc 1.9.0 - OS X Release/libConnectivityChecks.dylib"
+wget "${URL}/Orthanc 1.9.1 - OS X Release/Orthanc"
+wget "${URL}/Orthanc 1.9.1 - OS X Release/libModalityWorklists.dylib"
+wget "${URL}/Orthanc 1.9.1 - OS X Release/libServeFolders.dylib"
+wget "${URL}/Orthanc 1.9.1 - OS X Release/libConnectivityChecks.dylib"
 
 chmod +x ./Orthanc
 
