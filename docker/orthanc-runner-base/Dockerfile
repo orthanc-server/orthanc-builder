@@ -5,7 +5,6 @@ FROM debian:buster-20200514-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
-  apt-get --assume-yes install vim && \
   apt-get --assume-yes install wget && \
   apt-get --assume-yes install curl && \
   apt-get --assume-yes install python3.7 && \
