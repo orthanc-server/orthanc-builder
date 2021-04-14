@@ -1,3 +1,5 @@
+next    : - removed vim from Docker images
+          - upgraded base image to debian:buster-20210329-slim
 21.2.0  : - upgraded Orthanc to 1.9.1
 21.1.7  : - upgraded Orthanc to 1.9.0
 21.1.6  : - upgraded DICOMweb plugin to 1.5
