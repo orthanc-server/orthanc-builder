@@ -17,12 +17,12 @@ Explorer does not support Microsoft Internet Explorer.
 Content of the package 21.4.0
 -----------------------------
 
-Orthanc server                        1.9.1
+Orthanc server                        1.9.2
 Stone Web viewer plugin               1.0
 Osimis Web viewer plugin              1.4.2
-Modality worklists plugin             1.9.1
-Serve folders plugin                  1.9.1
-Connectivity check plugin             1.9.1
+Modality worklists plugin             1.9.2
+Serve folders plugin                  1.9.2
+Connectivity check plugin             1.9.2
 Orthanc Web viewer plugin             2.7
 DICOMweb plugin                       1.5
 PostgreSQL plugin                     3.3
