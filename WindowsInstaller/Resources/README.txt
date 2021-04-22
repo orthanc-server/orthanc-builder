@@ -25,7 +25,7 @@ Serve folders plugin                  1.9.2
 Connectivity check plugin             1.9.2
 Orthanc Web viewer plugin             2.7
 DICOMweb plugin                       1.5
-PostgreSQL plugin                     3.3
+PostgreSQL plugin                     4.0
 MySQL plugin                          3.0
 WSI Web viewer plugin                 1.0
 Transfers accelerator plugin          1.0

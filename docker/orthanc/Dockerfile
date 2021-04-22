@@ -27,7 +27,7 @@ RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
 
 # CHANGE_VERSION_PG
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancPostgreSQL-3.3" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancPostgreSQL-4.0" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/PostgreSQL
 RUN make -j 4

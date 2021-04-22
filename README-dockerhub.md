@@ -29,7 +29,7 @@ Connectivity check plugin             1.9.2
 Python plugin                         3.1
 Orthanc Web viewer plugin             2.7
 DICOMweb plugin                       1.5
-PostgreSQL plugin                     3.3
+PostgreSQL plugin                     4.0
 MySQL plugin                          3.0
 WSI Web viewer plugin                 1.0
 Authorization plugin                  0.2.4
