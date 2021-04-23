@@ -1,4 +1,4 @@
-next    : - upgraded Orthanc to 1.9.2
+21.4.0  : - upgraded Orthanc to 1.9.2
           - upgraded PostgreSQL plugins to 4.0
           - upgraded MySQL plugins to 4.0
           - removed vim from Docker images
