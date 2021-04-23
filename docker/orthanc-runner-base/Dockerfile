@@ -1,11 +1,10 @@
 # base image to build and execute orthanc.  
 # This image should contain only the packages that are common to both !
 # The purpose of this intermediate image is to benefit from Docker cache.
-FROM debian:buster-20200514-slim
+FROM debian:buster-20210329-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
-  apt-get --assume-yes install vim && \
   apt-get --assume-yes install wget && \
   apt-get --assume-yes install curl && \
   apt-get --assume-yes install python3.7 && \

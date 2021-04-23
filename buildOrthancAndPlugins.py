@@ -45,7 +45,7 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.9.1', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.9.2', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
@@ -146,7 +146,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-postgresql.hg-build',
             # don't run unit tests since it requires a postgresql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancPostgreSQL-3.3', # CHANGE_VERSION_PG
+        'stableBranch': 'OrthancPostgreSQL-4.0', # CHANGE_VERSION_PG
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancPostgreSQLStorage', 'OrthancPostgreSQLIndex'], # todo, we actualy never built the postgresql with this script ...
     },
@@ -165,7 +165,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-mysql.hg-build',
             # don't run unit tests since it requires a mysql server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancMySQL-3.0', # CHANGE_VERSION_MYSQL
+        'stableBranch': 'OrthancMySQL-4.0', # CHANGE_VERSION_MYSQL
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancMySQLStorage', 'OrthancMySQLIndex'], # todo, we actualy never built the mysql with this script ...
     },

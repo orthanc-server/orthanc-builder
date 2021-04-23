@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 32",
-  "Version" : "21.2.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "21.4.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 32,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.9.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.2 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/Orthanc.exe", "", "Comment:" ]
@@ -34,8 +34,8 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        [ "MySQL 3.0 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ],
-        [ "MySQL 3.0 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ]
+        [ "MySQL 4.0 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ],
+        [ "MySQL 4.0 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ]
       ],
       "Resources" : [
         [ "mysql.json", "Configuration" ]
@@ -96,7 +96,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.9.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.2 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
@@ -110,7 +110,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.9.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.2 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment:" ]
@@ -124,7 +124,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.9.1 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.2 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment:" ]
@@ -171,8 +171,8 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "PostgreSQL 3.3 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ],
-        [ "PostgreSQL 3.3 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ]
+        [ "PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ],
+        [ "PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ]
       ],
       "Resources" : [
         [ "postgresql.json", "Configuration" ]
@@ -195,7 +195,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.9.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.2 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]

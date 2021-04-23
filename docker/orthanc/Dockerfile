@@ -3,7 +3,7 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.2" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources/OrthancServer
 RUN make -j 4
@@ -27,7 +27,7 @@ RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
 
 # CHANGE_VERSION_PG
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancPostgreSQL-3.3" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancPostgreSQL-4.0" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/PostgreSQL
 RUN make -j 4
@@ -44,7 +44,7 @@ RUN apt-get --assume-yes install default-libmysqlclient-dev
 # RUN apt-get --assume-yes install libmariadb-dev
 
 # CHANGE_VERSION_MY_SQL
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-3.0" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-4.0" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/MySQL
 RUN make -j 4
