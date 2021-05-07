@@ -24,7 +24,7 @@ Modality worklists plugin             1.9.3
 Serve folders plugin                  1.9.3
 Connectivity check plugin             1.9.3
 Orthanc Web viewer plugin             2.7
-DICOMweb plugin                       1.5
+DICOMweb plugin                       1.6
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.0
 WSI Web viewer plugin                 1.0
