@@ -1,3 +1,4 @@
+next :    - upgraded Orthanc to 1.9.3
 21.5.0  : - fixed missing dependency for AWS object-storage-plugin
 21.4.1  : - upgraded object-storage plugins to 1.2.0 
 21.4.0  : - upgraded Orthanc to 1.9.2
