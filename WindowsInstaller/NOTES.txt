@@ -76,7 +76,7 @@ packages:
 # wget https://anonscm.debian.org/cgit/debian-med/orthanc.git/plain/debian/configuration/worklists.json -O Resources/worklists.json
 # unix2dos Resources/worklists.json
 
-# wget https://hg.orthanc-server.com/orthanc-stone/raw-file/StoneWebViewer-1.0/Applications/StoneWebViewer/WebApplication/configuration.json -O Resources/stone-webviewer.json
+# wget https://hg.orthanc-server.com/orthanc-stone/raw-file/StoneWebViewer-2.0/Applications/StoneWebViewer/WebApplication/configuration.json -O Resources/stone-webviewer.json
 # unix2dos Resources/stone-webviewer.json
 
 

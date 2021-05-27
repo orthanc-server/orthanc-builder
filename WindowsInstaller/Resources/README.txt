@@ -14,11 +14,11 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 21.5.1
+Content of the package 21.5.2
 -----------------------------
 
 Orthanc server                        1.9.3
-Stone Web viewer plugin               1.0
+Stone Web viewer plugin               2.0
 Osimis Web viewer plugin              1.4.2
 Modality worklists plugin             1.9.3
 Serve folders plugin                  1.9.3

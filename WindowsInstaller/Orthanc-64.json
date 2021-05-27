@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "21.5.1", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "21.5.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -85,7 +85,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Stone 1.0 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
+        [ "Stone 2.0 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
       ],
       "Resources" : [
         [ "stone-webviewer.json", "Configuration" ]

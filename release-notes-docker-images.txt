@@ -1,3 +1,4 @@
+21.5.2  : - upgraded Stone Web viewer plugin to 2.0
 21.5.1  : - upgraded Orthanc to 1.9.3
           - upgraded DICOMweb plugin to 1.6
 21.5.0  : - fixed missing dependency for AWS object-storage-plugin
