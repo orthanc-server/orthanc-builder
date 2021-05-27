@@ -81,7 +81,7 @@ if [[ $action == "pushToPublicRepo" ]]; then
   docker push osimis/orthanc:$releaseTag
   docker push osimis/orthanc-pro:$releaseTag
 
-	if [[ $isLatest ]]; then
+	if [[ $isLatest == true ]]; then
 		docker tag osimis/orthanc:current osimis/orthanc:latest
 		docker tag osimis/orthanc-pro:current osimis/orthanc-pro:latest
 
@@ -94,7 +94,7 @@ if [[ $action == "pushToPrivateRepo" ]]; then
   docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
   docker push osimis.azurecr.io/orthanc-pro:$releaseTag
 
-	if [[ $isLatest ]]; then
+	if [[ $isLatest  == true ]]; then
 		docker tag osimis.azurecr.io/orthanc-pro:$releaseTag osimis.azurecr.io/orthanc-pro:latest
 		docker push osimis.azurecr.io/orthanc-pro:latest
 	fi

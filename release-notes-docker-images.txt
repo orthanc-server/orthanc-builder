@@ -1,4 +1,6 @@
           - upgraded base image to debian:buster-20210511-slim
+          - removed curl and wget from the image
+          - cleanup unnecessary packages that can trigger errors during security scan and that are not used (build-essential, perl, bzip2, gnupg, xdg-user-dirs)
 21.5.2  : - upgraded Stone Web viewer plugin to 2.0
 21.5.1  : - upgraded Orthanc to 1.9.3
           - upgraded DICOMweb plugin to 1.6
