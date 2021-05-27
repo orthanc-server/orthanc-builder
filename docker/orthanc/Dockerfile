@@ -119,7 +119,7 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: no unit tests: # RUN /build/UnitTests
 
-########################## Orthanc Python
+########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM osimis/orthanc-builder-base:current as build-downloader
 
@@ -179,3 +179,12 @@ COPY docker-entrypoint.sh /
 COPY *.json /startup/ 
 COPY *.py /startup/
 COPY *.lua /lua-scripts/
+
+
+# cleanup unnecessary packages that can trigger errors during security scan
+RUN apt purge --assume-yes build-essential
+RUN apt purge --assume-yes perl
+RUN apt purge --assume-yes bzip2
+RUN apt purge --assume-yes gnupg
+RUN apt purge --assume-yes xdg-user-dirs
+RUN apt --assume-yes autoremove
