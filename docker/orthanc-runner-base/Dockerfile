@@ -10,6 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install ca-certificates && \
   apt-get --assume-yes install tzdata && \
   apt-get --assume-yes install locales && \
+  apt-get --assume-yes install libcurl4 && \
   apt-get --assume-yes install libdcmtk14 && \
   apt-get --assume-yes install libboost-log1.67.0 libboost-filesystem1.67.0 libboost-locale1.67.0 libboost-regex1.67.0 libboost-system1.67.0 libboost-thread1.67.0 libboost-iostreams1.67.0 && \
   apt-get --assume-yes install libjpeg62-turbo && \
