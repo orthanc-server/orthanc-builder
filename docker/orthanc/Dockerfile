@@ -113,7 +113,7 @@ RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install python3.7-dev
 
 # CHANGE_VERSION_ORTHANC_PYTHON
-RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r "OrthancPython-3.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r "OrthancPython-3.2" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.7 /sources
 RUN make -j 4

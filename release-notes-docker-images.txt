@@ -1,3 +1,4 @@
+21.6.0  : - upgraded Python plugin to 3.2
           - updated "env-var-non-standards" for new options in MySQL and PostgreSQL plugins
 21.5.2  : - upgraded Stone Web viewer plugin to 2.0
 21.5.1  : - upgraded Orthanc to 1.9.3
