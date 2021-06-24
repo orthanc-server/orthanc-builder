@@ -14,15 +14,15 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 21.5.2
+Content of the package 21.6.1
 -----------------------------
 
-Orthanc server                        1.9.3
+Orthanc server                        1.9.4
 Stone Web viewer plugin               2.0
 Osimis Web viewer plugin              1.4.2
-Modality worklists plugin             1.9.3
-Serve folders plugin                  1.9.3
-Connectivity check plugin             1.9.3
+Modality worklists plugin             1.9.4
+Serve folders plugin                  1.9.4
+Connectivity check plugin             1.9.4
 Orthanc Web viewer plugin             2.7
 DICOMweb plugin                       1.6
 PostgreSQL plugin                     4.0
@@ -30,7 +30,7 @@ MySQL plugin                          4.0
 WSI Web viewer plugin                 1.0
 Transfers accelerator plugin          1.0
 Authorization plugin                  0.2.4
-GDCM decoder/transcoder plugin        1.2
+GDCM decoder/transcoder plugin        1.3
 Osimis cloud synchronization plugin   0.3
 
 

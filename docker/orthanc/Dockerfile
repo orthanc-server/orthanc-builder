@@ -3,7 +3,7 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.3" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.4" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources/OrthancServer
 RUN make -j 4
@@ -14,7 +14,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-gdcm
 
 # CHANGE_VERSION_GDCM
-RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.2" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.3" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
 RUN make -j 4
