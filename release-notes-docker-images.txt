@@ -1,4 +1,4 @@
-21.6.2  : - upgraded object-storage plugins to 1.3.0 (possible BREAKING CHANGE in AWS plugin, check the plugin release notes)
+21.6.2  : - upgraded object-storage plugins to 1.3.0 (possible BREAKING CHANGE in object-storage plugins, check the plugin release notes)
           - upgraded base image to debian:buster-20210511-slim
           - removed curl tool and wget from the image (libcurl is used by Orthanc and cannot be removed)
           - cleanup unnecessary packages that can trigger errors during security scan and that are not used (build-essential, perl, bzip2, gnupg, xdg-user-dirs)
