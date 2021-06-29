@@ -119,6 +119,22 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: no unit tests: # RUN /build/UnitTests
 
+########################## Orthanc downloads (since wget is not in the runner image)
+
+FROM osimis/orthanc-builder-base:current as build-downloader
+
+RUN mkdir /downloads
+
+# CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
+# CHANGE_VERSION_WVB_ALPHA
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+# CHANGE_VERSION_OSIMIS_CLOUD
+RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-cloud/releases/0.3/libOrthancOsimisCloud.so --output-document /downloads/libOrthancOsimisCloud.so --quiet
+# CHANGE_VERSION_STONE_WEB_VIEWER
+RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.0/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
+
+
 ################################# the image that will run Orthanc dynamicaly linked
 FROM osimis/orthanc-runner-base:current
 
@@ -147,16 +163,10 @@ COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/pl
 COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disabled/
 
-
-
-# CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewer.so --quiet
-# CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libOsimisWebViewerAlpha.so --quiet
-# CHANGE_VERSION_OSIMIS_CLOUD
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-cloud/releases/0.3/libOrthancOsimisCloud.so --output-document /usr/share/orthanc/plugins-disabled/libOrthancOsimisCloud.so --quiet
-# CHANGE_VERSION_STONE_WEB_VIEWER
-RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.0/libStoneWebViewer.so --output-document /usr/share/orthanc/plugins-disabled/libStoneWebViewer.so --quiet
+COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-downloader /downloads/libOrthancOsimisCloud.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-disabled/
 
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
 
@@ -169,3 +179,12 @@ COPY docker-entrypoint.sh /
 COPY *.json /startup/ 
 COPY *.py /startup/
 COPY *.lua /lua-scripts/
+
+
+# cleanup unnecessary packages that can trigger errors during security scan
+RUN apt purge --assume-yes build-essential
+RUN apt purge --assume-yes perl
+RUN apt purge --assume-yes bzip2
+RUN apt purge --assume-yes gnupg
+RUN apt purge --assume-yes xdg-user-dirs
+RUN apt --assume-yes autoremove

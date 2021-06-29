@@ -1,3 +1,6 @@
+          - upgraded base image to debian:buster-20210511-slim
+          - removed curl tool and wget from the image (libcurl is used by Orthanc and cannot be removed)
+          - cleanup unnecessary packages that can trigger errors during security scan and that are not used (build-essential, perl, bzip2, gnupg, xdg-user-dirs)
 21.6.0  : - upgraded Python plugin to 3.2
           - updated "env-var-non-standards" for new options in MySQL and PostgreSQL plugins
 21.5.2  : - upgraded Stone Web viewer plugin to 2.0
