@@ -132,7 +132,7 @@ RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/lib
 # CHANGE_VERSION_OSIMIS_CLOUD
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-cloud/releases/0.3/libOrthancOsimisCloud.so --output-document /downloads/libOrthancOsimisCloud.so --quiet
 # CHANGE_VERSION_STONE_WEB_VIEWER
-RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.0/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
+RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.1/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
 
 
 ################################# the image that will run Orthanc dynamicaly linked

@@ -85,7 +85,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Stone 2.0 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
+        [ "Stone 2.1 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
       ],
       "Resources" : [
         [ "stone-webviewer.json", "Configuration" ]
