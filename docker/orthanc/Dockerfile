@@ -43,7 +43,7 @@ RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install default-libmysqlclient-dev
 # RUN apt-get --assume-yes install libmariadb-dev
 
-# CHANGE_VERSION_MY_SQL
+# CHANGE_VERSION_MYSQL
 RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-4.1" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/MySQL
