@@ -14,18 +14,18 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 21.6.2
+#### 21.7.0
 ```
 
 component                             version
 ---------------------------------------------
-Orthanc server                        1.9.4
+Orthanc server                        1.9.5
 Stone Web viwer plugin                2.1
 Osimis Web viewer plugin              1.4.2
 Osimis Web viewer plugin (alpha)      1.4.2
-Modality worklists plugin             1.9.4
-Serve folders plugin                  1.9.4
-Connectivity check plugin             1.9.4
+Modality worklists plugin             1.9.5
+Serve folders plugin                  1.9.5
+Connectivity check plugin             1.9.5
 Python plugin                         3.2
 Orthanc Web viewer plugin             2.7
 DICOMweb plugin                       1.6
