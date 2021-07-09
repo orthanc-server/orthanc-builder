@@ -13,7 +13,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 21.7.1
+#### 21.7.2
 ```
 
 component                             version
@@ -38,9 +38,9 @@ Osimis cloud synchronization plugin   0.3
 
 cloud plugins:
 
-AWS S3 plugin                         1.3.1
-Azure Blob Storage plugin             1.3.1
-Google Cloud Storage plugin           1.3.1
+AWS S3 plugin                         1.3.2
+Azure Blob Storage plugin             1.3.2
+Google Cloud Storage plugin           1.3.2
 Google Cloud Platform plugin          1.0
 
 commercial plugins (requiring a license):
