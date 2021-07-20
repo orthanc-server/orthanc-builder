@@ -34,8 +34,8 @@
       "Mandatory" : false,
       "Category" : "osimis",
       "Artifacts" : [
-        [ "MySQL 4.1 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ],
-        [ "MySQL 4.1 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ]
+        [ "MySQL 4.2 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ],
+        [ "MySQL 4.2 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ]
       ],
       "Resources" : [
         [ "mysql.json", "Configuration" ]
