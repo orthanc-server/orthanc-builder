@@ -1,3 +1,4 @@
+21.8.0  : - added the BEFORE_ORTHANC_STARTUP_SCRIPT env var to execute a custom script before Orthanc startup
 21.7.4  : - upgraded MySQL plugins to 4.3
 21.7.3  : - upgraded Orthanc to 1.9.6
           - upgraded MySQL plugins to 4.2
