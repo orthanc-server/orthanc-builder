@@ -46,6 +46,8 @@ wget "${URL}/Stone 2.1 - OS X Release/libStoneWebViewer.dylib"
 wget "${URL}/OsimisCloud 0.3 - OS X Release/libOrthancOsimisCloud.dylib"
 wget "${URL}/Gdcm 1.4 - OS X Release/libOrthancGdcm.dylib"
 wget "${URL}/WSI 1.0 - OS X Release/libOrthancWSI.dylib"
+wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcIndex.dylib"
+wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcStorage.dylib"
 
 # Create the archive
 cd ${TARGET}
