@@ -119,6 +119,20 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: no unit tests: # RUN /build/UnitTests
 
+########################## Orthanc ODBC
+
+FROM osimis/orthanc-builder-base:current as build-plugin-odbc
+
+RUN apt-get --assume-yes update
+RUN apt-get --assume-yes install unixodbc-dev
+
+# CHANGE_VERSION_ODBC
+RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancOdbc-1.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/Odbc
+RUN make -j 4
+# disabled: needs a ODBC server # RUN /build/UnitTests
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM osimis/orthanc-builder-base:current as build-downloader
@@ -162,6 +176,8 @@ COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/ortha
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-disabled/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-disabled/

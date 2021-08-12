@@ -134,6 +134,16 @@
   "OsimisCloud": {
     "enablingEnvVar" : "OSIMIS_CLOUD_PLUGIN_ENABLED",
     "libs" : ["libOrthancOsimisCloud.so"]
-  }
+  },
 
+  "Odbc" : {
+    "enablingEnvVar" : "ODBC_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "EnableIndex": true,
+      "EnableStorage": false,
+      "IndexConnectionString": "MUST BE DEFINED",
+      "StorageConnectionString": "MUST BE DEFINED"
+    },
+    "libs" : ["libOrthancOdbcIndex.so", "libOrthancOdbcStorage.so"]
+  }
 }

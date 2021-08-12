@@ -204,6 +204,25 @@ repositories = {
         'stableBranch': 'OrthancGdcm-1.4',  # CHANGE_VERSION_GDCM
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancGdcm'],
+    },
+    'odbc': {
+        'url': 'https://hg.orthanc-server.com/orthanc-databases/',
+        'localName': 'orthanc-databases-odbc.hg',
+        'tool': 'hg',
+        'platforms': ALL_PLATFORMS,
+        'build': {
+            'type': 'cmake',
+            'cmakeTarget': 'OrthancOdbc',
+            'cmakeTargetsOSX': ['OrthancOdbcStorage', 'OrthancOdbcIndex'], # 'UnitTests'],
+            # in windows: the name of the .sln file with 2 projects: Storage and Index
+            'cmakeOptions': ['-DSTANDALONE_BUILD=ON', '-DSTATIC_BUILD=ON', '-DALLOW_DOWNLOADS=ON'],
+            'buildFromFolder': 'Odbc',
+            'buildOutputFolder': '../orthanc-databases-odbc.hg-build',
+            # don't run unit tests since it requires a odbc server deployed   unitTestsExe': 'UnitTests' 
+        },
+        'stableBranch': 'OrthancOdbc-1.0', # CHANGE_VERSION_ODBC
+        'nightlyBranch': 'default',
+        'outputLibs': ['OrthancOdbcStorage', 'OrthancOdbcIndex'], # todo, we actualy never built the odbc with this script ...
     }
 }
 

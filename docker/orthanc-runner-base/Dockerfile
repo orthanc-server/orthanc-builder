@@ -25,6 +25,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install zlib1g && \
   apt-get --assume-yes install libpq5 && \
   apt-get --assume-yes install libmariadb3 && \
+  apt-get --assume-yes install unixodbc && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
 

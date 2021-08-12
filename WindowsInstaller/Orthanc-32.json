@@ -67,6 +67,18 @@
       ]
     },
     {
+      "Description" : "ODBC backend (AGPL license)",
+      "Mandatory" : false,
+      "Category" : "osimis",
+      "Artifacts" : [
+        [ "Odbc 1.0 - VC2008-32 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC" ],
+        [ "Odbc 1.0 - VC2008-32 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC" ]
+      ],
+      "Resources" : [
+        [ "odbc.json", "Configuration" ]
+      ]
+    },
+    {
       "Description" : "Osimis cloud synchronization plugin",
       "Mandatory" : false,
       "Category" : "osimis",
