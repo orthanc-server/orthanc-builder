@@ -173,7 +173,7 @@ class OrthancConfigurator:
 
         for lib in pluginDef["libs"]:
           try:
-            source = os.path.join("/usr/share/orthanc/plugins-disabled", lib)
+            source = os.path.join("/usr/share/orthanc/plugins-available", lib)
             target = os.path.join("/run/orthanc/plugins" if os.path.isdir("/run/orthanc/plugins") else "/usr/share/orthanc/plugins", lib)
             if not os.path.isfile(target): # the file might already be there (in case of container restart)
               try:
