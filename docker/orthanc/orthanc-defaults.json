@@ -6,5 +6,5 @@
   
   "HttpsCACertificates" : "/etc/ssl/certs/ca-certificates.crt",
 
-  "Plugins" : ["/usr/share/orthanc/plugins"]
+  "Plugins" : ["/run/orthanc/plugins", "/usr/share/orthanc/plugins"]
 }
