@@ -85,6 +85,12 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: no unit tests: # RUN /build/UnitTests
 
+RUN mkdir /downloads
+
+RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+
+
 ########################## Orthanc Webviewer
 
 FROM osimis/orthanc-builder-base:current as build-plugin-owv
@@ -171,8 +177,8 @@ COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/ortha
 COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
-# currently not built COPY --from=build-plugin-wsi /build/OrthancWSIDicomToTiff /usr/local/bin/
-# currently not built COPY --from=build-plugin-wsi /build/OrthancWSIDicomizer /usr/local/bin/
+COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomToTiff /usr/local/bin/
+COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomizer /usr/local/bin/
 COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-disabled/
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
@@ -187,6 +193,7 @@ COPY --from=build-downloader /downloads/libOrthancOsimisCloud.so /usr/share/orth
 COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-disabled/
 
 RUN chmod +x /usr/share/orthanc/plugins-disabled/*
+RUN chmod +x /usr/local/bin/*
 
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
