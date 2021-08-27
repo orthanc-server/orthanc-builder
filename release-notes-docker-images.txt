@@ -1,4 +1,7 @@
-          - upgraded base image to debian:bullseye-20210816-slim.  This updates DCMTK to 3.6.6 which should fix some DICOM TLS issues
+          - upgraded base image to debian:bullseye-20210816-slim which implies:
+            - python upgraded to 3.9
+            - DCMTK to 3.6.5-1 which should fix some DICOM TLS issues
+            - lua updated to 5.4
 21.8.1  : - upgraded Python plugin to 3.3
           - added orthanc-odbc plugins
 21.8.0  : - added the BEFORE_ORTHANC_STARTUP_SCRIPT env var to execute a custom script before Orthanc startup
