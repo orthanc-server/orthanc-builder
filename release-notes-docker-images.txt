@@ -2,6 +2,15 @@
             - python upgraded to 3.9
             - DCMTK to 3.6.5-1 which should fix some DICOM TLS issues
             - lua updated to 5.4
+          - upgraded transfers plugin to mainline version (49e9245b4005) to benefit from build process fixes (no new features)
+          - now including the WSI dicomizer tools:
+            - /usr/local/bin/OrthancWSIDicomizer
+            - /usr/local/bin/OrthancWSIDicomToTiff
+            - note that libopenslide has been installed too (use /usr/local/bin/OrthancWSIDicomizer --openslide=libopenslide.so.0 /my/file.svs)
+          - the MSSQL commercial plugin has been removed from the image.  The orthanc-odbc plugin can now be used with MSSQL server.  However,
+            note that the DB schemas are not compatible and therefore, you need to start a new Orthanc from scratch and copy all data from the
+            old Orthanc to the new one (https://book.orthanc-server.com/users/replication.html#generic-replication) 
+
 21.8.1  : - upgraded Python plugin to 3.3
           - added orthanc-odbc plugins
 21.8.0  : - added the BEFORE_ORTHANC_STARTUP_SCRIPT env var to execute a custom script before Orthanc startup
