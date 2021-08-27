@@ -8,11 +8,6 @@
 set -o errexit
 set -o xtrace
 
-# make sure we use the latest ubuntu image (which is the base of everything we build)
-# note: this has been removed now that we use a fixed base image.
-# instead of pulling, update the tag in docker\orthanc-runner-base\Dockerfile
-# docker pull debian:buster
-
 git submodule init
 git submodule update
 
