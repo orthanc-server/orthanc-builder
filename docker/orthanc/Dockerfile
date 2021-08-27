@@ -55,14 +55,9 @@ RUN make -j 4
 FROM osimis/orthanc-builder-base:current as build-plugin-transfers
 
 # CHANGE_VERSION_TRANSFERS
-RUN hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "OrthancTransfers-1.0" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "49e9245b4005" /sources
 WORKDIR /build
 
-# we need to patch a find_package incompatibility issue with quoted var in Orthanc framework 1.5.6 downloaded from cmake ->
-# - first run cmake to download the package (cmake will fail)
-# - then patch the cmake file
-# - run cmake again
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources || sed -i 's/"${ORTHANC_BOOST_COMPONENTS}"/${ORTHANC_BOOST_COMPONENTS}/g' /build/Orthanc-1.5.6/Resources/CMake/BoostConfiguration.cmake
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
 
