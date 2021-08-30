@@ -1,3 +1,4 @@
+          - upgraded DCMTK to 3.6.6 with static build to fix some DICOM TLS issues in Orthanc
 21.8.1  : - upgraded Python plugin to 3.3
           - added orthanc-odbc plugins
 21.8.0  : - added the BEFORE_ORTHANC_STARTUP_SCRIPT env var to execute a custom script before Orthanc startup

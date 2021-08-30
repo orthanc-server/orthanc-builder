@@ -5,7 +5,9 @@ FROM osimis/orthanc-builder-base:current as build-orthanc
 # CHANGE_VERSION_ORTHANC
 RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.6" /sources
 WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF /sources/OrthancServer
+
+# note: building with static DCMTL while waiting for Debian bullseye to fix Dicom TLS issues (we need DCMTK 3.6.5)
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF /sources/OrthancServer
 RUN make -j 4
 RUN /build/UnitTests
 
