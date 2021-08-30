@@ -1,4 +1,4 @@
-          - now including the WSI dicomizer tools:
+21.8.2  : - now including the WSI dicomizer tools:
             - /usr/local/bin/OrthancWSIDicomizer
             - /usr/local/bin/OrthancWSIDicomToTiff
             - note that libopenslide has been installed too (use /usr/local/bin/OrthancWSIDicomizer --openslide=libopenslide.so.0 /my/file.svs)
