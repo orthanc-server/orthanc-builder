@@ -1,3 +1,7 @@
+          - now including the WSI dicomizer tools:
+            - /usr/local/bin/OrthancWSIDicomizer
+            - /usr/local/bin/OrthancWSIDicomToTiff
+            - note that libopenslide has been installed too (use /usr/local/bin/OrthancWSIDicomizer --openslide=libopenslide.so.0 /my/file.svs)
           - upgraded DCMTK to 3.6.6 with static build to fix some DICOM TLS issues in Orthanc
 21.8.1  : - upgraded Python plugin to 3.3
           - added orthanc-odbc plugins
