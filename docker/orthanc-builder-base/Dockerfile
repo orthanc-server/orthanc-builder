@@ -1,6 +1,7 @@
 # image to compile Orthanc and its plugins dynamically
 FROM osimis/orthanc-runner-base:current
 
+RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install wget
 RUN apt-get --assume-yes install build-essential
