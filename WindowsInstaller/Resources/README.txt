@@ -14,7 +14,7 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 21.8.1
+Content of the package 21.8.3
 -----------------------------
 
 Orthanc server                        1.9.7

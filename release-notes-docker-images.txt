@@ -1,4 +1,4 @@
-Next :    - upgraded Orthanc to 1.9.7
+21.8.3  : - upgraded Orthanc to 1.9.7
           - upgraded Python plugin to 3.4
           - upgraded DICOMweb plugin to 1.7
           - upgraded Stone Web viewer plugin to 2.2
