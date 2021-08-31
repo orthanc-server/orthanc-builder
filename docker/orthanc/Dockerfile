@@ -3,7 +3,7 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.6" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.7" /sources
 WORKDIR /build
 
 # note: building with static DCMTL while waiting for Debian bullseye to fix Dicom TLS issues (we need DCMTK 3.6.5)

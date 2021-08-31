@@ -1,3 +1,4 @@
+Next :    - upgraded Orthanc to 1.9.7
 21.8.2  : - now including the WSI dicomizer tools:
             - /usr/local/bin/OrthancWSIDicomizer
             - /usr/local/bin/OrthancWSIDicomToTiff
