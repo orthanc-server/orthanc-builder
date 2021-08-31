@@ -18,7 +18,7 @@ Content of the package 21.8.1
 -----------------------------
 
 Orthanc server                        1.9.7
-Stone Web viewer plugin               2.1
+Stone Web viewer plugin               2.2
 Osimis Web viewer plugin              1.4.2
 Modality worklists plugin             1.9.7
 Serve folders plugin                  1.9.7
