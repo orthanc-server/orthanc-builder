@@ -1,5 +1,6 @@
 Next :    - upgraded Orthanc to 1.9.7
           - upgraded Python plugin to 3.4
+          - upgraded DICOMweb plugin to 1.7
 21.8.2  : - now including the WSI dicomizer tools:
             - /usr/local/bin/OrthancWSIDicomizer
             - /usr/local/bin/OrthancWSIDicomToTiff
