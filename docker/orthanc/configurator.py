@@ -1,4 +1,6 @@
 import os
+import errno
+import shutil
 import re
 import glob
 import json
@@ -167,14 +169,24 @@ class OrthancConfigurator:
         self._mergeConfigFromDefaults(pluginDefaultConfig, pluginName)
 
       if moveSoFiles and "libs" in pluginDef:
-        logInfo("Moving .so file for {p} plugin".format(p = pluginName))
+        logInfo("Installing .so file for {p} plugin".format(p = pluginName))
 
         for lib in pluginDef["libs"]:
           try:
-            if not os.path.isfile("/usr/share/orthanc/plugins/" + lib): # the file might already be there (in case of container restart)
-              os.rename("/usr/share/orthanc/plugins-disabled/" + lib, "/usr/share/orthanc/plugins/" + lib)
-          except:
-            logError("failed to move {l} file".format(l = lib))
+            source = os.path.join("/usr/share/orthanc/plugins-available", lib)
+            target = os.path.join("/run/orthanc/plugins" if os.path.isdir("/run/orthanc/plugins") else "/usr/share/orthanc/plugins", lib)
+            if not os.path.isfile(target): # the file might already be there (in case of container restart)
+              try:
+                os.link(source, target)
+                logInfo(f"Linked {source} -> {target}")
+              except OSError as err:
+                if err.errno == errno.EXDEV:
+                  shutil.copy(source, target)
+                  logInfo(f"Copied {source} -> {target}")
+                else:
+                  raise
+          except Exception as ex:
+            logError("failed to install {l} file: {e}".format(l = lib, e = ex))
             self.hasErrors = True
 
 

@@ -160,38 +160,40 @@ RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.2/libStoneWebVi
 FROM osimis/orthanc-runner-base:current
 
 RUN mkdir -p /etc/orthanc
-RUN mkdir -p /usr/share/orthanc/plugins-disabled/
+RUN mkdir -p /usr/share/orthanc/plugins-available && \
+	ln --symbolic /usr/share/orthanc/plugins-available /usr/share/orthanc/plugins-disabled && \
+	echo "plugins-disabled is deprecated, please source plugins from plugins-available instead" >/usr/share/orthanc/plugins-disabled.README
 RUN mkdir -p /usr/share/orthanc/plugins/
 
 COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
-COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
 # RUN ldd /usr/bin/Orthanc
 
-COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomToTiff /usr/local/bin/
 COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomizer /usr/local/bin/
-COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-available/
+COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
 
-COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-downloader /downloads/libOrthancOsimisCloud.so /usr/share/orthanc/plugins-disabled/
-COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-disabled/
+COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
+COPY --from=build-downloader /downloads/libOrthancOsimisCloud.so /usr/share/orthanc/plugins-available/
+COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 
-RUN chmod +x /usr/share/orthanc/plugins-disabled/*
+RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*
 
 SHELL ["/bin/bash", "-c"]
