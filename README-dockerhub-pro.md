@@ -10,6 +10,15 @@ Sample setups using this image are available [here](https://bitbucket.org/osimis
 
 Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/src/master/release-notes-docker-images.txt)
 
+# Azure Container Registry access token
+Once Osimis has provided you with an Azure Container Registry access token to the `orthanc-pro` images you need to login with following command line:
+`docker login -u $TOKEN_NAME -p $PASSWORD osimis.azurecr.io`
+
+Then you can pull images the following way:
+`docker pull osimis.azurecr.io/orthanc-pro`
+
+You can retrieve the list of available docker tags with the following Azure CLI command line:
+`az acr repository show-tags --name osimis --repository orthanc-pro --username $TOKEN_NAME --password $PASSWORD`
 
 # packages content
 
@@ -44,11 +53,11 @@ Azure Blob Storage plugin             1.3.2
 Google Cloud Storage plugin           1.3.2
 Google Cloud Platform plugin          1.0
 
-commercial plugins (requiring a license):
+Legacy commercial plugins (requiring a license):
 
-MSSql plugin                          1.1.0
-Osimis Web viewer pro plugin          1.4.1.0
-Osimis Web viewer pro plugin (alpha)  4a4a657
+MSSql plugin (legacy, replaced by the free ODBC plugin)                          1.1.0
+Osimis Web viewer pro plugin (deprecated, use the non-pro version instead)          1.4.1.0
+Osimis Web viewer pro plugin (alpha) (deprecated, use the non-pro version instead)  4a4a657
 ```
 
 # Documentation
@@ -83,13 +92,21 @@ However, since some plugins are available only in the `osimis/orthanc-pro` image
   }
 }</pre></td></tr>
 <tr><td><em>GoogleCloudPlatform</em></td><td><pre>GOOGLE_CLOUD_PLATFORM_PLUGIN_ENABLED</pre></td><td><pre></pre></td></tr>
-<tr><td><em>MSSQL</em></td><td><pre>MSSQL_PLUGIN_ENABLED</pre></td><td><pre>{
+<tr><td><em>MSSQL (deprecated, please use the ODBC plugin instead)</em></td><td><pre>MSSQL_PLUGIN_ENABLED</pre></td><td><pre>{
   "MSSQL": {
     "EnableIndex": true,
     "EnableStorage": false,
     "Lock": false,
     "ConnectionString": "SHOULD BE DEFINED BY YOU",
     "LicenseString": "SHOULD BE DEFINED BY YOU"
+  }
+}</pre></td></tr>
+<tr><td><em>ODBC</em></td><td><pre>ODBC_PLUGIN_ENABLED</pre></td><td><pre>{
+  "Odbc": {
+    "EnableIndex": true,
+    "EnableStorage": false,
+    "IndexConnectionString": "MUST BE DEFINED",
+    "StorageConnectionString": "MUST BE DEFINED"
   }
 }</pre></td></tr>
 <tr><td><em>OsimisWebViewerPro</em></td><td><pre>OSIMIS_WEB_VIEWER1_PRO_PLUGIN_ENABLED</pre></td><td><pre></pre></td></tr>
