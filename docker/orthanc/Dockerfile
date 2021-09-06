@@ -140,7 +140,7 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: needs a ODBC server # RUN /build/UnitTests
 
-########################## Orthanc ODBC
+########################## Orthanc TCIA
 
 FROM osimis/orthanc-builder-base:current as build-plugin-tcia
 
