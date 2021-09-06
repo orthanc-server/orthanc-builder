@@ -2,20 +2,17 @@
 
 set -ex
 
-# New version using the BuildBot CIS
-
-if [ "$#" -ne 1 ]; then
-    echo "Must provide a tag"
-    exit -1
-fi
+# CHANGE_VERSION_OSX
+VERSION=21.9.0
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/'
-FOLDER=Orthanc-OSX-$1
+FOLDER=Orthanc-OSX-$VERSION
 
 # https://stackoverflow.com/a/4774063/881731
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
+rm -rf ${TARGET}/${FOLDER} 
 mkdir ${TARGET}/${FOLDER}
 cd ${TARGET}/${FOLDER}
 
@@ -47,8 +44,28 @@ wget "${URL}/Gdcm 1.4 - OS X Release/libOrthancGdcm.dylib"
 wget "${URL}/WSI 1.0 - OS X Release/libOrthancWSI.dylib"
 wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcIndex.dylib"
 wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcStorage.dylib"
+wget "${URL}/Tcia 1.0 - OS X Release/libOrthancTcia.dylib"
 
 # Create the archive
 cd ${TARGET}
 zip -r ${FOLDER}.zip ${FOLDER}
 echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
+
+
+# upload files to AWS
+#####################
+
+# we first need to create the container before we can copy files to it
+echo $AWS_ACCESS_KEY_ID
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*" --cache-control=max-age=1)
+
+# CHANGE_VERSION_WIN_INSTALLER
+docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp
+
+# upload
+docker start -a $awsContainerId
+
+# remove container
+docker rm $awsContainerId
