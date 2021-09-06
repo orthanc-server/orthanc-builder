@@ -140,6 +140,16 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: needs a ODBC server # RUN /build/UnitTests
 
+########################## Orthanc ODBC
+
+FROM osimis/orthanc-builder-base:current as build-plugin-tcia
+
+# CHANGE_VERSION_TCIA
+RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r "OrthancTcia-1.0" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
+RUN make -j 4
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM osimis/orthanc-builder-base:current as build-downloader
@@ -150,8 +160,6 @@ RUN mkdir /downloads
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
 RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
-# CHANGE_VERSION_OSIMIS_CLOUD
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-cloud/releases/0.3/libOrthancOsimisCloud.so --output-document /downloads/libOrthancOsimisCloud.so --quiet
 # CHANGE_VERSION_STONE_WEB_VIEWER
 RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.2/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
 
@@ -187,10 +195,10 @@ COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/pl
 COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
-COPY --from=build-downloader /downloads/libOrthancOsimisCloud.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*

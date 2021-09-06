@@ -79,18 +79,16 @@
       ]
     },
     {
-      "Description" : "Osimis cloud synchronization plugin",
+      "Description" : "The Cancer Imaging Archive plugin",
       "Mandatory" : false,
-      "Category" : "osimis",
+      "Category" : "plugins",
       "Artifacts" : [
-        [ "OsimisCloud 0.3 - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment: # CHANGE_VERSION_OSIMIS_CLOUD" ]
+        [ "Tcia 1.0 - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA" ]
       ],
       "NightlyArtifacts" : [
-        [ "OsimisCloud mainline - VC2008-32 Release/OrthancOsimisCloud.dll", "Plugins", "Comment:" ]
+        [ "Tcia mainline - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment:" ]
       ]
     },
-
-    
     {
       "Description" : "Stone Web viewer (AGPL license)",
       "Name" : "stone_web_viewer",

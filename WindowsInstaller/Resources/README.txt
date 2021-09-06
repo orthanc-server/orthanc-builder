@@ -31,8 +31,8 @@ WSI Web viewer plugin                 1.0
 Transfers accelerator plugin          1.0
 Authorization plugin                  0.2.4
 GDCM decoder/transcoder plugin        1.4
-Osimis cloud synchronization plugin   0.3
 ODBC plugin                           1.0
+TCIA plugin                           1.0
 
 
 Folders
