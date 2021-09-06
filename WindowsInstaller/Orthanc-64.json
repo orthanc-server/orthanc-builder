@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "21.9.", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "21.9.0", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -87,6 +87,9 @@
       ],
       "NightlyArtifacts" : [
         [ "Tcia mainline - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment:" ]
+      ],
+      "Resources" : [
+        [ "tcia.json", "Configuration" ]
       ]
     },
     {

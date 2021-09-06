@@ -4,16 +4,16 @@
      * back-end of Orthanc.
      **/
     "Odbc" : {
-		// Enable the use of ODBC to store the Orthanc index?
-		"EnableIndex" : false,
+        // Enable the use of ODBC to store the Orthanc index?
+        "EnableIndex" : false,
 
-		// Enable the use of ODBC to store the DICOM files?
-		"EnableStorage" : false,
+        // Enable the use of ODBC to store the DICOM files?
+        "EnableStorage" : false,
 
-                // Connection string to the index database
-                "IndexConnectionString" : "DSN=index",
+        // Connection string to the index database
+        "IndexConnectionString" : "DSN=index",
 
-                // Connection string to the storage area database
-                "StorageConnectionString" : "DSN=storage"
+        // Connection string to the storage area database
+        "StorageConnectionString" : "DSN=storage"
     }
 }

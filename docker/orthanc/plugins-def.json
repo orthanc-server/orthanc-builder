@@ -144,6 +144,9 @@
 
   "Tcia": {
     "enablingEnvVar" : "TCIA_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
     "libs" : ["libOrthancTcia.so"]
   }
 

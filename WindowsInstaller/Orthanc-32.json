@@ -87,6 +87,9 @@
       ],
       "NightlyArtifacts" : [
         [ "Tcia mainline - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment:" ]
+      ],
+      "Resources" : [
+        [ "tcia.json", "Configuration" ]
       ]
     },
     {
