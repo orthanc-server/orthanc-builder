@@ -2,6 +2,22 @@
           - added the TCIA plugin
           - removed the Osimis Cloud plugin from images
           - WIN-INSTALLER: added the TCIA plugin + removed the Osimis Cloud plugin
+          - installing a plugin now links it in the target directory if
+            possible or copies it otherwise, instead of moving it; this
+            allows for "read-only" containers
+          - install plugins in /run/orthanc/plugins if the directory is
+            present, usually with the intent to run a "read-only"
+            container with tmpfs mounted on /run or subdirectories
+          - load plugins from /run/orthanc/plugins in addition to
+            /usr/share/orthanc/plugins; a warning is currently issued if
+            the directory doesn't exist and can be ignored
+          - /usr/share/orthanc/plugins-disabled renamed to
+            /usr/share/orthanc/plugins-available; a symbolic link is
+            left behind for backward-compatibility
+          - compatibility warning: any build processes which may rely on
+            "enabled" plugins to be unlinked from the plugins-disabled
+            directory need to be updated and assume the semantics of the
+            plugins-available directory
 21.8.3  : - upgraded Orthanc to 1.9.7
           - upgraded Python plugin to 3.4
           - upgraded DICOMweb plugin to 1.7
