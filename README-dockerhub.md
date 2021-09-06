@@ -14,13 +14,13 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 21.8.3
+#### 21.9.0
 ```
 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.9.7
-Stone Web viwer plugin                2.2
+Stone Web viewer plugin               2.2
 Osimis Web viewer plugin              1.4.2
 Osimis Web viewer plugin (alpha)      1.4.2
 Modality worklists plugin             1.9.7
@@ -36,4 +36,5 @@ Authorization plugin                  0.2.4
 Transfers accelerator plugin          1.0
 GDCM plugin                           1.4
 ODBC plugin                           1.0
+TCIA plugin                           1.0
 ```
