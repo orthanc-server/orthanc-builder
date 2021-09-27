@@ -148,6 +148,13 @@
       "Enable" : true
     },
     "libs" : ["libOrthancTcia.so"]
+  },
+  "Indexer": {
+    "enablingEnvVar" : "INDEXER_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "libs" : ["libOrthancIndexer.so"]
   }
 
 }

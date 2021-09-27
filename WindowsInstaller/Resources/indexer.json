@@ -1,0 +1,7 @@
+{
+    "Indexer" : {
+        "Enable" : false,
+        "Folders" : [],                       // List of folders to synchronize
+        "Interval" : 10                       // Delay between two synchronizations
+    }  
+}

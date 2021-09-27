@@ -3,7 +3,7 @@
 set -ex
 
 # CHANGE_VERSION_OSX
-VERSION=21.9.0
+VERSION=21.9.2
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/'
@@ -45,6 +45,7 @@ wget "${URL}/WSI 1.0 - OS X Release/libOrthancWSI.dylib"
 wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcIndex.dylib"
 wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcStorage.dylib"
 wget "${URL}/Tcia 1.0 - OS X Release/libOrthancTcia.dylib"
+wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
 
 # Create the archive
 cd ${TARGET}

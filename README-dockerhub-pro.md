@@ -22,7 +22,7 @@ You can retrieve the list of available docker tags with the following Azure CLI 
 
 # packages content
 
-#### 21.9.0
+#### 21.9.2
 ```
 
 component                             version
@@ -45,6 +45,7 @@ Transfers accelerator plugin          1.0
 GDCM plugin                           1.4
 ODBC plugin                           1.0
 TCIA plugin                           1.0
+Orthanc Indexer plugin                1.0
 
 cloud plugins:
 
