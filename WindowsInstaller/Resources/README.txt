@@ -88,8 +88,8 @@ Troubleshooting
    directory.
 
 7. Check the Orthanc Book and associated FAQ:
-   https://orthanc.chu.ulg.ac.be/book/index.html
-   https://orthanc.chu.ulg.ac.be/book/faq.html
+   https://book.orthanc-server.com
+   https://book.orthanc-server.com/faq.html
 
 8. Post a request for help to the Orthanc Users group:
    https://groups.google.com/forum/#!forum/orthanc-users
