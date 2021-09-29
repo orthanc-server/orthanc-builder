@@ -13,7 +13,7 @@ Click on 'Osimis WebViewer' to visualize the study in the web browser.
 
 Going further:
 -------------
-Read the Orthanc book to learn more about Orthanc configuration and advanced usage (https://orthanc.chu.ulg.ac.be/book/index.html)
+Read the Orthanc book to learn more about Orthanc configuration and advanced usage (https://book.orthanc-server.com)
 
 
 Troubleshooting:

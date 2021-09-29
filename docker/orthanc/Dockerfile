@@ -87,8 +87,8 @@ RUN make -j 4
 
 RUN mkdir /downloads
 
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget http://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
 
 ########################## Orthanc Webviewer
 
@@ -167,11 +167,11 @@ FROM osimis/orthanc-builder-base:current as build-downloader
 RUN mkdir /downloads
 
 # CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
+RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget http://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 # CHANGE_VERSION_STONE_WEB_VIEWER
-RUN wget http://orthanc.osimis.io/lsb/stone-webviewer/releases/2.2/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
+RUN wget https://orthanc.osimis.io/lsb/stone-webviewer/releases/2.2/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
 
 
 ################################# the image that will run Orthanc dynamicaly linked
