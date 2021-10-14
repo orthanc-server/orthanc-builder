@@ -222,8 +222,11 @@ CMD ["/tmp/orthanc.json"]
 ENV MALLOC_ARENA_MAX=5
 COPY docker-entrypoint.sh /
 COPY *.json /startup/ 
-COPY *.py /startup/
+COPY generateConfiguration.py /startup/
+COPY helpers.py /startup/
+COPY configurator.py /startup/
 COPY *.lua /lua-scripts/
+COPY test-aliveness.py /probes/
 
 
 # cleanup unnecessary packages that can trigger errors during security scan

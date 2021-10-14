@@ -1,3 +1,4 @@
+          - added an aliveness probe script in /probes/test-aliveness.py
 21.9.2  : - added the Indexer plugin
           - WIN-INSTALLER: added the Indexer plugin
 21.9.1  : - added LOGDIR & LOGFILE environment variables to control the --logdir and --logfile command line options
