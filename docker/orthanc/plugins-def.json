@@ -131,11 +131,6 @@
     "libs" : ["libOrthancWSI.so"]
   },
 
-  "OsimisCloud": {
-    "enablingEnvVar" : "OSIMIS_CLOUD_PLUGIN_ENABLED",
-    "libs" : ["libOrthancOsimisCloud.so"]
-  },
-
   "Odbc" : {
     "enablingEnvVar" : "ODBC_PLUGIN_ENABLED",
     "nonStandardDefaults" : {
@@ -145,5 +140,21 @@
       "StorageConnectionString": "MUST BE DEFINED"
     },
     "libs" : ["libOrthancOdbcIndex.so", "libOrthancOdbcStorage.so"]
+  },
+
+  "Tcia": {
+    "enablingEnvVar" : "TCIA_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "libs" : ["libOrthancTcia.so"]
+  },
+  "Indexer": {
+    "enablingEnvVar" : "INDEXER_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "libs" : ["libOrthancIndexer.so"]
   }
+
 }

@@ -392,8 +392,12 @@ public:
 };
 
 
-
+#if __cplusplus < 201103L  // C++11
+std::auto_ptr<IService> service_;
+#else
 std::unique_ptr<IService> service_;
+#endif
+
 SERVICE_STATUS serviceStatus_; 
 SERVICE_STATUS_HANDLE statusHandle_;
 HANDLE shutdownEvent_;

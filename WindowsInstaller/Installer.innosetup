@@ -3,7 +3,7 @@ AppName=${ORTHANC_NAME}
 ; AppVersion=${ORTHANC_VERSION}.${MERCURIAL_REVISION}
 AppVersion=${ORTHANC_VERSION}
 AppPublisher=Osimis S.A., Belgium
-AppPublisherURL=http://osimis.io/
+AppPublisherURL=https://osimis.io/
 SourceDir=.
 OutputDir=.
 ; OutputBaseFilename=OrthancInstaller-Win${ORTHANC_ARCHITECTURE}-${ORTHANC_VERSION}.${MERCURIAL_REVISION}
@@ -46,8 +46,8 @@ Name: "{group}\Open Orthanc Explorer"; Filename: "http://localhost:8042/app/expl
 Name: "{group}\Edit Orthanc settings"; Filename: "{app}\Configuration"
 Name: "{group}\Help to use Orthanc"; Filename: "{app}\README.txt";
 Name: "{group}\Open Orthanc homepage"; Filename: "http://www.orthanc-server.com/"; IconFilename: "{app}\Orthanc.ico"
-Name: "{group}\Open Osimis homepage"; Filename: "http://osimis.io/"; IconFilename: "{app}\Osimis.ico"
-Name: "{group}\Osimis professional services"; Filename: "http://www.osimis.io/en/services.html"; IconFilename: "{app}\Osimis.ico"
+Name: "{group}\Open Osimis homepage"; Filename: "https://osimis.io/"; IconFilename: "{app}\Osimis.ico"
+Name: "{group}\Osimis professional services"; Filename: "https://www.osimis.io/en/services.html"; IconFilename: "{app}\Osimis.ico"
 Name: "{group}\Command prompt for Orthanc tools"; Filename: "cmd.exe"; WorkingDir: "{app}\Tools"
 Name: "{group}\Uninstall Orthanc ${ORTHANC_VERSION}"; Filename: "{uninstallexe}"
 

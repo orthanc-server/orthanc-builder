@@ -16,6 +16,12 @@ elif [[ $VERBOSE_ENABLED == true ]]; then
 	verbosity=--verbose
 fi
 
+if [[ ! -z $LOGDIR ]];then
+	logoption=--logdir=$LOGDIR
+elif [[ ! -z $LOGFILE ]];then
+	logoption=--logfile=$LOGFILE
+fi
+
 jobs=""
 if [[ $NO_JOBS == true ]]; then
 	jobs=--no-jobs
@@ -31,6 +37,6 @@ if [[ ! -z $BEFORE_ORTHANC_STARTUP_SCRIPT ]]; then
 	$BEFORE_ORTHANC_STARTUP_SCRIPT
 fi
 
-argv=(Orthanc $verbosity $jobs $unlock "$@")
+argv=(Orthanc $verbosity $logoption $jobs $unlock "$@")
 echo "Startup command: ${argv[*]}" >&2
 exec "${argv[@]}"

@@ -1,6 +1,6 @@
 {
   "Name" : "Orthanc for Windows 64",
-  "Version" : "21.8.1", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
+  "Version" : "21.9.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
   "Architecture" : 64,
   "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
   "Components" : [
@@ -8,7 +8,7 @@
       "Description" : "Orthanc server",
       "Mandatory" : true,
       "Artifacts" : [
-        [ "Orthanc 1.9.6 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.7 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/Orthanc.exe", "", "Comment:" ]
@@ -79,25 +79,40 @@
       ]
     },
     {
-      "Description" : "Osimis cloud synchronization plugin",
+      "Description" : "Folder indexer plugin",
       "Mandatory" : false,
-      "Category" : "osimis",
+      "Category" : "plugins",
       "Artifacts" : [
-        [ "OsimisCloud 0.3 - VC2015-64 Release/OrthancOsimisCloud.dll", "Plugins", "Comment: # CHANGE_VERSION_OSIMIS_CLOUD" ]
+        [ "FolderIndexer 1.0 - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER" ]
       ],
       "NightlyArtifacts" : [
-        [ "OsimisCloud mainline - VC2015-64 Release/OrthancOsimisCloud.dll", "Plugins", "Comment:" ]
+        [ "FolderIndexer mainline - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment:" ]
+      ],
+      "Resources" : [
+        [ "indexer.json", "Configuration" ]
       ]
     },
-
-
+    {
+      "Description" : "The Cancer Imaging Archive plugin",
+      "Mandatory" : false,
+      "Category" : "plugins",
+      "Artifacts" : [
+        [ "Tcia 1.0 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA" ]
+      ],
+      "NightlyArtifacts" : [
+        [ "Tcia mainline - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment:" ]
+      ],
+      "Resources" : [
+        [ "tcia.json", "Configuration" ]
+      ]
+    },
     {
       "Description" : "Stone Web viewer (AGPL license)",
       "Name" : "stone_web_viewer",
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Stone 2.1 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
+        [ "Stone 2.2 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
       ],
       "Resources" : [
         [ "stone-webviewer.json", "Configuration" ]
@@ -108,7 +123,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.9.6 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.7 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
@@ -122,7 +137,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.9.6 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.7 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment:" ]
@@ -136,7 +151,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "Orthanc 1.9.6 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.7 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment:" ]
@@ -169,7 +184,7 @@
       "Mandatory" : false,
       "Category" : "plugins",
       "Artifacts" : [
-        [ "DicomWeb 1.6 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
+        [ "DicomWeb 1.7 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
       ],
       "NightlyArtifacts" : [
         [ "DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
@@ -207,7 +222,7 @@
       "Mandatory" : false,
       "Category" : "tools",
       "Artifacts" : [
-        [ "Orthanc 1.9.6 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
+        [ "Orthanc 1.9.7 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
       ],
       "NightlyArtifacts" : [
         [ "Orthanc mainline - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]
@@ -232,25 +247,25 @@
       "Mandatory" : false,
       "Category" : "tools/wsi",
       "Downloads" : [
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools" ],
-        [ "http://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools" ]
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools" ],
+        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools" ]
       ]
     }
   ]
