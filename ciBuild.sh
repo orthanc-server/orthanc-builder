@@ -62,7 +62,7 @@ if [[ $action == "build" ]]; then
 
 	# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
 	# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
-	docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
+	docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:21.11.0
 
   docker build -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
   docker build -t osimis/orthanc-pro:current --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
@@ -72,7 +72,7 @@ if [[ $action == "build" ]]; then
 fi
 
 if [[ $action == "pushToPublicRepo" ]]; then
-  docker push osimis/orthanc-builder-base:20.4.0
+  docker push osimis/orthanc-builder-base:21.11.0
   docker push osimis/orthanc:$releaseTag
   docker push osimis/orthanc-pro:$releaseTag
 
