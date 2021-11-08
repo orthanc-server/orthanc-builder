@@ -1,3 +1,6 @@
+21.10.0-buster : - new tag to differentiate from the default image that is now using Debian Bullseye as a base image.
+                   Since the msodbc drivers are not yet available, this image is required to run the ODBC plugin
+                   together with a MSSQL DB server.
 21.10.0 : - added an aliveness probe script in /probes/test-aliveness.py
 21.9.2  : - added the Indexer plugin
           - WIN-INSTALLER: added the Indexer plugin
