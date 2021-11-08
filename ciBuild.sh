@@ -40,11 +40,9 @@ elif [[ $branchName == "debian-buster" ]]; then
 	if [[ $gitLongTag =~ [0-9]+.[0-9]+.[0-9]+-0-[0-9a-g]{8}$ ]]; then 
 
 		releaseTag=$(echo $gitLongTag | sed -r "s/([0-9]+\.[0-9]+\.[0-9]+)-[0-9]+-.+/\1/")
-		# since we are in the master branch and on a tag, we'll tag the images as "latest" too
-		isLatest=true
 	else
 
-		echo "No tag found on the master branch -> will be tagged as 'master' and will not be tagges as 'latest'."
+		echo "No tag found on the debian-buster branch -> will be tagged only as 'debian-buster'"
 		releaseTag=$branchName
 	fi
 
