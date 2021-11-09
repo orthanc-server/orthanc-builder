@@ -3,7 +3,7 @@
 FROM osimis/orthanc-builder-base:current as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.7" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "0a38000b086d" /sources
 WORKDIR /build
 
 # note: building with static DCMTL while waiting for Debian bullseye to fix Dicom TLS issues (we need DCMTK 3.6.5)
@@ -16,7 +16,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-gdcm
 
 # CHANGE_VERSION_GDCM
-RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.4" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "f237a8095e86" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
 RUN make -j 4
