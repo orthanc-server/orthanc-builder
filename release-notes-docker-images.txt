@@ -1,4 +1,4 @@
-          - upgraded base image to debian:bullseye-slim which implies:
+21.11.0 : - upgraded base image to debian:bullseye-slim which implies:
             - python upgraded to 3.9
             - lua updated to 5.4
           - upgraded transfers plugin to mainline version (49e9245b4005) to benefit from build process fixes (no new features)
@@ -6,9 +6,12 @@
             - /usr/local/bin/OrthancWSIDicomizer
             - /usr/local/bin/OrthancWSIDicomToTiff
             - note that libopenslide has been installed too (use /usr/local/bin/OrthancWSIDicomizer --openslide=libopenslide.so.0 /my/file.svs)
-          - the MSSQL commercial plugin has been removed from the image.  The orthanc-odbc plugin can now be used with MSSQL server.  However,
-            note that the DB schemas are not compatible and therefore, you need to start a new Orthanc from scratch and copy all data from the
-            old Orthanc to the new one (https://book.orthanc-server.com/users/replication.html#generic-replication) 
+          - the MSSQL commercial plugin has been removed from the image.  
+            The orthanc-odbc plugin can now be used with MSSQL server.  However, note that the DB schemas are not compatible and therefore, 
+            you need to start a new Orthanc from scratch and copy all data from the old Orthanc to the new one 
+            (https://book.orthanc-server.com/users/replication.html#generic-replication).
+            Also note that as of today, msodbcsql17 is not available on Debian bullseye, therefore, in order to use Orthanc with MSSQL,
+            you should use the 21.10.0-buster image.
 21.10.0 : - added an aliveness probe script in /probes/test-aliveness.py
 21.9.2  : - added the Indexer plugin
           - WIN-INSTALLER: added the Indexer plugin
