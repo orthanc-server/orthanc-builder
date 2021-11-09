@@ -1,21 +1,21 @@
 # base image to build and execute orthanc.  
 # This image should contain only the packages that are common to both !
 # The purpose of this intermediate image is to benefit from Docker cache.
-FROM debian:buster-20210511-slim
+FROM debian:bullseye-20211011-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
-  apt-get --assume-yes install python3.7 && \
+  apt-get --assume-yes install python3 && \
   apt-get --assume-yes install python3-pip && \
   apt-get --assume-yes install ca-certificates && \
   apt-get --assume-yes install tzdata && \
   apt-get --assume-yes install locales && \
   apt-get --assume-yes install libcurl4 && \
-  apt-get --assume-yes install libdcmtk14 && \
-  apt-get --assume-yes install libboost-log1.67.0 libboost-filesystem1.67.0 libboost-locale1.67.0 libboost-regex1.67.0 libboost-system1.67.0 libboost-thread1.67.0 libboost-iostreams1.67.0 && \
+  apt-get --assume-yes install libdcmtk15 && \
+  apt-get --assume-yes install libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
   apt-get --assume-yes install libjpeg62-turbo && \
-  apt-get --assume-yes install libjsoncpp1 && \
-  apt-get --assume-yes install liblua5.3 && \
+  apt-get --assume-yes install libjsoncpp24 && \
+  apt-get --assume-yes install liblua5.4 && \
   apt-get --assume-yes install libpng16-16 && \
   apt-get --assume-yes install libpugixml1v5 && \
   apt-get --assume-yes install libsqlite3-0 && \
