@@ -27,16 +27,11 @@ if [[ $NO_JOBS == true ]]; then
 	jobs=--no-jobs
 fi
 
-unlock=""
-if [[ $UNLOCK == true ]]; then
-	unlock=--unlock
-fi
-
 if [[ ! -z $BEFORE_ORTHANC_STARTUP_SCRIPT ]]; then
 	echo "running custom startup script"
 	$BEFORE_ORTHANC_STARTUP_SCRIPT
 fi
 
-argv=(Orthanc $verbosity $logoption $jobs $unlock "$@")
+argv=(Orthanc $verbosity $logoption $jobs "$@")
 echo "Startup command: ${argv[*]}" >&2
 exec "${argv[@]}"
