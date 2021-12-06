@@ -1,4 +1,4 @@
-                 - upgraded ODBC plugin to 389c037387ea (escaping angle brackets)
+                 - upgraded ODBC plugin to 2a3bbb4104fa (escaping angle brackets)
 21.10.0-buster : - new tag to differentiate from the default image that is now using Debian Bullseye as a base image.
                    Since the msodbc drivers are not yet available, this image is required to run the ODBC plugin
                    together with a MSSQL DB server.
