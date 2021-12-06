@@ -228,7 +228,6 @@ COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/pl
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
-COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
 # OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
