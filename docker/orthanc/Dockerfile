@@ -162,6 +162,23 @@ WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
 RUN make -j 4
 
+########################## Orthanc Stone Viewer
+
+FROM osimis/orthanc-builder-base:current as build-stone-viewer
+
+ARG STONEVIEWER_VERSION
+
+RUN mkdir /downloads
+# CHANGE_VERSION_STONE_WEB_VIEWER
+RUN wget https://lsb.orthanc-server.com/stone-webviewer/2.2/wasm-binaries.zip --output-document /downloads/wasm-binaries.zip --quiet
+RUN unzip /downloads/wasm-binaries.zip -d /downloads
+
+# CHANGE_VERSION_STONE_WEB_VIEWER
+RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r "StoneWebViewer-2.2" /sources
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer /sources/Applications/StoneWebViewer/Plugin/
+RUN make -j 4
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM osimis/orthanc-builder-base:current as build-downloader
@@ -172,8 +189,6 @@ RUN mkdir /downloads
 RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
 RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
-# CHANGE_VERSION_STONE_WEB_VIEWER
-RUN wget https://orthanc.osimis.io/lsb/stone-webviewer/releases/2.2/libStoneWebViewer.so --output-document /downloads/libStoneWebViewer.so --quiet
 
 
 ################################# the image that will run Orthanc dynamicaly linked
@@ -209,10 +224,18 @@ COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/p
 COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
+
+# If the target architecture is not AMD64, then delete the OsimisWebViewer &
+# OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
+RUN if [ "$TARGETPLATFORM" != "linux/amd64" ]; then \
+	rm /usr/share/orthanc/plugins-available/libOsimisWebViewer.so && \
+	rm /usr/share/orthanc/plugins-available/libOsimisWebViewerAlpha.so; \
+	fi
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*

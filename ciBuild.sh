@@ -57,15 +57,15 @@ fi
 
 if [[ $action == "build" ]]; then
 
-	docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
-	docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
+	docker build --progress=plain -t osimis/orthanc-runner-base:current --platform "linux/amd64,linux/arm64" docker/orthanc-runner-base/
+	docker build --progress=plain -t osimis/orthanc-builder-base:current --platform "linux/amd64,linux/arm64" docker/orthanc-builder-base/
 
 	# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
 	# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
 	docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:21.11.0
 
-  docker build -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
-  docker build -t osimis/orthanc-pro:current --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+  docker build --progress=plain -t osimis/orthanc:current -f docker/orthanc/Dockerfile --platform "linux/amd64,linux/arm64" docker/orthanc/
+  docker build --progress=plain -t osimis/orthanc-pro:current --platform "linux/amd64,linux/arm64" --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
 
   docker tag osimis/orthanc:current osimis/orthanc:$releaseTag
   docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
