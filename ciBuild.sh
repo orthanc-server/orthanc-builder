@@ -8,6 +8,11 @@
 set -o errexit
 set -o xtrace
 
+# make sure we use the latest ubuntu image (which is the base of everything we build)
+# note: this has been removed now that we use a fixed base image.
+# instead of pulling, update the tag in docker\orthanc-runner-base\Dockerfile
+# docker pull debian:buster
+
 git submodule init
 git submodule update
 
@@ -29,17 +34,15 @@ if [[ ! $branchName ]]; then
 	if [[ $branchName == HEAD ]]; then
 		exit 2
 	fi
-elif [[ $branchName == "master" ]]; then
+elif [[ $branchName == "debian-buster" ]]; then
 	
 	# in the master branch, make sure the tag is clean ('1.2.3'; not 1.2.3-alpha) and there has been 0 commits since the tag has been set.
-	if [[ $gitLongTag =~ [0-9]+.[0-9]+.[0-9]+-0-[0-9a-g]{8}$ ]]; then 
+	if [[ $gitLongTag =~ [0-9]+.[0-9]+.[0-9]+-buster-0-[0-9a-g]{8}$ ]]; then 
 
-		releaseTag=$(echo $gitLongTag | sed -r "s/([0-9]+\.[0-9]+\.[0-9]+)-[0-9]+-.+/\1/")
-		# since we are in the master branch and on a tag, we'll tag the images as "latest" too
-		isLatest=true
+		releaseTag=$(echo $gitLongTag | sed -r "s/([0-9]+\.[0-9]+\.[0-9]+-buster)-[0-9]+-.+/\1/")
 	else
 
-		echo "No tag found on the master branch -> will be tagged as 'master' and will not be tagges as 'latest'."
+		echo "No tag found on the debian-buster branch -> will be tagged only as 'debian-buster'"
 		releaseTag=$branchName
 	fi
 
@@ -57,54 +60,41 @@ fi
 
 if [[ $action == "build" ]]; then
 
-	docker context create orthanc-amd64 || true
-	docker context create orthanc-arm64 || true
-	docker buildx create --use --name orthanc-buildx orthanc-amd64 || true
-	docker buildx create --append --name orthanc-buildx orthanc-arm64 || true	
-
-	docker buildx build --progress=plain -t osimis/orthanc-runner-base:current --platform "linux/amd64,linux/arm64" docker/orthanc-runner-base/
-	docker buildx build --progress=plain -t osimis/orthanc-builder-base:current --platform "linux/amd64,linux/arm64" docker/orthanc-builder-base/
+	docker build -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
+	docker build -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
 
 	# in order to build other plugins like the MSSQL plugin, we need the orthanc-builder image
 	# so we publish here.  Note that the tag here is not related to the tag of the osimis/orthanc images
-	# docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:21.11.0
+	# docker tag osimis/orthanc-builder-base:current osimis/orthanc-builder-base:20.4.0
 
-	docker buildx build --progress=plain -t osimis/orthanc:current -f docker/orthanc/Dockerfile --platform "linux/amd64,linux/arm64" docker/orthanc/
-	docker buildx build --progress=plain -t osimis/orthanc-pro:current --platform "linux/amd64,linux/arm64" --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+  docker build -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
+  docker build -t osimis/orthanc-pro:current --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
 
-	docker tag osimis/orthanc:current osimis/orthanc:$releaseTag-platform
-	docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag-platform
+  docker tag osimis/orthanc:current osimis/orthanc:$releaseTag
+  docker tag osimis/orthanc-pro:current osimis/orthanc-pro:$releaseTag
 fi
 
 if [[ $action == "pushToPublicRepo" ]]; then
-	# docker push osimis/orthanc-builder-base:21.11.0
-	# docker push osimis/orthanc:$releaseTag
-	# docker push osimis/orthanc-pro:$releaseTag
-
-	docker buildx build --push --progress=plain -t osimis/orthanc:$releaseTag -f docker/orthanc/Dockerfile --platform "linux/amd64,linux/arm64" docker/orthanc/
-	docker buildx build --push --progress=plain -t osimis/orthanc-pro:$releaseTag --platform "linux/amd64,linux/arm64" --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+  # docker push osimis/orthanc-builder-base:20.4.0
+  docker push osimis/orthanc:$releaseTag
+  docker push osimis/orthanc-pro:$releaseTag
 
 	if [[ $isLatest == true ]]; then
-		docker buildx build --push --progress=plain -t osimis/orthanc:latest -f docker/orthanc/Dockerfile --platform "linux/amd64,linux/arm64" docker/orthanc/
-		docker buildx build --push --progress=plain -t osimis/orthanc-pro:latest --platform "linux/amd64,linux/arm64" --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
-		# docker tag osimis/orthanc:current osimis/orthanc:latest
-		# docker tag osimis/orthanc-pro:current osimis/orthanc-pro:latest
+		docker tag osimis/orthanc:current osimis/orthanc:latest
+		docker tag osimis/orthanc-pro:current osimis/orthanc-pro:latest
 
-		# docker push osimis/orthanc:latest
+		docker push osimis/orthanc:latest
 	fi
 
 fi
 
 if [[ $action == "pushToPrivateRepo" ]]; then
-	# docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
-	# docker push osimis.azurecr.io/orthanc-pro:$releaseTag
-
-	docker buildx build --push --progress=plain -t osimis.azurecr.io/orthanc-pro:$releaseTag --platform "linux/amd64,linux/arm64" --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+  docker tag osimis/orthanc-pro:current osimis.azurecr.io/orthanc-pro:$releaseTag
+  docker push osimis.azurecr.io/orthanc-pro:$releaseTag
 
 	if [[ $isLatest  == true ]]; then
-		# docker tag osimis.azurecr.io/orthanc-pro:$releaseTag osimis.azurecr.io/orthanc-pro:latest
-		# docker push osimis.azurecr.io/orthanc-pro:latest
-		docker buildx build --push --progress=plain -t osimis.azurecr.io/orthanc-pro:latest --platform "linux/amd64,linux/arm64" --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -f docker/orthanc-pro-builder/Dockerfile docker/orthanc-pro-builder/
+		docker tag osimis.azurecr.io/orthanc-pro:$releaseTag osimis.azurecr.io/orthanc-pro:latest
+		docker push osimis.azurecr.io/orthanc-pro:latest
 	fi
 
 fi
