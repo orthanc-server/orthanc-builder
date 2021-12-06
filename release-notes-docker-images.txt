@@ -1,3 +1,4 @@
+          - updated ODBC plugin to 1.1
           - removed the "UNLOCK" environment variable that was only used in PostgreSQL < 1.0
 21.11.0 : - upgraded base image to debian:bullseye-slim which implies:
             - python upgraded to 3.9

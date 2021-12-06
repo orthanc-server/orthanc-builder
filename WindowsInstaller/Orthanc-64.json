@@ -1,272 +1,272 @@
 {
-  "Name" : "Orthanc for Windows 64",
-  "Version" : "21.9.2", "Comment" : "# CHANGE_VERSION_WIN_INSTALLER",
-  "Architecture" : 64,
-  "CIS" : "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
-  "Components" : [
-    {
-      "Description" : "Orthanc server",
-      "Mandatory" : true,
-      "Artifacts" : [
-        [ "Orthanc 1.9.7 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Orthanc mainline - VC2015-64 Release/Orthanc.exe", "", "Comment:" ]
-      ]
-    },
+    "Name": "Orthanc for Windows 64",
+    "Version": "21.9.2",
+    "Comment": "# CHANGE_VERSION_WIN_INSTALLER",
+    "Architecture": 64,
+    "CIS": "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
+    "Components": [{
+            "Description": "Orthanc server",
+            "Mandatory": true,
+            "Artifacts": [
+                ["Orthanc 1.9.7 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+            ],
+            "NightlyArtifacts": [
+                ["Orthanc mainline - VC2015-64 Release/Orthanc.exe", "", "Comment:"]
+            ]
+        },
 
 
-    {
-      "Description" : "Osimis Web viewer (AGPL license)",
-      "Name" : "osimis_web_viewer",
-      "Mandatory" : false,
-      "Category" : "osimis",
-      "Artifacts" : [
-        [ "OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB" ]
-      ],
-      "Resources" : [
-        [ "webviewer.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "MySQL backend (AGPL license)",
-      "Name" : "mysql",
-      "Mandatory" : false,
-      "Category" : "osimis",
-      "Artifacts" : [
-        [ "MySQL 4.3 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ],
-        [ "MySQL 4.3 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL" ]
-      ],
-      "Resources" : [
-        [ "mysql.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Transfers accelerator (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "osimis",
-      "Artifacts" : [
-        [ "Transfers 1.0 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Transfers mainline - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment:" ]
-      ],
-      "Resources" : [
-        [ "transfers.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Advanced authorization plugin (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "osimis",
-      "Artifacts" : [
-        [ "Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment:" ]
-      ]
-    },
-    {
-      "Description" : "ODBC backend (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "osimis",
-      "Artifacts" : [
-        [ "Odbc 1.0 - VC2015-64 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC" ],
-        [ "Odbc 1.0 - VC2015-64 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC" ]
-      ],
-      "Resources" : [
-        [ "odbc.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Folder indexer plugin",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "FolderIndexer 1.0 - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "FolderIndexer mainline - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment:" ]
-      ],
-      "Resources" : [
-        [ "indexer.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "The Cancer Imaging Archive plugin",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "Tcia 1.0 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Tcia mainline - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment:" ]
-      ],
-      "Resources" : [
-        [ "tcia.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Stone Web viewer (AGPL license)",
-      "Name" : "stone_web_viewer",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "Stone 2.2 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER" ]
-      ],
-      "Resources" : [
-        [ "stone-webviewer.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Modality worklists",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "Orthanc 1.9.7 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Orthanc mainline - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment:" ]
-      ],
-      "Resources" : [
-        [ "worklists.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Serve folders",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "Orthanc 1.9.7 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Orthanc mainline - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment:" ]
-      ],
-      "Resources" : [
-        [ "serve-folders.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Connectivity checks",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "Orthanc 1.9.7 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Orthanc mainline - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment:" ]
-      ]
-    },
-    {
-      "Description" : "GDCM decoder/transcoder",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "Gdcm 1.4 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Gdcm mainline - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment:" ]
-      ]
-    },
-    {
-      "Description" : "Web Viewer of medical images (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "WebViewer 2.7 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "WebViewer mainline - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment:" ]
-      ]
-    },
-    {
-      "Description" : "DICOMweb support (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "DicomWeb 1.7 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:" ]
-      ],
-      "Resources" : [
-        [ "dicomweb.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "PostgreSQL backend (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ],
-        [ "PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG" ]
-      ],
-      "Resources" : [
-        [ "postgresql.json", "Configuration" ]
-      ]
-    },
-    {
-      "Description" : "Web viewer of whole-slide microscopic images (AGPL license)",
-      "Mandatory" : false,
-      "Category" : "plugins",
-      "Artifacts" : [
-        [ "WSI 1.0 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "WSI mainline - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment:" ]
-      ]
-    },
+        {
+            "Description": "Osimis Web viewer (AGPL license)",
+            "Name": "osimis_web_viewer",
+            "Mandatory": false,
+            "Category": "osimis",
+            "Artifacts": [
+                ["OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+            ],
+            "Resources": [
+                ["webviewer.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "MySQL backend (AGPL license)",
+            "Name": "mysql",
+            "Mandatory": false,
+            "Category": "osimis",
+            "Artifacts": [
+                ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+            ],
+            "Resources": [
+                ["mysql.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Transfers accelerator (AGPL license)",
+            "Mandatory": false,
+            "Category": "osimis",
+            "Artifacts": [
+                ["Transfers 1.0 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+            ],
+            "NightlyArtifacts": [
+                ["Transfers mainline - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment:"]
+            ],
+            "Resources": [
+                ["transfers.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Advanced authorization plugin (AGPL license)",
+            "Mandatory": false,
+            "Category": "osimis",
+            "Artifacts": [
+                ["Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+            ],
+            "NightlyArtifacts": [
+                ["Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment:"]
+            ]
+        },
+        {
+            "Description": "ODBC backend (AGPL license)",
+            "Mandatory": false,
+            "Category": "osimis",
+            "Artifacts": [
+                ["Odbc 1.1 - VC2015-64 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
+                ["Odbc 1.1 - VC2015-64 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+            ],
+            "Resources": [
+                ["odbc.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Folder indexer plugin",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["FolderIndexer 1.0 - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+            ],
+            "NightlyArtifacts": [
+                ["FolderIndexer mainline - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment:"]
+            ],
+            "Resources": [
+                ["indexer.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "The Cancer Imaging Archive plugin",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["Tcia 1.0 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+            ],
+            "NightlyArtifacts": [
+                ["Tcia mainline - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment:"]
+            ],
+            "Resources": [
+                ["tcia.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Stone Web viewer (AGPL license)",
+            "Name": "stone_web_viewer",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["Stone 2.2 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+            ],
+            "Resources": [
+                ["stone-webviewer.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Modality worklists",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["Orthanc 1.9.7 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+            ],
+            "NightlyArtifacts": [
+                ["Orthanc mainline - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment:"]
+            ],
+            "Resources": [
+                ["worklists.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Serve folders",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["Orthanc 1.9.7 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+            ],
+            "NightlyArtifacts": [
+                ["Orthanc mainline - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment:"]
+            ],
+            "Resources": [
+                ["serve-folders.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Connectivity checks",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["Orthanc 1.9.7 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+            ],
+            "NightlyArtifacts": [
+                ["Orthanc mainline - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment:"]
+            ]
+        },
+        {
+            "Description": "GDCM decoder/transcoder",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["Gdcm 1.4 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+            ],
+            "NightlyArtifacts": [
+                ["Gdcm mainline - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment:"]
+            ]
+        },
+        {
+            "Description": "Web Viewer of medical images (AGPL license)",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["WebViewer 2.7 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+            ],
+            "NightlyArtifacts": [
+                ["WebViewer mainline - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment:"]
+            ]
+        },
+        {
+            "Description": "DICOMweb support (AGPL license)",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["DicomWeb 1.7 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+            ],
+            "NightlyArtifacts": [
+                ["DicomWeb mainline - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment:"]
+            ],
+            "Resources": [
+                ["dicomweb.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "PostgreSQL backend (AGPL license)",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+            ],
+            "Resources": [
+                ["postgresql.json", "Configuration"]
+            ]
+        },
+        {
+            "Description": "Web viewer of whole-slide microscopic images (AGPL license)",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Artifacts": [
+                ["WSI 1.0 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+            ],
+            "NightlyArtifacts": [
+                ["WSI mainline - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment:"]
+            ]
+        },
 
-    {
-      "Description" : "Maintenance tool to recover files compressed by Orthanc",
-      "Mandatory" : false,
-      "Category" : "tools",
-      "Artifacts" : [
-        [ "Orthanc 1.9.7 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "Orthanc mainline - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:" ]
-      ]
-    },
-    {
-      "Description" : "Conversion tools for DICOM whole-slide imaging (AGPL license)",
-      "Name" : "wsi",
-      "Mandatory" : false,
-      "Category" : "tools",
-      "Artifacts" : [
-        [ "WSI 1.0 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ],
-        [ "WSI 1.0 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI" ]
-      ],
-      "NightlyArtifacts" : [
-        [ "WSI mainline - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:" ],
-        [ "WSI mainline - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment:" ]
-      ]
-    },
-    {
-      "Description" : "OpenSlide support for proprietary formats (LGPL license)",
-      "Mandatory" : false,
-      "Category" : "tools/wsi",
-      "Downloads" : [
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools" ],
-        [ "https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools" ]
-      ]
-    }
-  ]
+        {
+            "Description": "Maintenance tool to recover files compressed by Orthanc",
+            "Mandatory": false,
+            "Category": "tools",
+            "Artifacts": [
+                ["Orthanc 1.9.7 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+            ],
+            "NightlyArtifacts": [
+                ["Orthanc mainline - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:"]
+            ]
+        },
+        {
+            "Description": "Conversion tools for DICOM whole-slide imaging (AGPL license)",
+            "Name": "wsi",
+            "Mandatory": false,
+            "Category": "tools",
+            "Artifacts": [
+                ["WSI 1.0 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
+                ["WSI 1.0 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+            ],
+            "NightlyArtifacts": [
+                ["WSI mainline - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:"],
+                ["WSI mainline - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment:"]
+            ]
+        },
+        {
+            "Description": "OpenSlide support for proprietary formats (LGPL license)",
+            "Mandatory": false,
+            "Category": "tools/wsi",
+            "Downloads": [
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools"],
+                ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools"]
+            ]
+        }
+    ]
 }

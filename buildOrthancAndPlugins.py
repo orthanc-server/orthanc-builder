@@ -220,7 +220,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-databases-odbc.hg-build',
             # don't run unit tests since it requires a odbc server deployed   unitTestsExe': 'UnitTests' 
         },
-        'stableBranch': 'OrthancOdbc-1.0', # CHANGE_VERSION_ODBC
+        'stableBranch': 'OrthancOdbc-1.1', # CHANGE_VERSION_ODBC
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancOdbcStorage', 'OrthancOdbcIndex'], # todo, we actualy never built the odbc with this script ...
     }
