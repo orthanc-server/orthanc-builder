@@ -19,10 +19,6 @@ try {
                             sh './ciBuild.sh ${BRANCH_NAME} build'
                         }
 
-                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-orthanc.osimis.io']]) {
-                            sh './ciBuild.sh ${BRANCH_NAME} build linux/arm64'
-                        }
-
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-jenkinsosimis') {
                             sh './ciBuild.sh ${BRANCH_NAME} pushToPublicRepo'
                         }
