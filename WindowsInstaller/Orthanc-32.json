@@ -210,7 +210,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["WSI 1.0 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                ["WSI 1.1 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
             ],
             "NightlyArtifacts": [
                 ["WSI mainline - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment:"]
@@ -234,8 +234,8 @@
             "Mandatory": false,
             "Category": "tools",
             "Artifacts": [
-                ["WSI 1.0 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
-                ["WSI 1.0 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
+                ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
             ],
             "NightlyArtifacts": [
                 ["WSI mainline - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:"],

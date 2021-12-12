@@ -81,7 +81,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-plugin-wsi
 
 # CHANGE_VERSION_ORTHANC_WSI
-RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-1.0" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-1.1" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF /sources/ViewerPlugin
 RUN make -j 4
@@ -89,8 +89,8 @@ RUN make -j 4
 
 RUN mkdir /downloads
 
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
 
 ########################## Orthanc Webviewer
 
