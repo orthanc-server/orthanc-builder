@@ -97,7 +97,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Tcia 1.0 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                ["Tcia 1.1 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
             ],
             "NightlyArtifacts": [
                 ["Tcia mainline - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment:"]

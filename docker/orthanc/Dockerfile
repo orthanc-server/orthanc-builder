@@ -157,7 +157,7 @@ RUN make -j 4
 FROM osimis/orthanc-builder-base:current as build-plugin-tcia
 
 # CHANGE_VERSION_TCIA
-RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r "OrthancTcia-1.0" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r "OrthancTcia-1.1" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
 RUN make -j 4

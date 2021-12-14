@@ -42,9 +42,9 @@ wget "${URL}/WebViewer 2.7 - OS X Release/libOrthancWebViewer.dylib"
 wget "${URL}/Stone 2.2 - OS X Release/libStoneWebViewer.dylib"
 wget "${URL}/Gdcm 1.4 - OS X Release/libOrthancGdcm.dylib"
 wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
-wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcIndex.dylib"
-wget "${URL}/Odbc 1.0 - OS X Release/libOrthancOdbcStorage.dylib"
-wget "${URL}/Tcia 1.0 - OS X Release/libOrthancTcia.dylib"
+wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcIndex.dylib"
+wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcStorage.dylib"
+wget "${URL}/Tcia 1.1 - OS X Release/libOrthancTcia.dylib"
 wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
 
 # Create the archive

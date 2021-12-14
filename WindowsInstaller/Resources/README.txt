@@ -31,8 +31,8 @@ WSI Web viewer plugin                 1.1
 Transfers accelerator plugin          1.0
 Authorization plugin                  0.2.4
 GDCM decoder/transcoder plugin        1.4
-ODBC plugin                           1.0
-TCIA plugin                           1.0
+ODBC plugin                           1.1
+TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 
 Folders
