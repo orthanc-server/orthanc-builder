@@ -231,7 +231,7 @@ COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/or
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
 # OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
-RUN if [ "$TARGETPLATFORM" != "linux/amd64" ]; then \
+RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]]; then \
 	rm /usr/share/orthanc/plugins-available/libOsimisWebViewer.so && \
 	rm /usr/share/orthanc/plugins-available/libOsimisWebViewerAlpha.so; \
 	fi
