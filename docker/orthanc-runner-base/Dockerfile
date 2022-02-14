@@ -1,7 +1,7 @@
 # base image to build and execute orthanc.  
 # This image should contain only the packages that are common to both !
 # The purpose of this intermediate image is to benefit from Docker cache.
-FROM debian:bullseye-20211011-slim
+FROM debian:bullseye-20220125-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
@@ -27,6 +27,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install libmariadb3 && \
   apt-get --assume-yes install unixodbc && \
   apt-get --assume-yes install libopenslide0 && \
+  apt-get --assume-yes install libcrypto++ && \
+  apt-get --assume-yes install libcpprest && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
 
@@ -34,5 +36,3 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # case-insensitive comparison of strings with accents)
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
-
-#  apt-get --assume-yes install libjpeg-dev zlib1g-dev libdcmtk2-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev && \

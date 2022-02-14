@@ -22,7 +22,7 @@ You can retrieve the list of available docker tags with the following Azure CLI 
 
 # packages content
 
-#### 21.10.0
+#### 22.2.0
 ```
 
 component                             version
@@ -46,17 +46,16 @@ GDCM plugin                           1.4
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
-
-cloud plugins:
-
 AWS S3 plugin                         1.3.3
 Azure Blob Storage plugin             1.3.3
 Google Cloud Storage plugin           1.3.3
+
+cloud plugins:
+
 Google Cloud Platform plugin          1.0
 
 Legacy commercial plugins (requiring a license):
 
-MSSql plugin (legacy, replaced by the free ODBC plugin)                          1.1.0
 Osimis Web viewer pro plugin (deprecated, use the non-pro version instead)          1.4.1.0
 Osimis Web viewer pro plugin (alpha) (deprecated, use the non-pro version instead)  4a4a657
 ```

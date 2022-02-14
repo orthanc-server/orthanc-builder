@@ -179,6 +179,109 @@ WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer /sources/Applications/StoneWebViewer/Plugin/
 RUN make -j 4
 
+
+# ########################## vcpkg cache
+
+# # create vcpkg cache.  This task takes a lot of time and only needs to be
+# # performed when the build system is updated -> it should be commented out
+# # most of the time
+
+# FROM osimis/orthanc-builder-base:current as vcpkg-cache-generator
+
+# ARG AWS_ACCESS_KEY_ID
+# ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+# ARG AWS_SECRET_ACCESS_KEY
+# ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+
+# RUN pip3 install awscli
+
+# WORKDIR /
+
+# RUN git clone https://github.com/Microsoft/vcpkg.git && \
+#   cd vcpkg/ && \
+#   git checkout 2021.05.12
+
+# WORKDIR /vcpkg
+# RUN ./bootstrap-vcpkg.sh
+# RUN ./vcpkg integrate install
+
+# # object storage prerequisites
+# RUN  ./vcpkg install cryptopp
+
+# # since we upgraded from Orthanc Framework 1.7.3 to 1.9.1
+# RUN  ./vcpkg install boost
+
+# # Google prerequisites
+# RUN  ./vcpkg install google-cloud-cpp
+
+# RUN  ./vcpkg install azure-storage-cpp
+
+# # export a snapshot to AWS (this snapshot is downloaded below to gain time)
+# RUN ./vcpkg export --x-all-installed --zip --output=object-storage-vcpkg-2021.05.12-bullseye
+# RUN aws s3 --region eu-west-1 cp object-storage-vcpkg-2021.05.12-bullseye.zip s3://orthanc.osimis.io/vcpkg/
+
+
+########################## Orthanc object storage plugins
+
+FROM osimis/orthanc-builder-base:current as build-plugin-object-storage
+
+WORKDIR /
+
+RUN git clone https://github.com/Microsoft/vcpkg.git && \
+  cd vcpkg/ && \
+  git checkout 2021.05.12
+WORKDIR /vcpkg
+RUN ./bootstrap-vcpkg.sh
+RUN ./vcpkg integrate install
+
+# reuse an exported vcpkg environment (only for google and azure plugins, the S3 plugin is a static build and does not need vcpkg)
+RUN wget --quiet https://orthanc.osimis.io/vcpkg/object-storage-vcpkg-2021.05.12-bullseye.zip --output-document /vcpkg.zip
+
+RUN unzip -q /vcpkg.zip -d /vcpkg/exported
+RUN mv /vcpkg/exported/object-storage-vcpkg-* /vcpkg/exported/object-storage
+
+# prerequisites (for object-storage client side encryption)
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get --assume-yes update && \
+		apt-get --assume-yes install libcrypto++-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+#####################################################
+
+WORKDIR /sources
+# CHANGE_VERSION_ORTHANC_CLOUD_STORAGE
+RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r 1.3.3
+
+# CHANGE_VERSION_ORTHANC (framework version used to build the cloud storage plugins)
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.9.6" 
+
+RUN mkdir -p /build/cloud-storage/aws
+WORKDIR /build/cloud-storage/aws
+RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_VCPKG_PACKAGES=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Aws/
+RUN make -j 4
+
+# upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
+RUN sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' /sources/orthanc-object-storage/Azure/CMakeLists.txt
+
+RUN mkdir -p /build/cloud-storage/azure
+WORKDIR /build/cloud-storage/azure
+
+RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/exported/object-storage/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Azure/
+RUN make -j 4
+
+# upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
+RUN sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' /sources/orthanc-object-storage/Google/CMakeLists.txt
+
+RUN mkdir -p /build/cloud-storage/google
+WORKDIR /build/cloud-storage/google
+RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/exported/object-storage/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Google/
+RUN make -j 4
+
+RUN ldd /build/cloud-storage/aws/libOrthancAwsS3Storage.so
+RUN ldd /build/cloud-storage/azure/libOrthancAzureBlobStorage.so
+RUN ldd /build/cloud-storage/google/libOrthancGoogleCloudStorage.so
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM osimis/orthanc-builder-base:current as build-downloader
@@ -229,6 +332,10 @@ COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/pl
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
 
+COPY --from=build-plugin-object-storage /build/cloud-storage/google/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-object-storage /build/cloud-storage/azure/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-object-storage /build/cloud-storage/aws/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
+
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
 # OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
 RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]]; then \
@@ -238,6 +345,9 @@ RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]];
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*
+
+# configure SSL for azure rest sdk (azure object storage plugin)
+ENV SSL_CERT_DIR=/etc/ssl/certs
 
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
