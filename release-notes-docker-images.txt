@@ -1,3 +1,4 @@
+pending : - updated Orthanc Web viewer to 2.8
 22.2.0 :  - upgraded base image to debian:bullseye-20220125-slim
           - added the 3 object storage plugins in the public osimis/orthanc images (version 1.3.3)
           - updated TCIA plugin to 1.1

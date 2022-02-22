@@ -23,7 +23,7 @@ Osimis Web viewer plugin              1.4.2
 Modality worklists plugin             1.9.7
 Serve folders plugin                  1.9.7
 Connectivity check plugin             1.9.7
-Orthanc Web viewer plugin             2.7
+Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.7
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
