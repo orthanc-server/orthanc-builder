@@ -3,7 +3,7 @@
 set -ex
 
 # CHANGE_VERSION_OSX
-VERSION=21.9.2
+VERSION=22.2.1
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/'
@@ -23,10 +23,10 @@ cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
 cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
 
 # Orthanc core
-wget "${URL}/Orthanc 1.9.7 - OS X Release/Orthanc"
-wget "${URL}/Orthanc 1.9.7 - OS X Release/libModalityWorklists.dylib"
-wget "${URL}/Orthanc 1.9.7 - OS X Release/libServeFolders.dylib"
-wget "${URL}/Orthanc 1.9.7 - OS X Release/libConnectivityChecks.dylib"
+wget "${URL}/Orthanc 1.10.0 - OS X Release/Orthanc"
+wget "${URL}/Orthanc 1.10.0 - OS X Release/libModalityWorklists.dylib"
+wget "${URL}/Orthanc 1.10.0 - OS X Release/libServeFolders.dylib"
+wget "${URL}/Orthanc 1.10.0 - OS X Release/libConnectivityChecks.dylib"
 
 chmod +x ./Orthanc
 
