@@ -52,6 +52,9 @@ else
 	commitCountSinceLastTag=$(git rev-list $lastTag.. --count)
 	if [[ $commitCountSinceLastTag == 0 ]]; then
 		releaseTag=$lastTag
+		if [[ $branchName == "master" ]]; then
+			isLatest=true
+		fi
 	else
 		releaseTag=$branchName
 	fi
