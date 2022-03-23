@@ -1,3 +1,4 @@
+          - updated Orthanc to 1.10.1
 22.2.2 :  - upgraded Python plugin to 4.0
 22.2.1 :  - updated Orthanc to 1.10.0
           - updated Orthanc Web viewer to 2.8
