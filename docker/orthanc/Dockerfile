@@ -1,6 +1,80 @@
+########################## orthanc-runner-base
+
+# base image to build and execute orthanc.  
+# This image should contain only the packages that are common to both !
+# The purpose of this intermediate image is to benefit from Docker cache.
+FROM debian:bullseye-20220125-slim as orthanc-runner-base
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+  apt-get --assume-yes update && \
+  apt-get --assume-yes install python3 && \
+  apt-get --assume-yes install python3-pip && \
+  apt-get --assume-yes install ca-certificates && \
+  apt-get --assume-yes install tzdata && \
+  apt-get --assume-yes install locales && \
+  apt-get --assume-yes install libcurl4 && \
+  apt-get --assume-yes install libdcmtk15 && \
+  apt-get --assume-yes install libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
+  apt-get --assume-yes install libjpeg62-turbo && \
+  apt-get --assume-yes install libjsoncpp24 && \
+  apt-get --assume-yes install liblua5.4 && \
+  apt-get --assume-yes install libpng16-16 && \
+  apt-get --assume-yes install libpugixml1v5 && \
+  apt-get --assume-yes install libsqlite3-0 && \
+  apt-get --assume-yes install libssl1.1 && \
+  apt-get --assume-yes install libuuid1 && \
+  apt-get --assume-yes install lsb-base && \
+  apt-get --assume-yes install zlib1g && \
+  apt-get --assume-yes install libpq5 && \
+  apt-get --assume-yes install libmariadb3 && \
+  apt-get --assume-yes install unixodbc && \
+  apt-get --assume-yes install libopenslide0 && \
+  apt-get --assume-yes install libcrypto++ && \
+  apt-get --assume-yes install libcpprest && \
+  apt-get --assume-yes clean && \
+  rm --recursive --force /var/lib/apt/lists/*
+
+# Make sure the en_US locale has been generated (required for
+# case-insensitive comparison of strings with accents)
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+RUN locale-gen
+
+
+
+
+########################## Orthanc builder base
+# image to compile Orthanc and its plugins dynamically
+FROM orthanc-runner-base as orthanc-builder-base
+
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN apt-get --assume-yes update
+RUN apt-get --assume-yes install wget
+RUN apt-get --assume-yes install build-essential
+RUN apt-get --assume-yes install unzip
+RUN apt-get --assume-yes install cmake
+RUN apt-get --assume-yes install uuid-dev
+RUN apt-get --assume-yes install apt-utils
+RUN apt-get --assume-yes install libcurl4-openssl-dev
+RUN apt-get --assume-yes install curl
+RUN apt-get --assume-yes install apt-transport-https
+RUN apt-get --assume-yes install liblua5.4-dev
+RUN apt-get --assume-yes install libgtest-dev
+RUN apt-get --assume-yes install libpng-dev
+RUN apt-get --assume-yes install libsqlite3-dev
+RUN apt-get --assume-yes install libjpeg-dev zlib1g-dev libdcmtk-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
+RUN apt-get --assume-yes install git
+RUN apt-get --assume-yes install mercurial
+RUN apt-get --assume-yes install zip
+
+# no need to clean apt-cache, it's a build image, we don't care about its size
+
+RUN mkdir -p /sources
+RUN mkdir -p /build
+
+
 ########################## Orthanc
 
-FROM osimis/orthanc-builder-base:current as build-orthanc
+FROM orthanc-builder-base as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
 RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.0" /sources
@@ -13,7 +87,7 @@ RUN /build/UnitTests
 
 ########################## Orthanc GDCM
 
-FROM osimis/orthanc-builder-base:current as build-gdcm
+FROM orthanc-builder-base as build-gdcm
 
 # CHANGE_VERSION_GDCM
 RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.4" /sources
@@ -23,7 +97,7 @@ RUN make -j 4
 
 ########################## Orthanc PG
 
-FROM osimis/orthanc-builder-base:current as build-plugin-pg
+FROM orthanc-builder-base as build-plugin-pg
 
 RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
@@ -37,7 +111,7 @@ RUN make -j 4
 
 ########################## Orthanc MySQL
 
-FROM osimis/orthanc-builder-base:current as build-plugin-mysql
+FROM orthanc-builder-base as build-plugin-mysql
 
 RUN apt-get --assume-yes update
 # on recent Debian, the libmysql-dev package is not available anymore
@@ -54,7 +128,7 @@ RUN make -j 4
 
 ########################## Orthanc Transfers
 
-FROM osimis/orthanc-builder-base:current as build-plugin-transfers
+FROM orthanc-builder-base as build-plugin-transfers
 
 # CHANGE_VERSION_TRANSFERS
 RUN hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "49e9245b4005" /sources
@@ -67,7 +141,7 @@ RUN /build/UnitTests
 
 ########################## Orthanc Dicomweb
 
-FROM osimis/orthanc-builder-base:current as build-plugin-dicomweb
+FROM orthanc-builder-base as build-plugin-dicomweb
 
 # CHANGE_VERSION_DW
 RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "OrthancDicomWeb-1.7" /sources
@@ -78,7 +152,7 @@ RUN /build/UnitTests
 
 ########################## Orthanc WSI
 
-FROM osimis/orthanc-builder-base:current as build-plugin-wsi
+FROM orthanc-builder-base as build-plugin-wsi
 
 # CHANGE_VERSION_ORTHANC_WSI
 RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-1.1" /sources
@@ -94,7 +168,7 @@ RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancW
 
 ########################## Orthanc Webviewer
 
-FROM osimis/orthanc-builder-base:current as build-plugin-owv
+FROM orthanc-builder-base as build-plugin-owv
 
 # CHANGE_VERSION_ORTHANC_WEB_VIEWER
 RUN hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r "OrthancWebViewer-2.8" /sources
@@ -105,7 +179,7 @@ RUN /build/UnitTests
 
 ########################## Orthanc authorization
 
-FROM osimis/orthanc-builder-base:current as build-plugin-auth
+FROM orthanc-builder-base as build-plugin-auth
 
 # CHANGE_VERSION_AUTH
 RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r "0.2.4" /sources
@@ -116,7 +190,7 @@ RUN make -j 4
 
 ########################## Orthanc Python
 
-FROM osimis/orthanc-builder-base:current as build-plugin-python
+FROM orthanc-builder-base as build-plugin-python
 
 RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install python3-dev
@@ -130,7 +204,7 @@ RUN make -j 4
 
 ########################## Orthanc ODBC
 
-FROM osimis/orthanc-builder-base:current as build-plugin-odbc
+FROM orthanc-builder-base as build-plugin-odbc
 
 RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install unixodbc-dev
@@ -144,7 +218,7 @@ RUN make -j 4
 
 ########################## Orthanc Indexer
 
-FROM osimis/orthanc-builder-base:current as build-plugin-indexer
+FROM orthanc-builder-base as build-plugin-indexer
 
 # CHANGE_VERSION_INDEXER
 RUN hg clone https://hg.orthanc-server.com/orthanc-indexer/ -r "OrthancIndexer-1.0" /sources
@@ -154,7 +228,7 @@ RUN make -j 4
 
 ########################## Orthanc TCIA
 
-FROM osimis/orthanc-builder-base:current as build-plugin-tcia
+FROM orthanc-builder-base as build-plugin-tcia
 
 # CHANGE_VERSION_TCIA
 RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r "OrthancTcia-1.1" /sources
@@ -164,7 +238,7 @@ RUN make -j 4
 
 ########################## Orthanc Stone Viewer
 
-FROM osimis/orthanc-builder-base:current as build-stone-viewer
+FROM orthanc-builder-base as build-stone-viewer
 
 ARG STONEVIEWER_VERSION
 
@@ -186,7 +260,7 @@ RUN make -j 4
 # # performed when the build system is updated -> it should be commented out
 # # most of the time
 
-# FROM osimis/orthanc-builder-base:current as vcpkg-cache-generator
+# FROM orthanc-builder-base as vcpkg-cache-generator
 
 # ARG AWS_ACCESS_KEY_ID
 # ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -223,7 +297,7 @@ RUN make -j 4
 
 ########################## Orthanc object storage plugins
 
-FROM osimis/orthanc-builder-base:current as build-plugin-object-storage
+FROM orthanc-builder-base as build-plugin-object-storage
 
 WORKDIR /
 
@@ -284,7 +358,7 @@ RUN ldd /build/cloud-storage/google/libOrthancGoogleCloudStorage.so
 
 ########################## Orthanc downloads (since wget is not in the runner image)
 
-FROM osimis/orthanc-builder-base:current as build-downloader
+FROM orthanc-builder-base as build-downloader
 
 RUN mkdir /downloads
 

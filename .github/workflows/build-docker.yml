@@ -40,24 +40,6 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Build the runner base Docker image
-      # run: docker build --progress=plain -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
-      uses: docker/build-push-action@v2
-      with:
-        platforms: linux/amd64
-        context: docker/orthanc-runner-base/
-        load: true
-        tags: osimis/orthanc-runner-base:current
-
-    - name: Build the builder base Docker image
-      # run: docker build --progress=plain -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
-      uses: docker/build-push-action@v2
-      with:
-        platforms: linux/amd64
-        context: docker/orthanc-builder-base/
-        load: true
-        tags: osimis/orthanc-builder-base:current
-
     - name: Build the osimis/orthanc Docker image
       # run: docker build --progress=plain -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
       uses: docker/build-push-action@v2
@@ -65,6 +47,8 @@ jobs:
         context: docker/orthanc/
         push: false
         tags: osimis/orthanc:current
+        cache-from: type=gha,scope=osimis-orthanc
+        cache-to: type=gha,scope=osimis-orthanc
 
     # - name: Tag with current commit ref
     #   run: docker tag osimis/orthanc:current osimis/orthanc:${{ github.ref }}
