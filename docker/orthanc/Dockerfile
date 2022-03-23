@@ -16,7 +16,7 @@ RUN /build/UnitTests
 FROM osimis/orthanc-builder-base:current as build-gdcm
 
 # CHANGE_VERSION_GDCM
-RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.4" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.5" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
 RUN make -j 4

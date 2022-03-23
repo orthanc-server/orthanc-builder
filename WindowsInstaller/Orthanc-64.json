@@ -162,7 +162,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Gdcm 1.4 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                ["Gdcm 1.5 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
             ],
             "NightlyArtifacts": [
                 ["Gdcm mainline - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment:"]

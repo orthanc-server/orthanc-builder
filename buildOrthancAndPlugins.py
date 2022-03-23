@@ -201,7 +201,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-gdcm.hg-build',
             # No unit test
         },
-        'stableBranch': 'OrthancGdcm-1.4',  # CHANGE_VERSION_GDCM
+        'stableBranch': 'OrthancGdcm-1.5',  # CHANGE_VERSION_GDCM
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancGdcm'],
     },
