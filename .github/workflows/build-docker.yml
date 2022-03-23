@@ -26,5 +26,8 @@ jobs:
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
     
-    - name: Build the Docker image
+    - name: Build the runner base Docker image
       run: docker build --progress=plain -t osimis/orthanc-runner-base:current docker/orthanc-runner-base/
+
+    - name: Build the builder base Docker image
+      run: docker build --progress=plain -t osimis/orthanc-builder-base:current docker/orthanc-builder-base/
