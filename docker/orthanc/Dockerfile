@@ -369,7 +369,7 @@ RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/li
 
 
 ################################# the image that will run Orthanc dynamicaly linked
-FROM osimis/orthanc-runner-base:current
+FROM orthanc-runner-base
 
 RUN mkdir -p /etc/orthanc
 RUN mkdir -p /usr/share/orthanc/plugins-available && \
