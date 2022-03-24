@@ -55,7 +55,7 @@ jobs:
       with:
         config: .github/buildkitd.toml
 
-    - name: Build the osimis/orthanc Docker image
+    - name: Build the osimis/orthanc Docker image (no push)
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
@@ -63,13 +63,26 @@ jobs:
         tags: osimis/orthanc:current
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
-        # target: build-orthanc
 
-    - name: Tag with current commit ref
-      run: docker tag osimis/orthanc:current osimis/orthanc:${{needs.pre-build.outputs.current_branch_tag}}
+  push-docker-tag:
+    name: push-docker-tag
+    needs: [build-docker, pre-build]
+    if: needs.pre-build.outputs.is_tag == 'true'
+    runs-on: ubuntu-latest
 
-    # - name: Login to DockerHub
-    #   uses: docker/login-action@v1
-    #   with:
-    #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build the osimis/orthanc Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        push: true
+        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}
+        cache-from: type=gha,scope=osimis-orthanc
+        cache-to: type=gha,scope=osimis-orthanc
+
+
