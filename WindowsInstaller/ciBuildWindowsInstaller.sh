@@ -3,8 +3,8 @@
 set -x #to debug the script
 set -e #to exit the script at the first failure
 
-is_tag = ${1:-false}
-is_default_branch = ${2:-false}
+is_tag=${1:-false}
+is_default_branch=${2:-false}
 
 # build Windows 32 bits
 docker build -t installer-builder-32 --build-arg configurationFile=Orthanc-32.json .
