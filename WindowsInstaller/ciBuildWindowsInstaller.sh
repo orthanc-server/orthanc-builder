@@ -19,21 +19,21 @@ docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win64-22.2.1.
 docker rm $dockerContainerId
 
 
-# upload files to AWS
-#####################
+# # upload files to AWS
+# #####################
 
-# we first need to create the container before we can copy files to it
-echo $AWS_ACCESS_KEY_ID
-export AWS_ACCESS_KEY_ID
-export AWS_SECRET_ACCESS_KEY
-awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
+# # we first need to create the container before we can copy files to it
+# echo $AWS_ACCESS_KEY_ID
+# export AWS_ACCESS_KEY_ID
+# export AWS_SECRET_ACCESS_KEY
+# awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
 
-# CHANGE_VERSION_WIN_INSTALLER
-docker cp OrthancInstaller-Win32-22.2.1.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
-docker cp OrthancInstaller-Win64-22.2.1.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
+# # CHANGE_VERSION_WIN_INSTALLER
+# docker cp OrthancInstaller-Win32-22.2.1.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
+# docker cp OrthancInstaller-Win64-22.2.1.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
 
-# upload
-docker start -a $awsContainerId
+# # upload
+# docker start -a $awsContainerId
 
-# remove container
-docker rm $awsContainerId
+# # remove container
+# docker rm $awsContainerId
