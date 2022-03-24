@@ -3,6 +3,9 @@
 set -x #to debug the script
 set -e #to exit the script at the first failure
 
+is_tag = ${1:-false}
+is_default_branch = ${2:-false}
+
 # build Windows 32 bits
 docker build -t installer-builder-32 --build-arg configurationFile=Orthanc-32.json .
 dockerContainerId=$(docker create installer-builder-32)
@@ -30,6 +33,13 @@ awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY ani
 # CHANGE_VERSION_WIN_INSTALLER
 docker cp OrthancInstaller-Win32-22.2.1.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
 docker cp OrthancInstaller-Win64-22.2.1.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
+
+if [[ $is_tag == "true" ]]; then
+    if [[ $is_default_branch == "true" ]]; then
+        docker cp OrthancInstaller-Win32-22.2.1.exe $awsContainerId:/tmp/OrthancInstaller-Win32-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
+        docker cp OrthancInstaller-Win64-22.2.1.exe $awsContainerId:/tmp/OrthancInstaller-Win64-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
+    fi
+fi
 
 # upload
 docker start -a $awsContainerId

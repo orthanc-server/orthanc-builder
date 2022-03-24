@@ -34,7 +34,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build installer
-      run: ./ciBuildWindowsInstaller.sh
+      run: ./ciBuildWindowsInstaller.sh $${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.is_default_branch }}
       working-directory: ./WindowsInstaller
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
