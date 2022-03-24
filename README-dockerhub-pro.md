@@ -28,7 +28,7 @@ You can retrieve the list of available docker tags with the following Azure CLI 
 component                             version
 ---------------------------------------------
 Orthanc server                        1.10.1
-Stone Web viewer plugin               2.2
+Stone Web viewer plugin               2.3
 Osimis Web viewer plugin              1.4.2
 Osimis Web viewer plugin (alpha)      1.4.2
 Modality worklists plugin             1.10.1

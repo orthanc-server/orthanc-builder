@@ -18,7 +18,7 @@ Content of the package 22.2.1
 -----------------------------
 
 Orthanc server                        1.10.1
-Stone Web viewer plugin               2.2
+Stone Web viewer plugin               2.3
 Osimis Web viewer plugin              1.4.2
 Modality worklists plugin             1.10.1
 Serve folders plugin                  1.10.1
