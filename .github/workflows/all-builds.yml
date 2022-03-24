@@ -17,6 +17,7 @@ jobs:
     outputs:
       current_branch_tag: ${{steps.branch-name.outputs.current_branch}}
       is_tag: ${{steps.branch-name.outputs.is_tag}}
+      is_default_branch: ${{steps.branch-name.outputs.is_default}}
     steps:
       - name: Get branch/tag name
         id: branch-name
@@ -64,10 +65,9 @@ jobs:
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
 
-  push-docker-tag:
-    name: push-docker-tag
+  push-docker:
+    name: push-docker
     needs: [build-docker, pre-build]
-    if: needs.pre-build.outputs.is_tag == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -78,13 +78,46 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build the osimis/orthanc Docker image
+    - name: Push with branch/tag
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
         push: true
-        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}
+        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
 
+    - name: Push with latest tag
+      uses: docker/build-push-action@v2
+      if: needs.pre-build.outputs.is_tag == 'true' and needs.pre-vuild.outputs.is_default_branch
+      with:
+        context: docker/orthanc/
+        push: true
+        tags: osimis/orthanc:latest
+        cache-from: type=gha,scope=osimis-orthanc
+        cache-to: type=gha,scope=osimis-orthanc
+
+    
+
+  # push-docker-latest:
+  #   name: push-docker-tag
+  #   needs: [build-docker, pre-build]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+    
+  #   - name: Login to DockerHub
+  #     uses: docker/login-action@v1
+  #     with:
+  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  #   - name: Build the osimis/orthanc Docker image
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       context: docker/orthanc/
+  #       push: true
+  #       tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}
+  #       cache-from: type=gha,scope=osimis-orthanc
+  #       cache-to: type=gha,scope=osimis-orthanc
 
