@@ -22,7 +22,7 @@ You can retrieve the list of available docker tags with the following Azure CLI 
 
 # packages content
 
-#### 22.2.2
+#### 22.3.0
 ```
 
 component                             version

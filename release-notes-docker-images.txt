@@ -1,4 +1,4 @@
-          - upgraded Stone Web viewer plugin to 2.3
+23.3.0 :  - upgraded Stone Web viewer plugin to 2.3
           - updated Orthanc to 1.10.1
           - upgraded GDCM plugin to 1.5
 22.2.2 :  - upgraded Python plugin to 4.0

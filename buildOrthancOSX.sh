@@ -3,7 +3,7 @@
 set -ex
 
 # CHANGE_VERSION_OSX
-VERSION=22.2.1
+VERSION=22.3.0
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/'
