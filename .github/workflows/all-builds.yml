@@ -70,6 +70,8 @@ jobs:
     if: needs.pre-build.outputs.is_tag == 'true'
     runs-on: ubuntu-latest
 
+    steps:
+    
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
