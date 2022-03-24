@@ -50,8 +50,8 @@ jobs:
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
 
-    # - name: Tag with current commit ref
-    #   run: docker tag osimis/orthanc:current osimis/orthanc:${{ github.ref }}
+    - name: Tag with current commit ref
+      run: docker tag osimis/orthanc:current osimis/orthanc:${{ github.ref }}
 
     # - name: Login to DockerHub
     #   uses: docker/login-action@v1
