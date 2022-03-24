@@ -45,7 +45,7 @@ jobs:
         tags: osimis/orthanc:current
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
-        target: build-orthanc
+        # target: build-orthanc
 
     - name: Tag with current commit ref
       run: docker tag osimis/orthanc:current osimis/orthanc:${{needs.pre-build.outputs.current_branch_tag}}
