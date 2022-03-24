@@ -60,6 +60,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
+        platforms: linux/amd64,linux/arm64
         push: false
         tags: osimis/orthanc:current
         cache-from: type=gha,scope=osimis-orthanc
@@ -75,6 +76,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
+        platforms: linux/amd64,linux/arm64
         push: true
         tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
         cache-from: type=gha,scope=osimis-orthanc
