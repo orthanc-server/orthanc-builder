@@ -39,6 +39,8 @@ jobs:
     #   run: sudo df -h
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
+      with:
+        config: .github/buildkitd.toml
 
     - name: Build the osimis/orthanc Docker image
       # run: docker build --progress=plain -t osimis/orthanc:current -f docker/orthanc/Dockerfile docker/orthanc/
@@ -49,6 +51,7 @@ jobs:
         tags: osimis/orthanc:current
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
+        target: build-orthanc
 
     - name: Tag with current commit ref
       run: docker tag osimis/orthanc:current osimis/orthanc:${{ github.ref }}
