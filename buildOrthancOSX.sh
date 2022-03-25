@@ -74,7 +74,7 @@ docker start -a $awsContainerId
 docker rm $awsContainerId
 
 if [[ $is_tag == "true" ]]; then
-    awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "OrthancAndPluginsOSX*" --cache-control=max-age=1)
+    awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1)
 
     docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp/orthancAndPluginsOSX.Stable.zip
 
