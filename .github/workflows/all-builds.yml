@@ -17,7 +17,7 @@ jobs:
     outputs:
       current_branch_tag: ${{steps.branch-name.outputs.current_branch}}
       is_tag: ${{steps.branch-name.outputs.is_tag}}
-      is_default_branch: ${{steps.branch-name.outputs.is_default}}
+      branch: ${{steps.branch-name.outputs.ref_branch}}
     steps:
       - name: Get branch/tag name
         id: branch-name
@@ -34,7 +34,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build installer
-      run: ./ciBuildWindowsInstaller.sh $${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.is_default_branch }}
+      run: ./ciBuildWindowsInstaller.sh $${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.branch }}
       working-directory: ./WindowsInstaller
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

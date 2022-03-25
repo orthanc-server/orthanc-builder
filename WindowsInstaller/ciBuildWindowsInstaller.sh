@@ -4,7 +4,7 @@ set -x #to debug the script
 set -e #to exit the script at the first failure
 
 is_tag=${1:-false}
-is_default_branch=${2:-false}
+branch_name=${2:-unknown}
 
 # build Windows 32 bits
 docker build -t installer-builder-32 --build-arg configurationFile=Orthanc-32.json .
@@ -35,7 +35,7 @@ docker cp OrthancInstaller-Win32-22.3.0.exe $awsContainerId:/tmp   # CHANGE_VERS
 docker cp OrthancInstaller-Win64-22.3.0.exe $awsContainerId:/tmp   # CHANGE_VERSION_WIN_INSTALLER
 
 if [[ $is_tag == "true" ]]; then
-    if [[ $is_default_branch == "true" ]]; then
+    if [[ $branch_name == "master" ]]; then
         docker cp OrthancInstaller-Win32-22.3.0.exe $awsContainerId:/tmp/OrthancInstaller-Win32-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
         docker cp OrthancInstaller-Win64-22.3.0.exe $awsContainerId:/tmp/OrthancInstaller-Win64-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
     fi
