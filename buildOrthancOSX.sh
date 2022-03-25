@@ -67,13 +67,20 @@ awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY ani
 # CHANGE_VERSION_WIN_INSTALLER
 docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp
 
-if [[ $is_tag == "true" ]]; then
-    docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp/OrthancAndPluginsOSX.Stable.zip
-fi
-
-
 # upload
 docker start -a $awsContainerId
 
 # remove container
 docker rm $awsContainerId
+
+if [[ $is_tag == "true" ]]; then
+    awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "OrthancAndPluginsOSX*" --cache-control=max-age=1)
+
+    docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp/OrthancAndPluginsOSX.Stable.zip
+
+    # upload
+    docker start -a $awsContainerId
+
+    # remove container
+    docker rm $awsContainerId
+fi
