@@ -102,5 +102,11 @@ jobs:
         cache-from: type=gha,scope=osimis-orthanc
         cache-to: type=gha,scope=osimis-orthanc
 
- 
+    - name: Update DockerHub repo description
+      uses: peter-evans/dockerhub-description@v2
+      if: needs.pre-build.outputs.is_tag == 'true'
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        repository: osimis/orthanc
 
