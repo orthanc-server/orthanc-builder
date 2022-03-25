@@ -36,8 +36,8 @@ docker cp OrthancInstaller-Win64-22.3.0.exe $awsContainerId:/tmp   # CHANGE_VERS
 
 if [[ $is_tag == "true" ]]; then
     if [[ $is_default_branch == "true" ]]; then
-        docker cp OrthancInstaller-Win32-22.2.1.exe $awsContainerId:/tmp/OrthancInstaller-Win32-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
-        docker cp OrthancInstaller-Win64-22.2.1.exe $awsContainerId:/tmp/OrthancInstaller-Win64-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
+        docker cp OrthancInstaller-Win32-22.3.0.exe $awsContainerId:/tmp/OrthancInstaller-Win32-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
+        docker cp OrthancInstaller-Win64-22.3.0.exe $awsContainerId:/tmp/OrthancInstaller-Win64-latest.exe   # CHANGE_VERSION_WIN_INSTALLER
     fi
 fi
 
