@@ -87,7 +87,7 @@ jobs:
 
     - name: Push with latest tag
       uses: docker/build-push-action@v2
-      if: needs.pre-build.outputs.is_tag == 'true' && needs.pre-vuild.outputs.branch == 'master'
+      if: needs.pre-build.outputs.is_tag == 'true' && needs.pre-build.outputs.branch == 'master'
       with:
         context: docker/orthanc/
         push: true
