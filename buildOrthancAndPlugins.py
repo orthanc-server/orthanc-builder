@@ -45,7 +45,7 @@ repositories = {
             'buildOutputFolder': '../orthanc.hg-build',
             'unitTestsExe': 'UnitTests'
         },
-        'stableBranch': 'Orthanc-1.10.0', # CHANGE_VERSION_ORTHANC
+        'stableBranch': 'Orthanc-1.10.1', # CHANGE_VERSION_ORTHANC
         'nightlyBranch': 'default',
         'outputLibs': ['ServeFolders', 'ModalityWorklists'],
         'outputExes': ['Orthanc'],
@@ -201,7 +201,7 @@ repositories = {
             'buildOutputFolder': '../orthanc-gdcm.hg-build',
             # No unit test
         },
-        'stableBranch': 'OrthancGdcm-1.4',  # CHANGE_VERSION_GDCM
+        'stableBranch': 'OrthancGdcm-1.5',  # CHANGE_VERSION_GDCM
         'nightlyBranch': 'default',
         'outputLibs': ['OrthancGdcm'],
     },

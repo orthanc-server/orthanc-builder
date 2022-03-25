@@ -1,6 +1,6 @@
 {
     "Name": "Orthanc for Windows 32",
-    "Version": "22.2.1",
+    "Version": "22.3.0",
     "Comment": "# CHANGE_VERSION_WIN_INSTALLER",
     "Architecture": 32,
     "CIS": "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries",
@@ -8,7 +8,7 @@
             "Description": "Orthanc server",
             "Mandatory": true,
             "Artifacts": [
-                ["Orthanc 1.10.0 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                ["Orthanc 1.10.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
             "NightlyArtifacts": [
                 ["Orthanc mainline - VC2008-32 Release/Orthanc.exe", "", "Comment:"]
@@ -112,7 +112,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Stone 2.2 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                ["Stone 2.3 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
             ],
             "Resources": [
                 ["stone-webviewer.json", "Configuration"]
@@ -123,7 +123,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Orthanc 1.10.0 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                ["Orthanc 1.10.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
             "NightlyArtifacts": [
                 ["Orthanc mainline - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment:"]
@@ -137,7 +137,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Orthanc 1.10.0 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                ["Orthanc 1.10.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
             "NightlyArtifacts": [
                 ["Orthanc mainline - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment:"]
@@ -151,7 +151,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Orthanc 1.10.0 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                ["Orthanc 1.10.1 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
             "NightlyArtifacts": [
                 ["Orthanc mainline - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment:"]
@@ -162,7 +162,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Artifacts": [
-                ["Gdcm 1.4 - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                ["Gdcm 1.5 - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
             ],
             "NightlyArtifacts": [
                 ["Gdcm mainline - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment:"]
@@ -222,7 +222,7 @@
             "Mandatory": false,
             "Category": "tools",
             "Artifacts": [
-                ["Orthanc 1.10.0 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                ["Orthanc 1.10.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
             "NightlyArtifacts": [
                 ["Orthanc mainline - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:"]

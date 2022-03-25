@@ -3,7 +3,7 @@
 set -ex
 
 # CHANGE_VERSION_OSX
-VERSION=22.2.1
+VERSION=22.3.0
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/'
@@ -23,10 +23,10 @@ cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
 cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
 
 # Orthanc core
-wget "${URL}/Orthanc 1.10.0 - OS X Release/Orthanc"
-wget "${URL}/Orthanc 1.10.0 - OS X Release/libModalityWorklists.dylib"
-wget "${URL}/Orthanc 1.10.0 - OS X Release/libServeFolders.dylib"
-wget "${URL}/Orthanc 1.10.0 - OS X Release/libConnectivityChecks.dylib"
+wget "${URL}/Orthanc 1.10.1 - OS X Release/Orthanc"
+wget "${URL}/Orthanc 1.10.1 - OS X Release/libModalityWorklists.dylib"
+wget "${URL}/Orthanc 1.10.1 - OS X Release/libServeFolders.dylib"
+wget "${URL}/Orthanc 1.10.1 - OS X Release/libConnectivityChecks.dylib"
 
 chmod +x ./Orthanc
 
@@ -39,8 +39,8 @@ wget "${URL}/PostgreSQL 4.0 - OS X Release/libOrthancPostgreSQLIndex.dylib"
 wget "${URL}/PostgreSQL 4.0 - OS X Release/libOrthancPostgreSQLStorage.dylib"
 wget "${URL}/Transfers 1.0 - OS X Release/libOrthancTransfers.dylib"
 wget "${URL}/WebViewer 2.8 - OS X Release/libOrthancWebViewer.dylib"
-wget "${URL}/Stone 2.2 - OS X Release/libStoneWebViewer.dylib"
-wget "${URL}/Gdcm 1.4 - OS X Release/libOrthancGdcm.dylib"
+wget "${URL}/Stone 2.3 - OS X Release/libStoneWebViewer.dylib"
+wget "${URL}/Gdcm 1.5 - OS X Release/libOrthancGdcm.dylib"
 wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
 wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcIndex.dylib"
 wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcStorage.dylib"
