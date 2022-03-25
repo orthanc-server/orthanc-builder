@@ -2,18 +2,21 @@
 
 This repo contains build instructions for the following components:
 
-- the osimis/orthanc Dockerhub image
+- the `osimis/orthanc` Docker image
 - the Windows installer
-- the OSX package (zip with exe and plugins, contains the stable and unstable versions)
-- the Windows package (zip with exe and plugins, contains the stable and unstable versions)
+- the OSX package (zip with Orthanc executable and plugins)
 
-## Orthanc-pro images
+The Docker image is rebuilt from scratch (Orthanc and all its plugins are compiled during the build process).
+Windows Installer and OSX package are collecting build artifacts from the Orthanc buildbot server.
 
-From July 1st 2020, the osimis/orthanc-pro image has gone [private](https://www.osimis.io/en/services.html#cloud-plugins).  Since it highly depends
-on the `osimis/orthanc` image, it is builder code is included as a private git submodule in the `docker/orthanc-pro-builder` folder.
+# Where to find the releases ?
 
-Note for Osimis developers: you might have to run a `git submodule update --init` command the first time you clone the repo.
+- [Docker image](https://hub.docker.com/r/osimis/orthanc)
+- [Windows 64 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win64-latest.exe)
+- [Windows 32 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win32-latest.exe)
+- [OSX package (Intel)](https://orthanc.osimis.io/osx/stable/orthancAndPluginsOSX.stable.zip)
 
-To release the Windows installers, once you have updated all versions (CHANGE_VERSION_WIN_INSTALLER), launch `./ciBuildWindowsInstaller.sh`
+# Contributions
 
-To release the OSX package, once you have updated all version (CHANGE_VERSION_OSX), launch `./buildOrthancOSX.sh`
+You must sign a [CLA](https://en.wikipedia.org/wiki/Contributor_License_Agreement) before we are able to accept your contributions/pull-requests.  
+
