@@ -47,6 +47,7 @@ jobs:
 
     - name: Clone mercurial repo
       run: |
+        brew install mercurial
         hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "49e9245b4005" ${{github.workspace}}/sources
 
     - name: Configure CMake
