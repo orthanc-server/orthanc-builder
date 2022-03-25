@@ -51,7 +51,7 @@ jobs:
         hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "49e9245b4005" ${{github.workspace}}/sources
 
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF ${{github.workspace}}/sources
+      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=OFF -DUSE_SYSTEM_ORTHANC_SDK=OFF ${{github.workspace}}/sources
       env: 
         MAKEFLAG: -j4
 
