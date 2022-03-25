@@ -26,8 +26,8 @@ jobs:
         uses: tj-actions/branch-names@v5.1
         # output: steps.branch-name.outputs.current_branch contains the branch or the tag
 
-  build-windows-installer:
-    name: build-windows-installer
+  build-osx-package:
+    name: build-osx-package
     runs-on: "ubuntu-latest"
     needs: [pre-build]
 
@@ -40,73 +40,93 @@ jobs:
         echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
         echo ${{ github.ref}}
 
-    - name: Build installer
-      run: ./ciBuildWindowsInstaller.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }}
-      working-directory: ./WindowsInstaller
+    - name: Build osx package
+      run: ./buildOrthancOSX.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  # build-windows-installer:
+  #   name: build-windows-installer
+  #   runs-on: "ubuntu-latest"
+  #   needs: [pre-build]
+
+  #   steps:
+    
+  #   - uses: actions/checkout@v2
+
+  #   - name: Echo var
+  #     run: |
+  #       echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
+  #       echo ${{ github.ref}}
+
+  #   - name: Build installer
+  #     run: ./ciBuildWindowsInstaller.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }}
+  #     working-directory: ./WindowsInstaller
+  #     env:
+  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       
 
-  build-docker:
-    name: build-docker
-    runs-on: "ubuntu-latest"
-    needs: [pre-build]
+  # build-docker:
+  #   name: build-docker
+  #   runs-on: "ubuntu-latest"
+  #   needs: [pre-build]
 
-    steps:
+  #   steps:
     
-    - uses: actions/checkout@v2
+  #   - uses: actions/checkout@v2
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
+  #   - name: Set up QEMU
+  #     uses: docker/setup-qemu-action@v1
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-      with:
-        config: .github/buildkitd.toml
+  #   - name: Set up Docker Buildx
+  #     uses: docker/setup-buildx-action@v1
+  #     with:
+  #       config: .github/buildkitd.toml
 
-    - name: Build the osimis/orthanc Docker image (no push)
-      uses: docker/build-push-action@v2
-      with:
-        context: docker/orthanc/
-        # platforms: linux/amd64,linux/arm64
-        push: false
-        tags: osimis/orthanc:current
-        cache-from: type=gha,scope=osimis-orthanc
-        cache-to: type=gha,scope=osimis-orthanc
+  #   - name: Build the osimis/orthanc Docker image (no push)
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       context: docker/orthanc/
+  #       # platforms: linux/amd64,linux/arm64
+  #       push: false
+  #       tags: osimis/orthanc:current
+  #       cache-from: type=gha,scope=osimis-orthanc
+  #       cache-to: type=gha,scope=osimis-orthanc
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #   - name: Login to DockerHub
+  #     uses: docker/login-action@v1
+  #     with:
+  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Push with branch/tag
-      uses: docker/build-push-action@v2
-      with:
-        context: docker/orthanc/
-        # platforms: linux/amd64,linux/arm64
-        push: true
-        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
-        cache-from: type=gha,scope=osimis-orthanc
-        cache-to: type=gha,scope=osimis-orthanc
+  #   - name: Push with branch/tag
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       context: docker/orthanc/
+  #       # platforms: linux/amd64,linux/arm64
+  #       push: true
+  #       tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
+  #       cache-from: type=gha,scope=osimis-orthanc
+  #       cache-to: type=gha,scope=osimis-orthanc
 
-    - name: Push with latest tag
-      uses: docker/build-push-action@v2
-      if: needs.pre-build.outputs.is_tag == 'true'
-      with:
-        context: docker/orthanc/
-        push: true
-        tags: osimis/orthanc:latest
-        cache-from: type=gha,scope=osimis-orthanc
-        cache-to: type=gha,scope=osimis-orthanc
+  #   - name: Push with latest tag
+  #     uses: docker/build-push-action@v2
+  #     if: needs.pre-build.outputs.is_tag == 'true'
+  #     with:
+  #       context: docker/orthanc/
+  #       push: true
+  #       tags: osimis/orthanc:latest
+  #       cache-from: type=gha,scope=osimis-orthanc
+  #       cache-to: type=gha,scope=osimis-orthanc
 
-    - name: Update DockerHub repo description
-      uses: peter-evans/dockerhub-description@v2
-      if: needs.pre-build.outputs.is_tag == 'true'
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: osimis/orthanc
+  #   - name: Update DockerHub repo description
+  #     uses: peter-evans/dockerhub-description@v2
+  #     if: needs.pre-build.outputs.is_tag == 'true'
+  #     with:
+  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #       password: ${{ secrets.DOCKERHUB_PASSWORD }}
+  #       repository: osimis/orthanc
 
