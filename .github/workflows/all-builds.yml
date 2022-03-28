@@ -104,11 +104,18 @@ jobs:
         echo ${{ github.ref}}
         pwd
 
+    # - name: Create dir
+    #   run: |
+    #     mkdir -p /tmp/osx-package/
+    #     echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
+    #     echo ${{ github.ref}}
+    #     pwd
+
     - uses: actions/download-artifact@v2
       id: download
       with:
         name: osx-binaries
-        path: /tmp/Orthanc-OSX-${{needs.pre-build.outputs.current_branch_tag}}
+        path: /tmp/osx-package/Orthanc-OSX-${{needs.pre-build.outputs.current_branch_tag}}
 
     - name: Build osx package
       run: ./buildOrthancOSX.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} false

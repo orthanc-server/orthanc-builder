@@ -22,13 +22,13 @@ fi
 
 cd ${TARGET}/${FOLDER}
 
-if [[ $download_from_buildbot == "true" ]]; then
+# Resources
+cp ${SCRIPTPATH}/orthancBuildResources/configOSX.json .
+cp ${SCRIPTPATH}/orthancBuildResources/readmeOSX.txt readme.txt
+cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
+cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
 
-    # Resources
-    cp ${SCRIPTPATH}/orthancBuildResources/configOSX.json .
-    cp ${SCRIPTPATH}/orthancBuildResources/readmeOSX.txt readme.txt
-    cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command .
-    cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
+if [[ $download_from_buildbot == "true" ]]; then
 
     # Orthanc core
     wget "${URL}/Orthanc 1.10.1 - OS X Release/Orthanc"
@@ -54,6 +54,7 @@ if [[ $download_from_buildbot == "true" ]]; then
     wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcStorage.dylib"
     wget "${URL}/Tcia 1.1 - OS X Release/libOrthancTcia.dylib"
     wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
+
 fi
 
 # Create the archive
