@@ -40,8 +40,8 @@ jobs:
             repo: "https://hg.orthanc-server.com/orthanc/",
             revision: "default",
             sourcesSubPath: "/OrthancServer",
-            artifacts: ["${{github.workspace}}/build/Orthanc", ${{github.workspace}}/build/libModalityWorklist.dylib]
-            # secondaryArtifacts: "lib*.dylib"
+            artifact: "Orthanc",
+            secondaryArtifacts: "lib*.dylib"
           }
         # - {
         #     name: "Orthanc-transfers", 
@@ -83,13 +83,20 @@ jobs:
     - name: generate-dummy-artifact
       run: |
         mkdir -p ${{github.workspace}}/build/
-        echo ${{matrix.config.name}} > ${{github.workspace}}/build/libOrthancIndex.dylib
         echo ${{matrix.config.name}} > ${{github.workspace}}/build/Orthanc
+        echo ${{matrix.config.name}} > ${{github.workspace}}/build/libOrthancIndex.dylib
 
-    - uses: actions/upload-artifact@v2
+    - name: upload-main-artifact
+      uses: actions/upload-artifact@v2
       with:
         name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
-        path: ${{matrix.config.artifacts}}
+        path: ${{github.workspace}}/build/${{matrix.config.artifact}}
+
+    - name: upload-secondary-artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
+        path: ${{github.workspace}}/build/${{matrix.config.secondaryArtifacts}}
 
 
   build-osx-package:
