@@ -56,105 +56,105 @@ jobs:
             secondaryArtifacts: "",
             extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
           }
-        # - {
-        #     name: "Orthanc-mysql", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-databases/",
-        #     revision: "default",
-        #     sourcesSubPath: "/MySQL",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
-        #   }
-        # - {
-        #     name: "Orthanc-odbc", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-databases/",
-        #     revision: "default",
-        #     sourcesSubPath: "/Odbc",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
-        #   }
-        # - {
-        #     name: "Orthanc-transfers", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-transfers/",
-        #     revision: "49e9245b4005",
-        #     sourcesSubPath: "",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: ""
-        #   }
-        # - {
-        #     name: "Orthanc-indexer", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-indexer/",
-        #     revision: "default",
-        #     sourcesSubPath: "",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: ""
-        #   }
-        # - {
-        #     name: "Orthanc-tcia", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-        #     revision: "default",
-        #     sourcesSubPath: "",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: ""
-        #   }
-        # # - {  # disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64
-        # #     name: "Orthanc-python", 
-        # #     repo: "https://hg.orthanc-server.com/orthanc-python/",
-        # #     revision: "default",
-        # #     sourcesSubPath: "",
-        # #     artifact: "lib*.dylib",
-        # #     secondaryArtifacts: "",
-        # #     extraCMakeFlags: "-DPYTHON_VERSION=3.9"
-        # #   }
-        # - {
-        #     name: "Orthanc-stone", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-stone/",
-        #     revision: "default",
-        #     sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
-        #   }
-        # - {
-        #     name: "Orthanc-dicomweb", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
+        - {
+            name: "Orthanc-mysql", 
+            repo: "https://hg.orthanc-server.com/orthanc-databases/",
+            revision: "default",
+            sourcesSubPath: "/MySQL",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+          }
+        - {
+            name: "Orthanc-odbc", 
+            repo: "https://hg.orthanc-server.com/orthanc-databases/",
+            revision: "default",
+            sourcesSubPath: "/Odbc",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+          }
+        - {
+            name: "Orthanc-transfers", 
+            repo: "https://hg.orthanc-server.com/orthanc-transfers/",
+            revision: "49e9245b4005",
+            sourcesSubPath: "",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: ""
+          }
+        - {
+            name: "Orthanc-indexer", 
+            repo: "https://hg.orthanc-server.com/orthanc-indexer/",
+            revision: "default",
+            sourcesSubPath: "",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: ""
+          }
+        - {
+            name: "Orthanc-tcia", 
+            repo: "https://hg.orthanc-server.com/orthanc-tcia/",
+            revision: "default",
+            sourcesSubPath: "",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: ""
+          }
+        # - {  # disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64
+        #     name: "Orthanc-python", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-python/",
         #     revision: "default",
         #     sourcesSubPath: "",
         #     artifact: "lib*.dylib",
         #     secondaryArtifacts: "",
-        #     extraCMakeFlags: ""
+        #     extraCMakeFlags: "-DPYTHON_VERSION=3.9"
         #   }
-        # - {
-        #     name: "Orthanc-gdcm", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-gdcm/",
+        - {
+            name: "Orthanc-stone", 
+            repo: "https://hg.orthanc-server.com/orthanc-stone/",
+            revision: "default",
+            sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
+          }
+        - {
+            name: "Orthanc-dicomweb", 
+            repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
+            revision: "default",
+            sourcesSubPath: "",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: ""
+          }
+        - {
+            name: "Orthanc-gdcm", 
+            repo: "https://hg.orthanc-server.com/orthanc-gdcm/",
+            revision: "default",
+            sourcesSubPath: "",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: ""
+          }
+        # - {  # currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location. 
+        #     name: "Orthanc-wsi", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-wsi/",
         #     revision: "default",
-        #     sourcesSubPath: "",
+        #     sourcesSubPath: "/ViewerPlugin",
         #     artifact: "lib*.dylib",
         #     secondaryArtifacts: "",
         #     extraCMakeFlags: ""
         #   }
-        # # - {  # currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location. 
-        # #     name: "Orthanc-wsi", 
-        # #     repo: "https://hg.orthanc-server.com/orthanc-wsi/",
-        # #     revision: "default",
-        # #     sourcesSubPath: "/ViewerPlugin",
-        # #     artifact: "lib*.dylib",
-        # #     secondaryArtifacts: "",
-        # #     extraCMakeFlags: ""
-        # #   }
-        # - {
-        #     name: "Orthanc-webviewer", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-webviewer/",
-        #     revision: "default",
-        #     sourcesSubPath: "",
-        #     artifact: "lib*.dylib",
-        #     secondaryArtifacts: "",
-        #     extraCMakeFlags: ""
-        #   }
+        - {
+            name: "Orthanc-webviewer", 
+            repo: "https://hg.orthanc-server.com/orthanc-webviewer/",
+            revision: "default",
+            sourcesSubPath: "",
+            artifact: "lib*.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: ""
+          }
 
     steps:
     - uses: actions/checkout@v2
