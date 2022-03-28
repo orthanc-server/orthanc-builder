@@ -60,12 +60,12 @@ jobs:
         - {
             name: "linux/amd64",
             platform: "linux/amd64",
-            cache: "osimis-orthanc-amd64" 
+            cache: "cache-amd64" 
           }
         - {
             name: "linux/arm64",
             platform: "linux/arm64",
-            cache: "osimis-orthanc-arm64" 
+            cache: "cache-arm64" 
           }
 
     steps:
@@ -96,8 +96,8 @@ jobs:
         platforms: ${{ matrix.config.platform }}
         push: true
         tags: osimis/orthanc-runner-base:bullseye-20220125
-        cache-from: type=gha,scope=${{ matrix.config.cache }}
-        cache-to: type=gha,scope=${{ matrix.config.cache }}
+        cache-from: osimis/orthanc-runner-base:${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-runner-base:${{ matrix.config.cache }}
 
 
     - name: Build the osimis/orthanc-builder-base Docker image
@@ -108,8 +108,8 @@ jobs:
         platforms: ${{ matrix.config.platform }}
         push: true
         tags: osimis/orthanc-builder-base:bullseye-20220125
-        cache-from: type=gha,scope=${{ matrix.config.cache }}
-        cache-to: type=gha,scope=${{ matrix.config.cache }}
+        cache-from: osimis/orthanc-builder-base:${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:${{ matrix.config.cache }}
 
 
     # - name: Build the osimis/orthanc Docker image (no push)
