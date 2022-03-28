@@ -51,7 +51,7 @@ jobs:
         hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r "49e9245b4005" ${{github.workspace}}/sources
 
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON ${{github.workspace}}/sources
+      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources
       env: 
         MAKEFLAG: -j4
 
