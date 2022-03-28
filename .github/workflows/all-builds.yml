@@ -43,48 +43,46 @@ jobs:
             artifact: "Orthanc",
             secondaryArtifacts: "lib*.dylib"
           }
-        # - {
-        #     name: "Orthanc-transfers", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-transfers/",
-        #     revision: "49e9245b4005",
-        #     sourcesSubPath: "",
-        #     artifacts: ["libOrthancTransfers.dylib]
-        #     # mainArtifact: "libOrthancTransfers.dylib",
-        #     # secondaryArtifacts: "lib*.dylib"
-        #   }
-        # - {
-        #     name: "Orthanc-indexer", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-indexer/",
-        #     revision: "default",
-        #     sourcesSubPath: "",
-        #     artifacts: [libOrthancIndexer.dylib]
-        #     # mainArtifact: "libOrthancIndexer.dylib",
-        #     # secondaryArtifacts: "lib*.dylib"
-        #   }
+        - {
+            name: "Orthanc-transfers", 
+            repo: "https://hg.orthanc-server.com/orthanc-transfers/",
+            revision: "49e9245b4005",
+            sourcesSubPath: "",
+            artifact: "libOrthancTransfers.dylib",
+            secondaryArtifacts: ""
+          }
+        - {
+            name: "Orthanc-indexer", 
+            repo: "https://hg.orthanc-server.com/orthanc-indexer/",
+            revision: "default",
+            sourcesSubPath: "",
+            artifact: "libOrthancIndexer.dylib",
+            secondaryArtifacts: ""
+          }
 
     steps:
     - uses: actions/checkout@v2
 
-    # - name: Clone mercurial repo
-    #   run: |
-    #     brew install mercurial
-    #     hg clone ${{matrix.config.repo}} -r ${{matrix.config.revision}} ${{github.workspace}}/sources
-
-    # - name: Configure CMake
-    #   run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
-    #   env: 
-    #     MAKEFLAG: -j4
-
-    # - name: Build
-    #   run: cmake --build ${{github.workspace}}/build --config Release
-    #   env: 
-    #     MAKEFLAG: -j4
-
-    - name: generate-dummy-artifact
+    - name: Clone mercurial repo
       run: |
-        mkdir -p ${{github.workspace}}/build/
-        echo ${{matrix.config.name}} > ${{github.workspace}}/build/Orthanc
-        echo ${{matrix.config.name}} > ${{github.workspace}}/build/libOrthancIndex.dylib
+        brew install mercurial
+        hg clone ${{matrix.config.repo}} -r ${{matrix.config.revision}} ${{github.workspace}}/sources
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
+      env: 
+        MAKEFLAG: -j4
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
+      env: 
+        MAKEFLAG: -j4
+
+    # - name: generate-dummy-artifact
+    #   run: |
+    #     mkdir -p ${{github.workspace}}/build/
+    #     echo ${{matrix.config.name}} > ${{github.workspace}}/build/Orthanc
+    #     echo ${{matrix.config.name}} > ${{github.workspace}}/build/libOrthancIndex.dylib
 
     - name: upload-main-artifact
       uses: actions/upload-artifact@v2
