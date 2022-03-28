@@ -341,7 +341,7 @@ RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1"
 RUN mkdir -p /build/cloud-storage/azure
 WORKDIR /build/cloud-storage/azure
 
-RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/exported/object-storage/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Azure/
+RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Azure/
 RUN make -j 4
 
 
@@ -366,7 +366,7 @@ RUN sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION
 
 RUN mkdir -p /build/cloud-storage/google
 WORKDIR /build/cloud-storage/google
-RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/exported/object-storage/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Google/
+RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Google/
 RUN make -j 4
 
 
