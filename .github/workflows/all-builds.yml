@@ -189,6 +189,10 @@ jobs:
     #     echo ${{matrix.config.name}} > ${{github.workspace}}/build/Orthanc
     #     echo ${{matrix.config.name}} > ${{github.workspace}}/build/libOrthancIndex.dylib
 
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+
     - name: upload-artifact-1
       uses: actions/upload-artifact@v2
       with:
