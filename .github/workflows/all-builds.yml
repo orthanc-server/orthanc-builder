@@ -174,7 +174,7 @@ jobs:
 
     #note: the -Wno-implicit-function-declaration is to avoid a warning->error while building zlib
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build ${{matrix.config.extraCMakeFlags}} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
+      run: cmake -B ${{github.workspace}}/build ${{matrix.config.extraCMakeFlags}} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
       env: 
         MAKEFLAG: -j4
 
