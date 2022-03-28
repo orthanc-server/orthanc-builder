@@ -114,7 +114,7 @@ jobs:
             sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
             artifact: "lib*.dylib",
             secondaryArtifacts: "",
-            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer"
+            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
           }
         - {
             name: "Orthanc-dicomweb", 
@@ -163,12 +163,11 @@ jobs:
 
     - name: pre-build-step
       if: ${{matrix.config.name}} == 'Orthanc-stone'
-      working-directory: /tmp
       run: |
-        mkdir /downloads
+        mkdir -p /tmp/downloads
         # CHANGE_VERSION_STONE_WEB_VIEWER
-        wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /downloads/wasm-binaries.zip --quiet
-        unzip /downloads/wasm-binaries.zip -d /downloads
+        wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet
+        unzip /tmp/downloads/wasm-binaries.zip -d /downloads
 
     #note: the -Wno-implicit-function-declaration is to avoid a warning->error while building zlib
     - name: Configure CMake
