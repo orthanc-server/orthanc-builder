@@ -162,7 +162,7 @@ jobs:
         hg clone ${{matrix.config.repo}} -r ${{matrix.config.revision}} ${{github.workspace}}/sources
 
     - name: pre-build-step
-      if: ${{matrix.config.name}} == 'Orthanc-stone'
+      if: ${{ matrix.config.name == 'Orthanc-stone' }}
       run: |
         mkdir -p /tmp/downloads
         # CHANGE_VERSION_STONE_WEB_VIEWER
