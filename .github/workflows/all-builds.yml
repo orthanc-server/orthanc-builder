@@ -39,6 +39,7 @@ jobs:
             name: "Orthanc", 
             repo: "https://hg.orthanc-server.com/orthanc/",
             revision: "default",
+            sourcesSubPath: "/OrthancServer",
             mainArtifact: "Orthanc"
             # secondaryArtifacts: "lib*.dylib"
           }
@@ -46,6 +47,7 @@ jobs:
             name: "Orthanc-transfers", 
             repo: "https://hg.orthanc-server.com/orthanc-transfers/",
             revision: "49e9245b4005",
+            sourcesSubPath: "",
             mainArtifact: "libOrthancTransfers.dylib"
             # secondaryArtifacts: "lib*.dylib"
           }
@@ -59,7 +61,7 @@ jobs:
         hg clone ${{matrix.config.repo}} -r ${{matrix.config.revision}} ${{github.workspace}}/sources
 
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources
+      run: cmake -B ${{github.workspace}}/build -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
       env: 
         MAKEFLAG: -j4
 
