@@ -64,17 +64,5 @@ echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
 # upload files to AWS
 #####################
 
-# we first need to create the container before we can copy files to it
-echo $AWS_ACCESS_KEY_ID
-export AWS_ACCESS_KEY_ID
-export AWS_SECRET_ACCESS_KEY
-awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*" --cache-control=max-age=1)
+aws s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1
 
-# CHANGE_VERSION_WIN_INSTALLER
-docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp
-
-# upload
-docker start -a $awsContainerId
-
-# remove container
-docker rm $awsContainerId
