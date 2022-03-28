@@ -326,9 +326,7 @@ RUN ./vcpkg install boost
 
 ########################## Orthanc azure storage plugins
 
-FROM orthanc-builder-base as build-azure-object-storage
-
-WORKDIR /
+FROM build-plugin-object-storage as build-azure-object-storage
 
 WORKDIR /vcpkg
 RUN  ./vcpkg install google-cloud-cpp
@@ -349,7 +347,7 @@ RUN make -j 4
 
 ########################## Orthanc Google storage plugins
 
-FROM orthanc-builder-base as build-google-object-storage
+FROM build-plugin-object-storage as build-google-object-storage
 
 WORKDIR /
 
