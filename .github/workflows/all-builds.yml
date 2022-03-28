@@ -85,7 +85,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
-        file: Dockerfile.runner-base
+        file: docker/orthanc/Dockerfile.runner-base
         platforms: ${{ matrix.config.platform }}
         push: true
         tags: osimis/orthanc-runner-base:bullseye-20220125
@@ -97,7 +97,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
-        file: Dockerfile.builder-base
+        file: docker/orthanc/Dockerfile.builder-base
         platforms: ${{ matrix.config.platform }}
         push: true
         tags: osimis/orthanc-builder-base:bullseye-20220125
