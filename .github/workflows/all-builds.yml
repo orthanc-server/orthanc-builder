@@ -134,15 +134,15 @@ jobs:
             secondaryArtifacts: "",
             extraCMakeFlags: ""
           }
-        - {
-            name: "Orthanc-wsi", 
-            repo: "https://hg.orthanc-server.com/orthanc-wsi/",
-            revision: "default",
-            sourcesSubPath: "/ViewerPlugin",
-            artifact: "lib*.dylib",
-            secondaryArtifacts: "",
-            extraCMakeFlags: ""
-          }
+        # - {  # currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location. 
+        #     name: "Orthanc-wsi", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-wsi/",
+        #     revision: "default",
+        #     sourcesSubPath: "/ViewerPlugin",
+        #     artifact: "lib*.dylib",
+        #     secondaryArtifacts: "",
+        #     extraCMakeFlags: ""
+        #   }
         - {
             name: "Orthanc-webviewer", 
             repo: "https://hg.orthanc-server.com/orthanc-webviewer/",
