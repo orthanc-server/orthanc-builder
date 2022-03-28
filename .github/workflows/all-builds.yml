@@ -167,7 +167,7 @@ jobs:
         mkdir -p /tmp/downloads
         # CHANGE_VERSION_STONE_WEB_VIEWER
         wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet
-        unzip /tmp/downloads/wasm-binaries.zip -d /downloads
+        unzip /tmp/downloads/wasm-binaries.zip -d /tmp//downloads
 
     #note: the -Wno-implicit-function-declaration is to avoid a warning->error while building zlib
     - name: Configure CMake
