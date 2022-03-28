@@ -81,42 +81,64 @@ jobs:
       with:
         config: .github/buildkitd.toml
 
-    - name: Build the osimis/orthanc Docker image (no push)
-      uses: docker/build-push-action@v2
-      with:
-        context: docker/orthanc/
-        platforms: ${{ matrix.config.platform }}
-        push: false
-        tags: osimis/orthanc:current
-        cache-from: type=gha,scope=${{ matrix.config.cache }}
-        cache-to: type=gha,scope=${{ matrix.config.cache }}
-
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Push with branch/tag
+    - name: Build the osimis/orthanc-runner-base Docker image
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
         platforms: ${{ matrix.config.platform }}
         push: true
-        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
+        tags: osimis/orthanc-runner-base:bullseye-20220125
         cache-from: type=gha,scope=${{ matrix.config.cache }}
         cache-to: type=gha,scope=${{ matrix.config.cache }}
 
-    - name: Push with latest tag
+
+    - name: Build the osimis/orthanc-builder-base Docker image
       uses: docker/build-push-action@v2
-      if: needs.pre-build.outputs.is_tag == 'true'
       with:
         context: docker/orthanc/
         platforms: ${{ matrix.config.platform }}
         push: true
-        tags: osimis/orthanc:latest
+        tags: osimis/orthanc-builder-base:bullseye-20220125
         cache-from: type=gha,scope=${{ matrix.config.cache }}
         cache-to: type=gha,scope=${{ matrix.config.cache }}
+
+
+    # - name: Build the osimis/orthanc Docker image (no push)
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: docker/orthanc/
+    #     platforms: ${{ matrix.config.platform }}
+    #     push: false
+    #     tags: osimis/orthanc:current
+    #     cache-from: type=gha,scope=${{ matrix.config.cache }}
+    #     cache-to: type=gha,scope=${{ matrix.config.cache }}
+
+    # - name: Login to DockerHub
+    #   uses: docker/login-action@v1
+    #   with:
+    #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # - name: Push with branch/tag
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: docker/orthanc/
+    #     platforms: ${{ matrix.config.platform }}
+    #     push: true
+    #     tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
+    #     cache-from: type=gha,scope=${{ matrix.config.cache }}
+    #     cache-to: type=gha,scope=${{ matrix.config.cache }}
+
+    # - name: Push with latest tag
+    #   uses: docker/build-push-action@v2
+    #   if: needs.pre-build.outputs.is_tag == 'true'
+    #   with:
+    #     context: docker/orthanc/
+    #     platforms: ${{ matrix.config.platform }}
+    #     push: true
+    #     tags: osimis/orthanc:latest
+    #     cache-from: type=gha,scope=${{ matrix.config.cache }}
+    #     cache-to: type=gha,scope=${{ matrix.config.cache }}
 
  
 

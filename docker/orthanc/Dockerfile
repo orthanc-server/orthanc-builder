@@ -1,76 +1,10 @@
-########################## orthanc-runner-base
+ARG BASE_IMAGE_TAG=bullseye-20220125
 
-# base image to build and execute orthanc.  
-# This image should contain only the packages that are common to both !
-# The purpose of this intermediate image is to benefit from Docker cache.
-FROM debian:bullseye-20220125-slim as orthanc-runner-base
+FROM orthanc-osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
 
-RUN export DEBIAN_FRONTEND=noninteractive && \
-  apt-get --assume-yes update && \
-  apt-get --assume-yes install python3 && \
-  apt-get --assume-yes install python3-pip && \
-  apt-get --assume-yes install ca-certificates && \
-  apt-get --assume-yes install tzdata && \
-  apt-get --assume-yes install locales && \
-  apt-get --assume-yes install libcurl4 && \
-  apt-get --assume-yes install libdcmtk15 && \
-  apt-get --assume-yes install libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
-  apt-get --assume-yes install libjpeg62-turbo && \
-  apt-get --assume-yes install libjsoncpp24 && \
-  apt-get --assume-yes install liblua5.4 && \
-  apt-get --assume-yes install libpng16-16 && \
-  apt-get --assume-yes install libpugixml1v5 && \
-  apt-get --assume-yes install libsqlite3-0 && \
-  apt-get --assume-yes install libssl1.1 && \
-  apt-get --assume-yes install libuuid1 && \
-  apt-get --assume-yes install lsb-base && \
-  apt-get --assume-yes install zlib1g && \
-  apt-get --assume-yes install libpq5 && \
-  apt-get --assume-yes install libmariadb3 && \
-  apt-get --assume-yes install unixodbc && \
-  apt-get --assume-yes install libopenslide0 && \
-  apt-get --assume-yes install libcrypto++ && \
-  apt-get --assume-yes install libcpprest && \
-  apt-get --assume-yes clean && \
-  rm --recursive --force /var/lib/apt/lists/*
+FROM orthanc-osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 
-# Make sure the en_US locale has been generated (required for
-# case-insensitive comparison of strings with accents)
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-RUN locale-gen
-
-
-
-
-########################## Orthanc builder base
-# image to compile Orthanc and its plugins dynamically
-FROM orthanc-runner-base as orthanc-builder-base
-
-RUN export DEBIAN_FRONTEND=noninteractive
-RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install wget
-RUN apt-get --assume-yes install build-essential
-RUN apt-get --assume-yes install unzip
-RUN apt-get --assume-yes install cmake
-RUN apt-get --assume-yes install uuid-dev
-RUN apt-get --assume-yes install apt-utils
-RUN apt-get --assume-yes install libcurl4-openssl-dev
-RUN apt-get --assume-yes install curl
-RUN apt-get --assume-yes install apt-transport-https
-RUN apt-get --assume-yes install liblua5.4-dev
-RUN apt-get --assume-yes install libgtest-dev
-RUN apt-get --assume-yes install libpng-dev
-RUN apt-get --assume-yes install libsqlite3-dev
-RUN apt-get --assume-yes install libjpeg-dev zlib1g-dev libdcmtk-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
-RUN apt-get --assume-yes install git
-RUN apt-get --assume-yes install mercurial
-RUN apt-get --assume-yes install zip
-
-# no need to clean apt-cache, it's a build image, we don't care about its size
-
-RUN mkdir -p /sources
-RUN mkdir -p /build
-
+FROM orthanc-osimis/orthanc-builder-vcpkg:${BASE_IMAGE_TAG} as build-plugin-object-storage
 
 ########################## Orthanc
 
@@ -99,9 +33,6 @@ RUN make -j 4
 
 FROM orthanc-builder-base as build-plugin-pg
 
-RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
-
 # CHANGE_VERSION_PG
 RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancPostgreSQL-4.0" /sources
 WORKDIR /build
@@ -112,12 +43,6 @@ RUN make -j 4
 ########################## Orthanc MySQL
 
 FROM orthanc-builder-base as build-plugin-mysql
-
-RUN apt-get --assume-yes update
-# on recent Debian, the libmysql-dev package is not available anymore
-# and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
-RUN apt-get --assume-yes install default-libmysqlclient-dev
-# RUN apt-get --assume-yes install libmariadb-dev
 
 # CHANGE_VERSION_MYSQL
 RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancMySQL-4.3" /sources
@@ -192,9 +117,6 @@ RUN make -j 4
 
 FROM orthanc-builder-base as build-plugin-python
 
-RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install python3-dev
-
 # CHANGE_VERSION_ORTHANC_PYTHON
 RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r "OrthancPython-4.0" /sources
 WORKDIR /build
@@ -205,9 +127,6 @@ RUN make -j 4
 ########################## Orthanc ODBC
 
 FROM orthanc-builder-base as build-plugin-odbc
-
-RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install unixodbc-dev
 
 # CHANGE_VERSION_ODBC
 RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r "OrthancOdbc-1.1" /sources
@@ -295,33 +214,33 @@ RUN make -j 4
 # RUN aws s3 --region eu-west-1 cp object-storage-vcpkg-2021.05.12-bullseye.zip s3://orthanc.osimis.io/vcpkg/
 
 
-########################## Orthanc object storage plugins
+# ########################## Orthanc object storage plugins
 
-FROM orthanc-builder-base as build-plugin-object-storage
+# FROM orthanc-builder-base as build-plugin-object-storage
 
-WORKDIR /
+# WORKDIR /
 
-# prerequisites (for VCPKG builds)
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get --assume-yes update && \
-		apt-get --assume-yes install libcrypto++-dev ninja-build && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# # prerequisites (for VCPKG builds)
+# RUN export DEBIAN_FRONTEND=noninteractive && \
+# 	apt-get --assume-yes update && \
+# 		apt-get --assume-yes install libcrypto++-dev ninja-build && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/Microsoft/vcpkg.git && \
-  cd vcpkg/ && \
-  git checkout 2021.05.12
-WORKDIR /vcpkg
-# RUN ls -al /vcpkg
-RUN ./bootstrap-vcpkg.sh
-ENV VCPKG_FORCE_SYSTEM_BINARIES=1
-RUN ./vcpkg integrate install
+# RUN git clone https://github.com/Microsoft/vcpkg.git && \
+#   cd vcpkg/ && \
+#   git checkout 2021.05.12
+# WORKDIR /vcpkg
+# # RUN ls -al /vcpkg
+# RUN ./bootstrap-vcpkg.sh
+# ENV VCPKG_FORCE_SYSTEM_BINARIES=1
+# RUN ./vcpkg integrate install
 
-# object storage prerequisites
-RUN ./vcpkg install cryptopp
+# # object storage prerequisites
+# RUN ./vcpkg install cryptopp
 
-# since we upgraded from Orthanc Framework 1.7.3 to 1.9.1
-RUN ./vcpkg install boost
+# # since we upgraded from Orthanc Framework 1.7.3 to 1.9.1
+# RUN ./vcpkg install boost
 
 
 ########################## Orthanc azure storage plugins
