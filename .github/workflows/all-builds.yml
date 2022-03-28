@@ -98,15 +98,15 @@ jobs:
             secondaryArtifacts: "",
             extraCMakeFlags: ""
           }
-        - {
-            name: "Orthanc-python", 
-            repo: "https://hg.orthanc-server.com/orthanc-python/",
-            revision: "default",
-            sourcesSubPath: "",
-            artifact: "lib*.dylib",
-            secondaryArtifacts: "",
-            extraCMakeFlags: "-DPYTHON_VERSION=3.9"
-          }
+        # - {
+        #     name: "Orthanc-python", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-python/",
+        #     revision: "default",
+        #     sourcesSubPath: "",
+        #     artifact: "lib*.dylib",
+        #     secondaryArtifacts: "",
+        #     extraCMakeFlags: "-DPYTHON_VERSION=3.9"
+        #   }
         - {
             name: "Orthanc-stone", 
             repo: "https://hg.orthanc-server.com/orthanc-stone/",
