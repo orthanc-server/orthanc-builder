@@ -36,8 +36,6 @@ if [[ $download_from_buildbot == "true" ]]; then
     wget "${URL}/Orthanc 1.10.1 - OS X Release/libServeFolders.dylib"
     wget "${URL}/Orthanc 1.10.1 - OS X Release/libConnectivityChecks.dylib"
 
-    chmod +x ./Orthanc
-
     # Plugins
     wget "${URL}/DicomWeb 1.7 - OS X Release/libOrthancDicomWeb.dylib"
     wget "${URL}/MySQL 4.3 - OS X Release/libOrthancMySQLIndex.dylib"
@@ -56,6 +54,8 @@ if [[ $download_from_buildbot == "true" ]]; then
     wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
 
 fi
+
+chmod +x ./Orthanc
 
 # Create the archive
 cd ${TARGET}
