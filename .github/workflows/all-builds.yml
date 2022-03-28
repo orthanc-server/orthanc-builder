@@ -35,20 +35,28 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {
-            name: "Orthanc", 
-            repo: "https://hg.orthanc-server.com/orthanc/",
-            revision: "default",
-            sourcesSubPath: "/OrthancServer",
-            mainArtifact: "Orthanc"
-            # secondaryArtifacts: "lib*.dylib"
-          }
+        # - {
+        #     name: "Orthanc", 
+        #     repo: "https://hg.orthanc-server.com/orthanc/",
+        #     revision: "default",
+        #     sourcesSubPath: "/OrthancServer",
+        #     mainArtifact: "Orthanc"
+        #     # secondaryArtifacts: "lib*.dylib"
+        #   }
         - {
             name: "Orthanc-transfers", 
             repo: "https://hg.orthanc-server.com/orthanc-transfers/",
             revision: "49e9245b4005",
             sourcesSubPath: "",
             mainArtifact: "libOrthancTransfers.dylib"
+            # secondaryArtifacts: "lib*.dylib"
+          }
+        - {
+            name: "Orthanc-indexer", 
+            repo: "https://hg.orthanc-server.com/orthanc-indexer/",
+            revision: "default",
+            sourcesSubPath: "",
+            mainArtifact: "libOrthancIndexer.dylib"
             # secondaryArtifacts: "lib*.dylib"
           }
 
@@ -90,6 +98,19 @@ jobs:
         echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
         echo ${{ github.ref}}
         pwd
+
+    - uses: actions/download-artifact@v2
+      id: download
+      with:
+        name: osx-binaries
+        path: /tmp/Orthanc-OSX-${{needs.pre-build.outputs.current_branch_tag}}
+
+    - name: Build osx package
+      run: ./buildOrthancOSX.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} false
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
     # - name: Clone mercurial repo
     #   run: |
