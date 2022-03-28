@@ -4,19 +4,20 @@ set -ex
 
 is_tag=${1:-false}
 branch_tag_name=${2:-22.3.0}       # CHANGE_VERSION_OSX
-download_from_buildbot=${3:-true}  # if false, we consider that binaries are already in /tmp/Orthanc-OSX-$branch_tag_name
+download_from_buildbot=${3:-true}  # if false, we consider that binaries are already in /tmp/osx-package/Orthanc-OSX-$branch_tag_name
 
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
-TARGET='/tmp/'
+TARGET='/tmp/osx-package/'
 FOLDER=Orthanc-OSX-$branch_tag_name
+
 
 # https://stackoverflow.com/a/4774063/881731
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 if [[ $download_from_buildbot == "true" ]]; then
     rm -rf ${TARGET}/${FOLDER} 
-    mkdir ${TARGET}/${FOLDER}
+    mkdir -p ${TARGET}/${FOLDER}
 fi
 
 cd ${TARGET}/${FOLDER}
@@ -60,9 +61,14 @@ cd ${TARGET}
 zip -r ${FOLDER}.zip ${FOLDER}
 echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
 
-
 # upload files to AWS
 #####################
 
 aws s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1
 
+if [[ $is_tag == "true" ]]; then
+    
+    cp ${TARGET}/${FOLDER}.zip ${TARGET}/orthancAndPluginsOSX.stable.zip
+    aws s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1
+
+fi
