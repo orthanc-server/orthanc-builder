@@ -1,12 +1,12 @@
 ARG BASE_IMAGE_TAG=bullseye-20220125
 
-FROM orthanc-osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
+FROM osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
 
-FROM orthanc-osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
+FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 
-FROM orthanc-osimis/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
+FROM osimis/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
 
-FROM orthanc-osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
+FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
 
 ########################## Orthanc
 
