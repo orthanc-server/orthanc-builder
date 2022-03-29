@@ -55,8 +55,7 @@ jobs:
             artifact: "libOrthancPostgreSQLIndex.dylib",
             artifact2: "libOrthancPostgreSQLStorage.dylib",
             secondaryArtifacts: "",
-            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2",
-            unitTests: "./UnitTests"
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
           }
         - {
             name: "Orthanc-mysql", 
@@ -65,8 +64,7 @@ jobs:
             sourcesSubPath: "/MySQL",
             artifact: "libOrthancMySQLIndex.dylib",
             artifact2: "libOrthancMySQLStorage.dylib",
-            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2",
-            unitTests: "./UnitTests"
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
           }
         - {
             name: "Orthanc-odbc", 
@@ -75,8 +73,7 @@ jobs:
             sourcesSubPath: "/Odbc",
             artifact: "libOrthancOdbcIndex.dylib",
             artifact2: "libOrthancOdbcStorage.dylib",
-            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2",
-            unitTests: "./UnitTests"
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
           }
         - {
             name: "Orthanc-transfers", 
@@ -93,8 +90,7 @@ jobs:
             revision: "default",
             sourcesSubPath: "",
             artifact: "libOrthancIndexer.dylib",
-            extraCMakeFlags: "",
-            unitTests: "./UnitTests"
+            extraCMakeFlags: ""
           }
         - {
             name: "Orthanc-tcia", 
@@ -118,8 +114,7 @@ jobs:
             revision: "default",
             sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
             artifact: "libStoneWebViewer.dylib",
-            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
-            unitTests: "./UnitTests"
+            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
           }
         - {
             name: "Orthanc-dicomweb", 

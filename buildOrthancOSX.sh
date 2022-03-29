@@ -40,20 +40,23 @@ if [[ $download_from_buildbot == "true" ]]; then
     wget "${URL}/DicomWeb 1.7 - OS X Release/libOrthancDicomWeb.dylib"
     wget "${URL}/MySQL 4.3 - OS X Release/libOrthancMySQLIndex.dylib"
     wget "${URL}/MySQL 4.3 - OS X Release/libOrthancMySQLStorage.dylib"
-    wget "${URL}/OsimisWebViewer 1.4.2 - OS X Release/libOsimisWebViewer.dylib"
     wget "${URL}/PostgreSQL 4.0 - OS X Release/libOrthancPostgreSQLIndex.dylib"
     wget "${URL}/PostgreSQL 4.0 - OS X Release/libOrthancPostgreSQLStorage.dylib"
     wget "${URL}/Transfers 1.0 - OS X Release/libOrthancTransfers.dylib"
     wget "${URL}/WebViewer 2.8 - OS X Release/libOrthancWebViewer.dylib"
     wget "${URL}/Stone 2.3 - OS X Release/libStoneWebViewer.dylib"
     wget "${URL}/Gdcm 1.5 - OS X Release/libOrthancGdcm.dylib"
-    wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
     wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcIndex.dylib"
     wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcStorage.dylib"
     wget "${URL}/Tcia 1.1 - OS X Release/libOrthancTcia.dylib"
     wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
 
 fi
+
+# these plugins are not built by GitHub so download them:
+wget "${URL}/OsimisWebViewer 1.4.2 - OS X Release/libOsimisWebViewer.dylib"
+wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
+
 
 chmod +x ./Orthanc
 
