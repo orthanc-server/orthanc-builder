@@ -1,56 +1,246 @@
+// how to obtain this file:
+// in orthanc-tests: generate the configuration file with python2 ./GenerateConfigurationForTests.py
+// then, paste it here and:
+// - remove the Plugins section
+// - remove the PostgreSQL/MySQL/Odbc sections
+// - update the IP of OrthancPeers and DicomModalities: replace localhost by orthanc-tests for the first item
 {
-  "DicomScpTimeout" : 30,
-  "DefaultEncoding": "Utf8",
+  "AcceptedTransferSyntaxes": [
+    "1.2.840.10008.1.*"
+   ], 
+   "AllowFindSopClassesInStudy": false, 
+   "AuthenticationEnabled": true, 
+   "BuiltinDecoderTranscoderOrder": "After", 
+   "CaseSensitivePN": false, 
+   "CheckRevisions": true, 
+   "ConcurrentJobs": 2, 
+   "DefaultEncoding": "Utf8", 
+   "DefaultPrivateCreator": "Lunit", 
+   "DeidentifyLogs": true, 
+   "DicomAet": "ORTHANC", 
+   "DicomAlwaysAllowEcho": true, 
+   "DicomAlwaysAllowFind": false, 
+   "DicomAlwaysAllowFindWorklist": false, 
+   "DicomAlwaysAllowGet": false, 
+   "DicomAlwaysAllowMove": false, 
+   "DicomAlwaysAllowStore": true, 
+   "DicomAssociationCloseDelay": 0, 
+   "DicomCheckCalledAet": false, 
+   "DicomCheckModalityHost": false, 
+   "DicomEchoChecksFind": false, 
+   "DicomLossyTranscodingQuality": 90, 
+   "DicomModalities": {
+    "orthanctest": [
+     "ORTHANCTEST", 
+     "orthanc-tests", 
+     5001
+    ], 
+    "self": [
+     "ORTHANC", 
+     "127.0.0.1", 
+     4242
+    ]
+   }, 
+   "DicomModalitiesInDatabase": false, 
+   "DicomPort": 4242, 
+   "DicomScpTimeout": 30, 
+   "DicomScuPreferredTransferSyntax": "1.2.840.10008.1.2.1", 
+   "DicomScuTimeout": 10, 
+   "DicomServerEnabled": true, 
+   "DicomThreadsCount": 4, 
+   "DicomTlsEnabled": false, 
+   "DicomTlsRemoteCertificateRequired": true, 
+   "DicomWeb": {
+    "Servers": {
+     "sample": [
+      "http://localhost:8042/dicom-web/", 
+      "alice", 
+      "orthanctest"
+     ]
+    }
+   }, 
+   "Dictionary": {
+    "0009,0010": [
+     "LO", 
+     "Private data element", 
+     1, 
+     1, 
+     "Lunit"
+    ], 
+    "0009,1001": [
+     "DS", 
+     "Abnormality score", 
+     1, 
+     1, 
+     "Lunit"
+    ], 
+    "00e1,10c2": [
+     "UI", 
+     "PET-CT Multi Modality Name", 
+     1, 
+     1, 
+     "ELSCINT1"
+    ], 
+    "4321,1012": [
+     "LO", 
+     "RadioButton3", 
+     1, 
+     1, 
+     "RadioLogic"
+    ], 
+    "7053,1003": [
+     "ST", 
+     "Original Image Filename", 
+     1, 
+     1, 
+     "Philips PET Private Group"
+    ]
+   }, 
+   "ExecuteLuaEnabled": true, 
+   "HttpCompressionEnabled": false, 
+   "HttpDescribeErrors": true, 
+   "HttpPort": 8042, 
+   "HttpProxy": "", 
+   "HttpRequestTimeout": 30, 
+   "HttpServerEnabled": true, 
+   "HttpThreadsCount": 50, 
+   "HttpTimeout": 2, 
+   "HttpVerbose": false, 
+   "HttpsCACertificates": "", 
+   "HttpsVerifyPeers": true, 
+   "IndexDirectory": "OrthancStorage", 
+   "IngestTranscodingOfCompressed": true, 
+   "IngestTranscodingOfUncompressed": true, 
+   "JobsHistorySize": 1000, 
+   "LimitFindInstances": 0, 
+   "LimitFindResults": 0, 
+   "LoadPrivateDictionary": true, 
+   "LogExportedResources": true, 
+   "LuaScripts": [], 
+   "MallocArenaMax": 5, 
+   "MaximumPatientCount": 0, 
+   "MaximumPduLength": 16384, 
+   "MaximumStorageCacheSize": 128, 
+   "MaximumStorageSize": 0, 
+   "MediaArchiveSize": 1, 
+   "MetricsEnabled": true, 
+   "Name": "MyOrthanc", 
+ "OrthancExplorerEnabled": true, 
+ "OrthancPeers": {
+  "peer": [
+   "http://orthanc-tests:5000/", 
+   "alice", 
+   "orthanctest"
+  ], 
+  "self": {
+   "Password": "orthanctest", 
+   "Url": "http://127.0.0.1:8042/", 
+   "Username": "alice"
+  }, 
+  "transfers-bidirectional": {
+   "Password": "orthanctest", 
+   "RemoteSelf": "transfers-bidirectional", 
+   "Url": "http://localhost:8042/", 
+   "Username": "alice"
+  }, 
+  "transfers-simple": {
+   "Password": "orthanctest", 
+   "Url": "http://localhost:8042/", 
+   "Username": "alice"
+  }
+ }, 
+ "OrthancPeersInDatabase": false, 
+ "OverwriteInstances": true, 
+ "QueryRetrieveSize": 100, 
+ "RegisteredUsers": {
+  "alice": "orthanctest"
+ }, 
+ "RemoteAccessAllowed": true, 
+ "SaveJobs": false, 
+ "SslCertificate": "certificate.pem", 
+ "SslEnabled": false, 
+ "SslMinimumProtocolVersion": 4, 
+ "SslTrustedClientCertificates": "trustedClientCertificates.pem", 
+ "SslVerifyPeers": false, 
+ "StableAge": 60, 
+ "StorageAccessOnFind": "Always", 
+ "StorageCommitmentReportsSize": 100, 
+ "StorageCompression": false, 
+ "StorageDirectory": "OrthancStorage", 
+ "StoreDicom": true, 
+ "StoreMD5ForAttachments": true, 
+ "StrictAetComparison": false, 
+ "SyncStorageArea": false, 
+ "SynchronousCMove": false, 
+ "SynchronousZipStream": true, 
+ "TcpNoDelay": true, 
+ "TranscodeDicomProtocol": true, 
+ "UnknownSopClassAccepted": false, 
+ "UserContentType": {}, 
+ "UserMetadata": {}, 
+ "WebDavDeleteAllowed": true, 
+ "WebDavEnabled": true, 
+ "WebDavUploadAllowed": true, 
+ "Worklists": {
+  "Database": "/home/alain/o/orthanc-tests/Database/Worklists/Working", 
+  "Enable": true
+ }, 
+ "ZipLoaderThreads": 0
 
-  "RemoteAccessAllowed": true,
-  "AuthenticationEnabled" : true,
-  "ExecuteLuaEnabled": true,
 
-  "RegisteredUsers" : {
-    "alice" : "orthanctest"
-  },
 
-  "DicomModalities" : {
-    "orthanctest" : [ "ORTHANCTEST", "orthanc-tests", 5001 ],
-    "self" : ["ORTHANC", "127.0.0.1", 4242]
-  },
+  // "DicomScpTimeout" : 30,
+  // "DefaultEncoding": "Utf8",
 
-  "DicomScuTimeout" : 10,
+  // "RemoteAccessAllowed": true,
+  // "AuthenticationEnabled" : true,
+  // "ExecuteLuaEnabled": true,
 
-  "OrthancPeers" : {
-    "peer" : [ "http://orthanc-tests:5000/", "alice", "orthanctest" ],
-    "self": {
-      "Password": "orthanctest", 
-      "Url": "http://127.0.0.1:8042/", 
-      "Username": "alice"
-     }, 
-     "transfers-bidirectional": {
-      "Password": "orthanctest", 
-      "RemoteSelf": "transfers-bidirectional", 
-      "Url": "http://localhost:8042/", 
-      "Username": "alice"
-     }, 
-     "transfers-simple": {
-      "Password": "orthanctest", 
-      "Url": "http://localhost:8042/", 
-      "Username": "alice"
-     }
-  },
+  // "RegisteredUsers" : {
+  //   "alice" : "orthanctest"
+  // },
 
-  "DicomAet": "ORTHANC",
-  "DicomAssociationCloseDelay" : 0,
+  // "DicomModalities" : {
+  //   "orthanctest" : [ "ORTHANCTEST", "orthanc-tests", 5001 ],
+  //   "self" : ["ORTHANC", "127.0.0.1", 4242]
+  // },
 
-  "AllowFindSopClassesInStudy" : true,
-  "Dictionary" : {
-    "00e1,10c2" : [ "UI", "PET-CT Multi Modality Name", 1, 1, "ELSCINT1" ],
-    "7053,1003" : [ "ST", "Original Image Filename", 1, 1, "Philips PET Private Group" ],
-    "4321,1012" : [ "LO", "RadioButton3", 1, 1, "RadioLogic" ]
-  },
-  "LogExportedResources": true,
-  "OverwriteInstances": true,
-  "JobsHistorySize": 1000,
-  "SynchronousCMove": false,
-  "MediaArchiveSize": 1,
-  "SaveJobs": false,
-  "CheckRevisions": true
+  // "DicomScuTimeout" : 10,
+
+  // "OrthancPeers" : {
+  //   "peer" : [ "http://orthanc-tests:5000/", "alice", "orthanctest" ],
+  //   "self": {
+  //     "Password": "orthanctest", 
+  //     "Url": "http://127.0.0.1:8042/", 
+  //     "Username": "alice"
+  //    }, 
+  //    "transfers-bidirectional": {
+  //     "Password": "orthanctest", 
+  //     "RemoteSelf": "transfers-bidirectional", 
+  //     "Url": "http://localhost:8042/", 
+  //     "Username": "alice"
+  //    }, 
+  //    "transfers-simple": {
+  //     "Password": "orthanctest", 
+  //     "Url": "http://localhost:8042/", 
+  //     "Username": "alice"
+  //    }
+  // },
+
+  // "DicomAet": "ORTHANC",
+  // "DicomAssociationCloseDelay" : 0,
+
+  // "AllowFindSopClassesInStudy" : true,
+  // "Dictionary" : {
+  //   "00e1,10c2" : [ "UI", "PET-CT Multi Modality Name", 1, 1, "ELSCINT1" ],
+  //   "7053,1003" : [ "ST", "Original Image Filename", 1, 1, "Philips PET Private Group" ],
+  //   "4321,1012" : [ "LO", "RadioButton3", 1, 1, "RadioLogic" ]
+  // },
+  // "LogExportedResources": true,
+  // "OverwriteInstances": true,
+  // "JobsHistorySize": 1000,
+  // "SynchronousCMove": false,
+  // "MediaArchiveSize": 1,
+  // "SaveJobs": false,
+  // "CheckRevisions": true
 }

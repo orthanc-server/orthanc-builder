@@ -10,3 +10,6 @@ docker build --build-arg ORTHANC_TESTS_REVISION=default -f orthanc-tests/Dockerf
 
 
 COMPOSE_FILE=docker-compose.sqlite.yml                   docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+
+
+# TODO run other tes
