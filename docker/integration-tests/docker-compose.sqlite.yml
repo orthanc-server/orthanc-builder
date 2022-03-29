@@ -1,0 +1,11 @@
+version: "2"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+
+  orthanc-tests:
+    image: orthanc-tests
+    depends_on:
+      - orthanc-under-tests
+
+
