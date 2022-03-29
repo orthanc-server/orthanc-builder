@@ -117,17 +117,41 @@ jobs:
         cache-to: osimis/orthanc-builder-base:${{ matrix.config.cache }}
 
 
-    - name: Build the osimis/orthanc-builder-vcpkg Docker image
+    - name: Build the osimis/orthanc-builder-vcpkg-base Docker image
       uses: docker/build-push-action@v2
       with:
         context: docker/orthanc/
         file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg
         platforms: ${{ matrix.config.platform }}
         push: true
-        tags: osimis/orthanc-builder-vcpkg:bullseye-20220125
-        cache-from: osimis/orthanc-builder-vcpkg:${{ matrix.config.cache }}
-        cache-to: osimis/orthanc-builder-vcpkg:${{ matrix.config.cache }}
+        tags: osimis/orthanc-builder-base:vcpkg-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-${{ matrix.config.cache }}
 
+    - name: Build the osimis/orthanc-builder-vcpkg-google Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg-google
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-google-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-google-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-google-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc-builder-vcpkg-azure Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg-azure
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-azure-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
 
     - name: Build the osimis/orthanc Docker image (no push)
       uses: docker/build-push-action@v2

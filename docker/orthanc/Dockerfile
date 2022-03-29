@@ -4,7 +4,9 @@ FROM orthanc-osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-ba
 
 FROM orthanc-osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 
-FROM orthanc-osimis/orthanc-builder-vcpkg:${BASE_IMAGE_TAG} as build-plugin-object-storage
+FROM orthanc-osimis/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
+
+FROM orthanc-osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
 
 ########################## Orthanc
 
@@ -245,10 +247,7 @@ RUN make -j 4
 
 ########################## Orthanc azure storage plugins
 
-FROM build-plugin-object-storage as build-azure-object-storage
-
-WORKDIR /vcpkg
-RUN  ./vcpkg install google-cloud-cpp
+FROM build-plugin-object-storage-azure as build-azure-object-storage
 
 WORKDIR /sources
 # CHANGE_VERSION_ORTHANC_CLOUD_STORAGE
@@ -266,12 +265,9 @@ RUN make -j 4
 
 ########################## Orthanc Google storage plugins
 
-FROM build-plugin-object-storage as build-google-object-storage
+FROM build-plugin-object-storage-google as build-google-object-storage
 
 WORKDIR /
-
-WORKDIR /vcpkg
-RUN ./vcpkg install azure-storage-cpp
 
 WORKDIR /sources
 # CHANGE_VERSION_ORTHANC_CLOUD_STORAGE
