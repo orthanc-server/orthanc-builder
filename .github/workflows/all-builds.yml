@@ -35,93 +35,93 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {
-            name: "Orthanc", 
-            repo: "https://hg.orthanc-server.com/orthanc/",
-            revision: "default",
-            sourcesSubPath: "/OrthancServer",
-            artifact: "Orthanc",
-            artifact2: "libModalityWorklists.dylib",
-            artifact3: "libServeFolders.dylib",
-            artifact4: "libConnectivityChecks.dylib",
-            extraCMakeFlags: ""
-          }
-        - {
-            name: "Orthanc-postgresql", 
-            repo: "https://hg.orthanc-server.com/orthanc-databases/",
-            revision: "default",
-            sourcesSubPath: "/PostgreSQL",
-            artifact: "libOrthancPostgreSQLIndex.dylib",
-            artifact2: "libOrthancPostgreSQLStorage.dylib",
-            secondaryArtifacts: "",
-            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
-          }
-        - {
-            name: "Orthanc-mysql", 
-            repo: "https://hg.orthanc-server.com/orthanc-databases/",
-            revision: "default",
-            sourcesSubPath: "/MySQL",
-            artifact: "libOrthancMySQLIndex.dylib",
-            artifact2: "libOrthancMySQLStorage.dylib",
-            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
-          }
-        - {
-            name: "Orthanc-odbc", 
-            repo: "https://hg.orthanc-server.com/orthanc-databases/",
-            revision: "default",
-            sourcesSubPath: "/Odbc",
-            artifact: "libOrthancOdbcIndex.dylib",
-            artifact2: "libOrthancOdbcStorage.dylib",
-            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
-          }
-        - {
-            name: "Orthanc-transfers", 
-            repo: "https://hg.orthanc-server.com/orthanc-transfers/",
-            revision: "49e9245b4005",
-            sourcesSubPath: "",
-            artifact: "libOrthancTransfers.dylib",
-            extraCMakeFlags: ""
-          }
-        - {
-            name: "Orthanc-indexer", 
-            repo: "https://hg.orthanc-server.com/orthanc-indexer/",
-            revision: "default",
-            sourcesSubPath: "",
-            artifact: "libOrthancIndexer.dylib",
-            extraCMakeFlags: ""
-          }
-        - {
-            name: "Orthanc-tcia", 
-            repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-            revision: "default",
-            sourcesSubPath: "",
-            artifact: "libOrthancTcia.dylib",
-            extraCMakeFlags: ""
-          }
-        # - {  # disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64
-        #     name: "Orthanc-python", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-python/",
+        # - {
+        #     name: "Orthanc", 
+        #     repo: "https://hg.orthanc-server.com/orthanc/",
+        #     revision: "default",
+        #     sourcesSubPath: "/OrthancServer",
+        #     artifact: "Orthanc",
+        #     artifact2: "libModalityWorklists.dylib",
+        #     artifact3: "libServeFolders.dylib",
+        #     artifact4: "libConnectivityChecks.dylib",
+        #     extraCMakeFlags: ""
+        #   }
+        # - {
+        #     name: "Orthanc-postgresql", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-databases/",
+        #     revision: "default",
+        #     sourcesSubPath: "/PostgreSQL",
+        #     artifact: "libOrthancPostgreSQLIndex.dylib",
+        #     artifact2: "libOrthancPostgreSQLStorage.dylib",
+        #     secondaryArtifacts: "",
+        #     extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+        #   }
+        # - {
+        #     name: "Orthanc-mysql", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-databases/",
+        #     revision: "default",
+        #     sourcesSubPath: "/MySQL",
+        #     artifact: "libOrthancMySQLIndex.dylib",
+        #     artifact2: "libOrthancMySQLStorage.dylib",
+        #     extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+        #   }
+        # - {
+        #     name: "Orthanc-odbc", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-databases/",
+        #     revision: "default",
+        #     sourcesSubPath: "/Odbc",
+        #     artifact: "libOrthancOdbcIndex.dylib",
+        #     artifact2: "libOrthancOdbcStorage.dylib",
+        #     extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+        #   }
+        # - {
+        #     name: "Orthanc-transfers", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-transfers/",
+        #     revision: "49e9245b4005",
+        #     sourcesSubPath: "",
+        #     artifact: "libOrthancTransfers.dylib",
+        #     extraCMakeFlags: ""
+        #   }
+        # - {
+        #     name: "Orthanc-indexer", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-indexer/",
         #     revision: "default",
         #     sourcesSubPath: "",
-        #     artifact: "libOrthancPython.dylib",
-        #     extraCMakeFlags: "-DPYTHON_VERSION=3.9"
+        #     artifact: "libOrthancIndexer.dylib",
+        #     extraCMakeFlags: ""
         #   }
-        - {
-            name: "Orthanc-stone", 
-            repo: "https://hg.orthanc-server.com/orthanc-stone/",
-            revision: "default",
-            sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
-            artifact: "libStoneWebViewer.dylib",
-            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
-          }
-        - {
-            name: "Orthanc-dicomweb", 
-            repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
-            revision: "default",
-            sourcesSubPath: "",
-            artifact: "libOrthancDicomWeb.dylib",
-            extraCMakeFlags: ""
-          }
+        # - {
+        #     name: "Orthanc-tcia", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-tcia/",
+        #     revision: "default",
+        #     sourcesSubPath: "",
+        #     artifact: "libOrthancTcia.dylib",
+        #     extraCMakeFlags: ""
+        #   }
+        # # - {  # disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64
+        # #     name: "Orthanc-python", 
+        # #     repo: "https://hg.orthanc-server.com/orthanc-python/",
+        # #     revision: "default",
+        # #     sourcesSubPath: "",
+        # #     artifact: "libOrthancPython.dylib",
+        # #     extraCMakeFlags: "-DPYTHON_VERSION=3.9"
+        # #   }
+        # - {
+        #     name: "Orthanc-stone", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-stone/",
+        #     revision: "default",
+        #     sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
+        #     artifact: "libStoneWebViewer.dylib",
+        #     extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
+        #   }
+        # - {
+        #     name: "Orthanc-dicomweb", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
+        #     revision: "default",
+        #     sourcesSubPath: "",
+        #     artifact: "libOrthancDicomWeb.dylib",
+        #     extraCMakeFlags: ""
+        #   }
         - {
             name: "Orthanc-gdcm", 
             repo: "https://hg.orthanc-server.com/orthanc-gdcm/",
