@@ -187,6 +187,10 @@ jobs:
         cache-from: osimis/orthanc:${{ matrix.config.cache }}
         cache-to: osimis/orthanc:${{ matrix.config.cache }}
 
+    - name: Run integration tests
+      run: ./run-integration-tests.sh current
+      working-directory: ${{github.workspace}}/docker/integration-tests
+
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
 
