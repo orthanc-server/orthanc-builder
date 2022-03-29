@@ -57,28 +57,31 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        # - {
-        #     name: "linux/amd64",
-        #     platform: "linux/amd64",
-        #     cache: "cache-amd64" 
-        #   }
+        - {
+            name: "linux/amd64",
+            platform: "linux/amd64",
+            cache: "cache-amd64" 
+          }
+        # ARM 64 builds are deactivated because, with QEMU emulation, we reach the 6h timeouts for a build step
+        # in github actions (e.g to run .vcpkg install azure-sdk-cpp and similar) -> to reactivate once we have access
+        # to an ARM64 slave
         # - {
         #     name: "linux/arm64",
         #     platform: "linux/arm64",
         #     cache: "cache-arm64" 
         #   }
-        - {
-            name: "linux/all",
-            platform: "linux/arm64,linux/amd64",
-            cache: "cache-all" 
-          }
+        # - {
+        #     name: "linux/all",
+        #     platform: "linux/arm64,linux/amd64",
+        #     cache: "cache-all" 
+        #   }
 
     steps:
     
     - uses: actions/checkout@v2
 
     - name: Set up QEMU
-      # if: ${{ matrix.config.platform == 'linux/arm64' }}
+      if: ${{ matrix.config.platform == 'linux/arm64' }}
       uses: docker/setup-qemu-action@v1
 
     - name: Set up Docker Buildx
@@ -163,6 +166,9 @@ jobs:
         tags: osimis/orthanc:current
         cache-from: osimis/orthanc:${{ matrix.config.cache }}
         cache-to: osimis/orthanc:${{ matrix.config.cache }}
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
 
     # - name: Build the osimis/orthanc Docker image (no push)
     #   uses: docker/build-push-action@v2
