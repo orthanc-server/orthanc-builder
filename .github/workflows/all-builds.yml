@@ -184,8 +184,8 @@ jobs:
         platforms: ${{ matrix.config.platform }}
         push: true
         tags: osimis/orthanc:current
-        cache-from: osimis/orthanc:${{ matrix.config.cache }}
-        cache-to: osimis/orthanc:${{ matrix.config.cache }}
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
 
     - name: Run integration tests
       run: ./run-integration-tests.sh current
