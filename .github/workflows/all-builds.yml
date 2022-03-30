@@ -183,12 +183,12 @@ jobs:
         file: docker/orthanc/Dockerfile
         platforms: ${{ matrix.config.platform }}
         push: true
-        tags: osimis/orthanc:${GITHUB_SHA::7}
+        tags: osimis/orthanc:current
         cache-from: osimis/orthanc:${{ matrix.config.cache }}
         cache-to: osimis/orthanc:${{ matrix.config.cache }}
 
     - name: Run integration tests
-      run: ./run-integration-tests.sh ${GITHUB_SHA::7}
+      run: ./run-integration-tests.sh current
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Setup tmate session
