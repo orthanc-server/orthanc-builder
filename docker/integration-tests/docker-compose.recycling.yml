@@ -1,0 +1,12 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    environment:
+      ORTHANC__MAXIMUM_PATIENT_COUNT: "4"
+
+  orthanc-tests-recycling:
+    image: orthanc-tests-recycling
+    depends_on:
+      - orthanc-under-tests
+

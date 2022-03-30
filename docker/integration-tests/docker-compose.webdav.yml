@@ -1,0 +1,10 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+
+  orthanc-tests-webdav:
+    image: orthanc-tests-webdav
+    depends_on:
+      - orthanc-under-tests
+

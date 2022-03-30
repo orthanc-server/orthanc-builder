@@ -1,0 +1,18 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    volumes:
+      - wl-volume:/worklists:ro
+    environment:
+      ORTHANC__WORKLISTS__FILTER_ISSUER_AET: "false"
+
+  orthanc-tests-worklists:
+    image: orthanc-tests-worklists
+    depends_on:
+      - orthanc-under-tests
+    volumes:
+      - wl-volume:/tests/orthanc-tests//Database/Worklists/Working
+volumes:
+  wl-volume:
+
