@@ -38,7 +38,7 @@ jobs:
         - {
             name: "Orthanc", 
             repo: "https://hg.orthanc-server.com/orthanc/",
-            revision: "default",
+            revision: "2e3006382c22",  # CHANGE_VERSION_ORTHANC
             sourcesSubPath: "/OrthancServer",
             artifact: "Orthanc",
             artifact2: "libModalityWorklists.dylib",
@@ -50,7 +50,7 @@ jobs:
         - {
             name: "Orthanc-postgresql", 
             repo: "https://hg.orthanc-server.com/orthanc-databases/",
-            revision: "default",
+            revision: "OrthancPostgreSQL-4.0", # OrthancPostgreSQL-4.0
             sourcesSubPath: "/PostgreSQL",
             artifact: "libOrthancPostgreSQLIndex.dylib",
             artifact2: "libOrthancPostgreSQLStorage.dylib",
@@ -60,7 +60,7 @@ jobs:
         - {
             name: "Orthanc-mysql", 
             repo: "https://hg.orthanc-server.com/orthanc-databases/",
-            revision: "default",
+            revision: "OrthancMySQL-4.3",  # CHANGE_VERSION_MYSQL
             sourcesSubPath: "/MySQL",
             artifact: "libOrthancMySQLIndex.dylib",
             artifact2: "libOrthancMySQLStorage.dylib",
@@ -69,7 +69,7 @@ jobs:
         - {
             name: "Orthanc-odbc", 
             repo: "https://hg.orthanc-server.com/orthanc-databases/",
-            revision: "default",
+            revision: "OrthancOdbc-1.1", # CHANGE_VERSION_ODBC
             sourcesSubPath: "/Odbc",
             artifact: "libOrthancOdbcIndex.dylib",
             artifact2: "libOrthancOdbcStorage.dylib",
@@ -78,7 +78,7 @@ jobs:
         - {
             name: "Orthanc-transfers", 
             repo: "https://hg.orthanc-server.com/orthanc-transfers/",
-            revision: "49e9245b4005",
+            revision: "49e9245b4005",  # CHANGE_VERSION_TRANSFERS
             sourcesSubPath: "",
             artifact: "libOrthancTransfers.dylib",
             extraCMakeFlags: "",
@@ -87,7 +87,7 @@ jobs:
         - {
             name: "Orthanc-indexer", 
             repo: "https://hg.orthanc-server.com/orthanc-indexer/",
-            revision: "default",
+            revision: "OrthancIndexer-1.0", # CHANGE_VERSION_INDEXER
             sourcesSubPath: "",
             artifact: "libOrthancIndexer.dylib",
             extraCMakeFlags: ""
@@ -95,7 +95,7 @@ jobs:
         - {
             name: "Orthanc-tcia", 
             repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-            revision: "default",
+            revision: "OrthancTcia-1.1", # CHANGE_VERSION_TCIA
             sourcesSubPath: "",
             artifact: "libOrthancTcia.dylib",
             extraCMakeFlags: ""
@@ -111,7 +111,7 @@ jobs:
         - {
             name: "Orthanc-stone", 
             repo: "https://hg.orthanc-server.com/orthanc-stone/",
-            revision: "default",
+            revision: "StoneWebViewer-2.3", # CHANGE_VERSION_STONE_WEB_VIEWER
             sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
             artifact: "libStoneWebViewer.dylib",
             extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
@@ -119,7 +119,7 @@ jobs:
         - {
             name: "Orthanc-dicomweb", 
             repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
-            revision: "default",
+            revision: "OrthancDicomWeb-1.7", # CHANGE_VERSION_DW
             sourcesSubPath: "",
             artifact: "libOrthancDicomWeb.dylib",
             extraCMakeFlags: "",
@@ -128,7 +128,7 @@ jobs:
         - {
             name: "Orthanc-gdcm", 
             repo: "https://hg.orthanc-server.com/orthanc-gdcm/",
-            revision: "default",
+            revision: "4b8fd4b10742", # CHANGE_VERSION_GDCM
             sourcesSubPath: "",
             artifact: "libOrthancGdcm.dylib",
             extraCMakeFlags: ""
@@ -136,7 +136,7 @@ jobs:
         # - {  # currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location. 
         #     name: "Orthanc-wsi", 
         #     repo: "https://hg.orthanc-server.com/orthanc-wsi/",
-        #     revision: "default",
+        #     revision: "OrthancWSI-1.1", # CHANGE_VERSION_WSI
         #     sourcesSubPath: "/ViewerPlugin",
         #     artifact: "libOrthancWSI.dylib",
         #     secondaryArtifacts: "",
@@ -145,7 +145,7 @@ jobs:
         - {
             name: "Orthanc-webviewer", 
             repo: "https://hg.orthanc-server.com/orthanc-webviewer/",
-            revision: "default",
+            revision: "OrthancWebViewer-2.8", # CHANGE_VERSION_ORTHANC_WEB_VIEWER
             sourcesSubPath: "",
             artifact: "libOrthancWebViewer.dylib",
             extraCMakeFlags: "",
@@ -266,26 +266,26 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  # build-windows-installer:
-  #   name: build-windows-installer
-  #   runs-on: "ubuntu-latest"
-  #   needs: [pre-build]
+  build-windows-installer:
+    name: build-windows-installer
+    runs-on: "ubuntu-latest"
+    needs: [pre-build]
 
-  #   steps:
+    steps:
     
-  #   - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-  #   - name: Echo var
-  #     run: |
-  #       echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
-  #       echo ${{ github.ref}}
+    - name: Echo var
+      run: |
+        echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
+        echo ${{ github.ref}}
 
-  #   - name: Build installer
-  #     run: ./ciBuildWindowsInstaller.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }}
-  #     working-directory: ./WindowsInstaller
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Build installer
+      run: ./ciBuildWindowsInstaller.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }}
+      working-directory: ./WindowsInstaller
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       
 

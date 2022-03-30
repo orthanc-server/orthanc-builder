@@ -29,29 +29,52 @@ cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt .
 
 if [[ $download_from_buildbot == "true" ]]; then
 
-    # Orthanc core
+    # CHANGE_VERSION_ORTHANC
     wget "${URL}/Orthanc 1.10.1 - OS X Release/Orthanc"
     wget "${URL}/Orthanc 1.10.1 - OS X Release/libModalityWorklists.dylib"
     wget "${URL}/Orthanc 1.10.1 - OS X Release/libServeFolders.dylib"
     wget "${URL}/Orthanc 1.10.1 - OS X Release/libConnectivityChecks.dylib"
 
-    # Plugins
+    # CHANGE_VERSION_DW
     wget "${URL}/DicomWeb 1.7 - OS X Release/libOrthancDicomWeb.dylib"
+    
+    # CHANGE_VERSION_MYSQL
     wget "${URL}/MySQL 4.3 - OS X Release/libOrthancMySQLIndex.dylib"
     wget "${URL}/MySQL 4.3 - OS X Release/libOrthancMySQLStorage.dylib"
+    
+    # CHANGE_VERSION_PG
     wget "${URL}/PostgreSQL 4.0 - OS X Release/libOrthancPostgreSQLIndex.dylib"
     wget "${URL}/PostgreSQL 4.0 - OS X Release/libOrthancPostgreSQLStorage.dylib"
+    
+    # CHANGE_VERSION_TRANSFERS
     wget "${URL}/Transfers 1.0 - OS X Release/libOrthancTransfers.dylib"
+    
+    # CHANGE_VERSION_ORTHANC_WEB_VIEWER
     wget "${URL}/WebViewer 2.8 - OS X Release/libOrthancWebViewer.dylib"
+    
+    # CHANGE_VERSION_STONE_WEB_VIEWER
     wget "${URL}/Stone 2.3 - OS X Release/libStoneWebViewer.dylib"
+    
+    # CHANGE_VERSION_GDCM
     wget "${URL}/Gdcm 1.5 - OS X Release/libOrthancGdcm.dylib"
+    
+    # CHANGE_VERSION_ODBC
     wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcIndex.dylib"
     wget "${URL}/Odbc 1.1 - OS X Release/libOrthancOdbcStorage.dylib"
+    
+    # CHANGE_VERSION_TCIA
     wget "${URL}/Tcia 1.1 - OS X Release/libOrthancTcia.dylib"
+    
+    # CHANGE_VERSION_INDEXER
     wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
 
-    # these plugins are not built by GitHub so download but only contain AMD64 binary (TODO)
+
+    # these plugins are not built by GitHub so download only contains AMD64 binary (TODO)
+    
+    
     wget "${URL}/OsimisWebViewer 1.4.2 - OS X Release/libOsimisWebViewer.dylib"
+    
+    # CHANGE_VERSION_WSI
     wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
 fi
 

@@ -16,3 +16,27 @@ Each time you want to release a new package (which means you'll upgrade the vers
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page (note, since 22.3.0, the latest
   windows installer is always copied under ...latest.exe)
 
+List of CHANGE_VERSION_ variables and their current values:
+- CHANGE_VERSION_ORTHANC                     
+  - OSX: 2e3006382c22 (post 1.10.1)
+  - Docker and windows plugins: "Orthanc-1.10.1"
+  - Framework for object-storage: "Orthanc-1.10.1"
+- CHANGE_VERSION_WVB
+  - OSX: not used
+  - others: 1.4.2
+- CHANGE_VERSION_TRANSFERS
+  - Docker: "49e9245b4005"
+  - others: 1.0
+- CHANGE_VERSION_AUTH: 0.2.4    - not used by OSX
+- CHANGE_VERSION_MYSQL: 4.3
+- CHANGE_VERSION_ODBC: 1.1      
+- CHANGE_VERSION_INDEXER: 1.0
+- CHANGE_VERSION_TCIA: 1.1
+- CHANGE_VERSION_STONE_WEB_VIEWER: 2.3
+- CHANGE_VERSION_GDCM: 
+  - OSX: 4b8fd4b10742 (post 1.5)
+  - Docker and windows plugins: "Orthanc-1.10.1"
+- CHANGE_VERSION_ORTHANC_WEB_VIEWER: 2.8
+- CHANGE_VERSION_DW: 1.7
+- CHANGE_VERSION_PG: 4.0
+- CHANGE_VERSION_WSI: 1.1

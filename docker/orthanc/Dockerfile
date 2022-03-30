@@ -81,7 +81,7 @@ RUN /build/UnitTests
 
 FROM orthanc-builder-base as build-plugin-wsi
 
-# CHANGE_VERSION_ORTHANC_WSI
+# CHANGE_VERSION_WSI
 RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r "OrthancWSI-1.1" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF /sources/ViewerPlugin
