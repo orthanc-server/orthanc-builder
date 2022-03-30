@@ -1,7 +1,7 @@
 version: "2"
 services:
   orthanc-under-tests:
-    build: orthanc-under-tests
+    image: orthanc-under-tests
     depends_on:
       - odbc-pg-server
     environment:
@@ -13,7 +13,7 @@ services:
       VERBOSE_STARTUP: "true"
 
   orthanc-tests:
-    build: orthanc-tests
+    image: orthanc-tests
     depends_on:
       - orthanc-under-tests
 
