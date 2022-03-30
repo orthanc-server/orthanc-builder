@@ -58,11 +58,11 @@ if [[ $download_from_buildbot == "true" ]]; then
     wget "${URL}/Tcia 1.1 - OS X Release/libOrthancTcia.dylib"
     wget "${URL}/FolderIndexer 1.0 - OS X Release/libOrthancIndexer.dylib"
 
+    # these plugins are not built by GitHub so download but only contain AMD64 binary (TODO)
+    wget "${URL}/OsimisWebViewer 1.4.2 - OS X Release/libOsimisWebViewer.dylib"
+    wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
 fi
 
-# these plugins are not built by GitHub so download them:
-wget "${URL}/OsimisWebViewer 1.4.2 - OS X Release/libOsimisWebViewer.dylib"
-wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
 
 
 chmod +x ./Orthanc
