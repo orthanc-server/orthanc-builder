@@ -6,7 +6,7 @@ branch_tag_name=${1:-unknown}
 docker build --build-arg IMAGE_TAG=$branch_tag_name -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
 
 # CHANGE_ORTHANC_TESTS_VERSION
-orthanc_tests_revision=281a599f5338
+orthanc_tests_revision=ee398adfeb8e
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests

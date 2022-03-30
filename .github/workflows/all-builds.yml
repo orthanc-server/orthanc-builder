@@ -38,7 +38,7 @@ jobs:
         - {
             name: "Orthanc", 
             repo: "https://hg.orthanc-server.com/orthanc/",
-            revision: "2e3006382c22",  # CHANGE_VERSION_ORTHANC
+            revision: "d68b3a2cea17",  # CHANGE_VERSION_ORTHANC
             sourcesSubPath: "/OrthancServer",
             artifact: "Orthanc",
             artifact2: "libModalityWorklists.dylib",
@@ -119,7 +119,7 @@ jobs:
         - {
             name: "Orthanc-dicomweb", 
             repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
-            revision: "OrthancDicomWeb-1.7", # CHANGE_VERSION_DW
+            revision: "c76d81c6fee8", # CHANGE_VERSION_DW
             sourcesSubPath: "",
             artifact: "libOrthancDicomWeb.dylib",
             extraCMakeFlags: "",

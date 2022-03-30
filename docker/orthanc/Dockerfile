@@ -13,7 +13,7 @@ FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-o
 FROM orthanc-builder-base as build-orthanc
 
 # CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "d68b3a2cea17" /sources
 WORKDIR /build
 
 # note: building with static DCMTL while waiting for Debian bullseye to fix Dicom TLS issues (we need DCMTK 3.6.5)
@@ -71,7 +71,7 @@ RUN /build/UnitTests
 FROM orthanc-builder-base as build-plugin-dicomweb
 
 # CHANGE_VERSION_DW
-RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "OrthancDicomWeb-1.7" /sources
+RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r "c76d81c6fee8" /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
@@ -314,6 +314,33 @@ RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_VCPKG_PACKAGES=OFF -DORTHANC_F
 RUN make -j 4
 
 
+########################## Orthanc Explorer 2
+
+FROM orthanc-builder-base:current as build-oe2
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get --assume-yes update && \
+	apt-get --assume-yes install nodejs npm && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# CHANGE_VERSION_ORTHANC_EXPLORER_2
+WORKDIR /sources
+
+RUN git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
+    cd /sources/orthanc-explorer-2 && \
+	git checkout 5b20c3f07d4ae82ea79a69dba1a9d4173f0abef0
+
+WORKDIR /sources/orthanc-explorer-2/WebApplication
+
+RUN npm install
+RUN npm run build
+
+WORKDIR /build
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/orthanc-explorer-2/
+RUN make -j 4
+
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM orthanc-builder-base as build-downloader
@@ -359,6 +386,7 @@ COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc
 COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
