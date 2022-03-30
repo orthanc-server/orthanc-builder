@@ -267,6 +267,18 @@
                 ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools"],
                 ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools"]
             ]
+        },
+        {
+            "Description": "Orthanc Explorer 2 User Interface",
+            "Mandatory": false,
+            "Category": "plugins",
+            "Downloads": [
+                ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.1.2/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+            ],
+            "Resources": [
+                ["orthanc-explorer-2.json", "Configuration"]
+            ]
         }
+
     ]
 }

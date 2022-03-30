@@ -316,7 +316,7 @@ RUN make -j 4
 
 ########################## Orthanc Explorer 2
 
-FROM orthanc-builder-base:current as build-oe2
+FROM orthanc-builder-base as build-oe2
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
