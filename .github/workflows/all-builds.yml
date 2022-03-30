@@ -1,0 +1,448 @@
+name: all-builds
+
+on:
+  push:
+    branches: 
+      - '*'
+    tags:
+      - '*'
+
+  pull_request:
+    branches: [ master ]
+
+
+jobs:
+  pre-build:
+    name: pre-build
+    runs-on: "ubuntu-latest"
+    outputs:
+      current_branch_tag: ${{steps.branch-name.outputs.current_branch}}
+      is_tag: ${{steps.branch-name.outputs.is_tag}}
+      ref_branch: ${{steps.branch-name.outputs.ref_branch}}
+      default_branch: ${{steps.branch-name.outputs.default_branch}}
+      is_default: ${{steps.branch-name.outputs.is_default}}
+    steps:
+      - name: Get branch/tag name
+        id: branch-name
+        uses: tj-actions/branch-names@v5.1
+        # output: steps.branch-name.outputs.current_branch contains the branch or the tag
+
+  build-osx-binaries:
+    name: build-osx-binaries
+    runs-on: "macos-latest"
+    needs: [pre-build]
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Orthanc", 
+            repo: "https://hg.orthanc-server.com/orthanc/",
+            revision: "2e3006382c22",  # CHANGE_VERSION_ORTHANC
+            sourcesSubPath: "/OrthancServer",
+            artifact: "Orthanc",
+            artifact2: "libModalityWorklists.dylib",
+            artifact3: "libServeFolders.dylib",
+            artifact4: "libConnectivityChecks.dylib",
+            extraCMakeFlags: "",
+            unitTests: "./UnitTests"
+          }
+        - {
+            name: "Orthanc-postgresql", 
+            repo: "https://hg.orthanc-server.com/orthanc-databases/",
+            revision: "OrthancPostgreSQL-4.0", # OrthancPostgreSQL-4.0
+            sourcesSubPath: "/PostgreSQL",
+            artifact: "libOrthancPostgreSQLIndex.dylib",
+            artifact2: "libOrthancPostgreSQLStorage.dylib",
+            secondaryArtifacts: "",
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+          }
+        - {
+            name: "Orthanc-mysql", 
+            repo: "https://hg.orthanc-server.com/orthanc-databases/",
+            revision: "OrthancMySQL-4.3",  # CHANGE_VERSION_MYSQL
+            sourcesSubPath: "/MySQL",
+            artifact: "libOrthancMySQLIndex.dylib",
+            artifact2: "libOrthancMySQLStorage.dylib",
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+          }
+        - {
+            name: "Orthanc-odbc", 
+            repo: "https://hg.orthanc-server.com/orthanc-databases/",
+            revision: "OrthancOdbc-1.1", # CHANGE_VERSION_ODBC
+            sourcesSubPath: "/Odbc",
+            artifact: "libOrthancOdbcIndex.dylib",
+            artifact2: "libOrthancOdbcStorage.dylib",
+            extraCMakeFlags: "-DORTHANC_SDK_VERSION=1.9.2"
+          }
+        - {
+            name: "Orthanc-transfers", 
+            repo: "https://hg.orthanc-server.com/orthanc-transfers/",
+            revision: "49e9245b4005",  # CHANGE_VERSION_TRANSFERS
+            sourcesSubPath: "",
+            artifact: "libOrthancTransfers.dylib",
+            extraCMakeFlags: "",
+            unitTests: "./UnitTests"
+          }
+        - {
+            name: "Orthanc-indexer", 
+            repo: "https://hg.orthanc-server.com/orthanc-indexer/",
+            revision: "OrthancIndexer-1.0", # CHANGE_VERSION_INDEXER
+            sourcesSubPath: "",
+            artifact: "libOrthancIndexer.dylib",
+            extraCMakeFlags: ""
+          }
+        - {
+            name: "Orthanc-tcia", 
+            repo: "https://hg.orthanc-server.com/orthanc-tcia/",
+            revision: "OrthancTcia-1.1", # CHANGE_VERSION_TCIA
+            sourcesSubPath: "",
+            artifact: "libOrthancTcia.dylib",
+            extraCMakeFlags: ""
+          }
+        # - {  # disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64
+        #     name: "Orthanc-python", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-python/",
+        #     revision: "default",
+        #     sourcesSubPath: "",
+        #     artifact: "libOrthancPython.dylib",
+        #     extraCMakeFlags: "-DPYTHON_VERSION=3.9"
+        #   }
+        - {
+            name: "Orthanc-stone", 
+            repo: "https://hg.orthanc-server.com/orthanc-stone/",
+            revision: "StoneWebViewer-2.3", # CHANGE_VERSION_STONE_WEB_VIEWER
+            sourcesSubPath: "/Applications/StoneWebViewer/Plugin",
+            artifact: "libStoneWebViewer.dylib",
+            extraCMakeFlags: "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
+          }
+        - {
+            name: "Orthanc-dicomweb", 
+            repo: "https://hg.orthanc-server.com/orthanc-dicomweb/",
+            revision: "OrthancDicomWeb-1.7", # CHANGE_VERSION_DW
+            sourcesSubPath: "",
+            artifact: "libOrthancDicomWeb.dylib",
+            extraCMakeFlags: "",
+            unitTests: "./UnitTests"
+          }
+        - {
+            name: "Orthanc-gdcm", 
+            repo: "https://hg.orthanc-server.com/orthanc-gdcm/",
+            revision: "4b8fd4b10742", # CHANGE_VERSION_GDCM
+            sourcesSubPath: "",
+            artifact: "libOrthancGdcm.dylib",
+            extraCMakeFlags: ""
+          }
+        # - {  # currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location. 
+        #     name: "Orthanc-wsi", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-wsi/",
+        #     revision: "OrthancWSI-1.1", # CHANGE_VERSION_WSI
+        #     sourcesSubPath: "/ViewerPlugin",
+        #     artifact: "libOrthancWSI.dylib",
+        #     secondaryArtifacts: "",
+        #     extraCMakeFlags: ""
+        #   }
+        - {
+            name: "Orthanc-webviewer", 
+            repo: "https://hg.orthanc-server.com/orthanc-webviewer/",
+            revision: "OrthancWebViewer-2.8", # CHANGE_VERSION_ORTHANC_WEB_VIEWER
+            sourcesSubPath: "",
+            artifact: "libOrthancWebViewer.dylib",
+            extraCMakeFlags: "",
+            unitTests: "./UnitTests"
+          }
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Clone mercurial repo
+      run: |
+        brew install mercurial
+        hg clone ${{matrix.config.repo}} -r ${{matrix.config.revision}} ${{github.workspace}}/sources
+
+    - name: pre-build-step
+      if: ${{ matrix.config.name == 'Orthanc-stone' }}
+      run: |
+        mkdir -p /tmp/downloads
+        # CHANGE_VERSION_STONE_WEB_VIEWER
+        wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet
+        unzip /tmp/downloads/wasm-binaries.zip -d /tmp//downloads
+
+    #note: the -Wno-implicit-function-declaration is to avoid a warning->error while building zlib
+    - name: CMake Build
+      if: ${{ matrix.config.name != 'Orthanc-gdcm' }}
+      run: |
+        cmake -B ${{github.workspace}}/build ${{matrix.config.extraCMakeFlags}} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
+        cd ${{github.workspace}}/build
+        make -j 6
+
+    # specific build for GDCM which can not be built in a single step
+    - name: CMake Build GDCM
+      if: ${{ matrix.config.name == 'Orthanc-gdcm' }}
+      run: |
+        cmake -B ${{github.workspace}}/build-arm64 ${{matrix.config.extraCMakeFlags}} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
+        cd ${{github.workspace}}/build-arm64
+        make -j 6
+        cmake -B ${{github.workspace}}/build-amd64 ${{matrix.config.extraCMakeFlags}} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
+        cd ${{github.workspace}}/build-amd64
+        make -j 6
+        mkdir ${{github.workspace}}/build
+        lipo -create -output ${{github.workspace}}/build/libOrthancGdcm.dylib ${{github.workspace}}/build-amd64/libOrthancGdcm.dylib ${{github.workspace}}/build-arm64/libOrthancGdcm.dylib
+
+    - name: Run unit tests
+      if: ${{ matrix.config.unitTests }}
+      run: ${{ matrix.config.unitTests }}
+      working-directory: ${{github.workspace}}/build
+
+
+    # - name: generate-dummy-artifact
+    #   run: |
+    #     mkdir -p ${{github.workspace}}/build/
+    #     echo ${{matrix.config.name}} > ${{github.workspace}}/build/Orthanc
+    #     echo ${{matrix.config.name}} > ${{github.workspace}}/build/libOrthancIndex.dylib
+
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+
+    - name: upload-artifact-1
+      uses: actions/upload-artifact@v2
+      with:
+        name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
+        path: ${{github.workspace}}/build/${{matrix.config.artifact}}
+
+    - name: upload-artifact-2
+      uses: actions/upload-artifact@v2
+      if: ${{matrix.config.artifact2}}
+      with:
+        name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
+        path: ${{github.workspace}}/build/${{matrix.config.artifact2}}
+
+    - name: upload-artifact-3
+      uses: actions/upload-artifact@v2
+      if: ${{matrix.config.artifact3}}
+      with:
+        name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
+        path: ${{github.workspace}}/build/${{matrix.config.artifact3}}
+
+    - name: upload-artifact-4
+      uses: actions/upload-artifact@v2
+      if: ${{matrix.config.artifact4}}
+      with:
+        name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
+        path: ${{github.workspace}}/build/${{matrix.config.artifact4}}
+
+    - name: upload-artifact-5
+      uses: actions/upload-artifact@v2
+      if: ${{matrix.config.artifact5}}
+      with:
+        name: osx-binaries    # all artifacts have the same name -> they should append to the artifact
+        path: ${{github.workspace}}/build/${{matrix.config.artifact5}}
+
+  build-osx-package:
+    name: build-osx-package
+    runs-on: "macos-latest"
+    needs: [pre-build, build-osx-binaries]
+
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: Echo var
+      run: |
+        echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
+        echo ${{ github.ref}}
+        pwd
+
+    - uses: actions/download-artifact@v2
+      id: download
+      with:
+        name: osx-binaries
+        path: /tmp/osx-package/Orthanc-OSX-${{needs.pre-build.outputs.current_branch_tag}}
+
+    - name: Build osx package
+      run: ./buildOrthancOSX.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} false
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  build-windows-installer:
+    name: build-windows-installer
+    runs-on: "ubuntu-latest"
+    needs: [pre-build]
+
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: Echo var
+      run: |
+        echo ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} ${{ needs.pre-build.outputs.ref_branch }} ${{ needs.pre-build.outputs.default_branch }} ${{ needs.pre-build.outputs.is_default }}
+        echo ${{ github.ref}}
+
+    - name: Build installer
+      run: ./ciBuildWindowsInstaller.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }}
+      working-directory: ./WindowsInstaller
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      
+
+  build-docker:
+    name: build-docker
+    runs-on: "ubuntu-latest"
+    needs: [pre-build]
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "linux/amd64",
+            platform: "linux/amd64",
+            cache: "cache-amd64" 
+          }
+        # ARM 64 builds are deactivated because, with QEMU emulation, we reach the 6h timeouts for a build step
+        # in github actions (e.g to run .vcpkg install azure-sdk-cpp and similar) -> to reactivate once we have access
+        # to an ARM64 slave
+        # - {
+        #     name: "linux/arm64",
+        #     platform: "linux/arm64",
+        #     cache: "cache-arm64" 
+        #   }
+        # - {
+        #     name: "linux/all",
+        #     platform: "linux/arm64,linux/amd64",
+        #     cache: "cache-all" 
+        #   }
+
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      if: ${{ matrix.config.platform == 'linux/arm64' }}
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      with:
+        config: .github/buildkitd.toml
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+
+    - name: Build the osimis/orthanc-runner-base Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.runner-base
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-runner-base:bullseye-20220125
+        cache-from: osimis/orthanc-runner-base:${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-runner-base:${{ matrix.config.cache }}
+
+
+    - name: Build the osimis/orthanc-builder-base Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-base
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:${{ matrix.config.cache }}
+
+
+    - name: Build the osimis/orthanc-builder-vcpkg-base Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc-builder-vcpkg-google Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg-google
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-google-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-google-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-google-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc-builder-vcpkg-azure Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg-azure
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-azure-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc Docker image (no push)
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc:current
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Run integration tests
+      run: ./run-integration-tests.sh current
+      working-directory: ${{github.workspace}}/docker/integration-tests
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push with branch/tag
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Push with latest tag
+      uses: docker/build-push-action@v2
+      if: needs.pre-build.outputs.is_tag == 'true'
+      with:
+        context: docker/orthanc/
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc:latest
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Update DockerHub repo description
+      uses: peter-evans/dockerhub-description@v2
+      if: needs.pre-build.outputs.is_tag == 'true'
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        repository: osimis/orthanc
+

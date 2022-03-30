@@ -155,6 +155,34 @@
       "Enable" : true
     },
     "libs" : ["libOrthancIndexer.so"]
+  },
+
+  "AzureBlobStorage": {
+    "enablingEnvVar": "AZURE_BLOB_STORAGE_PLUGIN_ENABLED",
+    "enablingEnvVarLegacy": "AZSTOR_ENABLED",
+    "nonStandardDefaults": {
+        "ConnectionString": "MUST BE DEFINED BY YOU",
+        "ContainerName": "MUST BE DEFINED BY YOU"
+    },
+    "libs": ["libOrthancAzureBlobStorage.so"]
+  },
+
+  "AwsS3Storage": {
+    "enablingEnvVar": "AWS_S3_STORAGE_PLUGIN_ENABLED",
+    "nonStandardDefaults": {
+        "BucketName": "MUST BE DEFINED BY YOU",
+        "Region": "MUST BE DEFINED BY YOU"
+    },
+    "libs": ["libOrthancAwsS3Storage.so"]
+  },
+
+  "GoogleCloudStorage": {
+    "enablingEnvVar": "GOOGLE_CLOUD_STORAGE_PLUGIN_ENABLED",
+    "nonStandardDefaults": {
+        "ServiceAccountFile": "MUST BE DEFINED BY YOU",
+        "BucketName": "MUST BE DEFINED BY YOU"
+    },
+    "libs": ["libOrthancGoogleCloudStorage.so"]
   }
 
 }

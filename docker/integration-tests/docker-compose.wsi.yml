@@ -1,0 +1,12 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    environment:
+      WSI_PLUGIN_ENABLED: "true"
+
+  orthanc-tests-wsi:
+    image: orthanc-tests-wsi
+    depends_on:
+      - orthanc-under-tests
+

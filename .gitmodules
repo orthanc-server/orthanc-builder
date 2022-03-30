@@ -1,3 +1,0 @@
-[submodule "docker/orthanc-pro-builder"]
-	path = docker/orthanc-pro-builder
-	url = git@bitbucket.org:osimis/orthanc-pro-builder.git

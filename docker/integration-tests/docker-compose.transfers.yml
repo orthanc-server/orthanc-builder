@@ -1,0 +1,12 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    environment:
+      TRANSFERS_PLUGIN_ENABLED: "true"
+
+  orthanc-tests-transfers:
+    image: orthanc-tests-transfers
+    depends_on:
+      - orthanc-under-tests
+
