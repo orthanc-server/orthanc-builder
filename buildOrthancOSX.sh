@@ -3,9 +3,16 @@
 set -ex
 
 is_tag=${1:-false}
+<<<<<<< HEAD
 branch_tag_name=${2:-22.3.0}       # CHANGE_VERSION_OSX
 download_from_buildbot=${3:-true}  # if false, we consider that binaries are already in /tmp/osx-package/Orthanc-OSX-$branch_tag_name
 
+=======
+branch_tag_name=${2:-unknown}
+
+# CHANGE_VERSION_OSX
+VERSION=22.3.0
+>>>>>>> master
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/osx-package/'
@@ -68,11 +75,37 @@ echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
 # upload files to AWS
 #####################
 
+<<<<<<< HEAD
 aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1
+=======
+# we first need to create the container before we can copy files to it
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*" --cache-control=max-age=1)
+
+# CHANGE_VERSION_WIN_INSTALLER
+docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp
+>>>>>>> master
 
 if [[ $is_tag == "true" ]]; then
     
     cp ${TARGET}/${FOLDER}.zip ${TARGET}/orthancAndPluginsOSX.stable.zip
     aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1
 
+<<<<<<< HEAD
+=======
+# remove container
+docker rm $awsContainerId
+
+if [[ $is_tag == "true" ]]; then
+    awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1)
+
+    docker cp ${TARGET}/${FOLDER}.zip $awsContainerId:/tmp/orthancAndPluginsOSX.stable.zip
+
+    # upload
+    docker start -a $awsContainerId
+
+    # remove container
+    docker rm $awsContainerId
+>>>>>>> master
 fi

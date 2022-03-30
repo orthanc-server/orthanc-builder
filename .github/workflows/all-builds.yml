@@ -266,8 +266,6 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-
-
   # build-windows-installer:
   #   name: build-windows-installer
   #   runs-on: "ubuntu-latest"
@@ -291,64 +289,160 @@ jobs:
 
       
 
-  # build-docker:
-  #   name: build-docker
-  #   runs-on: "ubuntu-latest"
-  #   needs: [pre-build]
+  build-docker:
+    name: build-docker
+    runs-on: "ubuntu-latest"
+    needs: [pre-build]
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "linux/amd64",
+            platform: "linux/amd64",
+            cache: "cache-amd64" 
+          }
+        # ARM 64 builds are deactivated because, with QEMU emulation, we reach the 6h timeouts for a build step
+        # in github actions (e.g to run .vcpkg install azure-sdk-cpp and similar) -> to reactivate once we have access
+        # to an ARM64 slave
+        # - {
+        #     name: "linux/arm64",
+        #     platform: "linux/arm64",
+        #     cache: "cache-arm64" 
+        #   }
+        # - {
+        #     name: "linux/all",
+        #     platform: "linux/arm64,linux/amd64",
+        #     cache: "cache-all" 
+        #   }
 
-  #   steps:
+    steps:
     
-  #   - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-  #   - name: Set up QEMU
-  #     uses: docker/setup-qemu-action@v1
+    - name: Set up QEMU
+      if: ${{ matrix.config.platform == 'linux/arm64' }}
+      uses: docker/setup-qemu-action@v1
 
-  #   - name: Set up Docker Buildx
-  #     uses: docker/setup-buildx-action@v1
-  #     with:
-  #       config: .github/buildkitd.toml
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      with:
+        config: .github/buildkitd.toml
 
-  #   - name: Build the osimis/orthanc Docker image (no push)
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       context: docker/orthanc/
-  #       # platforms: linux/amd64,linux/arm64
-  #       push: false
-  #       tags: osimis/orthanc:current
-  #       cache-from: type=gha,scope=osimis-orthanc
-  #       cache-to: type=gha,scope=osimis-orthanc
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #   - name: Login to DockerHub
-  #     uses: docker/login-action@v1
-  #     with:
-  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #   - name: Push with branch/tag
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       context: docker/orthanc/
-  #       # platforms: linux/amd64,linux/arm64
-  #       push: true
-  #       tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
-  #       cache-from: type=gha,scope=osimis-orthanc
-  #       cache-to: type=gha,scope=osimis-orthanc
+    - name: Build the osimis/orthanc-runner-base Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.runner-base
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-runner-base:bullseye-20220125
+        cache-from: osimis/orthanc-runner-base:${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-runner-base:${{ matrix.config.cache }}
 
-  #   - name: Push with latest tag
-  #     uses: docker/build-push-action@v2
-  #     if: needs.pre-build.outputs.is_tag == 'true'
-  #     with:
-  #       context: docker/orthanc/
-  #       push: true
-  #       tags: osimis/orthanc:latest
-  #       cache-from: type=gha,scope=osimis-orthanc
-  #       cache-to: type=gha,scope=osimis-orthanc
 
-  #   - name: Update DockerHub repo description
-  #     uses: peter-evans/dockerhub-description@v2
-  #     if: needs.pre-build.outputs.is_tag == 'true'
-  #     with:
-  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       password: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #       repository: osimis/orthanc
+    - name: Build the osimis/orthanc-builder-base Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-base
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:${{ matrix.config.cache }}
+
+
+    - name: Build the osimis/orthanc-builder-vcpkg-base Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc-builder-vcpkg-google Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg-google
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-google-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-google-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-google-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc-builder-vcpkg-azure Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile.builder-vcpkg
+        target: orthanc-build-vcpkg-azure
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc-builder-base:vcpkg-azure-bullseye-20220125
+        cache-from: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
+
+    - name: Build the osimis/orthanc Docker image (no push)
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        file: docker/orthanc/Dockerfile
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc:current
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Run integration tests
+      run: ./run-integration-tests.sh current
+      working-directory: ${{github.workspace}}/docker/integration-tests
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push with branch/tag
+      uses: docker/build-push-action@v2
+      with:
+        context: docker/orthanc/
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Push with latest tag
+      uses: docker/build-push-action@v2
+      if: needs.pre-build.outputs.is_tag == 'true'
+      with:
+        context: docker/orthanc/
+        platforms: ${{ matrix.config.platform }}
+        push: true
+        tags: osimis/orthanc:latest
+        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Update DockerHub repo description
+      uses: peter-evans/dockerhub-description@v2
+      if: needs.pre-build.outputs.is_tag == 'true'
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        repository: osimis/orthanc
 
