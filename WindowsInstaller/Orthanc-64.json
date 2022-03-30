@@ -273,7 +273,7 @@
             "Mandatory": false,
             "Category": "plugins",
             "Downloads": [
-                ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.1.2/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.1.3/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
             ],
             "Resources": [
                 ["orthanc-explorer-2.json", "Configuration"]

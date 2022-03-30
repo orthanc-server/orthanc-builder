@@ -80,7 +80,7 @@ fi
 
 # download universal binaries
 # CHANGE_VERSION_ORTHANC_EXPLORER_2
-wget "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.1.2/libOrthancExplorer2.dylib"
+wget "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.1.3/libOrthancExplorer2-universal.dylib"
 
 
 
