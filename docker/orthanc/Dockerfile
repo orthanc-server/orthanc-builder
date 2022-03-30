@@ -350,7 +350,6 @@ COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthan
 COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomToTiff /usr/local/bin/
 COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomizer /usr/local/bin/
-COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-available/

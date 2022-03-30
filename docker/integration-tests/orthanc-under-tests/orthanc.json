@@ -4,6 +4,7 @@
 // - remove the Plugins section
 // - remove the PostgreSQL/MySQL/Odbc sections
 // - update the IP of OrthancPeers and DicomModalities: replace localhost by orthanc-tests for the first item
+// - update the Worklists.Database to "/worklists"
 {
   "AcceptedTransferSyntaxes": [
     "1.2.840.10008.1.*"
@@ -182,7 +183,7 @@
  "WebDavEnabled": true, 
  "WebDavUploadAllowed": true, 
  "Worklists": {
-  "Database": "/home/alain/o/orthanc-tests/Database/Worklists/Working", 
+  "Database": "/worklists", 
   "Enable": true
  }, 
  "ZipLoaderThreads": 0
