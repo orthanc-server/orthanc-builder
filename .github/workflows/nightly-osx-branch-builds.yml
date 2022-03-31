@@ -28,7 +28,7 @@ jobs:
         - {
             name: "Orthanc-tcia", 
             repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-            revision: "default",
+            branch: "default",
             sourcesSubPath: "",
             artifact: "libOrthancTcia.dylib",
             extraCMakeFlags: ""
