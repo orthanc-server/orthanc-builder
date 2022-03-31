@@ -41,8 +41,7 @@ jobs:
       run: |
         brew install mercurial
         hg clone ${{matrix.config.repo}} -r ${{matrix.config.branch}} ${{github.workspace}}/sources
-        cd ${{github.workspace}}/sources
-        last_commit_id=$(hg id -i)
+        last_commit_id=$(cd ${{github.workspace}}/sources && hg id -i)
         already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/${{matrix.config.artifact}}.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
         echo '::set-output name=ALREADY_BUILT::$already_built'
         echo '::set-output name=LAST_COMMIT_ID::$last_commit_id'
@@ -55,11 +54,12 @@ jobs:
         make -j 6
 
     - name: Run unit tests
-      if: ${{ matrix.config.unitTests }}
+      if: ${{ !steps.check-last-build.outputs.ALREADY_BUILT && matrix.config.unitTests }}
       run: ${{ matrix.config.unitTests }}
       working-directory: ${{github.workspace}}/build
 
     - name: upload-artifact-1
+      if: ${{ !steps.check-last-build.outputs.ALREADY_BUILT }}
       run: |
         cp ${{github.workspace}}/build/${{matrix.config.artifact}} ${{github.workspace}}/build/${{matrix.config.artifact}}.${{steps.check-last-build.outputs.LAST_COMMIT_ID}}
         cp ${{github.workspace}}/build/${{matrix.config.artifact}} ${{github.workspace}}/build/${{matrix.config.artifact}}.${{matrix.config.branch}}
