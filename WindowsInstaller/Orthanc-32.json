@@ -155,7 +155,7 @@
             "Category": "plugins",
             "Artifacts": [
                 ["DicomWeb 1.7 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
-            ]
+            ],
             "Resources": [
                 ["dicomweb.json", "Configuration"]
             ]
