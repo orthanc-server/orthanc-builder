@@ -2,63 +2,83 @@
 
 set -ex
 
-repo=https://hg.orthanc-server.com/orthanc-tcia
-branch=default
-workspace=workspace
-extraCMakeFlags=
-sourcesSubPath=
-unitTests=
-artifact=
-artifact2=
-artifact3=
-artifact4=
+# repo=https://hg.orthanc-server.com/orthanc-tcia
+# branch=default
+# workspace=workspace
+# extraCMakeFlags=
+# sourcesSubPath=
+# unitTests=
+# artifact=
+# artifact2=
+# artifact3=
+# artifact4=
 
 
-#!/usr/bin/env bash
+# #!/usr/bin/env bash
 
-while [ $# -gt 0 ]; do
-  case "$1" in
-    --repo)
-      repo="$2"
-      ;;
-    --branch)
-      branch="$2"
-      ;;
-    --workspace)
-      workspace="$2"
-      ;;
-    --extraCMakeFlags)
-      extraCMakeFlags="$2"
-      ;;
-    --sourcesSubPath)
-      sourcesSubPath="$2"
-      ;;
-    --unitTests)
-      unitTests="$2"
-      ;;
-    --artifact1)
-      artifact1="$2"
-      ;;
-    --artifact2)
-      artifact2="$2"
-      ;;
-    --artifact3)
-      artifact3="$2"
-      ;;
-    --artifact4)
-      artifact4="$2"
-      ;;
-    *)
-      printf "***************************\n"
-      printf "* Error: Invalid argument.*\n"
-      printf "***************************\n"
-      exit 1
-  esac
-  shift
-  shift
+# while [ $# -gt 0 ]; do
+#   case "$1" in
+#     --repo)
+#       repo="$2"
+#       ;;
+#     --branch)
+#       branch="$2"
+#       ;;
+#     --workspace)
+#       workspace="$2"
+#       ;;
+#     --extraCMakeFlags)
+#       extraCMakeFlags="$2"
+#       ;;
+#     --sourcesSubPath)
+#       sourcesSubPath="$2"
+#       ;;
+#     --unitTests)
+#       unitTests="$2"
+#       ;;
+#     --artifact1)
+#       artifact1="$2"
+#       ;;
+#     --artifact2)
+#       artifact2="$2"
+#       ;;
+#     --artifact3)
+#       artifact3="$2"
+#       ;;
+#     --artifact4)
+#       artifact4="$2"
+#       ;;
+#     *)
+#       printf "***************************\n"
+#       printf "* Error: Invalid argument.*\n"
+#       printf "***************************\n"
+#       exit 1
+#   esac
+#   shift
+#   shift
+# done
+
+for argument in "$@"
+do
+   key=$(echo $argument | cut -f1 -d=)
+
+   key_length=${#key}
+   VALUE="${argument:$key_length+1}"
+
+   export "$key"="$value"
 done
 
-
+# use here your expected variables
+echo "workspace = $workspace"
+echo "repo = $repo"
+echo "branch = $branch"
+echo "extraCMakeFlags = $extraCMakeFlags"
+echo "sourcesSubPath = $sourcesSubPath"
+echo "unitTests = $unitTests"
+echo "artifact = $artifact"
+echo "artifact2 = $artifact2"
+echo "artifact3 = $artifact3"
+echo "artifact4 = $artifact4"
 
 hg clone $repo -r $branch $workspace/sources
 
