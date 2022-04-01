@@ -33,7 +33,8 @@ jobs:
     needs: [get-build-matrix]
     strategy:
       fail-fast: false
-      matrix: ${{fromJSON(needs.get-build-matrix.outputs.matrix)}}
+      matrix: 
+        config: ${{fromJSON(needs.get-build-matrix.outputs.matrix)}}
         # config:
         # - {
         #     name: "Orthanc", 

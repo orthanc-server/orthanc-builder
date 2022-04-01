@@ -5,5 +5,5 @@
         "repoType": "hg",
         "branches": "OrthancTcia-1.1;default",
         "artifactsOSX": "libOrthancTcia.dylib"
-        }
+    }
 ]
