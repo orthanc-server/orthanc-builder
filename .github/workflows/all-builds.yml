@@ -421,25 +421,29 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Push with branch/tag
-      uses: docker/build-push-action@v2
-      with:
-        context: docker/orthanc/
-        platforms: ${{ matrix.config.platform }}
-        push: true
-        tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
-        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
-        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+      run: ./local-build.sh stable linux/amd64 0 1 ${{ needs.pre-build.outputs.current_branch_tag }} 1
+
+      # uses: docker/build-push-action@v2
+      # with:
+      #   context: docker/orthanc/
+      #   platforms: ${{ matrix.config.platform }}
+      #   push: true
+      #   tags: osimis/orthanc:${{ needs.pre-build.outputs.current_branch_tag }}  # push with branch name or tag
+      #   cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+      #   cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
 
     - name: Push with latest tag
       uses: docker/build-push-action@v2
       if: needs.pre-build.outputs.is_tag == 'true'
-      with:
-        context: docker/orthanc/
-        platforms: ${{ matrix.config.platform }}
-        push: true
-        tags: osimis/orthanc:latest
-        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
-        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+      run: ./local-build.sh stable linux/amd64 0 1 latest 1
+
+      # with:
+      #   context: docker/orthanc/
+      #   platforms: ${{ matrix.config.platform }}
+      #   push: true
+      #   tags: osimis/orthanc:latest
+      #   cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+      #   cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
 
     - name: Update DockerHub repo description
       uses: peter-evans/dockerhub-description@v2
