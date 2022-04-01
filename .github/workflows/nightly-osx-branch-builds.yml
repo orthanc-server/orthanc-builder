@@ -11,13 +11,28 @@ on:
 
 jobs:
 
+  get-build-matrix:
+    name: get-build-matrix
+    runs-on: "ubuntu-latest"
+    outputs:
+      matrix: ${{ steps.read-matrix.outputs.matrix }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Read build matrix
+      id: read-matrix
+      run: echo "::set-output name=matrix::$(cat build-matrix.json)"
+
+
   build-osx-branches:
     name: build-osx-branches
     runs-on: "macos-latest"
+    needs: [get-build-matrix]
     strategy:
       fail-fast: false
-      matrix:
-        config:
+      matrix: ${{fromJSON(needs.get-build-matrix.outputs.matrix)}}
+        # config:
         # - {
         #     name: "Orthanc", 
         #     repo: "https://hg.orthanc-server.com/orthanc/",
@@ -30,12 +45,12 @@ jobs:
         #     extraCMakeFlags: "",
         #     unitTests: "./UnitTests"
         #   },
-        - {
-            name: "Orthanc-tcia", 
-            repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-            branches: "default;OrthancTcia-1.1",
-            artifactsOSX: "libOrthancTcia.dylib"
-          }
+        # - {
+        #     name: "Orthanc-tcia", 
+        #     repo: "https://hg.orthanc-server.com/orthanc-tcia/",
+        #     branches: "default;OrthancTcia-1.1",
+        #     artifactsOSX: "libOrthancTcia.dylib"
+        #   }
 
     steps:
     - uses: actions/checkout@v2
