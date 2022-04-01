@@ -63,7 +63,7 @@ do
    key=$(echo $argument | cut -f1 -d=)
 
    key_length=${#key}
-   VALUE="${argument:$key_length+1}"
+   value="${argument:$key_length+1}"
 
    export "$key"="$value"
 done
