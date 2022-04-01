@@ -53,7 +53,7 @@ jobs:
     - name: Build unstable if required
       id: build-unstable
       run: |
-        brew install mercurial
+        rm -rf ${{github.workspace}}/sources
         ./build-osx-branch.sh version=unstable configName="${{matrix.name}}" workspace="${{github.workspace}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
