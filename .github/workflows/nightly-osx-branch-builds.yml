@@ -54,7 +54,7 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@main        
         with:
           inputFile: 'build-matrix.json'
-          filter: 'configs'
+          filter: '[]'
 
       - name: output
         run: |
