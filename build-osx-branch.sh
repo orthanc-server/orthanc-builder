@@ -95,9 +95,10 @@ if [[ $already_built == 0 ]]; then
         $unitTests
     fi
 
-    cp $workspace/build/$artifact $workspace/build/$artifact.$last_commit_id
-    cp $workspace/build/$artifact $workspace/build/$artifact.$branch
-    aws s3 --region eu-west-1 cp $workspace s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --exclude "*" --include "$artifact.*" --cache-control=max-age=1
+    mkdir /tmp/artifacts
+    cp $workspace/build/$artifact /tmp/artifacts/$artifact.$last_commit_id
+    cp $workspace/build/$artifact /tmp/artifacts/$artifact.$branch
+    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --cache-control=max-age=1
 
 fi
  
