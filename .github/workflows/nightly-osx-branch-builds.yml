@@ -42,7 +42,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build stable if required
-      id: build
+      id: build-stable
       run: |
         brew install mercurial
         ./build-osx-branch.sh version=stable configName="${{matrix.name}}" workspace="${{github.workspace}}"
@@ -51,7 +51,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Build unstable if required
-      id: build
+      id: build-unstable
       run: |
         brew install mercurial
         ./build-osx-branch.sh version=unstable configName="${{matrix.name}}" workspace="${{github.workspace}}"
