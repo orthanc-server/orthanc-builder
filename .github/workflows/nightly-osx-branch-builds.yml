@@ -32,7 +32,7 @@ jobs:
 
       - name: output from json
         run: |
-          echo ${{fromJSON${{steps.set-matrix.outputs.matrix}}}}
+          echo ${{fromJSON(${{steps.set-matrix.outputs.matrix}})}}
 
     # outputs:
     #   matrix: ${{ steps.read-matrix.outputs.matrix }}
