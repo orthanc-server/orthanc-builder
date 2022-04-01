@@ -11,36 +11,6 @@ on:
 
 jobs:
 
-  matrix_prep:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      # Required as the JSON input file needs to be read
-      - uses: actions/checkout@v2      
-
-      - id: set-matrix
-        uses: JoshuaTheMiller/conditional-build-matrix@main        
-        with:
-          # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
-          filter: '[]'   
-
-      - name: output
-        run: |
-          echo ${{steps.set-matrix.outputs.matrix}}
-
-        
-  build:
-    needs: matrix_prep
-    strategy:      
-      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
-    name: Build
-    runs-on: ${{ matrix.runs_on }}
-    steps:
-    - name: Echo
-      run: echo "${{ matrix.runOn }}"
-
-
   get-build-matrix:
     name: get-build-matrix
     runs-on: "ubuntu-latest"
@@ -54,28 +24,11 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@main        
         with:
           inputFile: 'build-matrix.json'
-          filter: 'configs'
+          filter: 'configs[?runsOnOSX]'
 
       - name: output
         run: |
           echo ${{steps.set-matrix.outputs.matrix}}
-
-      - name: output from json
-        run: |
-          echo ${{fromJSON(steps.set-matrix.outputs.matrix)}}
-
-    # outputs:
-    #   matrix: ${{ steps.read-matrix.outputs.matrix }}
-
-    # steps:
-    # - uses: actions/checkout@v2
-
-    # - name: Read build matrix
-    #   id: read-matrix
-    #   run: |
-    #     JSON=$(cat ${{github.workspace}}/build-matrix.json)
-    #     echo "::set-output name=matrix::${JSON//'%'/'%25'}"
-
 
   build-osx-branches:
     name: build-osx-branches
