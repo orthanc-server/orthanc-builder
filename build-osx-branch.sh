@@ -26,12 +26,13 @@ echo "unitTests = $unitTests"
 echo "artifacts = $artifacts"
 
 hg clone $repo $workspace/sources
-cd $workspace/sources
+
 
 export IFS=";"  # separator for lists
 
 for branch in $branches; do
 
+    cd $workspace/sources
     hg update -r $branch
 
     # to know if a build has already been performed, check on S3 if a file has already been generated with this commit id

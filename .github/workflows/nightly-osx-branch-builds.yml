@@ -45,7 +45,7 @@ jobs:
       id: build
       run: |
         brew install mercurial
-        ./build-osx-branch.sh configName="${{matrix.name}}" repo="${{matrix.repo}}" branches="${{matrix.branches}}" workspace="${{github.workspace}}" sourcesSubPath="${{matrix.sourcesSubPath}}" unitTests="${{matrix.unitTests}}" extraCMakeFlags="${{matrix.extraCMakeFlags}}" artifacts="${{matrix.artifactsOSX}}"
+        ./build-osx-branch.sh configName="${{matrix.name}}" repo="${{matrix.repo}}" branches="${{matrix.branchesOSX}}" workspace="${{github.workspace}}" sourcesSubPath="${{matrix.sourcesSubPath}}" unitTests="${{matrix.unitTests}}" extraCMakeFlags="${{matrix.extraCMakeFlags}}" artifacts="${{matrix.artifactsOSX}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
