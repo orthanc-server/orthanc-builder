@@ -1,0 +1,75 @@
+name: nightly-osx-branch-builds
+
+# on:
+#   schedule:
+#     - cron: "0 * * * *"
+
+on:
+  push:
+    branches: 
+      - 'nightly-builds'
+
+jobs:
+
+  build-osx-branches:
+    name: build-osx-branches
+    runs-on: "macos-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        # - {
+        #     name: "Orthanc", 
+        #     repo: "https://hg.orthanc-server.com/orthanc/",
+        #     branch: "default",
+        #     sourcesSubPath: "/OrthancServer",
+        #     artifact: "Orthanc",
+        #     artifact2: "libModalityWorklists.dylib",
+        #     artifact3: "libServeFolders.dylib",
+        #     artifact4: "libConnectivityChecks.dylib",
+        #     extraCMakeFlags: "",
+        #     unitTests: "./UnitTests"
+        #   },
+        - {
+            name: "Orthanc-tcia", 
+            repo: "https://hg.orthanc-server.com/orthanc-tcia/",
+            branch: "default",
+            sourcesSubPath: "",
+            artifact: "libOrthancTcia.dylib",
+            extraCMakeFlags: ""
+          }
+
+    steps:
+
+    - name: Check last version has already been built
+      id: check-last-build
+      run: |
+        brew install mercurial
+        hg clone ${{matrix.config.repo}} -r ${{matrix.config.branch}} ${{github.workspace}}/sources
+        last_commit_id=$(cd ${{github.workspace}}/sources && hg id -i)
+        already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/${{matrix.config.artifact}}.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+        echo '::set-output name=ALREADY_BUILT::$already_built'
+        echo '::set-output name=LAST_COMMIT_ID::$last_commit_id'
+
+    - name: CMake Build
+      if: ${{ !steps.check-last-build.outputs.ALREADY_BUILT }}
+      run: |
+        cmake -B ${{github.workspace}}/build ${{matrix.config.extraCMakeFlags}} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  ${{github.workspace}}/sources${{matrix.config.sourcesSubPath}}
+        cd ${{github.workspace}}/build
+        make -j 6
+
+    - name: Run unit tests
+      if: ${{ !steps.check-last-build.outputs.ALREADY_BUILT && matrix.config.unitTests }}
+      run: ${{ matrix.config.unitTests }}
+      working-directory: ${{github.workspace}}/build
+
+    - name: upload-artifact-1
+      if: ${{ !steps.check-last-build.outputs.ALREADY_BUILT }}
+      run: |
+        cp ${{github.workspace}}/build/${{matrix.config.artifact}} ${{github.workspace}}/build/${{matrix.config.artifact}}.${{steps.check-last-build.outputs.LAST_COMMIT_ID}}
+        cp ${{github.workspace}}/build/${{matrix.config.artifact}} ${{github.workspace}}/build/${{matrix.config.artifact}}.${{matrix.config.branch}}
+        aws s3 --region eu-west-1 cp ${{github.workspace}} s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --exclude "*" --include "${{matrix.config.artifact}}.*" --cache-control=max-age=1
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+ 
