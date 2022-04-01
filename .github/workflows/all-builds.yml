@@ -261,7 +261,7 @@ jobs:
     #     path: /tmp/osx-package/Orthanc-OSX-${{needs.pre-build.outputs.current_branch_tag}}
 
     - name: Build osx package
-      run: ./buildOrthancOSX.sh ${{ needs.pre-build.outputs.is_tag }} ${{ needs.pre-build.outputs.current_branch_tag }} false true
+      run: ./build-osx-package.sh is_tag=${{ needs.pre-build.outputs.is_tag }} version=stable branchTagName=${{ needs.pre-build.outputs.current_branch_tag }}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
