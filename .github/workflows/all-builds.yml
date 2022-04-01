@@ -433,10 +433,10 @@ jobs:
       #   cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
 
     - name: Push with latest tag
-      uses: docker/build-push-action@v2
       if: needs.pre-build.outputs.is_tag == 'true'
       run: ./local-build.sh stable linux/amd64 0 1 latest 1
 
+      # uses: docker/build-push-action@v2
       # with:
       #   context: docker/orthanc/
       #   platforms: ${{ matrix.config.platform }}
