@@ -23,18 +23,18 @@ jobs:
         #     repo: "https://hg.orthanc-server.com/orthanc/",
         #     branch: "default",
         #     sourcesSubPath: "/OrthancServer",
-        #     artifact: "Orthanc",
-        #     artifact2: "libModalityWorklists.dylib",
-        #     artifact3: "libServeFolders.dylib",
-        #     artifact4: "libConnectivityChecks.dylib",
+        #     artifactsOSX: "Orthanc;libModalityWorklists.dylib;libServeFolders.dylib;libConnectivityChecks.dylib",
+        #     # artifact2: "libModalityWorklists.dylib",
+        #     # artifact3: "libServeFolders.dylib",
+        #     # artifact4: "libConnectivityChecks.dylib",
         #     extraCMakeFlags: "",
         #     unitTests: "./UnitTests"
         #   },
         - {
             name: "Orthanc-tcia", 
             repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-            branch: "default",
-            artifact: "libOrthancTcia.dylib"
+            branches: "default;OrthancTcia-1.1",
+            artifactsOSX: "libOrthancTcia.dylib"
           }
 
     steps:
@@ -44,7 +44,7 @@ jobs:
       id: build
       run: |
         brew install mercurial
-        ./build-osx-branch.sh repo="${{matrix.config.repo}}" branch="${{matrix.config.branch}}" workspace="${{github.workspace}}" sourcesSubPath="${{matrix.config.sourcesSubPath}}" unitTests="${{matrix.config.unitTests}}" extraCMakeFlags="${{matrix.config.extraCMakeFlags}}" artifact="${{matrix.config.artifact}}" artifact1="${{matrix.config.artifact1}}" artifact2="${{matrix.config.artifact2}}" artifact3="${{matrix.config.artifact3}}" artifact4="${{matrix.config.artifact4}}"
+        ./build-osx-branch.sh configName="${{matrix.config.name}}" repo="${{matrix.config.repo}}" branches="${{matrix.config.branches}}" workspace="${{github.workspace}}" sourcesSubPath="${{matrix.config.sourcesSubPath}}" unitTests="${{matrix.config.unitTests}}" extraCMakeFlags="${{matrix.config.extraCMakeFlags}}" artifacts="${{matrix.config.artifactsOSX}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

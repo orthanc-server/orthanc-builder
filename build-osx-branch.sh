@@ -2,62 +2,6 @@
 
 set -ex
 
-# repo=https://hg.orthanc-server.com/orthanc-tcia
-# branch=default
-# workspace=workspace
-# extraCMakeFlags=
-# sourcesSubPath=
-# unitTests=
-# artifact=
-# artifact2=
-# artifact3=
-# artifact4=
-
-
-# #!/usr/bin/env bash
-
-# while [ $# -gt 0 ]; do
-#   case "$1" in
-#     --repo)
-#       repo="$2"
-#       ;;
-#     --branch)
-#       branch="$2"
-#       ;;
-#     --workspace)
-#       workspace="$2"
-#       ;;
-#     --extraCMakeFlags)
-#       extraCMakeFlags="$2"
-#       ;;
-#     --sourcesSubPath)
-#       sourcesSubPath="$2"
-#       ;;
-#     --unitTests)
-#       unitTests="$2"
-#       ;;
-#     --artifact1)
-#       artifact1="$2"
-#       ;;
-#     --artifact2)
-#       artifact2="$2"
-#       ;;
-#     --artifact3)
-#       artifact3="$2"
-#       ;;
-#     --artifact4)
-#       artifact4="$2"
-#       ;;
-#     *)
-#       printf "***************************\n"
-#       printf "* Error: Invalid argument.*\n"
-#       printf "***************************\n"
-#       exit 1
-#   esac
-#   shift
-#   shift
-# done
-
 for argument in "$@"
 do
    key=$(echo $argument | cut -f1 -d=)
@@ -69,36 +13,96 @@ do
 done
 
 # use here your expected variables
+echo "configName = $configName"
 echo "workspace = $workspace"
 echo "repo = $repo"
-echo "branch = $branch"
+echo "branches = $branches"
 echo "extraCMakeFlags = $extraCMakeFlags"
 echo "sourcesSubPath = $sourcesSubPath"
 echo "unitTests = $unitTests"
-echo "artifact = $artifact"
-echo "artifact2 = $artifact2"
-echo "artifact3 = $artifact3"
-echo "artifact4 = $artifact4"
+echo "artifacts = $artifacts"
 
-hg clone $repo -r $branch $workspace/sources
+hg clone $repo $workspace/sources
 
-last_commit_id=$(cd $workspace/sources && hg id -i)
-already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$artifact.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+export IFS=";"  # separator for lists
 
-if [[ $already_built == 0 ]]; then
+for branch in $branches; do
 
-    cmake -B $workspace/build extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
-    cd $workspace/build
-    make -j 6
+    last_commit_id=$(cd $workspace/sources && hg id -i)
+    already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$artifact.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
-    if [[ $unitTests ]]; then
-        $unitTests
+    if [[ $already_built == 0 ]]; then
+
+        ######### pre-build steps
+        if [[ $configName == "Orthanc-stone" ]]; then
+            mkdir -p /tmp/downloads
+
+            # TODO: need to download the wasm-binaries for the right branch/version
+            # CHANGE_VERSION_STONE_WEB_VIEWER
+            wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet
+            unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads
+        fi
+
+        ########## build
+
+        if [[ $configName == "Orthanc-gdcm" ]]; then
+            # specific build for GDCM which can not be built in a single step
+            cmake -B $workspace/build-arm64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+            cd $workspace/build-arm64
+            make -j 6
+            cmake -B $workspace/build-amd64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+            cd $workspace/build-amd64
+            make -j 6
+            mkdir $workspace/build
+            lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib
+        
+        else
+            # generic build steps
+            cmake -B $workspace/build extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+            cd $workspace/build
+            make -j 6
+
+        fi
+
+        ########## test
+        if [[ $unitTests ]]; then
+            $unitTests
+        fi
+
+        ########## post-build
+
+
+        ########## upload
+        mkdir /tmp/artifacts
+
+        for artifact in $artifacts; do
+
+            cp $workspace/build/$artifact /tmp/artifacts/$artifact.$last_commit_id
+            cp $workspace/build/$artifact /tmp/artifacts/$artifact.$branch
+
+        done
+            # if [[ $artifact1 ]]; then
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact1.$last_commit_id
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact1.$branch
+            # fi
+
+            # if [[ $artifact2 ]]; then
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact2.$last_commit_id
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact2.$branch
+            # fi
+
+            # if [[ $artifact3 ]]; then
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact3.$last_commit_id
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact3.$branch
+            # fi
+
+            # if [[ $artifact4 ]]; then
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact4.$last_commit_id
+            #     cp $workspace/build/$artifact /tmp/artifacts/$artifact4.$branch
+            # fi
+
+        aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --cache-control=max-age=1
+
     fi
 
-    mkdir /tmp/artifacts
-    cp $workspace/build/$artifact /tmp/artifacts/$artifact.$last_commit_id
-    cp $workspace/build/$artifact /tmp/artifacts/$artifact.$branch
-    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --cache-control=max-age=1
-
-fi
- 
+done # for branch loop 
