@@ -24,7 +24,7 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@main        
         with:
           inputFile: 'build-matrix.json'
-          filter: 'configs[?runsOnOSX]'
+          filter: 'configs[?buildForOSX]'
 
       - name: output
         run: |
@@ -41,12 +41,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Build if required
+    - name: Build stable if required
       id: build
       run: |
         brew install mercurial
-        ./build-osx-branch.sh configName="${{matrix.name}}" repo="${{matrix.repo}}" branches="${{matrix.branchesOSX}}" workspace="${{github.workspace}}" sourcesSubPath="${{matrix.sourcesSubPath}}" unitTests="${{matrix.unitTests}}" extraCMakeFlags="${{matrix.extraCMakeFlags}}" artifacts="${{matrix.artifactsOSX}}"
+        ./build-osx-branch.sh version=stable configName="${{matrix.name}}" workspace="${{github.workspace}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+    - name: Build unstable if required
+      id: build
+      run: |
+        brew install mercurial
+        ./build-osx-branch.sh version=unstable configName="${{matrix.name}}" workspace="${{github.workspace}}"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

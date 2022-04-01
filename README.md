@@ -17,7 +17,7 @@ Windows Installer and OSX package are collecting build artifacts from the Orthan
 - [OSX package (Universal)](https://orthanc.osimis.io/osx/stable/orthancAndPluginsOSX.stable.zip)
 
 **Notes**: 
-- you can use this repo to build `linux/arm64` docker images but we are currently not able to build them on our build slaves because, with QEMU emulation, a build would take more than 12 hours which is the limit of github.  Simply use `./local-build.sh linux/arm64` to build these images.
+- you can use this repo to build `linux/arm64` docker images but we are currently not able to build them on our build slaves because, with QEMU emulation, a build would take more than 12 hours which is the limit of github.  Simply use `./local-build.sh stable linux/arm64` to build these images.
 - the OSX binaries are all Universal binaries except for the OsimisViewer and WSI plugins that are Intel binaries only.
 
 

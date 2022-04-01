@@ -12,8 +12,8 @@ FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-o
 
 FROM orthanc-builder-base as build-orthanc
 
-# CHANGE_VERSION_ORTHANC
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "d68b3a2cea17" /sources
+ARG ORTHANC_COMMIT_ID
+RUN hg clone https://hg.orthanc-server.com/orthanc/ -r $ORTHANC_COMMIT_ID /sources
 WORKDIR /build
 
 # note: building with static DCMTL while waiting for Debian bullseye to fix Dicom TLS issues (we need DCMTK 3.6.5)
@@ -25,8 +25,8 @@ RUN /build/UnitTests
 
 FROM orthanc-builder-base as build-gdcm
 
-# CHANGE_VERSION_GDCM
-RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r "OrthancGdcm-1.5" /sources
+ARG ORTHANC_GDCM_COMMIT_ID
+RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r $ORTHANC_GDCM_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
 RUN make -j 4

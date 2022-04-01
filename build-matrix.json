@@ -1,15 +1,37 @@
 {
     "configs": [
         {
+            "name": "XXXXX Sample configuration for documentation to list all fields", 
+            "repo": "https://hg.orthanc-server.com/orthanc/    path to repo",
+            "repoType": "hg                                    or git",
+            "sourcesSubPath": "/OrthancServer                  OPTIONAL path to CMakeLists.txt",
+            "comment": "# CHANGE_VERSION_XXX",
+            "stable": "XXX-1.1                                 Name of the stable branch/tag",
+            "unstable": "default                               Name of the unstable branch",
+            "stableOSX": "4b8fd4b10742                         OPTIONAL specific stable branch/tag for OSX",
+            "unstableOSX": "4b8fd4b10742                       OPTIONAL specific unstable branch/tag for OSX",
+            "stableDocker": "4b8fd4b10742                      OPTIONAL specific stable branch/tag for Docker",
+            "unstableDocker": "4b8fd4b10742                    OPTIONAL specific unstable branch/tag for Docker",
+            "artifactsOSX": "libOrthancGdcm.dylib;libZZ.dylib  list of ; separated artifacts for OSX",
+            "preBuildStableOSX": "                             OPTIONAL custom pre-build step for OSX",
+            "preBuildUnstableOSX": "                           OPTIONAL custom pre-build step for OSX",
+            "customBuildOSX": "                                OPTIONAL custom pre-build step for OSX",
+            "unitTests": "./UnitTests                          OPTIONAL",
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2    OPTIONAL",
+            "buildForOSX": false
+        },
+        {
             "name": "Orthanc", 
             "repo": "https://hg.orthanc-server.com/orthanc/",
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "branchesOSX": "d68b3a2cea17;default;more-tags",
+            "stable": "Orthanc-1.10.1",
+            "unstable": "more-tags",
+            "stableOSX": "d68b3a2cea17",
             "artifactsOSX": "Orthanc;libModalityWorklists.dylib;libServeFolders.dylib;libConnectivityChecks.dylib",
             "unitTests": "./UnitTests",
-            "runsOnOSX": true
+            "buildForOSX": true
         },
         {
             "name": "Orthanc-postgresql", 
@@ -17,9 +39,10 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "branchesOSX": "OrthancPostgreSQL-4.0;default",
+            "stable": "OrthancPostgreSQL-4.0",
+            "unstable": "default",
             "artifactsOSX": "libOrthancPostgreSQLIndex.dylib;libOrthancPostgreSQLStorage.dylib",
-            "runsOnOSX": true,
+            "buildForOSX": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
         },
         {
@@ -28,9 +51,10 @@
             "repoType": "hg",
             "sourcesSubPath": "/MySQL",
             "comment": "# CHANGE_VERSION_MYSQL",
-            "branchesOSX": "OrthancMySQL-4.3;default",
+            "stable": "OrthancMySQL-4.3",
+            "unstable": "default",
             "artifactsOSX": "libOrthancMySQLIndex.dylib;libOrthancMySQLStorage.dylib",
-            "runsOnOSX": true,
+            "buildForOSX": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
         },
         {
@@ -39,9 +63,10 @@
             "repoType": "hg",
             "sourcesSubPath": "/Odbc",
             "comment": "# CHANGE_VERSION_ODBC",
-            "branchesOSX": "OrthancOdbc-1.1;default",
+            "stable": "OrthancOdbc-1.1",
+            "unstable": "default",
             "artifactsOSX": "libOrthancOdbcIndex.dylib;libOrthancOdbcStorage.dylib",
-            "runsOnOSX": true,
+            "buildForOSX": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
         },
         {
@@ -49,9 +74,10 @@
             "repo": "https://hg.orthanc-server.com/orthanc-transfers/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TRANSFERS",
-            "branchesOSX": "49e9245b4005;default",
+            "stable": "49e9245b4005",
+            "unstable": "default",
             "artifactsOSX": "libOrthancTransfers.dylib",
-            "runsOnOSX": true,
+            "buildForOSX": true,
             "unitTests": "./UnitTests"
         },
         {
@@ -59,18 +85,20 @@
             "repo": "https://hg.orthanc-server.com/orthanc-indexer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_INDEXER",
-            "branchesOSX": "OrthancIndexer-1.0;default",
+            "stable": "OrthancIndexer-1.0",
+            "unstable": "default",
             "artifactsOSX": "libOrthancIndexer.dylib",
-            "runsOnOSX": true
+            "buildForOSX": true
         },
         {
             "name": "Orthanc-tcia", 
             "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TCIA",
-            "branchesOSX": "OrthancTcia-1.1;default",
+            "stable": "OrthancTcia-1.1",
+            "unstable": "default",
             "artifactsOSX": "libOrthancTcia.dylib",
-            "runsOnOSX": true
+            "buildForOSX": true
         },
         {
             "name": "Orthanc-python", 
@@ -79,7 +107,7 @@
             "comment": "# CHANGE_VERSION_PYTHON",
             "branchesOSX": "",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "runsOnOSX": false
+            "buildForOSX": false
         },
         {
             "name": "Orthanc-stone", 
@@ -87,10 +115,13 @@
             "repoType": "hg",
             "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
-            "branchesOSX": "StoneWebViewer-2.3",
+            "stable": "StoneWebViewer-2.3",
+            "unstable": "default",
             "artifactsOSX": "libStoneWebViewer.dylib",
             "commentOSX": "# currently always building with wasm-binaries from latest offical version",
-            "runsOnOSX": true,
+            "buildForOSX": true,
+            "preBuildStableOSX": "mkdir -p /tmp/downloads && wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
+            "preBuildUnstableOSX": "mkdir -p /tmp/downloads && wget https://lsb.orthanc-server.com/stone-webviewer/mainline/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
         },
         {
@@ -98,9 +129,10 @@
             "repo": "https://hg.orthanc-server.com/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
-            "branchesOSX": "c76d81c6fee8",
+            "stable": "OrthancDicomWeb-1.7",
+            "unstable": "more-tags",
             "artifactsOSX": "libOrthancDicomWeb.dylib",
-            "runsOnOSX": true,
+            "buildForOSX": true,
             "unitTests": "./UnitTests"
         },
         {
@@ -108,10 +140,12 @@
             "repo": "https://hg.orthanc-server.com/orthanc-gdcm/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GDCM",
-            "branchesOSX": "4b8fd4b10742",
+            "stable": "OrthancGdcm-1.5",
+            "unstable": "default",
+            "stableOSX": "4b8fd4b10742",
             "artifactsOSX": "libOrthancGdcm.dylib",
-            "runsOnOSX": true,
-            "unitTests": "./UnitTests"
+            "customBuildOSX" : "cmake -B $workspace/build-arm64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib             ",
+            "buildForOSX": true
         },
         {
             "name": "Orthanc-wsi", 
@@ -119,18 +153,20 @@
             "repoType": "hg",
             "sourcesSubPath": "/ViewerPlugin",
             "comment": "# CHANGE_VERSION_WSI",
-            "branchesOSX": "OrthancWSI-1.1",
+            "stable": "OrthancWSI-1.1",
+            "unstable": "default",
             "commentOSX": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
-            "runsOnOSX": false
+            "buildForOSX": false
         },
         {
             "name": "Orthanc-webviewer", 
             "repo": "https://hg.orthanc-server.com/orthanc-webviewer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
-            "branchesOSX": "OrthancWebViewer-2.8",
+            "stable": "OrthancWebViewer-2.8",
+            "unstable": "default",
             "artifactsOSX": "libOrthancWebViewer.dylib",
-            "runsOnOSX": true,
+            "buildForOSX": true,
             "unitTests": "./UnitTests"
         }
     ]
