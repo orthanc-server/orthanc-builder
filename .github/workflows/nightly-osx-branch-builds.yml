@@ -15,16 +15,28 @@ jobs:
     name: get-build-matrix
     runs-on: "ubuntu-latest"
     outputs:
-      matrix: ${{ steps.read-matrix.outputs.matrix }}
-
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - uses: actions/checkout@v2
+      # Required as the JSON input file needs to be read
+      - uses: actions/checkout@v2      
+    
+      - id: set-matrix
+        uses: JoshuaTheMiller/conditional-build-matrix@main        
+        with:
+          inputFile: 'build-matrix.json'
+          filter: 'configs'
 
-    - name: Read build matrix
-      id: read-matrix
-      run: |
-        JSON=$(cat ${{github.workspace}}/build-matrix.json)
-        echo "::set-output name=matrix::${JSON//'%'/'%25'}"
+    # outputs:
+    #   matrix: ${{ steps.read-matrix.outputs.matrix }}
+
+    # steps:
+    # - uses: actions/checkout@v2
+
+    # - name: Read build matrix
+    #   id: read-matrix
+    #   run: |
+    #     JSON=$(cat ${{github.workspace}}/build-matrix.json)
+    #     echo "::set-output name=matrix::${JSON//'%'/'%25'}"
 
 
   build-osx-branches:

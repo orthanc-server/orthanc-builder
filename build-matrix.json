@@ -1,9 +1,11 @@
-[
-    {
-        "name": "Orthanc-tcia", 
-        "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
-        "repoType": "hg",
-        "branches": "OrthancTcia-1.1;default",
-        "artifactsOSX": "libOrthancTcia.dylib"
-    }
-]
+{
+    "configs": [
+        {
+            "name": "Orthanc-tcia", 
+            "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
+            "repoType": "hg",
+            "branches": "OrthancTcia-1.1;default",
+            "artifactsOSX": "libOrthancTcia.dylib"
+        }
+    ]
+}
