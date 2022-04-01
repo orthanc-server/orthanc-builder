@@ -36,7 +36,7 @@ jobs:
             branch: "default",
             sourcesSubPath: "",
             artifact: "libOrthancTcia.dylib",
-            extraCMakeFlags: ""
+            extraCMakeFlags: "",
             unitTests: "None"
           }
 
