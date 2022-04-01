@@ -6,7 +6,7 @@ repo=https://hg.orthanc-server.com/orthanc-tcia
 branch=default
 workspace=workspace
 extraCMakeFlags=
-sourceSubPath=
+sourcesSubPath=
 unitTests=
 artifact=
 artifact2=
@@ -30,8 +30,8 @@ while [ $# -gt 0 ]; do
     --extraCMakeFlags)
       extraCMakeFlags="$2"
       ;;
-    --sourceSubPath)
-      sourceSubPath="$2"
+    --sourcesSubPath)
+      sourcesSubPath="$2"
       ;;
     --unitTests)
       unitTests="$2"
