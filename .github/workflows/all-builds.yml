@@ -396,16 +396,19 @@ jobs:
         cache-from: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
         cache-to: osimis/orthanc-builder-base:vcpkg-azure-${{ matrix.config.cache }}
 
-    - name: Build the osimis/orthanc Docker image (no push)
-      uses: docker/build-push-action@v2
-      with:
-        context: docker/orthanc/
-        file: docker/orthanc/Dockerfile
-        platforms: ${{ matrix.config.platform }}
-        push: true
-        tags: osimis/orthanc:current
-        cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
-        cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+    # - name: Build the osimis/orthanc Docker image (no push)
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: docker/orthanc/
+    #     file: docker/orthanc/Dockerfile
+    #     platforms: ${{ matrix.config.platform }}
+    #     push: true
+    #     tags: osimis/orthanc:current
+    #     cache-from: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+    #     cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
+
+    - name: Build with local-build.sh
+      run: ./local-build.sh stable linux/amd64 0 1
 
     - name: Run integration tests
       run: ./run-integration-tests.sh current

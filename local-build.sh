@@ -8,6 +8,7 @@ set -o xtrace
 version=${1:-stable}
 platform=${2:-linux/amd64}
 skipCommitChecks=${3:-0}     # when building locally, you might set this value to 1 to avoid translating branch into commit_id (faster)
+isCiBuild=${4:-0}             # when building on CI
 
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
@@ -15,7 +16,7 @@ skipCommitChecks=${3:-0}     # when building locally, you might set this value t
 getCommitId() { # $1 = name, $2 = version (stable or unstable)
     revision=$(cat build-matrix.json | jq -r ".configs[] | select( .name == \"$1\").$2")
 
-    if [[ $skipCommitChecks ]]; then
+    if [[ $skipCommitChecks == "1" ]]; then
         echo $revision
     else
         repo=$(cat build-matrix.json | jq -r ".configs[] | select( .name == \"$1\").repo")
@@ -42,13 +43,25 @@ ORTHANC_AZURE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-azure-storage" $version)
 ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version)
 ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version)
 
-# docker build --progress=plain --platform=$platform -t osimis/orthanc-runner-base:current -f docker/orthanc/Dockerfile.runner-base docker/orthanc
+if [[ $isCiBuild == "1" ]]; then
 
-# docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-base docker/orthanc
+    from_cache="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
+    to_cache="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
 
-# docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
-# docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
-# docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
+    # base images have already been built before in CI
+else
+    from_cache=
+    to_cache=
+
+    docker build --progress=plain --platform=$platform -t osimis/orthanc-runner-base:current -f docker/orthanc/Dockerfile.runner-base docker/orthanc
+
+    docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-base docker/orthanc
+
+    docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
+    docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
+    docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
+
+fi
 
 docker build \
   --progress=plain --platform=$platform -t osimis/orthanc:current --build-arg BASE_IMAGE_TAG=current \
@@ -69,4 +82,6 @@ docker build \
   --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
   --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
   --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
+  $from_cache \
+  $to_cache \
   -f docker/orthanc/Dockerfile  docker/orthanc/
