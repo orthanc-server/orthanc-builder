@@ -36,7 +36,7 @@ getPrebuildStepOSX() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
         prebuild=$(getFromMatrix $1 preBuildStableOSX "")
     else
-        prebuild=$(getFromMatrix $1 preBuildUntableOSX "")
+        prebuild=$(getFromMatrix $1 preBuildUnstableOSX "")
     fi
 
     echo $prebuild
