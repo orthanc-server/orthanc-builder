@@ -2,7 +2,7 @@ name: nightly-osx-branch-builds
 
 # on:
 #   schedule:
-#     - cron: "0 * * * *"
+#     - cron: "0 5 * * *"
 
 on:
   push:
@@ -58,3 +58,7 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
