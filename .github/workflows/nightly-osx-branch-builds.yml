@@ -26,6 +26,14 @@ jobs:
           inputFile: 'build-matrix.json'
           filter: 'configs'
 
+      - name: output
+        run: |
+          echo ${{steps.set-matrix.outputs.matrix}}
+
+      - name: output from json
+        run: |
+          echo ${{fromJSON${{steps.set-matrix.outputs.matrix}}}}
+
     # outputs:
     #   matrix: ${{ steps.read-matrix.outputs.matrix }}
 
