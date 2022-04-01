@@ -1,8 +1,13 @@
 name: nightly-osx-branch-builds
 
+# on:
+#   schedule:
+#     - cron: "0 * * * *"
+
 on:
-  schedule:
-    - cron: "0 * * * *"
+  push:
+    branches: 
+      - 'nightly-builds'
 
 jobs:
 
