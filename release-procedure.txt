@@ -16,6 +16,8 @@ Each time you want to release a new package (which means you'll upgrade the vers
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page (note, since 22.3.0, the latest
   windows installer is always copied under ...latest.exe)
 
+All version numbers shall be changed in build-matrix.json (and in release-notes-docker-images.txt + README-dockerhub.md)
+
 List of CHANGE_VERSION_ variables and their current values:
 - CHANGE_VERSION_ORTHANC
   - OSX: d68b3a2cea17 (more-tags)
@@ -43,3 +45,6 @@ List of CHANGE_VERSION_ variables and their current values:
 - CHANGE_VERSION_WSI: 1.1
 - CHANGE_VERSION_ORTHANC_EXPLORER_2: 5b20c3f07d4ae82ea79a69dba1a9d4173f0abef0
 - CHANGE_ORTHANC_TESTS_VERSION: ee398adfeb8e
+- CHANGE_VERSION_AZURE_OBJECT_STORAGE: 1.3.3
+- CHANGE_VERSION_AWS_OBJECT_STORAGE: 1.3.3
+- CHANGE_VERSION_GOOGLE_OBJECT_STORAGE: 1.3.3

@@ -1,10 +1,14 @@
 #!/bin/bash
 
+# example to run locally:
+# ./buildOrthancOSX.sh false stable false true
 set -ex
 
 is_tag=${1:-false}
-branch_tag_name=${2:-22.3.0}       # CHANGE_VERSION_OSX
-download_from_buildbot=${3:-true}  # if false, we consider that binaries are already in /tmp/osx-package/Orthanc-OSX-$branch_tag_name
+version=${2:-stable}                            # or unstable
+download_from_buildbot=${3:-true}       # legacy
+download_from_nightly_osx_builds=${4:-false}
+
 
 URL='https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries/'
 TARGET='/tmp/osx-package/'
