@@ -100,7 +100,7 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (o
 
     if [[ $3 == "osx" ]]; then
         revision=$(getBranchTagToBuildOSX $1 $2)
-    elif [[ $3 == "win"]]; then
+    elif [[ $3 == "win" ]]; then
         exit 1 # TODO
     else
         revision=$(getBranchTagToBuildDocker $1 $2)
