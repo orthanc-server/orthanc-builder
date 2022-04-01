@@ -87,8 +87,11 @@ for branch in $branches; do
 
         for artifact in $artifacts; do
 
-            cp $workspace/build/$artifact /tmp/artifacts/$artifact.$last_commit_id
-            cp $workspace/build/$artifact /tmp/artifacts/$artifact.$branch
+            if [ -f "$workspace/build/$artifact" ]; then  # some artifacts may not exist for some branches
+
+                cp $workspace/build/$artifact /tmp/artifacts/$artifact.$last_commit_id
+                cp $workspace/build/$artifact /tmp/artifacts/$artifact.$branch
+            fi
 
         done
             # if [[ $artifact1 ]]; then

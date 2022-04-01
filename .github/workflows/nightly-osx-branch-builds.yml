@@ -37,25 +37,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{fromJSON(needs.get-build-matrix.outputs.matrix)}}
-        # config:
-        # - {
-        #     name: "Orthanc", 
-        #     repo: "https://hg.orthanc-server.com/orthanc/",
-        #     branch: "default",
-        #     sourcesSubPath: "/OrthancServer",
-        #     artifactsOSX: "Orthanc;libModalityWorklists.dylib;libServeFolders.dylib;libConnectivityChecks.dylib",
-        #     # artifact2: "libModalityWorklists.dylib",
-        #     # artifact3: "libServeFolders.dylib",
-        #     # artifact4: "libConnectivityChecks.dylib",
-        #     extraCMakeFlags: "",
-        #     unitTests: "./UnitTests"
-        #   },
-        # - {
-        #     name: "Orthanc-tcia", 
-        #     repo: "https://hg.orthanc-server.com/orthanc-tcia/",
-        #     branches: "default;OrthancTcia-1.1",
-        #     artifactsOSX: "libOrthancTcia.dylib"
-        #   }
 
     steps:
     - uses: actions/checkout@v2

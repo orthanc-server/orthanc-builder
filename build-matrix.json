@@ -1,12 +1,137 @@
 {
     "configs": [
         {
+            "name": "Orthanc", 
+            "repo": "https://hg.orthanc-server.com/orthanc/",
+            "repoType": "hg",
+            "sourcesSubPath": "/OrthancServer",
+            "comment": "# CHANGE_VERSION_ORTHANC",
+            "branches": "Orthanc-1.10.1;default;more-tags",
+            "artifactsOSX": "Orthanc;libModalityWorklists.dylib;libServeFolders.dylib;libConnectivityChecks.dylib",
+            "unitTests": "./UnitTests",
+            "runsOnOSX": true
+        },
+        {
+            "name": "Orthanc-postgresql", 
+            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repoType": "hg",
+            "sourcesSubPath": "/PostgreSQL",
+            "comment": "# CHANGE_VERSION_PG",
+            "branches": "OrthancPostgreSQL-4.0;default",
+            "artifactsOSX": "libOrthancPostgreSQLIndex.dylib;libOrthancPostgreSQLStorage.dylib",
+            "runsOnOSX": true,
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
+        },
+        {
+            "name": "Orthanc-mysql", 
+            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repoType": "hg",
+            "sourcesSubPath": "/MySQL",
+            "comment": "# CHANGE_VERSION_MYSQL",
+            "branches": "OrthancPostgreSQL-4.3;default",
+            "artifactsOSX": "libOrthancMySQLIndex.dylib;libOrthancMySQLStorage.dylib",
+            "runsOnOSX": true,
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
+        },
+        {
+            "name": "Orthanc-odbc", 
+            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repoType": "hg",
+            "sourcesSubPath": "/Odbc",
+            "comment": "# CHANGE_VERSION_ODBC",
+            "branches": "OrthancPostgreSQL-4.3;default",
+            "artifactsOSX": "libOrthancOdbcIndex.dylib;libOrthancOdbcStorage.dylib",
+            "runsOnOSX": true,
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
+        },
+        {
+            "name": "Orthanc-transfers", 
+            "repo": "https://hg.orthanc-server.com/orthanc-transfers/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_TRANSFERS",
+            "branches": "49e9245b4005;default",
+            "artifactsOSX": "libOrthancTransfers.dylib",
+            "runsOnOSX": true,
+            "unitTests": "./UnitTests"
+        },
+        {
+            "name": "Orthanc-indexer", 
+            "repo": "https://hg.orthanc-server.com/orthanc-indexer/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_INDEXER",
+            "branches": "OrthancIndexer-1.0;default",
+            "artifactsOSX": "libOrthancIndexer.dylib",
+            "runsOnOSX": true
+        },
+        {
             "name": "Orthanc-tcia", 
             "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
             "repoType": "hg",
+            "comment": "# CHANGE_VERSION_TCIA",
             "branches": "OrthancTcia-1.1;default",
             "artifactsOSX": "libOrthancTcia.dylib",
-            "runsOnOSX": "true"
+            "runsOnOSX": true
+        },
+        {
+            "name": "Orthanc-python", 
+            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "branches": "TODO",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "runsOnOSX": false
+        },
+        {
+            "name": "Orthanc-stone", 
+            "repo": "https://hg.orthanc-server.com/orthanc-stone/",
+            "repoType": "hg",
+            "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
+            "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
+            "branches": "StoneWebViewer-2.3",
+            "artifactsOSX": "libStoneWebViewer.dylib",
+            "commentOSX": "# currently always building with wasm-binaries from latest offical version",
+            "runsOnOSX": true,
+            "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
+        },
+        {
+            "name": "Orthanc-dicomweb", 
+            "repo": "https://hg.orthanc-server.com/orthanc-dicomweb/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_DW",
+            "branches": "c76d81c6fee8",
+            "artifactsOSX": "libOrthancDicomWeb.dylib",
+            "runsOnOSX": true,
+            "unitTests": "./UnitTests"
+        },
+        {
+            "name": "Orthanc-gdcm", 
+            "repo": "https://hg.orthanc-server.com/orthanc-gdcm/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_GDCM",
+            "branches": "4b8fd4b10742",
+            "artifactsOSX": "libOrthancGdcm.dylib",
+            "runsOnOSX": true,
+            "unitTests": "./UnitTests"
+        },
+        {
+            "name": "Orthanc-wsi", 
+            "repo": "https://hg.orthanc-server.com/orthanc-wsi/",
+            "repoType": "hg",
+            "sourcesSubPath": "/ViewerPlugin",
+            "comment": "# CHANGE_VERSION_WSI",
+            "branches": "OrthancWSI-1.1",
+            "commentOSX": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
+            "runsOnOSX": false
+        },
+        {
+            "name": "Orthanc-webviewer", 
+            "repo": "https://hg.orthanc-server.com/orthanc-webviewer/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
+            "branches": "OrthancWebViewer-2.8",
+            "artifactsOSX": "libOrthancWebViewer.dylib",
+            "runsOnOSX": true,
+            "unitTests": "./UnitTests"
         }
     ]
     
