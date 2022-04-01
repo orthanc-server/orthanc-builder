@@ -37,10 +37,11 @@ jobs:
             sourcesSubPath: "",
             artifact: "libOrthancTcia.dylib",
             extraCMakeFlags: "",
-            unitTests: "None"
+            unitTests: ""
           }
 
     steps:
+    - uses: actions/checkout@v2
 
     - name: Build if required
       id: build
