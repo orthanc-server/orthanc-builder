@@ -22,7 +22,7 @@ jobs:
 
     - name: Read build matrix
       id: read-matrix
-      run: echo "::set-output name=matrix::$(cat build-matrix.json)"
+      run: echo ::set-output name=matrix::{\"include\":$(cat build-matrix.json)}\"
 
 
   build-osx-branches:
