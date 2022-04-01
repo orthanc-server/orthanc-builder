@@ -5,6 +5,12 @@
 
 set -ex
 
+# https://stackoverflow.com/a/4774063/881731
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+source $SCRIPTPATH/bash-helpers.sh
+
+
 for argument in "$@"
 do
    key=$(echo $argument | cut -f1 -d=)
@@ -15,56 +21,7 @@ do
    export "$key"="$value"
 done
 
-getFromMatrix() { # $1 = name, $2 = field, $3 = defaultValue
-    value=$(cat build-matrix.json | jq -r ".configs[] | select( .name == \"$1\").$2")
-    if [[ $value == "null" ]]; then
-        echo $3
-    else
-        echo $value
-    fi
-}
 
-getBranchTagToBuild() { # $1 = name, $2 = version (stable or unstable)
-    if [[ $2 == "stable" ]]; then
-
-        revision=$(getFromMatrix $1 stableOSX)
-
-        if [[ $revision == "" ]]; then
-            revision=$(getFromMatrix $1 stable)
-        fi
-
-    else
-
-        revision=$(getFromMatrix $1 unstableOSX)
-
-        if [[ $revision == "" ]]; then
-            revision=$(getFromMatrix $1 unstable)
-        fi
-
-    fi
-
-    echo $revision
-}
-
-getPrebuildStep() { # $1 = name, $2 = version (stable or unstable)
-    if [[ $2 == "stable" ]]; then
-        prebuild=$(getFromMatrix $1 preBuildStableOSX "")
-    else
-        prebuild=$(getFromMatrix $1 preBuildUntableOSX "")
-    fi
-
-    echo $prebuild
-}
-
-getCustomBuild() { # $1 = name, $2 = version (stable or unstable)
-    if [[ $2 == "stable" ]]; then
-        prebuild=$(getFromMatrix $1 customBuildOSX "")
-    else
-        prebuild=$(getFromMatrix $1 customBuildOSX "")
-    fi
-
-    echo $prebuild
-}
 
 getCommitId() { # $1 = name, $2 = version (stable or unstable)
 
@@ -75,14 +32,14 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable)
 }
 
 commit_id=$(getCommitId $configName $version)
-branchTag=$(getBranchTagToBuild $configName $version)
+branchTag=$(getBranchTagToBuildOSX $configName $version)
 repo=$(getFromMatrix $configName repo)
 extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags)
 sourcesSubPath=$(getFromMatrix $configName sourcesSubPath)
 unitTests=$(getFromMatrix $configName unitTests)
 artifacts=$(getFromMatrix $configName artifactsOSX)
-prebuildStep=$(getPrebuildStep $configName $version)
-customBuild=$(getCustomBuild $configName $version)
+prebuildStep=$(getPrebuildStepOSX $configName $version)
+customBuild=$(getCustomBuildOSX $configName $version)
 extraCMakeFlagsOSX=$(getFromMatrix $configName extraCMakeFlagsOSX)
 
 echo "configName = $configName"
@@ -101,7 +58,7 @@ echo "extraCMakeFlagsOSX = $extraCMakeFlagsOSX"
 hg clone $repo $workspace/sources
 
 
-export IFS=";"  # separator for lists
+# export IFS=";"  # separator for lists
 
 cd $workspace/sources
 hg update -r $branchTag
