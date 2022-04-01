@@ -23,7 +23,7 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@main        
         with:
           # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
-          filter: '[?runOnBranch==`${{ github.ref }}` || runOnBranch==`always`]'   
+          filter: '[]'   
 
       - name: output
         run: |
