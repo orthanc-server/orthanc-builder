@@ -45,13 +45,15 @@ ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version)
 
 if [[ $isCiBuild == "1" ]]; then
 
-    from_cache="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
-    to_cache="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
+    from_cache_arg="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
+    to_cache_arg="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
 
     # base images have already been built before in CI
+    base_image_tag_arg=
 else
-    from_cache=
-    to_cache=
+    from_cache_arg=
+    to_cache_arg=
+    base_image_tag_arg="--build-arg BASE_IMAGE_TAG=current"
 
     docker build --progress=plain --platform=$platform -t osimis/orthanc-runner-base:current -f docker/orthanc/Dockerfile.runner-base docker/orthanc
 
@@ -64,7 +66,7 @@ else
 fi
 
 docker build \
-  --progress=plain --platform=$platform -t osimis/orthanc:current --build-arg BASE_IMAGE_TAG=current \
+  --progress=plain --platform=$platform -t osimis/orthanc:current \
   --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
   --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
   --build-arg ORTHANC_PG_COMMIT_ID=$ORTHANC_PG_COMMIT_ID \
@@ -82,6 +84,7 @@ docker build \
   --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
   --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
   --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
+  $base_image_tag_arg \
   $from_cache \
   $to_cache \
   -f docker/orthanc/Dockerfile  docker/orthanc/
