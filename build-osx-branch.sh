@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# sample command
+# ./build-osx-branch.sh configName="Orthanc-tcia" repo="https://hg.orthanc-server.com/orthanc-tcia/" branches="default;OrthancTcia-1.1" workspace="/tmp/orthanc-builder" sourcesSubPath="" unitTests="" extraCMakeFlags="" artifacts="libOrthancTcia.dylib"
+
 set -ex
 
 for argument in "$@"
@@ -23,13 +26,20 @@ echo "unitTests = $unitTests"
 echo "artifacts = $artifacts"
 
 hg clone $repo $workspace/sources
+cd $workspace/sources
 
 export IFS=";"  # separator for lists
 
 for branch in $branches; do
 
+    hg update -r $branch
+
+    # to know if a build has already been performed, check on S3 if a file has already been generated with this commit id
+    read -a artifacts_array <<< "$artifacts"
+    first_artifact=${artifacts_array[0]}
+
     last_commit_id=$(cd $workspace/sources && hg id -i)
-    already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$artifact.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$first_artifact.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
     if [[ $already_built == 0 ]]; then
 
