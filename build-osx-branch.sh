@@ -22,7 +22,7 @@ do
 done
 
 
-commit_id=$(getCommitId $configName $version)
+commit_id=$(getCommitId $configName $version osx)
 branchTag=$(getBranchTagToBuildOSX $configName $version)
 repo=$(getFromMatrix $configName repo)
 repoType=$(getFromMatrix $configName repoType)

@@ -52,9 +52,60 @@ getCustomBuildOSX() { # $1 = name, $2 = version (stable or unstable)
     echo $prebuild
 }
 
-getCommitId() { # $1 = name, $2 = version (stable or unstable)
+getBranchTagToBuildDocker() { # $1 = name, $2 = version (stable or unstable)
+    if [[ $2 == "stable" ]]; then
 
-    revision=$(getBranchTagToBuild $1 $2)
+        revision=$(getFromMatrix $1 stableDocker)
+
+        if [[ $revision == "" ]]; then
+            revision=$(getFromMatrix $1 stable)
+        fi
+
+    else
+
+        revision=$(getFromMatrix $1 unstableDocker)
+
+        if [[ $revision == "" ]]; then
+            revision=$(getFromMatrix $1 unstable)
+        fi
+
+    fi
+
+    echo $revision
+}
+
+getBranchTagToBuildWin() { # $1 = name, $2 = version (stable or unstable)
+    if [[ $2 == "stable" ]]; then
+
+        revision=$(getFromMatrix $1 stableWin)
+
+        if [[ $revision == "" ]]; then
+            revision=$(getFromMatrix $1 stable)
+        fi
+
+    else
+
+        revision=$(getFromMatrix $1 unstableWin)
+
+        if [[ $revision == "" ]]; then
+            revision=$(getFromMatrix $1 unstable)
+        fi
+
+    fi
+
+    echo $revision
+}
+
+getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (osx/win/docker)
+
+    if [[ $3 == "osx" ]]; then
+        revision=$(getBranchTagToBuildOSX $1 $2)
+    elif [[ $3 == "win"]]; then
+        exit 1 # TODO
+    else
+        revision=$(getBranchTagToBuildDocker $1 $2)
+    fi
+
     repo=$(getFromMatrix $1 repo)
     repoType=$(getFromMatrix $1 repoType)
     
