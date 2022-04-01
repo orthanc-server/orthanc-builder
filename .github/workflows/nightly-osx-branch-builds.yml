@@ -34,10 +34,7 @@ jobs:
             name: "Orthanc-tcia", 
             repo: "https://hg.orthanc-server.com/orthanc-tcia/",
             branch: "default",
-            sourcesSubPath: "",
-            artifact: "libOrthancTcia.dylib",
-            extraCMakeFlags: "",
-            unitTests: ""
+            artifact: "libOrthancTcia.dylib"
           }
 
     steps:
