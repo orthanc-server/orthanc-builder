@@ -38,15 +38,12 @@ cp ${SCRIPTPATH}/orthancBuildResources/readmeOSX.txt ${TARGET}/${FOLDER}/readme.
 cp ${SCRIPTPATH}/orthancBuildResources/startOrthanc.command ${TARGET}/${FOLDER}
 cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt ${TARGET}/${FOLDER}
 
-# IFS=";"  # separator for lists
-
 
 downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
     echo "downloading $1";
     artifacts=$(getFromMatrix $1 artifactsOSX)
     branchTag=$(getBranchTagToBuildOSX $1 $version)
  
-    # IFS=" "  # separator for lists (don't know why here, artifacts are separated by spaces)
     for artifact in $artifacts; do
         wget "https://orthanc.osimis.io/nightly-osx-builds/$artifact.$branchTag" --output-document ${TARGET}/${FOLDER}/$artifact || true
     done
@@ -57,15 +54,16 @@ downloadArtifacts() { # $1 config_name
     artifacts=$(getFromMatrix $1 downloadForOSX)
     branchTag=$(getBranchTagToBuildOSX $1 $version)
  
-    # IFS=" "  # separator for lists (don't know why here, artifacts are separated by spaces)
     for artifact in $artifacts; do
         wget "$downloadForOSX/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact || true
     done
 }
 
-# IFS=";"  # separator for lists
+# extract tuple from build-matrix and cycle through all config
 while read -r config_name build_for_osx download_for_osx; do
-    echo $config_name $build_for_osx
+    
+    echo $config_name $build_for_osx $download_for_osx
+    
     if [[ "$build_for_osx" == "true" ]]; then
         downloadArtifactsFromOrthancOsimisIo $config_name
     elif [[ "$download_for_osx" == "true" ]]; then

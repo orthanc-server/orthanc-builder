@@ -34,6 +34,7 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable)
 commit_id=$(getCommitId $configName $version)
 branchTag=$(getBranchTagToBuildOSX $configName $version)
 repo=$(getFromMatrix $configName repo)
+repoType=$(getFromMatrix $configName repoType)
 extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags)
 sourcesSubPath=$(getFromMatrix $configName sourcesSubPath)
 unitTests=$(getFromMatrix $configName unitTests)
@@ -42,11 +43,13 @@ prebuildStep=$(getPrebuildStepOSX $configName $version)
 customBuild=$(getCustomBuildOSX $configName $version)
 extraCMakeFlagsOSX=$(getFromMatrix $configName extraCMakeFlagsOSX)
 
+
 echo "configName = $configName"
 echo "version = $version"
 echo "branchTag = $branchTag"
 echo "workspace = $workspace"
 echo "repo = $repo"
+echo "repoType = $repoType"
 echo "extraCMakeFlags = $extraCMakeFlags"
 echo "sourcesSubPath = $sourcesSubPath"
 echo "unitTests = $unitTests"
@@ -55,13 +58,19 @@ echo "prebuildStep = $prebuildStep"
 echo "customBuild = $customBuild"
 echo "extraCMakeFlagsOSX = $extraCMakeFlagsOSX"
 
-hg clone $repo $workspace/sources
+if [[ $repoType == "hg" ]]; then
 
+    hg clone $repo $workspace/sources
+    cd $workspace/sources
+    hg update -r $branchTag
 
-# export IFS=";"  # separator for lists
+elif [[ $repoType == "git" ]]; then
 
-cd $workspace/sources
-hg update -r $branchTag
+    git clone $repo $workspace/sources
+    cd $workspace/sources
+    git checkout $branchTag
+
+fi
 
 # to know if a build has already been performed, check on S3 if a file has already been generated with this commit id
 read -a artifacts_array <<< "$artifacts"

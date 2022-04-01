@@ -219,6 +219,18 @@
             "buildForOSX": false,
             "artifactsOSX": "libOrthancExplorer2-universal.dylib",
             "downloadForOSX": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/"
+        },
+        {
+            "name": "osimis-viewer", 
+            "repo": "https://bitbucket.org/osimis/osimis-webviewer-plugin/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_WVB",
+            "stable": "e930729",
+            "unstable": "e930729",
+            "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DVIEWER_VERSION_FULL=1.4.2-0-g9d9eff4 -DDORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=frontend-build",
+            "unitTests": "./UnitTests",
+            "artifactsOSX": "libOsimisWebViewer.dylib"
         }
     ]
     
