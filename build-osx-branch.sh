@@ -22,15 +22,6 @@ do
 done
 
 
-
-getCommitId() { # $1 = name, $2 = version (stable or unstable)
-
-    revision=$(getBranchTagToBuild $1 $2)
-    repo=$(getFromMatrix $1 repo)
-    commit_id=$(hg identify $repo -r $revision)
-    echo $commit_id
-}
-
 commit_id=$(getCommitId $configName $version)
 branchTag=$(getBranchTagToBuildOSX $configName $version)
 repo=$(getFromMatrix $configName repo)

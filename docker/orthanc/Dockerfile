@@ -200,7 +200,7 @@ ARG ORTHANC_AZURE_STORAGE_COMMIT_ID
 WORKDIR /sources
 RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $ORTHANC_AZURE_STORAGE_COMMIT_ID
 
-# CHANGE_VERSION_ORTHANC (framework version used to build the cloud storage plugins)
+# (framework version used to build the cloud storage plugins)
 RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
 
 # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
@@ -222,7 +222,7 @@ WORKDIR /sources
 ARG ORTHANC_GOOGLE_STORAGE_COMMIT_ID
 RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $ORTHANC_GOOGLE_STORAGE_COMMIT_ID
 
-# CHANGE_VERSION_ORTHANC (framework version used to build the cloud storage plugins)
+# (framework version used to build the cloud storage plugins)
 RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
 
 # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
@@ -252,7 +252,7 @@ WORKDIR /sources
 ARG ORTHANC_AWS_STORAGE_COMMIT_ID
 RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $ORTHANC_AWS_STORAGE_COMMIT_ID
 
-# CHANGE_VERSION_ORTHANC (framework version used to build the cloud storage plugins)
+# (framework version used to build the cloud storage plugins)
 RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
 
 RUN mkdir -p /build/cloud-storage/aws

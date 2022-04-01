@@ -5,6 +5,8 @@ set -o xtrace
 # ./local-build.sh
 # ./local-build.sh stable linux/amd64 1
 
+source bash-helpers.sh
+
 version=${1:-stable}
 platform=${2:-linux/amd64}
 skipCommitChecks=${3:-0}      # when building locally, you might set this value to 1 to avoid translating branch into commit_id (faster)
@@ -16,18 +18,6 @@ if [[ $push == "0" ]]; then  # either we push or we build !
 
     # get version number from build-matrix.json (stable or unstable)
     # note: we get the last commit id from a branch to detect last changes in a branch
-
-    getCommitId() { # $1 = name, $2 = version (stable or unstable)
-        revision=$(cat build-matrix.json | jq -r ".configs[] | select( .name == \"$1\").$2")
-
-        if [[ $skipCommitChecks == "1" ]]; then
-            echo $revision
-        else
-            repo=$(cat build-matrix.json | jq -r ".configs[] | select( .name == \"$1\").repo")
-            commit_id=$(hg identify $repo -r $revision)
-            echo $commit_id
-        fi
-    }
 
     ORTHANC_COMMIT_ID=$(getCommitId "Orthanc" $version)
     ORTHANC_GDCM_COMMIT_ID=$(getCommitId "Orthanc-gdcm" $version)

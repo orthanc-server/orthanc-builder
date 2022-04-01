@@ -51,3 +51,26 @@ getCustomBuildOSX() { # $1 = name, $2 = version (stable or unstable)
 
     echo $prebuild
 }
+
+getCommitId() { # $1 = name, $2 = version (stable or unstable)
+
+    revision=$(getBranchTagToBuild $1 $2)
+    repo=$(getFromMatrix $1 repo)
+    repoType=$(getFromMatrix $1 repoType)
+    
+    if [[ $repoType == "hg" ]]; then
+
+        commit_id=$(hg identify $repo -r $revision)
+
+    elif [[ $repoType == "git" ]]; then
+
+        tmp=$(mktemp -d -t git-check-last-commit-XXXXXXXXXXX)
+        git clone --filter=blob:none --no-checkout  https://bitbucket.org/osimis/osimis-webviewer-plugin/ $tmp
+        pushd $tmp
+        commit_id=$(git rev-parse $revision)
+        popd
+
+    fi
+
+    echo $commit_id
+}

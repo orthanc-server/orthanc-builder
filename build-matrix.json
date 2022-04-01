@@ -6,8 +6,8 @@
             "repoType": "hg                                    or git",
             "sourcesSubPath": "/OrthancServer                  OPTIONAL path to CMakeLists.txt",
             "comment": "# CHANGE_VERSION_XXX",
-            "stable": "XXX-1.1                                 Name of the stable branch/tag",
-            "unstable": "default                               Name of the unstable branch",
+            "stable": "XXX-1.1                                 Name of the stable branch/tag: used by Docker/Win/OSX if not overriden",
+            "unstable": "default                               Name of the unstable branch: used by Docker/Win/OSX if not overriden",
             "stableOSX": "4b8fd4b10742                         OPTIONAL specific stable branch/tag for OSX",
             "unstableOSX": "4b8fd4b10742                       OPTIONAL specific unstable branch/tag for OSX",
             "stableDocker": "4b8fd4b10742                      OPTIONAL specific stable branch/tag for Docker",
@@ -33,7 +33,6 @@
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForOSX": true
-            
         },
         {
             "name": "Orthanc-postgresql", 
@@ -225,8 +224,8 @@
             "repo": "https://bitbucket.org/osimis/osimis-webviewer-plugin/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_WVB",
-            "stable": "e930729",
-            "unstable": "e930729",
+            "stable": "1.4.2",
+            "unstable": "1.4.2",
             "buildForOSX": true,
             "extraCMakeFlagsOSX": "-DVIEWER_VERSION_FULL=1.4.2-0-g9d9eff4 -DDORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=frontend-build",
             "unitTests": "./UnitTests",

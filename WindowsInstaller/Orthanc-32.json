@@ -9,9 +9,6 @@
             "Mandatory": true,
             "Artifacts": [
                 ["Orthanc 1.10.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
-            ],
-            "NightlyArtifacts": [
-                ["Orthanc mainline - VC2008-32 Release/Orthanc.exe", "", "Comment:"]
             ]
         },
 
@@ -48,9 +45,6 @@
             "Artifacts": [
                 ["Transfers 1.0 - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
             ],
-            "NightlyArtifacts": [
-                ["Transfers mainline - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment:"]
-            ],
             "Resources": [
                 ["transfers.json", "Configuration"]
             ]
@@ -61,9 +55,6 @@
             "Category": "osimis",
             "Artifacts": [
                 ["Authorization 0.2.4 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
-            ],
-            "NightlyArtifacts": [
-                ["Authorization 0.2.4 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment:"]
             ]
         },
         {
@@ -85,9 +76,6 @@
             "Artifacts": [
                 ["FolderIndexer 1.0 - VC2008-32 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
             ],
-            "NightlyArtifacts": [
-                ["FolderIndexer mainline - VC2008-32 Release/OrthancIndexer.dll", "Plugins", "Comment:"]
-            ],
             "Resources": [
                 ["indexer.json", "Configuration"]
             ]
@@ -98,9 +86,6 @@
             "Category": "plugins",
             "Artifacts": [
                 ["Tcia 1.1 - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
-            ],
-            "NightlyArtifacts": [
-                ["Tcia mainline - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment:"]
             ],
             "Resources": [
                 ["tcia.json", "Configuration"]
@@ -125,9 +110,6 @@
             "Artifacts": [
                 ["Orthanc 1.10.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
-            "NightlyArtifacts": [
-                ["Orthanc mainline - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment:"]
-            ],
             "Resources": [
                 ["worklists.json", "Configuration"]
             ]
@@ -139,9 +121,6 @@
             "Artifacts": [
                 ["Orthanc 1.10.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
             ],
-            "NightlyArtifacts": [
-                ["Orthanc mainline - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment:"]
-            ],
             "Resources": [
                 ["serve-folders.json", "Configuration"]
             ]
@@ -152,9 +131,6 @@
             "Category": "plugins",
             "Artifacts": [
                 ["Orthanc 1.10.1 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
-            ],
-            "NightlyArtifacts": [
-                ["Orthanc mainline - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment:"]
             ]
         },
         {
@@ -163,9 +139,6 @@
             "Category": "plugins",
             "Artifacts": [
                 ["Gdcm 1.5 - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
-            ],
-            "NightlyArtifacts": [
-                ["Gdcm mainline - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment:"]
             ]
         },
         {
@@ -174,9 +147,6 @@
             "Category": "plugins",
             "Artifacts": [
                 ["WebViewer 2.8 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
-            ],
-            "NightlyArtifacts": [
-                ["WebViewer mainline - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment:"]
             ]
         },
         {
@@ -185,10 +155,7 @@
             "Category": "plugins",
             "Artifacts": [
                 ["DicomWeb 1.7 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
-            ],
-            "NightlyArtifacts": [
-                ["DicomWeb mainline - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment:"]
-            ],
+            ]
             "Resources": [
                 ["dicomweb.json", "Configuration"]
             ]
@@ -211,9 +178,6 @@
             "Category": "plugins",
             "Artifacts": [
                 ["WSI 1.1 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
-            ],
-            "NightlyArtifacts": [
-                ["WSI mainline - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment:"]
             ]
         },
 
@@ -223,9 +187,6 @@
             "Category": "tools",
             "Artifacts": [
                 ["Orthanc 1.10.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
-            ],
-            "NightlyArtifacts": [
-                ["Orthanc mainline - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment:"]
             ]
         },
         {
@@ -236,10 +197,6 @@
             "Artifacts": [
                 ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
                 ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
-            ],
-            "NightlyArtifacts": [
-                ["WSI mainline - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment:"],
-                ["WSI mainline - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment:"]
             ]
         },
         {
