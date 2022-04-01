@@ -30,8 +30,10 @@
             "unstable": "more-tags",
             "stableOSX": "d68b3a2cea17",
             "artifactsOSX": "Orthanc;libModalityWorklists.dylib;libServeFolders.dylib;libConnectivityChecks.dylib",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForOSX": true
+            
         },
         {
             "name": "Orthanc-postgresql", 
@@ -105,7 +107,8 @@
             "repo": "https://hg.orthanc-server.com/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "branchesOSX": "",
+            "stable": "OrthancPython-4.0",
+            "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false
         },
@@ -168,6 +171,43 @@
             "artifactsOSX": "libOrthancWebViewer.dylib",
             "buildForOSX": true,
             "unitTests": "./UnitTests"
+        },
+        {
+            "name": "Orthanc-auth", 
+            "repo": "https://hg.orthanc-server.com/orthanc-authorization/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_AUTH",
+            "stable": "0.2.4",
+            "unstable": "default",
+            "artifactsOSX": "libOrthancAuthorization.dylib",
+            "buildForOSX": false
+        },
+        {
+            "name": "Orthanc-azure-storage", 
+            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
+            "stable": "1.3.3",
+            "unstable": "default",
+            "buildForOSX": false
+        },
+        {
+            "name": "Orthanc-google-storage", 
+            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
+            "stable": "1.3.3",
+            "unstable": "default",
+            "buildForOSX": false
+        },
+        {
+            "name": "Orthanc-aws-storage", 
+            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
+            "stable": "1.3.3",
+            "unstable": "default",
+            "buildForOSX": false
         }
     ]
     

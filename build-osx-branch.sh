@@ -77,12 +77,13 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable)
 commit_id=$(getCommitId $configName $version)
 branchTag=$(getBranchTagToBuild $configName $version)
 repo=$(getFromMatrix $configName repo)
-extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags "")
-sourcesSubPath=$(getFromMatrix $configName sourcesSubPath "")
-unitTests=$(getFromMatrix $configName unitTests "")
-artifacts=$(getFromMatrix $configName artifactsOSX "")
+extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags)
+sourcesSubPath=$(getFromMatrix $configName sourcesSubPath)
+unitTests=$(getFromMatrix $configName unitTests)
+artifacts=$(getFromMatrix $configName artifactsOSX)
 prebuildStep=$(getPrebuildStep $configName $version)
 customBuild=$(getCustomBuild $configName $version)
+extraCMakeFlagsOSX=$(getFromMatrix $configName extraCMakeFlagsOSX)
 
 echo "configName = $configName"
 echo "version = $version"
@@ -95,6 +96,7 @@ echo "unitTests = $unitTests"
 echo "artifacts = $artifacts"
 echo "prebuildStep = $prebuildStep"
 echo "customBuild = $customBuild"
+echo "extraCMakeFlagsOSX = $extraCMakeFlagsOSX"
 
 hg clone $repo $workspace/sources
 
@@ -126,7 +128,7 @@ if [[ $already_built == 0 ]]; then
     else
     
         # generic build steps
-        cmake -B $workspace/build extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
         cd $workspace/build
         make -j 6
     
