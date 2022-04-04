@@ -201,10 +201,10 @@ jobs:
     #     cache-to: osimis/orthanc-builder-base:main-${{ matrix.config.cache }}
 
     - name: Build with local-build.sh
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build finalTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
 
     - name: Run integration tests
-      run: ./run-integration-tests.sh current
+      run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} tagToTest=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     # - name: Login to DockerHub
@@ -214,7 +214,7 @@ jobs:
     #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Push with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push pushTag=${{ needs.pre-build.outputs.current_branch_tag }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push pushTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
       # run: ./local-build.sh ${{ matrix.config.stableUnstable }} ${{ matrix.config.platform }} 0 1 ${{ needs.pre-build.outputs.current_branch_tag }} 1
 
       # uses: docker/build-push-action@v2
