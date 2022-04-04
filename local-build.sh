@@ -15,7 +15,9 @@ skipCommitChecks=0
 platform=linux/amd64
 type=local
 step=build
+currentTag=current
 pushTag=unknown
+
 
 for argument in "$@"
 do
@@ -32,11 +34,8 @@ echo "platform         = $platform"
 echo "type             = $type"
 echo "skipCommitChecks = $skipCommitChecks"
 echo "step             = $step"
+echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
-
-# debian_base_version="bullseye-20220328-slim"
-current_tag="current-$version"
-
 
 
 # get version number from build-matrix.json (stable or unstable)
@@ -83,23 +82,23 @@ if [[ $type == "local" ]]; then
     build="build"
     push_load_arg=
 else
-    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
-    to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$version"
+    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$currentTag"
+    to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$currentTag"
 
-    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
-    to_cache_arg_builder_base="--cache-to=osimis/orthanc-builder-base:cache-$version"
+    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$currentTag"
+    to_cache_arg_builder_base="--cache-to=osimis/orthanc-builder-base:cache-$currentTag"
 
-    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
-    to_cache_arg_builder_vcpkg="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-$version"
+    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$currentTag"
+    to_cache_arg_builder_vcpkg="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-$currentTag"
 
-    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
-    to_cache_arg_builder_vcpkg_azure="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
+    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$currentTag"
+    to_cache_arg_builder_vcpkg_azure="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-azure-$currentTag"
 
-    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
-    to_cache_arg_builder_vcpkg_google="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
+    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$currentTag"
+    to_cache_arg_builder_vcpkg_google="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-google-$currentTag"
 
-    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
-    to_cache_arg="--cache-to=osimis/orthanc-builder-base:cache-main-$version"
+    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$currentTag"
+    to_cache_arg="--cache-to=osimis/orthanc-builder-base:cache-main-$currentTag"
 
     # when building in CI, use buildx
     build="buildx build"
@@ -115,7 +114,7 @@ fi
 
 ###### runner-base
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$current_tag \
+    --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$currentTag \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
     $push_load_arg \
@@ -123,38 +122,38 @@ docker $build \
 
 ###### builder-base
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$current_tag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$currentTag \
     $from_cache_arg_builder_base \
     $to_cache_arg_builder_base \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$current_tag \
+    --build-arg BASE_IMAGE_TAG=$currentTag \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
 ###### builder-base-vcpkg
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$current_tag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$currentTag \
     $from_cache_arg_builder_vcpkg \
     $to_cache_arg_builder_vcpkg \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$current_tag \
+    --build-arg BASE_IMAGE_TAG=$currentTag \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
 
 ###### builder-base-vcpkg-azure
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$current_tag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$currentTag \
     $from_cache_arg_builder_vcpkg_azure \
     $to_cache_arg_builder_vcpkg_azure \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$current_tag \
+    --build-arg BASE_IMAGE_TAG=$currentTag \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
 
 ###### builder-base-vcpkg-google
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$current_tag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$currentTag \
     $from_cache_arg_builder_vcpkg_google \
     $to_cache_arg_builder_vcpkg_google \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$current_tag \
+    --build-arg BASE_IMAGE_TAG=$currentTag \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
 
 
@@ -164,7 +163,7 @@ if [[ $step == "push" ]]; then
 
 else
 
-    final_tag=$current_tag
+    final_tag=$currentTag
 
 fi
 
@@ -188,7 +187,7 @@ docker $build \
     --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
-    --build-arg BASE_IMAGE_TAG=$current_tag \
+    --build-arg BASE_IMAGE_TAG=$currentTag \
     $from_cache \
     $to_cache \
     $push_load_arg \
