@@ -61,45 +61,45 @@ if [[ $step == "build" ]]; then
     ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version docker $skipCommitChecks)
     ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks)
 
-    if [[ $type == "local" ]]; then
-        from_cache_arg_runner_base=
-        to_cache_arg_runner_base=
+    # if [[ $type == "local" ]]; then
+    #     from_cache_arg_runner_base=
+    #     to_cache_arg_runner_base=
 
-        from_cache_arg_builder_base=
-        to_cache_arg_builder_base=
+    #     from_cache_arg_builder_base=
+    #     to_cache_arg_builder_base=
 
-        from_cache_arg_builder_vcpkg=
-        to_cache_arg_builder_vcpkg=
+    #     from_cache_arg_builder_vcpkg=
+    #     to_cache_arg_builder_vcpkg=
 
-        from_cache_arg_builder_vcpkg_azure=
-        to_cache_arg_builder_vcpkg_azure=
+    #     from_cache_arg_builder_vcpkg_azure=
+    #     to_cache_arg_builder_vcpkg_azure=
 
-        from_cache_arg_builder_vcpkg_google=
-        to_cache_arg_builder_vcpkg_google=
+    #     from_cache_arg_builder_vcpkg_google=
+    #     to_cache_arg_builder_vcpkg_google=
 
-        from_cache_arg=
-        to_cache_arg=
+    #     from_cache_arg=
+    #     to_cache_arg=
 
-    else
-        from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
-        to_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
+    # else
+    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
+    to_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
 
-        from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
-        to_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
+    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
+    to_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
 
-        from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
-        to_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
+    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
+    to_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
 
-        from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
-        to_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
+    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
+    to_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
 
-        from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
-        to_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
+    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
+    to_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
 
-        from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
-        to_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
+    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
+    to_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
 
-    fi
+    # fi
 
     runner_base_tag=$debian_base_version
     builder_base_tag=$debian_base_version
@@ -118,6 +118,7 @@ if [[ $step == "build" ]]; then
 
     if [[ $type == "ci" ]]; then
         docker push osimis/orthanc-runner-base:$runner_base_tag
+        docker push osimis/orthanc-runner-base:cache-$version
     fi
 
     ###### builder-base
@@ -130,6 +131,7 @@ if [[ $step == "build" ]]; then
 
     if [[ $type == "ci" ]]; then
         docker push osimis/orthanc-builder-base:$builder_base_tag
+        docker push osimis/orthanc-builder-base:cache-$version
     fi
 
     ###### builder-base-vcpkg
@@ -142,6 +144,7 @@ if [[ $step == "build" ]]; then
 
     if [[ $type == "ci" ]]; then
         docker push osimis/orthanc-builder-base:$builder_vcpkg_tag
+        docker push osimis/orthanc-builder-base:cache-vcpkg-$version
     fi
 
     ###### builder-base-vcpkg-azure
@@ -154,6 +157,7 @@ if [[ $step == "build" ]]; then
 
     if [[ $type == "ci" ]]; then
         docker push osimis/orthanc-builder-base:$builder_vcpkg_azure_tag
+        docker push osimis/orthanc-builder-base:cache-vcpkg-azure-$version
     fi
 
     ###### builder-base-vcpkg-google
@@ -166,6 +170,7 @@ if [[ $step == "build" ]]; then
 
     if [[ $type == "ci" ]]; then
         docker push osimis/orthanc-builder-base:$builder_vcpkg_google_tag
+        docker push osimis/orthanc-builder-base:cache-vcpkg-google-$version
     fi
 
     ###### osimis/orthanc
@@ -194,7 +199,8 @@ if [[ $step == "build" ]]; then
         -f docker/orthanc/Dockerfile  docker/orthanc/
 
     if [[ $type == "ci" ]]; then
-        docker push osimis/orthanc-builder-base:$builder_vcpkg_google_tag
+        docker push osimis/orthanc-builder-base:$final_image_temporary_tag
+        docker push osimis/orthanc-builder-base:cache-main-$version
     fi
 
 elif [[ $step == "push" ]]; then
