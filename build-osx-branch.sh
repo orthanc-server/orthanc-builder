@@ -54,20 +54,20 @@ if [[ $repoType == "hg" ]]; then
     hg clone $repo $workspace/sources
     cd $workspace/sources
     hg update -r $branchTag
+    last_commit_id=$(hg id -i)
 
 elif [[ $repoType == "git" ]]; then
 
     git clone $repo $workspace/sources
     cd $workspace/sources
     git checkout $branchTag
-
+    last_commit_id=$(git rev-parse $branchTag)
 fi
 
 # to know if a build has already been performed, check on S3 if a file has already been generated with this commit id
 read -a artifacts_array <<< "$artifacts"
 first_artifact=${artifacts_array[0]}
 
-last_commit_id=$(cd $workspace/sources && hg id -i)
 already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$first_artifact.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
