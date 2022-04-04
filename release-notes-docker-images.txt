@@ -1,3 +1,4 @@
+          - upgraded base image to debian:bullseye-20220328-slim
           - first version of Orthanc Explorer 2
 22.3.0 :  - upgraded Stone Web viewer plugin to 2.3
           - updated Orthanc to 1.10.1

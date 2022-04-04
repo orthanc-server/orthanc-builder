@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_TAG=bullseye-20220125
+ARG BASE_IMAGE_TAG=current
 
 FROM osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
 

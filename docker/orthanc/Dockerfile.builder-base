@@ -1,6 +1,6 @@
 ########################## Orthanc builder base
 # image to compile Orthanc and its plugins dynamically
-ARG BASE_IMAGE_TAG=bullseye-20220125
+ARG BASE_IMAGE_TAG=current
 FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG}
 
 RUN export DEBIAN_FRONTEND=noninteractive
