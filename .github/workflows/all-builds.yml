@@ -88,6 +88,7 @@ jobs:
             cache: "cache-amd64-stable",
             stableUnstable: "stable"
           }
+        # TODO: remove that config once it is successfull (it is handled by nightly-unstable-packages.yml)
         - {
             name: "linux/amd64",
             platform: "linux/amd64",
