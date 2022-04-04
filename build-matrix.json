@@ -1,4 +1,9 @@
 {
+    "integrationTests" : {
+        "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
+        "stable": "Orthanc-1.10.1",
+        "unstable": "more-tags"
+    },
     "configs": [
         {
             "name": "XXXXX Sample configuration for documentation to list all fields", 

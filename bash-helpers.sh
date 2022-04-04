@@ -9,6 +9,10 @@ getFromMatrix() { # $1 = name, $2 = field, $3 = defaultValue
     fi
 }
 
+getIntegTestsRevision() { # $1 = stable/unstable
+    value=$(cat build-matrix.json | jq -r ".integrationTests.$1")    
+    echo $value
+}
 
 getBranchTagToBuildOSX() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
@@ -96,7 +100,13 @@ getBranchTagToBuildWin() { # $1 = name, $2 = version (stable or unstable)
     echo $revision
 }
 
-getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (osx/win/docker)
+getHgCommitId() { # $1 = repo, $2 = branch/tag/revision
+    commit_id=$(hg identify $1 -r $2)
+    echo $commit_id
+}
+
+
+getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (osx/win/docker), $4 = skipCommitCheck (0/1)
 
     if [[ $3 == "osx" ]]; then
         revision=$(getBranchTagToBuildOSX $1 $2)
@@ -106,12 +116,18 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (o
         revision=$(getBranchTagToBuildDocker $1 $2)
     fi
 
+    if [[ $4 == "1" ]]; then
+        echo $revision
+        return
+    fi
+
+    # get the last commit id for this revision
     repo=$(getFromMatrix $1 repo)
     repoType=$(getFromMatrix $1 repoType)
     
     if [[ $repoType == "hg" ]]; then
 
-        commit_id=$(hg identify $repo -r $revision)
+        commit_id=$(getHgCommitId $repo $revision)
 
     elif [[ $repoType == "git" ]]; then
 

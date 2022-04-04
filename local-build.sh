@@ -1,92 +1,205 @@
-set -o errexit
-set -o xtrace
+set -ex
 
 # example
-# ./local-build.sh
-# ./local-build.sh stable linux/amd64 1
+# To build locally:
+# ./local-build.sh 
+# ./local-build.sh version=unstable skipCommitChecks=1
+# To build from CI:
+# ./local-build.sh version=stable platform=linux/amd64 type=ci step=push pushTag=22.3.0
 
 source bash-helpers.sh
 
-version=${1:-stable}
-platform=${2:-linux/amd64}
-skipCommitChecks=${3:-0}      # when building locally, you might set this value to 1 to avoid translating branch into commit_id (faster)
-isCiBuild=${4:-0}             # when building on CI
-branchTagName=${5:-unknown}   # when building on CI
-push=${6:-0}                  # when building on CI
+# default arg values
+version=stable
+skipCommitChecks=0
+platform=linux/amd64
+type=local
+step=build
+pushTag=unknown
 
-if [[ $push == "0" ]]; then  # either we push or we build !
+for argument in "$@"
+do
+   key=$(echo $argument | cut -f1 -d=)
+
+   key_length=${#key}
+   value="${argument:$key_length+1}"
+
+   export "$key"="$value"
+done
+
+echo "version          = $version"
+echo "platform         = $platform"
+echo "type             = $type"
+echo "skipCommitChecks = $skipCommitChecks"
+echo "step             = $step"
+echo "pushTag          = $pushTag"
+
+debian_base_version="bullseye-20220125"
+final_image_temporary_tag="current-$debian_base_version"
+
+
+if [[ $step == "build" ]]; then
 
     # get version number from build-matrix.json (stable or unstable)
     # note: we get the last commit id from a branch to detect last changes in a branch
 
-    ORTHANC_COMMIT_ID=$(getCommitId "Orthanc" $version docker)
-    ORTHANC_GDCM_COMMIT_ID=$(getCommitId "Orthanc-gdcm" $version docker)
-    ORTHANC_PG_COMMIT_ID=$(getCommitId "Orthanc-postgresql" $version docker)
-    ORTHANC_MYSQL_COMMIT_ID=$(getCommitId "Orthanc-mysql" $version docker)
-    ORTHANC_TRANSFERS_COMMIT_ID=$(getCommitId "Orthanc-transfers" $version docker)
-    ORTHANC_DW_COMMIT_ID=$(getCommitId "Orthanc-dicomweb" $version docker)
-    ORTHANC_WSI_COMMIT_ID=$(getCommitId "Orthanc-wsi" $version docker)
-    ORTHANC_OWV_COMMIT_ID=$(getCommitId "Orthanc-webviewer" $version docker)
-    ORTHANC_AUTH_COMMIT_ID=$(getCommitId "Orthanc-auth" $version docker)
-    ORTHANC_PYTHON_COMMIT_ID=$(getCommitId "Orthanc-python" $version docker)
-    ORTHANC_ODBC_COMMIT_ID=$(getCommitId "Orthanc-odbc" $version docker)
-    ORTHANC_INDEXER_COMMIT_ID=$(getCommitId "Orthanc-indexer" $version docker)
-    ORTHANC_TCIA_COMMIT_ID=$(getCommitId "Orthanc-tcia" $version docker)
-    ORTHANC_STONE_VIEWER_COMMIT_ID=$(getCommitId "Orthanc-stone" $version docker)
-    ORTHANC_AZURE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-azure-storage" $version docker)
-    ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version docker)
-    ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker)
+    ORTHANC_COMMIT_ID=$(getCommitId "Orthanc" $version docker $skipCommitChecks)
+    ORTHANC_GDCM_COMMIT_ID=$(getCommitId "Orthanc-gdcm" $version docker $skipCommitChecks)
+    ORTHANC_PG_COMMIT_ID=$(getCommitId "Orthanc-postgresql" $version docker $skipCommitChecks)
+    ORTHANC_MYSQL_COMMIT_ID=$(getCommitId "Orthanc-mysql" $version docker $skipCommitChecks)
+    ORTHANC_TRANSFERS_COMMIT_ID=$(getCommitId "Orthanc-transfers" $version docker $skipCommitChecks)
+    ORTHANC_DW_COMMIT_ID=$(getCommitId "Orthanc-dicomweb" $version docker $skipCommitChecks)
+    ORTHANC_WSI_COMMIT_ID=$(getCommitId "Orthanc-wsi" $version docker $skipCommitChecks)
+    ORTHANC_OWV_COMMIT_ID=$(getCommitId "Orthanc-webviewer" $version docker $skipCommitChecks)
+    ORTHANC_AUTH_COMMIT_ID=$(getCommitId "Orthanc-auth" $version docker $skipCommitChecks)
+    ORTHANC_PYTHON_COMMIT_ID=$(getCommitId "Orthanc-python" $version docker $skipCommitChecks)
+    ORTHANC_ODBC_COMMIT_ID=$(getCommitId "Orthanc-odbc" $version docker $skipCommitChecks)
+    ORTHANC_INDEXER_COMMIT_ID=$(getCommitId "Orthanc-indexer" $version docker $skipCommitChecks)
+    ORTHANC_TCIA_COMMIT_ID=$(getCommitId "Orthanc-tcia" $version docker $skipCommitChecks)
+    ORTHANC_STONE_VIEWER_COMMIT_ID=$(getCommitId "Orthanc-stone" $version docker $skipCommitChecks)
+    ORTHANC_AZURE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-azure-storage" $version docker $skipCommitChecks)
+    ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version docker $skipCommitChecks)
+    ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks)
 
-    if [[ $isCiBuild == "1" ]]; then
+    if [[ $type == "local" ]]; then
+        from_cache_arg_runner_base=
+        to_cache_arg_runner_base=
 
-        from_cache_arg="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
-        to_cache_arg="--cache-from=osimis/orthanc-builder-base:main-cache-amd64"
+        from_cache_arg_builder_base=
+        to_cache_arg_builder_base=
 
-        # base images have already been built before in CI
-        base_image_tag_arg=
-    else
+        from_cache_arg_builder_vcpkg=
+        to_cache_arg_builder_vcpkg=
+
+        from_cache_arg_builder_vcpkg_azure=
+        to_cache_arg_builder_vcpkg_azure=
+
+        from_cache_arg_builder_vcpkg_google=
+        to_cache_arg_builder_vcpkg_google=
+
         from_cache_arg=
         to_cache_arg=
-        base_image_tag_arg="--build-arg BASE_IMAGE_TAG=current"
 
-        docker build --progress=plain --platform=$platform -t osimis/orthanc-runner-base:current -f docker/orthanc/Dockerfile.runner-base docker/orthanc
+    else
+        from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
+        to_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$version"
 
-        docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-base docker/orthanc
+        from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
+        to_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$version"
 
-        docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
-        docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
-        docker build --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-current --build-arg BASE_IMAGE_TAG=current -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
+        from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
+        to_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$version"
+
+        from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
+        to_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$version"
+
+        from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
+        to_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$version"
+
+        from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
+        to_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$version"
 
     fi
 
+    runner_base_tag=$debian_base_version
+    builder_base_tag=$debian_base_version
+    builder_vcpkg_tag="vcpkg-$debian_base_version"
+    builder_vcpkg_azure_tag="vcpkg-azure-$debian_base_version"
+    builder_vcpkg_google_tag="vcpkg-google-$debian_base_version"
+
+
+    ###### runner-base
     docker build \
-    --progress=plain --platform=$platform -t osimis/orthanc:current \
-    --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
-    --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
-    --build-arg ORTHANC_PG_COMMIT_ID=$ORTHANC_PG_COMMIT_ID \
-    --build-arg ORTHANC_MYSQL_COMMIT_ID=$ORTHANC_MYSQL_COMMIT_ID \
-    --build-arg ORTHANC_TRANSFERS_COMMIT_ID=$ORTHANC_TRANSFERS_COMMIT_ID \
-    --build-arg ORTHANC_DW_COMMIT_ID=$ORTHANC_DW_COMMIT_ID \
-    --build-arg ORTHANC_WSI_COMMIT_ID=$ORTHANC_WSI_COMMIT_ID \
-    --build-arg ORTHANC_OWV_COMMIT_ID=$ORTHANC_OWV_COMMIT_ID \
-    --build-arg ORTHANC_AUTH_COMMIT_ID=$ORTHANC_AUTH_COMMIT_ID \
-    --build-arg ORTHANC_PYTHON_COMMIT_ID=$ORTHANC_PYTHON_COMMIT_ID \
-    --build-arg ORTHANC_ODBC_COMMIT_ID=$ORTHANC_ODBC_COMMIT_ID \
-    --build-arg ORTHANC_INDEXER_COMMIT_ID=$ORTHANC_INDEXER_COMMIT_ID \
-    --build-arg ORTHANC_TCIA_COMMIT_ID=$ORTHANC_TCIA_COMMIT_ID \
-    --build-arg ORTHANC_STONE_VIEWER_COMMIT_ID=$ORTHANC_STONE_VIEWER_COMMIT_ID \
-    --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
-    --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
-    --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
-    $base_image_tag_arg \
-    $from_cache \
-    $to_cache \
-    -f docker/orthanc/Dockerfile  docker/orthanc/
+        --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$runner_base_tag \
+        --build-arg BASE_IMAGE_TAG=$debian_base_version \
+        $from_cache_arg_runner_base \
+        $to_cache_arg_runner_base \
+        -f docker/orthanc/Dockerfile.runner-base docker/orthanc
 
-elif [[ $push == "1" ]]; then
+    if [[ $type == "ci" ]]; then
+        docker push osimis/orthanc-runner-base:$runner_base_tag
+    fi
 
-    docker tag osimis/orthanc:current osimis/orthanc:$branchTagName
-    docker push osimis/orthanc:$branchTagName
+    ###### builder-base
+    docker build \
+        --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$builder_base_tag \
+        $from_cache_arg_builder_base \
+        $to_cache_arg_builder_base \
+        --build-arg BASE_IMAGE_TAG=$debian_base_version \
+        -f docker/orthanc/Dockerfile.builder-base docker/orthanc
+
+    if [[ $type == "ci" ]]; then
+        docker push osimis/orthanc-builder-base:$builder_base_tag
+    fi
+
+    ###### builder-base-vcpkg
+    docker build \
+        --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$builder_vcpkg_tag \
+        $from_cache_arg_builder_vcpkg \
+        $to_cache_arg_builder_vcpkg \
+        --build-arg BASE_IMAGE_TAG=$debian_base_version \
+        -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
+
+    if [[ $type == "ci" ]]; then
+        docker push osimis/orthanc-builder-base:$builder_vcpkg_tag
+    fi
+
+    ###### builder-base-vcpkg-azure
+    docker build \
+        --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$builder_vcpkg_azure_tag \
+        $from_cache_arg_builder_vcpkg_azure \
+        $to_cache_arg_builder_vcpkg_azure \
+        --build-arg BASE_IMAGE_TAG=$debian_base_version \
+        -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
+
+    if [[ $type == "ci" ]]; then
+        docker push osimis/orthanc-builder-base:$builder_vcpkg_azure_tag
+    fi
+
+    ###### builder-base-vcpkg-google
+    docker build \
+        --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$builder_vcpkg_google_tag \
+        $from_cache_arg_builder_vcpkg_google \
+        $to_cache_arg_builder_vcpkg_google \
+        --build-arg BASE_IMAGE_TAG=$debian_base_version \
+        -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
+
+    if [[ $type == "ci" ]]; then
+        docker push osimis/orthanc-builder-base:$builder_vcpkg_google_tag
+    fi
+
+    ###### osimis/orthanc
+    docker build \
+        --progress=plain --platform=$platform -t osimis/orthanc:$final_image_temporary_tag \
+        --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
+        --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
+        --build-arg ORTHANC_PG_COMMIT_ID=$ORTHANC_PG_COMMIT_ID \
+        --build-arg ORTHANC_MYSQL_COMMIT_ID=$ORTHANC_MYSQL_COMMIT_ID \
+        --build-arg ORTHANC_TRANSFERS_COMMIT_ID=$ORTHANC_TRANSFERS_COMMIT_ID \
+        --build-arg ORTHANC_DW_COMMIT_ID=$ORTHANC_DW_COMMIT_ID \
+        --build-arg ORTHANC_WSI_COMMIT_ID=$ORTHANC_WSI_COMMIT_ID \
+        --build-arg ORTHANC_OWV_COMMIT_ID=$ORTHANC_OWV_COMMIT_ID \
+        --build-arg ORTHANC_AUTH_COMMIT_ID=$ORTHANC_AUTH_COMMIT_ID \
+        --build-arg ORTHANC_PYTHON_COMMIT_ID=$ORTHANC_PYTHON_COMMIT_ID \
+        --build-arg ORTHANC_ODBC_COMMIT_ID=$ORTHANC_ODBC_COMMIT_ID \
+        --build-arg ORTHANC_INDEXER_COMMIT_ID=$ORTHANC_INDEXER_COMMIT_ID \
+        --build-arg ORTHANC_TCIA_COMMIT_ID=$ORTHANC_TCIA_COMMIT_ID \
+        --build-arg ORTHANC_STONE_VIEWER_COMMIT_ID=$ORTHANC_STONE_VIEWER_COMMIT_ID \
+        --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
+        --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
+        --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
+        --build-arg BASE_IMAGE_TAG=$debian_base_version \
+        $from_cache \
+        $to_cache \
+        -f docker/orthanc/Dockerfile  docker/orthanc/
+
+    if [[ $type == "ci" ]]; then
+        docker push osimis/orthanc-builder-base:$builder_vcpkg_google_tag
+    fi
+
+elif [[ $step == "push" ]]; then
+
+    docker tag osimis/orthanc:$final_image_temporary_tag osimis/orthanc:$pushTag
+    docker push osimis/orthanc:$pushTag
 
 fi
-

@@ -1,12 +1,31 @@
 set -o errexit
 set -o xtrace
 
-branch_tag_name=${1:-unknown}
+# example usage
+# test localy the '22.3.0' version, with the orthanc-tests version 'Orthanc-1.10.1'
+# ./run-integration-tests.sh 22.3.0 Orthanc-1.10.1
 
-docker build --build-arg IMAGE_TAG=$branch_tag_name -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
+source ../../bash-helpers.sh
 
-# CHANGE_ORTHANC_TESTS_VERSION
-orthanc_tests_revision=ee398adfeb8e
+image_tag_name=${1:-latest}
+integ_tests_branch_tag=${2:-default}
+stable_unstable=${3:-0}                          # when ruuning on CI (stable/unstable)
+
+docker build --build-arg IMAGE_TAG=$image_tag_name -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
+
+pushd ../..
+
+if [[ "$stable_unstable" == "0" ]]; then
+    echo "integ_tests_branch_tag"
+    integ_tests_branch_tag=${2:-default}
+else
+    integ_tests_branch_tag=$(getIntegTestsRevision $stable_unstable)
+fi
+
+orthanc_tests_revision=$(getHgCommitId https://hg.orthanc-server.com/orthanc-tests/ $integ_tests_branch_tag)
+
+popd
+
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests

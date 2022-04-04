@@ -5,11 +5,11 @@
 
 set -ex
 
-# https://stackoverflow.com/a/4774063/881731
-SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+# # https://stackoverflow.com/a/4774063/881731
+# SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-source $SCRIPTPATH/bash-helpers.sh
-
+# source $SCRIPTPATH/bash-helpers.sh
+source bash-helpers.sh
 
 for argument in "$@"
 do
