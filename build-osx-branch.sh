@@ -68,7 +68,7 @@ fi
 read -a artifacts_array <<< "$artifacts"
 first_artifact=${artifacts_array[0]}
 
-already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$first_artifact.$last_commit_id | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
 
@@ -106,8 +106,8 @@ if [[ $already_built == 0 ]]; then
 
         if [ -f "$workspace/build/$artifact" ]; then  # some artifacts may not exist for some branches
 
-            cp $workspace/build/$artifact /tmp/artifacts/$artifact.$last_commit_id
-            cp $workspace/build/$artifact /tmp/artifacts/$artifact.$branchTag
+            cp $workspace/build/$artifact /tmp/artifacts/$last_commit_id/$artifact
+            cp $workspace/build/$artifact /tmp/artifacts/$branchTag/$artifact
         fi
 
     done

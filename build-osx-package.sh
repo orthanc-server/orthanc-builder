@@ -45,7 +45,7 @@ downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
     branchTag=$(getBranchTagToBuildOSX $1 $version)
  
     for artifact in $artifacts; do
-        wget "https://orthanc.osimis.io/nightly-osx-builds/$artifact.$branchTag" --output-document ${TARGET}/${FOLDER}/$artifact || true
+        wget "https://orthanc.osimis.io/nightly-osx-builds/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact || true
     done
 }
 
