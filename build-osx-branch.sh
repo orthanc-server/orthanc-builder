@@ -100,7 +100,8 @@ if [[ $already_built == 0 ]]; then
 
 
     ########## upload
-    mkdir /tmp/artifacts
+    mkdir -p /tmp/artifacts/$last_commit_id
+    mkdir -p /tmp/artifacts/$branchTag
 
     for artifact in $artifacts; do
 
