@@ -1,12 +1,12 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN dpkg --add-architecture i386
 RUN apt-get update
 RUN apt-get install -yq curl unrar unzip build-essential g++-mingw-w64 cmake python mercurial wget software-properties-common apt-transport-https
-RUN wget -nc https://dl.winehq.org/wine-builds/Release.key
-RUN apt-key add Release.key
+RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key
+RUN apt-key add winehq.key
 RUN apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
 RUN apt-get update
 # RUN sed -i "s/main/main contrib non-free/" etc/apt/sources.list
@@ -22,10 +22,17 @@ RUN cd innosetup && \
     curl -fsSL -o is-unicode.exe http://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
+RUN pip3 install requests
 
-ARG configurationFile
-COPY . /tmp
+COPY build-matrix.json /
+COPY WindowsInstaller/ /tmp
 
 WORKDIR /tmp
 
-RUN python -u ./CreateInstaller.py --config=$configurationFile  --from-docker
+ARG PLATFORM
+ARG TAG
+
+RUN python3 --version
+RUN python3 -u ./CreateInstaller.py --matrix=/build-matrix.json --platform=${PLATFORM} --tag=${TAG}  --from-docker

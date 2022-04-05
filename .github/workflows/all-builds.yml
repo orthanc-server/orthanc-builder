@@ -151,11 +151,11 @@ jobs:
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Push with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push pushTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
 
     - name: Push with latest tag
       if: needs.pre-build.outputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push pushTag=latest
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=latest
 
     - name: Update DockerHub repo description
       uses: peter-evans/dockerhub-description@v2

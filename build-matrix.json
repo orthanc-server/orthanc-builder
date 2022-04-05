@@ -23,7 +23,20 @@
             "customBuildOSX": "                                OPTIONAL custom pre-build step for OSX",
             "unitTests": "./UnitTests                          OPTIONAL",
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2    OPTIONAL",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [{
+                "Exclude": true,
+                "Description": "Osimis Web viewer (AGPL license)",
+                "Name": "osimis_web_viewer",
+                "Mandatory": false,
+                "Category": "osimis",
+                "Artifacts64": [
+                    ["OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                ],
+                "Resources": [
+                    ["webviewer.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc", 
@@ -37,7 +50,69 @@
             "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
-            "buildForOSX": true
+            "buildForOSX": true,
+            "windows": [
+                {
+                    "Description": "Orthanc server",
+                    "Mandatory": true,
+                    "Artifacts64": [
+                        ["Orthanc 1.10.1 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.10.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ]
+                },
+                {
+                    "Description": "Modality worklists",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["Orthanc 1.10.1 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.10.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Resources": [
+                        ["worklists.json", "Configuration"]
+                    ]
+                },
+                {
+                    "Description": "Serve folders",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["Orthanc 1.10.1 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.10.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Resources": [
+                        ["serve-folders.json", "Configuration"]
+                    ]
+                },
+                {
+                    "Description": "Connectivity checks",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["Orthanc 1.10.1 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.10.1 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ]
+                },
+                {
+                    "Description": "Maintenance tool to recover files compressed by Orthanc",
+                    "Mandatory": false,
+                    "Category": "tools",
+                    "Artifacts64": [
+                        ["Orthanc 1.10.1 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.10.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ]
+                }
+            ]
         },
         {
             "name": "Orthanc-postgresql", 
@@ -49,7 +124,23 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForOSX": true,
-            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
+            "windows": [{
+                "Description": "PostgreSQL backend (AGPL license)",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                    ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                ],
+                "Artifacts32": [
+                    ["PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                    ["PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                ],
+                "Resources": [
+                    ["postgresql.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-mysql", 
@@ -61,7 +152,24 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
             "buildForOSX": true,
-            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
+            "windows": [{
+                "Description": "MySQL backend (AGPL license)",
+                "Name": "mysql",
+                "Mandatory": false,
+                "Category": "osimis",
+                "Artifacts64": [
+                    ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                    ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                ],
+                "Artifacts32": [
+                    ["MySQL 4.3 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                    ["MySQL 4.3 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                ],
+                "Resources": [
+                    ["mysql.json", "Configuration"]
+                ]            
+            }]
         },
         {
             "name": "Orthanc-odbc", 
@@ -73,7 +181,23 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
             "buildForOSX": true,
-            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2"
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
+            "windows": [{
+                "Description": "ODBC backend (AGPL license)",
+                "Mandatory": false,
+                "Category": "osimis",
+                "Artifacts64": [
+                    ["Odbc 1.1 - VC2015-64 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
+                    ["Odbc 1.1 - VC2015-64 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+                ],
+                "Artifacts32": [
+                    ["Odbc 1.1 - VC2008-32 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
+                    ["Odbc 1.1 - VC2008-32 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+                ],
+                "Resources": [
+                    ["odbc.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-transfers", 
@@ -84,7 +208,21 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancTransfers.dylib",
             "buildForOSX": true,
-            "unitTests": "./UnitTests"
+            "unitTests": "./UnitTests",
+            "windows": [{
+                "Description": "Transfers accelerator (AGPL license)",
+                "Mandatory": false,
+                "Category": "osimis",
+                "Artifacts64": [
+                    ["Transfers 1.0 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                ],
+                "Artifacts32": [
+                    ["Transfers 1.0 - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                ],
+                "Resources": [
+                    ["transfers.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-indexer", 
@@ -94,7 +232,21 @@
             "stable": "OrthancIndexer-1.0",
             "unstable": "default",
             "artifactsOSX": "libOrthancIndexer.dylib",
-            "buildForOSX": true
+            "buildForOSX": true,
+            "windows": [{
+                "Description": "Folder indexer plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["FolderIndexer 1.0 - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+                ],
+                "Artifacts32": [
+                    ["FolderIndexer 1.0 - VC2008-32 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+                ],
+                "Resources": [
+                    ["indexer.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-tcia", 
@@ -104,7 +256,21 @@
             "stable": "OrthancTcia-1.1",
             "unstable": "default",
             "artifactsOSX": "libOrthancTcia.dylib",
-            "buildForOSX": true
+            "buildForOSX": true,
+            "windows": [{
+                "Description": "The Cancer Imaging Archive plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["Tcia 1.1 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                ],
+                "Artifacts32": [
+                    ["Tcia 1.1 - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                ],
+                "Resources": [
+                    ["tcia.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-python", 
@@ -114,7 +280,9 @@
             "stable": "OrthancPython-4.0",
             "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [{
+            }]
         },
         {
             "name": "Orthanc-stone", 
@@ -129,7 +297,22 @@
             "buildForOSX": true,
             "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://lsb.orthanc-server.com/stone-webviewer/mainline/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
-            "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer"
+            "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
+            "windows": [{
+                "Description": "Stone Web viewer (AGPL license)",
+                "Name": "stone_web_viewer",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["Stone 2.3 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                ],
+                "Artifacts32": [
+                    ["Stone 2.3 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                ],
+                "Resources": [
+                    ["stone-webviewer.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-dicomweb", 
@@ -140,7 +323,21 @@
             "unstable": "more-tags",
             "artifactsOSX": "libOrthancDicomWeb.dylib",
             "buildForOSX": true,
-            "unitTests": "./UnitTests"
+            "unitTests": "./UnitTests",
+            "windows": [{
+                "Description": "DICOMweb support (AGPL license)",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["DicomWeb 1.7 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                ],
+                "Artifacts32": [
+                    ["DicomWeb 1.7 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                ],
+                "Resources": [
+                    ["dicomweb.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-gdcm", 
@@ -152,7 +349,18 @@
             "stableOSX": "4b8fd4b10742",
             "artifactsOSX": "libOrthancGdcm.dylib",
             "customBuildOSX" : "cmake -B $workspace/build-arm64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
-            "buildForOSX": true
+            "buildForOSX": true,
+            "windows": [{
+                "Description": "GDCM decoder/transcoder",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["Gdcm 1.5 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                ],
+                "Artifacts32": [
+                    ["Gdcm 1.5 - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-wsi", 
@@ -163,7 +371,81 @@
             "stable": "OrthancWSI-1.1",
             "unstable": "default",
             "commentOSX": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [
+                {
+                    "Description": "Web viewer of whole-slide microscopic images (AGPL license)",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["WSI 1.1 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                    ],
+                    "Artifacts32": [
+                        ["WSI 1.1 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                    ]
+                },
+                {
+                    "Description": "Conversion tools for DICOM whole-slide imaging (AGPL license)",
+                    "Name": "wsi",
+                    "Mandatory": false,
+                    "Category": "tools",
+                    "Artifacts64": [
+                        ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
+                        ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                    ],
+                    "Artifacts32": [
+                        ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
+                        ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                    ]
+                },
+                {
+                    "Description": "OpenSlide support for proprietary formats (LGPL license)",
+                    "Mandatory": false,
+                    "Category": "tools/wsi",
+                    "Downloads64": [
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools"]
+                    ],
+                    "Downloads32": [
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/iconv.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libcairo-2.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libffi-6.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgdk_pixbuf-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgio-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libglib-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgmodule-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgobject-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgthread-2.0-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libintl-8.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libjpeg-62.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libopenjp2.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libopenslide-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libpixman-1-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libpng16-16.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libsqlite3-0.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libtiff-5.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libxml2-2.dll", "Tools"],
+                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/zlib1.dll", "Tools"]
+                    ]
+                }
+            ]
         },
         {
             "name": "Orthanc-webviewer", 
@@ -174,7 +456,18 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancWebViewer.dylib",
             "buildForOSX": true,
-            "unitTests": "./UnitTests"
+            "unitTests": "./UnitTests",
+            "windows": [{
+                "Description": "Web Viewer of medical images (AGPL license)",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["WebViewer 2.8 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+                ],
+                "Artifacts32": [
+                    ["WebViewer 2.8 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-auth", 
@@ -184,7 +477,18 @@
             "stable": "0.2.4",
             "unstable": "default",
             "artifactsOSX": "libOrthancAuthorization.dylib",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [{
+                "Description": "Advanced authorization plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "osimis",
+                "Artifacts64": [
+                    ["Authorization 0.2.4 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                ],
+                "Artifacts32": [
+                    ["Authorization 0.2.4 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                ]
+            }]
         },
         {
             "name": "Orthanc-azure-storage", 
@@ -193,7 +497,9 @@
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
             "stable": "1.3.3",
             "unstable": "default",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [{
+            }]
         },
         {
             "name": "Orthanc-google-storage", 
@@ -202,7 +508,9 @@
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
             "stable": "1.3.3",
             "unstable": "default",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [{
+            }]
         },
         {
             "name": "Orthanc-aws-storage", 
@@ -211,7 +519,9 @@
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
             "stable": "1.3.3",
             "unstable": "default",
-            "buildForOSX": false
+            "buildForOSX": false,
+            "windows": [{
+            }]
         },
         {
             "name": "Orthanc-explorer-2", 
@@ -220,9 +530,21 @@
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
             "stable": "0.1.3",
             "unstable": "master",
+            "comment2": "this plugin has its own built process on Github -> OSX and Win64 are built by Github",
             "buildForOSX": false,
             "artifactsOSX": "libOrthancExplorer2-universal.dylib",
-            "downloadForOSX": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/"
+            "downloadForOSX": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/",
+            "windows": [{
+                "Description": "Orthanc Explorer 2 User Interface",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Downloads64": [
+                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.1.3/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                ],
+                "Resources": [
+                    ["orthanc-explorer-2.json", "Configuration"]
+                ]
+            }]
         },
         {
             "name": "osimis-viewer", 
@@ -235,7 +557,22 @@
             "buildForOSX": true,
             "customBuildOSX" : "cmake -B $workspace/build-arm64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-arm64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-amd64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOsimisWebViewer.dylib $workspace/build-amd64/libOsimisWebViewer.dylib $workspace/build-arm64/libOsimisWebViewer.dylib",
             "unitTests": "./UnitTests",
-            "artifactsOSX": "libOsimisWebViewer.dylib"
+            "artifactsOSX": "libOsimisWebViewer.dylib",
+            "windows": [{
+                "Description": "Osimis Web viewer (AGPL license)",
+                "Name": "osimis_web_viewer",
+                "Mandatory": false,
+                "Category": "osimis",
+                "Artifacts64": [
+                    ["OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                ],
+                "Artifacts32": [
+                    ["OsimisWebViewer 1.4.2 - VC2015-32 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                ],
+                "Resources": [
+                    ["webviewer.json", "Configuration"]
+                ]
+            }]
         }
     ]
     

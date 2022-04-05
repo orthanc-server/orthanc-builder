@@ -66,16 +66,13 @@ while read -r config_name build_for_osx download_for_osx; do
     
     if [[ "$build_for_osx" == "true" ]]; then
         downloadArtifactsFromOrthancOsimisIo $config_name
-    elif [[ "$download_for_osx" == "true" ]]; then
+    elif [[ "$download_for_osx" != "null" ]]; then
         downloadArtifacts $config_name
     fi
 
 done< <(cat $SCRIPTPATH/build-matrix.json | jq -r '.configs[] | "\(.name) \(.buildForOSX) \(.downloadForOSX)"')
 
 # # TODO these plugins are not built by GitHub so the downloaded files only contain AMD64 binary (TODO)
-# # CHANGE_VERSION_WVB
-# wget "${URL}/OsimisWebViewer 1.4.2 - OS X Release/libOsimisWebViewer.dylib"
-
 # # CHANGE_VERSION_WSI
 # wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
 
