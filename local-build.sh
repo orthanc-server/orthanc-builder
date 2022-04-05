@@ -188,8 +188,8 @@ docker $build \
     --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
     --build-arg BASE_IMAGE_TAG=$currentTag \
-    $from_cache \
-    $to_cache \
+    $from_cache_arg \
+    $to_cache_arg \
     $push_load_arg \
     -f docker/orthanc/Dockerfile  docker/orthanc/
 

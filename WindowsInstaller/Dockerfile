@@ -32,7 +32,7 @@ COPY WindowsInstaller/ /tmp
 WORKDIR /tmp
 
 ARG PLATFORM
-ARG TAG
+ARG VERSION
 
 RUN python3 --version
-RUN python3 -u ./CreateInstaller.py --matrix=/build-matrix.json --platform=${PLATFORM} --tag=${TAG}  --from-docker
+RUN python3 -u ./CreateInstaller.py --matrix=/build-matrix.json --platform=${PLATFORM} --version=${VERSION}  --from-docker
