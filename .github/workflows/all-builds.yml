@@ -112,8 +112,6 @@ jobs:
 
     steps:
     
-    - uses: actions/checkout@v2
-
     - name: Maximize build space
       uses: easimon/maximize-build-space@v5
       with:
@@ -121,6 +119,8 @@ jobs:
         swap-size-mb: 1024
         remove-dotnet: 'true'
         remove-android: 'true'
+
+    - uses: actions/checkout@v2
 
     - name: Set up QEMU
       if: ${{ matrix.config.platform == 'linux/arm64' }}
