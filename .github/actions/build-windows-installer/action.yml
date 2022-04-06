@@ -16,5 +16,6 @@ runs:
 
   steps:
   - name: Build installer
+    shell: bash
     run: ./ciBuildWindowsInstaller.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
     working-directory: ./WindowsInstaller
