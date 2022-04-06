@@ -54,7 +54,7 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - uses: ./.github/workflows/build-windows-installer.yml
+    - uses: ./.github/actions/build-windows-installer
       with:
         is_tag: ${{ needs.pre-build.outputs.is_tag }}
         current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}

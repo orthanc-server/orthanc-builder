@@ -1,0 +1,23 @@
+name: build windows installer
+
+inputs:
+  is_tag:
+    description: 'Is a Git Tag'
+    required: true
+  current_branch_tag:
+    description: 'Git branch or Tag'
+    required: true
+  stable_unstalbe:
+    description: 'stable/unstable (currently not used)'
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+  - name: Build installer
+    run: ./ciBuildWindowsInstaller.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
+    working-directory: ./WindowsInstaller
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
