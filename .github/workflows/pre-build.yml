@@ -1,29 +1,29 @@
 on:
   workflow_call:
     outputs:
-      is_tag: ${{ jobs.pre-build.outputs.is_tag }}
-      current_branch_tag: ${{ jobs.pre-build.outputs.current_branch_tag }}
+      is_tag: ${{ jobs.pre_build.outputs.is_tag }}
+      current_branch_tag: ${{ jobs.pre_build.outputs.current_branch_tag }}
 
 jobs:
 
-  pre-build:
-    name: pre-build
+  pre_build:
+    name: pre_build
     runs-on: "ubuntu-latest"
     outputs:
-      current_branch_tag: ${{steps.branch-name.outputs.current_branch}}
-      is_tag: ${{steps.branch-name.outputs.is_tag}}
-      ref_branch: ${{steps.branch-name.outputs.ref_branch}}
-      default_branch: ${{steps.branch-name.outputs.default_branch}}
-      is_default: ${{steps.branch-name.outputs.is_default}}
+      current_branch_tag: ${{steps.branch_name.outputs.current_branch}}
+      is_tag: ${{steps.branch_name.outputs.is_tag}}
+      ref_branch: ${{steps.branch_name.outputs.ref_branch}}
+      default_branch: ${{steps.branch_name.outputs.default_branch}}
+      is_default: ${{steps.branch_name.outputs.is_default}}
 
     steps:
     - name: Get branch/tag name
-      id: branch-name
-      uses: tj-actions/branch-names@v5.1
-      # output: steps.branch-name.outputs.current_branch contains the branch or the tag
+      id: branch_name
+      uses: tj-actions/branch_names@v5.1
+      # output: steps.branch_name.outputs.current_branch contains the branch or the tag
 
-    - name: Echo pre-build
+    - name: Echo pre_build
       run: |
-        echo ${{ steps.branch-name.outputs.is_tag }} ${{ steps.branch-name.outputs.current_branch_tag }}
+        echo ${{ steps.branch_name.outputs.is_tag }} ${{ steps.branch_name.outputs.current_branch }}
         echo ${{ github.ref}}
 
