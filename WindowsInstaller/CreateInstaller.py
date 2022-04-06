@@ -137,7 +137,7 @@ CATEGORIES = {
     'plugins' : 'Official plugins',
     'osimis' : 'Plugins by Osimis',
     'tools' : 'Command-line tools',
-    'tools/wsi' : None,
+    'tools.wsi' : 'WSI Command-line tools',
     }
 
 COMPONENTS_BY_CATEGORIES = {}
