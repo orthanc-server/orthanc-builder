@@ -14,7 +14,7 @@ on:
 jobs:
   pre-build:
     name: pre-build
-    uses: ./github/workflows/pre-build.yml
+    uses: ./.github/workflows/pre-build.yml
 
     # runs-on: "ubuntu-latest"
     # outputs:

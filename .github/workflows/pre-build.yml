@@ -17,10 +17,10 @@ jobs:
       is_default: ${{steps.branch-name.outputs.is_default}}
 
     steps:
-      - name: Get branch/tag name
-        id: branch-name
-        uses: tj-actions/branch-names@v5.1
-        # output: steps.branch-name.outputs.current_branch contains the branch or the tag
+    - name: Get branch/tag name
+      id: branch-name
+      uses: tj-actions/branch-names@v5.1
+      # output: steps.branch-name.outputs.current_branch contains the branch or the tag
 
     - name: Echo pre-build
       run: |
