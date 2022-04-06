@@ -1,6 +1,8 @@
 name: all-builds
 
 on:
+  schedule:
+    - cron: "0 5 * * *"
   push:
     branches: 
       - '*'
@@ -16,38 +18,34 @@ jobs:
     name: pre-build
     uses: ./.github/workflows/pre-build.yml
 
-    # runs-on: "ubuntu-latest"
-    # outputs:
-    #   current_branch_tag: ${{steps.branch-name.outputs.current_branch}}
-    #   is_tag: ${{steps.branch-name.outputs.is_tag}}
-    #   ref_branch: ${{steps.branch-name.outputs.ref_branch}}
-    #   default_branch: ${{steps.branch-name.outputs.default_branch}}
-    #   is_default: ${{steps.branch-name.outputs.is_default}}
-    # steps:
-    #   - name: Get branch/tag name
-    #     id: branch-name
-    #     uses: tj-actions/branch-names@v5.1
-    #     # output: steps.branch-name.outputs.current_branch contains the branch or the tag
+  build-osx-binaries-stable:
+    name: build-osx-binaries-stable
+    needs: [pre-build]
+    uses: ./.github/workflows/build-osx-binaries.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: stable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  build-osx-binaries-unstable:
+    name: build-osx-binaries-unstable
+    needs: [pre-build]
+    uses: ./.github/workflows/build-osx-binaries.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: unstable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  # build-osx-package:
-  #   name: build-osx-package
-  #   runs-on: "ubuntu-latest"
-  #   needs: [pre-build]
-
-  #   steps:
-    
-  #   - uses: actions/checkout@v2
-
-  #   - name: Build osx package
-  #     run: ./build-osx-package.sh is_tag=${{ needs.pre-build.outputs.is_tag }} version=stable branchTagName=${{ needs.pre-build.outputs.current_branch_tag }}
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build-osx-package-stable:
     name: build-osx-package-stable
-    needs: [pre-build] #, build-osx-binaries-stable]
+    needs: [pre-build, build-osx-binaries-stable]
     uses: ./.github/workflows/build-osx-package.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -59,7 +57,7 @@ jobs:
 
   build-osx-package-unstable:
     name: build-osx-package-unstable
-    needs: [pre-build] #, build-osx-binaries-unstable]
+    needs: [pre-build, build-osx-binaries-unstable]
     uses: ./.github/workflows/build-osx-package.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -72,7 +70,7 @@ jobs:
 
   build-windows-installer:
     name: build-windows-installer
-    needs: [pre-build] #, build-win-binaries-unstable]
+    needs: [pre-build] #, TODO: build win binaries as well build-win-binaries-unstable]
     uses: ./.github/workflows/build-windows-installer.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -85,92 +83,14 @@ jobs:
 
   build-docker:
     name: build-docker
-    runs-on: "ubuntu-latest"
     needs: [pre-build]
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "linux/amd64",
-            platform: "linux/amd64",
-            cache: "cache-amd64-stable",
-            stableUnstable: "stable"
-          }
-        # the unstable config is also built by nightly-unstable-packages.yml but it is still good to have it built at every commit too
-        - {
-            name: "linux/amd64",
-            platform: "linux/amd64",
-            cache: "cache-amd64-unstable",
-            stableUnstable: "unstable"
-          }
-        
-        # ARM 64 builds are deactivated because, with QEMU emulation, we reach the 6h timeouts for a build step
-        # in github actions (e.g to run .vcpkg install azure-sdk-cpp and similar) -> to reactivate once we have access
-        # to an ARM64 slave
-        # - {
-        #     name: "linux/arm64",
-        #     platform: "linux/arm64",
-        #     cache: "cache-arm64" 
-        #   }
-        # - {
-        #     name: "linux/all",
-        #     platform: "linux/arm64,linux/amd64",
-        #     cache: "cache-all" 
-        #   }
+    uses: ./.github/workflows/build-docker.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+      docker_hub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    steps:
-    
-    - name: Maximize build space
-      uses: easimon/maximize-build-space@v5
-      with:
-        # reserve space for docker
-        root-reserve-mb: 40000
-        swap-size-mb: 1024
-        remove-dotnet: 'true'
-        remove-android: 'true'
-
-    - uses: actions/checkout@v2
-
-    - name: Set up QEMU
-      if: ${{ matrix.config.platform == 'linux/arm64' }}
-      uses: docker/setup-qemu-action@v1
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-      with:
-        config: .github/buildkitd.toml
-
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    # - name: Setup tmate session
-    #   uses: mxschmitt/action-tmate@v3
-    #   with:
-    #     limit-access-to-actor: true
-
-    - name: Build with local-build.sh
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
-
-    - name: Run integration tests
-      run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} tagToTest=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
-      working-directory: ${{github.workspace}}/docker/integration-tests
-
-    - name: Push with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
-
-    - name: Push with latest tag
-      if: needs.pre-build.outputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=latest
-
-    - name: Update DockerHub repo description
-      uses: peter-evans/dockerhub-description@v2
-      if: needs.pre-build.outputs.is_tag == 'true'
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: osimis/orthanc
 

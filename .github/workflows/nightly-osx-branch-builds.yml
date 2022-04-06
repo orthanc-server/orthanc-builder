@@ -1,147 +1,93 @@
-name: nightly-osx-branch-builds
+# name: nightly-osx-branch-builds
+
+# # on:
+# #   schedule:
+# #     - cron: "0 5 * * *"
 
 # on:
-#   schedule:
-#     - cron: "0 5 * * *"
+#   push:
+#     branches: 
+#       - 'nightly-builds'
 
-on:
-  push:
-    branches: 
-      - 'nightly-builds'
+# jobs:
 
-jobs:
+#   pre-build:
+#     name: pre-build
+#     uses: ./.github/workflows/pre-build.yml
 
-  pre-build:
-    name: pre-build
-    uses: ./.github/workflows/pre-build.yml
+#   build-osx-binaries-stable:
+#     name: build-osx-binaries-stable
+#     needs: [pre-build]
+#     uses: ./.github/workflows/build-osx-binaries.yml
+#     with:
+#       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+#       stable_unstable: stable
+#       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+#     secrets:
+#       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  # get-build-matrix:
-  #   name: get-build-matrix
-  #   runs-on: "ubuntu-latest"
-  #   outputs:
-  #     matrix: ${{ steps.set-matrix.outputs.matrix }}
-  #   steps:
-  #     # Required as the JSON input file needs to be read
-  #     - uses: actions/checkout@v2      
+#   build-osx-binaries-unstable:
+#     name: build-osx-binaries-unstable
+#     needs: [pre-build]
+#     uses: ./.github/workflows/build-osx-binaries.yml
+#     with:
+#       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+#       stable_unstable: unstable
+#       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+#     secrets:
+#       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+#   build-osx-package-stable:
+#     name: build-osx-package-stable
+#     needs: [pre-build, build-osx-binaries-stable]
+#     uses: ./.github/workflows/build-osx-package.yml
+#     with:
+#       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+#       stable_unstable: stable
+#       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+#     secrets:
+#       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+#   build-osx-package-unstable:
+#     name: build-osx-package-unstable
+#     needs: [pre-build, build-osx-binaries-unstable]
+#     uses: ./.github/workflows/build-osx-package.yml
+#     with:
+#       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+#       stable_unstable: unstable
+#       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+#     secrets:
+#       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+#   # build-osx-package:
+#   #   name: build-osx-package
+#   #   runs-on: "ubuntu-latest"
+#   #   needs: [pre-build, build-osx-binaries]
+
+#   #   steps:
     
-  #     - id: set-matrix
-  #       uses: JoshuaTheMiller/conditional-build-matrix@main        
-  #       with:
-  #         inputFile: 'build-matrix.json'
-  #         filter: 'configs[?buildForOSX]'
+#   #   - uses: actions/checkout@v2
 
-  #     - name: output
-  #       run: |
-  #         echo ${{steps.set-matrix.outputs.matrix}}
+#   #   - uses: ./.github/actions/build-osx-package
+#   #     with:
+#   #       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+#   #       stable_unstable: stable
+#   #       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+#   #     env:
+#   #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  # build-osx-binaries:
-  #   name: build-osx-binaries
-  #   runs-on: "macos-latest"
-  #   needs: [get-build-matrix]
-  #   strategy:
-  #     fail-fast: false
-  #     matrix: ${{fromJSON(needs.get-build-matrix.outputs.matrix)}}
-
-  #   steps:
-  #   - uses: actions/checkout@v2
-
-  #   - name: Build stable if required
-  #     id: build-stable
-  #     run: |
-  #       brew install mercurial
-  #       ./build-osx-branch.sh version=stable configName="${{matrix.name}}" workspace="${{github.workspace}}"
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  #   - name: Build unstable if required
-  #     id: build-unstable
-  #     run: |
-  #       rm -rf ${{github.workspace}}/sources
-  #       ./build-osx-branch.sh version=unstable configName="${{matrix.name}}" workspace="${{github.workspace}}"
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  #   - name: Setup tmate session
-  #     if: ${{ failure() }}
-  #     uses: mxschmitt/action-tmate@v3
-  #     with:
-  #       limit-access-to-actor: true
-
-  build-osx-binaries-stable:
-    name: build-osx-binaries-stable
-    needs: [pre-build]
-    uses: ./.github/workflows/build-osx-binaries.yml
-    with:
-      is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: stable
-      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-    secrets:
-      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  build-osx-binaries-unstable:
-    name: build-osx-binaries-unstable
-    needs: [pre-build]
-    uses: ./.github/workflows/build-osx-binaries.yml
-    with:
-      is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: unstable
-      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-    secrets:
-      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-
-  build-osx-package-stable:
-    name: build-osx-package-stable
-    needs: [pre-build, build-osx-binaries-stable]
-    uses: ./.github/workflows/build-osx-package.yml
-    with:
-      is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: stable
-      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-    secrets:
-      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  build-osx-package-unstable:
-    name: build-osx-package-unstable
-    needs: [pre-build, build-osx-binaries-unstable]
-    uses: ./.github/workflows/build-osx-package.yml
-    with:
-      is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: unstable
-      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-    secrets:
-      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-
-  # build-osx-package:
-  #   name: build-osx-package
-  #   runs-on: "ubuntu-latest"
-  #   needs: [pre-build, build-osx-binaries]
-
-  #   steps:
-    
-  #   - uses: actions/checkout@v2
-
-  #   - uses: ./.github/actions/build-osx-package
-  #     with:
-  #       is_tag: ${{ needs.pre-build.outputs.is_tag }}
-  #       stable_unstable: stable
-  #       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  #   - uses: ./.github/actions/build-osx-package
-  #     with:
-  #       is_tag: ${{ needs.pre-build.outputs.is_tag }}
-  #       stable_unstable: unstable
-  #       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#   #   - uses: ./.github/actions/build-osx-package
+#   #     with:
+#   #       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+#   #       stable_unstable: unstable
+#   #       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+#   #     env:
+#   #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
