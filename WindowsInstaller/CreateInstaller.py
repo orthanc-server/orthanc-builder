@@ -133,15 +133,17 @@ def GetDownloadBasename(f):
     return os.path.basename(f).split('?')[0]
 
 CATEGORIES = {
+    'none': None,
     'plugins' : 'Official plugins',
     'osimis' : 'Plugins by Osimis',
     'tools' : 'Command-line tools',
     'tools/wsi' : None,
     }
 
+COMPONENTS_BY_CATEGORIES = {}
 COMPONENTS = []
 FILES = []
-HAS_CATEGORIES = []
+# HAS_CATEGORIES = []
 
 count = 0
 
@@ -181,20 +183,21 @@ for repo in MATRIX['configs']:
 
             if 'Category' in component:
                 category = component['Category']
-
-                if not category in HAS_CATEGORIES and CATEGORIES[category] != None:
-                    HAS_CATEGORIES.append(category)
-                    COMPONENTS.append('Name: "%s"; Description: "%s"; Types: full' % (category, CATEGORIES[category]))
-
                 name = '%s\\%s' % (category, name)
+            else:
+                category = 'none'
+
+            if not category in COMPONENTS_BY_CATEGORIES:
+                COMPONENTS_BY_CATEGORIES[category] = []
+
 
             if component['Mandatory']:
                 options = 'Types: full compact custom; Flags: fixed'
             else:
                 options = 'Types: full'
 
-            COMPONENTS.append('Name: "%s"; Description: "%s"; %s' % (
-                                name, component['Description'], options))
+            COMPONENTS_BY_CATEGORIES[category].append('Name: "%s"; Description: "%s"; %s' % (
+                                                      name, component['Description'], options))
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
@@ -215,6 +218,14 @@ for repo in MATRIX['configs']:
                         s += '; Flags: onlyifdoesntexist uninsneveruninstall'
                     
                     FILES.append(s)
+
+for category in CATEGORIES:
+    if category in COMPONENTS_BY_CATEGORIES:
+        if category != 'none':
+            COMPONENTS.append('Name: "%s"; Description: "%s"; Types: full' % (category, CATEGORIES[category]))
+
+        for c in COMPONENTS_BY_CATEGORIES[category]:
+            COMPONENTS.append(c)
 
 
 ##
