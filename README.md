@@ -46,9 +46,8 @@ Windows Installer and OSX package are collecting build artifacts from the Orthan
 
 # Troubleshooting
 
-- sometimes, the Github runner might run out of space (especially when if you change the base Debian image and it needs to rebuild everything).  You should
-  relaunch the build.  The second build will benefit from the Docker cache and should succeed.
 - if an OSX build fails, you may connect to the build slave thanks to `tmate`.  Access is limited to approved actors with their SSH Github key.
+- sometimes, the `test_incoming_jpeg (Tests.Orthanc)` test fails.  Retrying the job usually solve the issue (TODO investigate)
 
 # Contributions
 
