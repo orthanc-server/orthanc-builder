@@ -10,7 +10,7 @@ on:
         type: string
         required: true
       stable_unstable:
-        description: 'stable/unstable'
+        description: 'stable/unstable (currently not used)'
         type: string
         required: true
       aws_access_key_id:
@@ -22,16 +22,16 @@ on:
 
 jobs:
 
-  build-osx-package:
-    name: build-osx-package
+  build-windows-installer:
+    name: build-windows-installer
     runs-on: "ubuntu-latest"
 
     steps:
 
     - uses: actions/checkout@v2
 
-    - name: Build OSX Package
-      run: ./build-osx-package.sh is_tag=${{ inputs.is_tag }} version=${{ inputs.stable_unstable }} branchTagName=${{ inputs.current_branch_tag }}
+    - name: Build Windows installer
+      run: ./ciBuildWindowsInstaller.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
