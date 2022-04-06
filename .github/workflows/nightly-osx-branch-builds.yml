@@ -79,6 +79,30 @@ jobs:
       stable_unstable: stable
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
 
+  build-osx-package-stable:
+    name: build-osx-package-stable
+    needs: [pre-build, build-osx-binaries]
+    uses: ./.github/workflows/build-osx-package.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: stable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  build-osx-package-unstable:
+    name: build-osx-package-unstable
+    needs: [pre-build, build-osx-binaries]
+    uses: ./.github/workflows/build-osx-package.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: unstable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
   # build-osx-package:
   #   name: build-osx-package
