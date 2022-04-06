@@ -28,11 +28,6 @@ echo "testVersion        = $testVersion"
 echo "version            = $version"
 
 
-
-# image_tag_name=${1:-latest}
-# integ_tests_branch_tag=${2:-default}
-# stable_unstable=${3:-0}                          # when ruuning on CI (stable/unstable)
-
 docker build --build-arg IMAGE_TAG=$tagToTest -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
 
 pushd ../..

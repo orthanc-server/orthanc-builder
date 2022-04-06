@@ -76,7 +76,7 @@ RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancW
 
 RUN chmod +x /apps/*
 
-ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 1600 && python /tests/orthanc-tests/Plugins/WSI/Run.py --server=orthanc-under-tests --force --dicomizer=/apps/OrthancWSIDicomizer --to-tiff=/apps/OrthancWSIDicomToTiff -- -v
+ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WSI/Run.py --server=orthanc-under-tests --force --dicomizer=/apps/OrthancWSIDicomizer --to-tiff=/apps/OrthancWSIDicomToTiff -- -v
 
 ##############################################################
 FROM python-base-image as orthanc-tests-webdav
