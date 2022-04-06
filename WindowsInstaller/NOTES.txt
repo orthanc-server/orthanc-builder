@@ -44,12 +44,12 @@ Build
 Windows 32 package:
 
 # rm -rf /tmp/OsimisInstaller
-# ./CreateInstaller.py --config Orthanc-1.2.0-32.json
+# ./CreateInstaller.py --matrix=../build-matrix.json --platform=32 --version=22.3.0
 
 Windows 64 package:
 
 # rm -rf /tmp/OsimisInstaller
-# ./CreateInstaller.py --config Orthanc-1.2.0-32.json
+# ./CreateInstaller.py --matrix=../build-matrix.json --platform=64 --version=22.3.0
 
 The resulting installers are located in "/tmp/OsimisInstaller/"
 
