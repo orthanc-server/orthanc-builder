@@ -72,21 +72,37 @@ jobs:
 
   build-osx-package:
     name: build-osx-package
-    runs-on: "ubuntu-latest"
     needs: [pre-build, build-osx-binaries]
+    uses: ./.github/workflows/build-osx-package.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: stable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
 
-    steps:
+
+  # build-osx-package:
+  #   name: build-osx-package
+  #   runs-on: "ubuntu-latest"
+  #   needs: [pre-build, build-osx-binaries]
+
+  #   steps:
     
-    - uses: actions/checkout@v2
+  #   - uses: actions/checkout@v2
 
-    - name: Build osx unstable package
-      run: ./build-osx-package.sh is_tag=${{ needs.pre-build.outputs.is_tag }} version=unstable branchTagName=${{ needs.pre-build.outputs.current_branch_tag }}
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #   - uses: ./.github/actions/build-osx-package
+  #     with:
+  #       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+  #       stable_unstable: stable
+  #       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+  #     env:
+  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Build osx stable package
-      run: ./build-osx-package.sh is_tag=${{ needs.pre-build.outputs.is_tag }} version=stable branchTagName=${{ needs.pre-build.outputs.current_branch_tag }}
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #   - uses: ./.github/actions/build-osx-package
+  #     with:
+  #       is_tag: ${{ needs.pre-build.outputs.is_tag }}
+  #       stable_unstable: unstable
+  #       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+  #     env:
+  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

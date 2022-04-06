@@ -34,8 +34,11 @@ jobs:
     
     - uses: actions/checkout@v2
 
-    - name: Build osx unstable package
-      run: ./build-osx-package.sh is_tag=${{ needs.pre-build.outputs.is_tag }} version=unstable branchTagName=${{ needs.pre-build.outputs.current_branch_tag }}
+    - uses: ./.github/actions/build-osx-package
+      with:
+        is_tag: ${{ needs.pre-build.outputs.is_tag }}
+        stable_unstable: unstable
+        current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
