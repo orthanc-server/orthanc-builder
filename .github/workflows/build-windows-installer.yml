@@ -13,11 +13,10 @@ on:
         description: 'stable/unstable (currently not used)'
         type: string
         required: true
+    secrets:
       aws_access_key_id:
-        type: string
         required: true
       aws_secret_access_key:
-        type: string
         required: true
 
 jobs:
@@ -33,5 +32,5 @@ jobs:
     - name: Build Windows installer
       run: ./ciBuildWindowsInstaller.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
       env:
-        AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
