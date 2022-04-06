@@ -22,8 +22,6 @@ jobs:
 
     steps:
     
-    - uses: actions/checkout@v2
-
     - name: Build installer
       run: ./ciBuildWindowsInstaller.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
       working-directory: ./WindowsInstaller
