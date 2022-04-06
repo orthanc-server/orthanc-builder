@@ -388,7 +388,7 @@
                     "Description": "Conversion tools for DICOM whole-slide imaging (AGPL license)",
                     "Name": "wsi",
                     "Mandatory": false,
-                    "Category": "tools.wsi",
+                    "Category": "tools/wsi",
                     "Artifacts64": [
                         ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
                         ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
@@ -401,7 +401,7 @@
                 {
                     "Description": "OpenSlide support for proprietary formats (LGPL license)",
                     "Mandatory": false,
-                    "Category": "tools.wsi",
+                    "Category": "tools/wsi",
                     "Downloads64": [
                         ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools"],
                         ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools"],
