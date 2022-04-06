@@ -7,7 +7,7 @@ on:
 jobs:
 
   pre-build:
-  name: pre-build
+    name: pre-build
     runs-on: "ubuntu-latest"
     outputs:
       current_branch_tag: ${{steps.branch-name.outputs.current_branch}}
