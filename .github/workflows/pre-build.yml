@@ -1,8 +1,10 @@
 on:
   workflow_call:
     outputs:
-      is_tag: ${{ jobs.pre_build.outputs.is_tag }}
-      current_branch_tag: ${{ jobs.pre_build.outputs.current_branch_tag }}
+      is_tag: 
+        value: ${{ jobs.pre_build.outputs.is_tag }}
+      current_branch_tag: 
+        value: ${{ jobs.pre_build.outputs.current_branch_tag }}
 
 jobs:
 
