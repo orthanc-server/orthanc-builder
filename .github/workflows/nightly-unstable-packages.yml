@@ -34,12 +34,11 @@ jobs:
     
     - uses: actions/checkout@v2
 
-    - name: Build osx package
+    - name: Build osx unstable package
       run: ./build-osx-package.sh is_tag=${{ needs.pre-build.outputs.is_tag }} version=unstable branchTagName=${{ needs.pre-build.outputs.current_branch_tag }}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
 
 
   # TODO: there's currently no difference between stable/unstable windows installer
@@ -96,12 +95,13 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    # following lines are copied as is from all-builds.yml
     - name: Build with local-build.sh
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build finalTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
 
     - name: Run integration tests
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} tagToTest=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Push with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push pushTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ needs.pre-build.outputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
