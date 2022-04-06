@@ -3,12 +3,15 @@ on:
     inputs:
       is_tag:
         description: 'Is a Git Tag'
+        type: string
         required: true
       current_branch_tag:
         description: 'Git branch or Tag'
+        type: string
         required: true
       stable_unstalbe:
         description: 'stable/unstable'
+        type: string
         required: true
 
 jobs:
