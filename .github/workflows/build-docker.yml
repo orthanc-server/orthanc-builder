@@ -9,13 +9,13 @@ on:
         description: 'Git branch or Tag'
         type: string
         required: true
-      secrets:
-        docker_hub_username:
-          required: true
-        docker_hub_password:
-          required: true
-        docker_hub_token:
-          required: true
+    secrets:
+      docker_hub_username:
+        required: true
+      docker_hub_password:
+        required: true
+      docker_hub_token:
+        required: true
 
 
 
