@@ -35,13 +35,9 @@ Windows Installer and OSX package are collecting build artifacts from the Orthan
 
 # Continuous Builds
 
-- OSX stable/unstable binaries are rebuilt every night (if needed) (`nightly-osx-branch-builds.yml`)
-- OSX unstable package is rebuilt every night (`nightly-unstable-packages.yml`)
-- OSX stable package is rebuilt at every commit (`all-builds.yml`)
-- Window stable installer is rebuilt at every commit (`all-builds.yml`)
-<!-- TODO - Window unstable installer is rebuilt every night (`all-builds.yml`) -->
-- Docker stable image is rebuilt at every commit (`all-builds.yml`)
-- Docker unstable image is rebuilt every night (`nightly-unstable-packages.yml`)
+- OSX stable/unstable binaries and packages are rebuilt every night (if needed) and on every commit
+- Window stable installer is rebuilt at every commit
+- Docker stable and unstable images are rebuilt every night and on every commit
 - Integration tests are run for every Docker build
 
 # Troubleshooting
