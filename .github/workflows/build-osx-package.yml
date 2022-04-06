@@ -9,7 +9,7 @@ on:
         description: 'Git branch or Tag'
         type: string
         required: true
-      stable_unstalbe:
+      stable_unstable:
         description: 'stable/unstable'
         type: string
         required: true
