@@ -19,13 +19,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+# example usage
+# python3 ./CreateInstaller.py --config=../build-matrix.json  --platform=64 --version=22.3.0 --force
 
 import os
 import subprocess
 import argparse
 import json
 import shutil
-import urllib
+import requests
 
 
 ##
@@ -33,9 +35,16 @@ import urllib
 ##
 
 parser = argparse.ArgumentParser(description = 'Create the Osimis installer.')
-parser.add_argument('--config', 
+parser.add_argument('--matrix', 
                     default = None,
-                    help = 'Config of the build')
+                    help = 'Build matrix of the build')
+parser.add_argument('--platform', 
+                    default = "64",
+                    type=str,
+                    help = '32/64')
+parser.add_argument('--version', 
+                    default = None,
+                    help = 'the version of the installer (ex: 22.3.0)')
 parser.add_argument('--target', 
                     default = '/tmp/OsimisInstaller',
                     help = 'Working directory')
@@ -51,19 +60,23 @@ args = parser.parse_args()
 ## Load and validate the configuration
 ##
 
-if args.config == None:
-    print('Please provide a configuration file')
+if args.matrix == None:
+    print('Please provide a build matrix configuration file')
     exit(-1)
 
-with open(args.config, 'r') as f:
-    CONFIG = json.loads(f.read())
+with open(args.matrix, 'r') as f:
+    MATRIX = json.loads(f.read())
 
-ARCHITECTURE = CONFIG['Architecture']
+ARCHITECTURE = args.platform
+VERSION = args.version
 
-if not ARCHITECTURE in [ 32, 64 ]:
+if not ARCHITECTURE in [ "32", "64" ]:
     print('ERROR- The "Architecture" option must be set to 32 or 64')
     exit(-1)
 
+ARTIFACTS_KEY = f"Artifacts{ARCHITECTURE}"
+DOWNLOADS_KEY = f"Downloads{ARCHITECTURE}"
+CIS = "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries"
 
 ##
 ## Prepare the working directory
@@ -107,44 +120,101 @@ for resource in os.listdir(os.path.join(SOURCE, 'Resources')):
         shutil.copy(source, target);
 
 
-##
-## Download the build artifacts from the CIS
-##
-
 def Download(url, target):
-    print ('Downloading: %s' % url)
-    f = urllib.urlopen(url)
-    if f.getcode() != 200:
+    print (f"Downloading: {url} to {target}")
+    r = requests.get(url)
+    if r.status_code != 200:
         raise Exception('Cannot download: %s' % url)
     
     with open(target, 'wb') as g:
-        g.write(f.read())
-    
-for component in CONFIG['Components']:
-    if 'Artifacts' in component:
-        for artifact in component['Artifacts']:
-            target = os.path.join(TARGET, 'Artifacts', os.path.basename(artifact[0]))
-            CheckNotExisting(target)
-
-            if not os.path.exists(target):
-                Download('%s/%s' % (CONFIG['CIS'], artifact[0]), target)
-
-                
-##
-## Download additional resources
-##
+        g.write(r.content)
 
 def GetDownloadBasename(f):
     return os.path.basename(f).split('?')[0]
 
-for component in CONFIG['Components']:
-    if 'Downloads' in component:
-        for download in component['Downloads']:
-            target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download[0]))
-            CheckNotExisting(target)
+CATEGORIES = {
+    'plugins' : 'Official plugins',
+    'osimis' : 'Plugins by Osimis',
+    'tools' : 'Command-line tools',
+    'tools/wsi' : None,
+    }
 
-            if not os.path.exists(target):
-                Download(download[0], target)
+COMPONENTS = []
+FILES = []
+HAS_CATEGORIES = []
+
+count = 0
+
+for repo in MATRIX['configs']:
+    if 'windows' in repo and len(repo['windows']) > 0:
+
+        for component in repo['windows']:
+
+            if component.get('Exclude') == True or len(component) == 0:
+                continue
+
+            # downloads
+
+            if ARTIFACTS_KEY in component:
+                for artifact in component[ARTIFACTS_KEY]:
+                    target = os.path.join(TARGET, 'Artifacts', os.path.basename(artifact[0]))
+                    CheckNotExisting(target)
+
+                    if not os.path.exists(target):
+                        Download(f"{CIS}/{artifact[0]}", target)
+
+            if DOWNLOADS_KEY in component:
+                for download in component[DOWNLOADS_KEY]:
+                    target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download[0]))
+                    CheckNotExisting(target)
+
+                    if not os.path.exists(target):
+                        Download(download[0], target)
+
+            # generate list of components and files
+
+            if 'Name' in component:
+                name = component['Name']
+            else:
+                name = 'component%02d' % count
+                count += 1
+
+            if 'Category' in component:
+                category = component['Category']
+
+                if not category in HAS_CATEGORIES and CATEGORIES[category] != None:
+                    HAS_CATEGORIES.append(category)
+                    COMPONENTS.append('Name: "%s"; Description: "%s"; Types: full' % (category, CATEGORIES[category]))
+
+                name = '%s\\%s' % (category, name)
+
+            if component['Mandatory']:
+                options = 'Types: full compact custom; Flags: fixed'
+            else:
+                options = 'Types: full'
+
+            COMPONENTS.append('Name: "%s"; Description: "%s"; %s' % (
+                                name, component['Description'], options))
+
+            if ARTIFACTS_KEY in component:
+                for artifact in component[ARTIFACTS_KEY]:
+                    FILES.append('Source: "Artifacts/%s"; DestDir: "{app}/%s"; Components: %s' % (
+                                os.path.basename(artifact[0]), artifact[1], name))
+
+            if DOWNLOADS_KEY in component:
+                for download in component[DOWNLOADS_KEY]:
+                    FILES.append('Source: "Downloads/%s"; DestDir: "{app}/%s"; Components: %s' % (
+                                GetDownloadBasename(download[0]), download[1], name))
+
+            if 'Resources' in component:
+                for resource in component['Resources']:
+                    s = 'Source: "Resources/%s"; DestDir: "{app}/%s"; Components: %s' % (
+                        resource[0], resource[1], name)
+
+                    if resource[1] == 'Configuration':
+                        s += '; Flags: onlyifdoesntexist uninsneveruninstall'
+                    
+                    FILES.append(s)
 
 
 ##
@@ -177,61 +247,6 @@ else:
 ## Generate the list of components and files
 ## 
 
-CATEGORIES = {
-    'plugins' : 'Official plugins',
-    'osimis' : 'Plugins by Osimis',
-    'tools' : 'Command-line tools',
-    'tools/wsi' : None,
-    }
-
-COMPONENTS = []
-FILES = []
-HAS_CATEGORIES = []
-
-count = 0
-for component in CONFIG['Components']:
-    if 'Name' in component:
-        name = component['Name']
-    else:
-        name = 'component%02d' % count
-        count += 1
-
-    if 'Category' in component:
-        category = component['Category']
-
-        if not category in HAS_CATEGORIES and CATEGORIES[category] != None:
-            HAS_CATEGORIES.append(category)
-            COMPONENTS.append('Name: "%s"; Description: "%s"; Types: full' % (category, CATEGORIES[category]))
-
-        name = '%s\\%s' % (category, name)
-
-    if component['Mandatory']:
-        options = 'Types: full compact custom; Flags: fixed'
-    else:
-        options = 'Types: full'
-
-    COMPONENTS.append('Name: "%s"; Description: "%s"; %s' % (
-                        name, component['Description'], options))
-
-    if 'Artifacts' in component:
-        for artifact in component['Artifacts']:
-            FILES.append('Source: "Artifacts/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                        os.path.basename(artifact[0]), artifact[1], name))
-
-    if 'Downloads' in component:
-        for download in component['Downloads']:
-            FILES.append('Source: "Downloads/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                        GetDownloadBasename(download[0]), download[1], name))
-
-    if 'Resources' in component:
-        for resource in component['Resources']:
-            s = 'Source: "Resources/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                resource[0], resource[1], name)
-
-            if resource[1] == 'Configuration':
-                s += '; Flags: onlyifdoesntexist uninsneveruninstall'
-            
-            FILES.append(s)
 
 ##
 ## Compile the Windows service and the configuration generator (always
@@ -263,14 +278,14 @@ ArchitecturesInstallIn64BitMode=x64
 with open(os.path.join(SOURCE, 'Installer.innosetup'), 'r') as f:
     installer = f.read()
 
-installer = installer.replace('${ORTHANC_NAME}', CONFIG['Name'])
-installer = installer.replace('${ORTHANC_VERSION}', CONFIG['Version'])
+installer = installer.replace('${ORTHANC_NAME}', f"Orthanc for Windows {ARCHITECTURE}")
+installer = installer.replace('${ORTHANC_VERSION}', VERSION)
 installer = installer.replace('${ORTHANC_COMPONENTS}', '\n'.join(COMPONENTS))
 installer = installer.replace('${ORTHANC_FILES}', '\n'.join(FILES))
 # installer = installer.replace('${MERCURIAL_REVISION}', MERCURIAL_REVISION)
 installer = installer.replace('${ORTHANC_ARCHITECTURE}', str(ARCHITECTURE))
 installer = installer.replace('${ORTHANC_SETUP}', 
-                              SETUP_64 if ARCHITECTURE == 64 else '')
+                              SETUP_64 if ARCHITECTURE == "64" else '')
 
 with open(os.path.join(TARGET, 'Installer.innosetup'), 'w') as g:
     g.write(installer)

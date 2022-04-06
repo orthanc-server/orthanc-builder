@@ -1,14 +1,27 @@
 #!/bin/bash
 
+# to run locally: ./ciBuildWindowsInstaller.sh false test
+
 set -x #to debug the script
 set -e #to exit the script at the first failure
+
 
 is_tag=${1:-false}
 branch_tag_name=${2:-unknown}
 
+
+# the version must always be X.Y.Z
+if [[ $is_tag == "true" ]]; then
+    version=$branch_tag_name
+else
+    version=0.0.0
+fi
+
+docker build --progress=plain -t installer-builder-32 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=32 ..
+
 # build Windows 32 bits
-docker build -t installer-builder-32 --build-arg configurationFile=Orthanc-32.json .
 dockerContainerId=$(docker create installer-builder-32)
+
 
 # copy the orthanc.json generated from the 32 bits version (we can't generate it with wine and Orthanc 64 bits)
 docker cp $dockerContainerId:/tmp/OsimisInstaller/orthanc.json .
@@ -16,7 +29,7 @@ docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win32.exe .
 docker rm $dockerContainerId
 
 # build Windows 64 bits
-docker build -t installer-builder-64 --build-arg configurationFile=Orthanc-64.json .
+docker build --progress=plain -t installer-builder-64 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=64 ..
 dockerContainerId=$(docker create installer-builder-64)
 docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win64.exe .
 docker rm $dockerContainerId

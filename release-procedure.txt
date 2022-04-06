@@ -7,36 +7,35 @@ These packages are numberd by YY.M[.r] where YY is the year, M is the month and 
 
 Each time you want to release a new package (which means you'll upgrade the version of at least one component):
 
-- search for `CHANGE_VERSION` in the whole repo and look for lines containing the component(s) you're upgrading -> upgrade the versions
+- search for `CHANGE_VERSION` in the whole repo and look for lines containing the component(s) you're upgrading -> upgrade the versions.
+  Note: all version numbers shall be in build-matrix.json (except for Windows Installer !)
 - search for `CHANGE_VERSION` in the whole repo and look for the package version numbers -> upgrade with YY.M[.r]
 - update the WindowsInstaller/Resources/README.txt with the new version numbers
 - update the docker/README-dockerhub.txt with the new version numbers (keep the previous version package list in the readme)
 - update the release-notes-docker-images.txt
 - at this stage, you may commit and tag as explained before and let GitHub build the Docker images OR you may build manually with the commands below.
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page (note, since 22.3.0, the latest
-  windows installer is always copied under ...latest.exe)
+  windows installer is always copied under ...latest.exe and there's no need to update the Osimis website anymore)
 
-List of CHANGE_VERSION_ variables and their current values:
-- CHANGE_VERSION_ORTHANC                     
-  - OSX: 2e3006382c22 (post 1.10.1)
-  - Docker and windows plugins: "Orthanc-1.10.1"
-  - Framework for object-storage: "Orthanc-1.10.1"
+All version numbers shall be changed in build-matrix.json (and in release-notes-docker-images.txt + README-dockerhub.md)
+
+List of CHANGE_VERSION_ variables:
+- CHANGE_VERSION_ORTHANC
 - CHANGE_VERSION_WVB
-  - OSX: not used
-  - others: 1.4.2
 - CHANGE_VERSION_TRANSFERS
-  - Docker: "49e9245b4005"
-  - others: 1.0
-- CHANGE_VERSION_AUTH: 0.2.4    - not used by OSX
-- CHANGE_VERSION_MYSQL: 4.3
-- CHANGE_VERSION_ODBC: 1.1      
-- CHANGE_VERSION_INDEXER: 1.0
-- CHANGE_VERSION_TCIA: 1.1
-- CHANGE_VERSION_STONE_WEB_VIEWER: 2.3
-- CHANGE_VERSION_GDCM: 
-  - OSX: 4b8fd4b10742 (post 1.5)
-  - Docker and windows plugins: "Orthanc-1.10.1"
-- CHANGE_VERSION_ORTHANC_WEB_VIEWER: 2.8
-- CHANGE_VERSION_DW: 1.7
-- CHANGE_VERSION_PG: 4.0
-- CHANGE_VERSION_WSI: 1.1
+- CHANGE_VERSION_AUTH
+- CHANGE_VERSION_MYSQL
+- CHANGE_VERSION_ODBC
+- CHANGE_VERSION_INDEXER
+- CHANGE_VERSION_TCIA
+- CHANGE_VERSION_STONE_WEB_VIEWER
+- CHANGE_VERSION_GDCM
+- CHANGE_VERSION_ORTHANC_WEB_VIEWER
+- CHANGE_VERSION_DW
+- CHANGE_VERSION_PG
+- CHANGE_VERSION_WSI
+- CHANGE_VERSION_ORTHANC_EXPLORER_2
+- CHANGE_ORTHANC_TESTS_VERSION
+- CHANGE_VERSION_AZURE_OBJECT_STORAGE
+- CHANGE_VERSION_AWS_OBJECT_STORAGE
+- CHANGE_VERSION_GOOGLE_OBJECT_STORAGE

@@ -3,6 +3,9 @@
   "ORTHANC__HTTPS_CA_CERTIFICATES": "HttpsCACertificates",
   "ORTHANC__STORE_MD5_FOR_ATTACHMENTS": "StoreMD5ForAttachments",
 
+  "ORTHANC__ORTHANC_EXPLORER_2__IS_DEFAULT_ORTHANC_UI": "OrthancExplorer2.IsDefaultOrthancUI",
+  "OE2_ENABLED": "OrthancExplorer2.IsDefaultOrthancUI",
+
   "ORTHANC__POSTGRESQL__ENABLE_INDEX": "PostgreSQL.EnableIndex",
   "ORTHANC__POSTGRESQL__ENABLE_STORAGE": "PostgreSQL.EnableStorage",
   "ORTHANC__POSTGRESQL__HOST": "PostgreSQL.Host",

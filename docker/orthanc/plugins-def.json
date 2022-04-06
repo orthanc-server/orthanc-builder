@@ -183,6 +183,14 @@
         "BucketName": "MUST BE DEFINED BY YOU"
     },
     "libs": ["libOrthancGoogleCloudStorage.so"]
+  },
+  
+  "OrthancExplorer2": {
+    "enablingEnvVar" : "ORTHANC_EXPLORER_2_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true,
+      "IsDefaultOrthancUI": false
+    },
+    "libs" : ["libOrthancExplorer2.so"]
   }
-
 }
