@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sample command
-# ./build-osx-package.sh version=stable isTag=true branchTagName=master
+# ./build-osx-package.sh stable_unstable=stable is_tag=true current_branch_tag=master
 
 set -ex
 
@@ -21,12 +21,12 @@ do
 done
 
 
-echo "version = $version"
-echo "branchTagName = $branchTagName"
-echo "isTag = $isTag"
+echo "stable_unstable = $stable_unstable"
+echo "current_branch_tag = $current_branch_tag"
+echo "is_tag = $is_tag"
 
 TARGET='/tmp/osx-package/'
-FOLDER=Orthanc-OSX-$branchTagName
+FOLDER=Orthanc-OSX-$current_branch_tag-$stable_unstable
 
 
 rm -rf ${TARGET}/${FOLDER} 
@@ -42,7 +42,7 @@ cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt ${TARGET}/${FOLD
 downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
     echo "downloading $1";
     artifacts=$(getFromMatrix $1 artifactsOSX)
-    branchTag=$(getBranchTagToBuildOSX $1 $version)
+    branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do
         wget "https://orthanc.osimis.io/nightly-osx-builds/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact || true
@@ -52,7 +52,7 @@ downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
 downloadArtifacts() { # $1 config_name
     echo "downloading $1";
     artifacts=$(getFromMatrix $1 downloadForOSX)
-    branchTag=$(getBranchTagToBuildOSX $1 $version)
+    branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do
         wget "$downloadForOSX/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact || true
@@ -86,11 +86,12 @@ echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
 # upload files to AWS
 #####################
 
-aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1
-
 if [[ $is_tag == "true" ]]; then
     
     cp ${TARGET}/${FOLDER}.zip ${TARGET}/orthancAndPluginsOSX.stable.zip
     aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1
 
+    cp ${TARGET}/${FOLDER}.zip ${TARGET}/Orthanc-OSX-$current_branch_tag.zip
 fi
+
+aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://orthanc.osimis.io/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1
