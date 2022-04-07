@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sample command
-# ./build-osx-package.sh stable_unstable=stable is_tag=true current_branch_tag=master
+# ./build-osx-package.sh stable_unstable=stable is_tag=false current_branch_tag=master
 
 set -ex
 
