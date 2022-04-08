@@ -40,8 +40,8 @@ jobs:
         run: |
           echo ${{steps.set-matrix.outputs.matrix}}
 
-  build-osx-binaries:
-    name: build-osx-binaries
+  build:
+    name: build
     runs-on: "macos-latest"
     needs: [get-build-matrix]
     strategy:
