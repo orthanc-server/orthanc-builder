@@ -45,32 +45,32 @@ downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
     branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do
-        wget "https://orthanc.osimis.io/nightly-osx-builds/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact || true
+        wget "https://orthanc.osimis.io/nightly-osx-builds/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact
     done
 }
 
-downloadArtifacts() { # $1 config_name
-    echo "downloading $1";
-    artifacts=$(getFromMatrix $1 downloadForOSX)
+downloadArtifacts() { # $1 config_name $2 root_download_for_osx
+    echo "downloading $1 $2";
+    artifacts=$(getFromMatrix $1 artifactsOSX)
     branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do
-        wget "$downloadForOSX/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact || true
+        wget "$2/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact
     done
 }
 
 # extract tuple from build-matrix and cycle through all config
-while read -r config_name build_for_osx download_for_osx; do
+while read -r config_name build_for_osx root_download_for_osx; do
     
-    echo $config_name $build_for_osx $download_for_osx
+    echo $config_name $build_for_osx $root_download_for_osx
     
     if [[ "$build_for_osx" == "true" ]]; then
         downloadArtifactsFromOrthancOsimisIo $config_name
-    elif [[ "$download_for_osx" != "null" ]]; then
-        downloadArtifacts $config_name
+    elif [[ "$root_download_for_osx" != "null" ]]; then
+        downloadArtifacts $config_name $root_download_for_osx
     fi
 
-done< <(cat $SCRIPTPATH/build-matrix.json | jq -r '.configs[] | "\(.name) \(.buildForOSX) \(.downloadForOSX)"')
+done< <(cat $SCRIPTPATH/build-matrix.json | jq -r '.configs[] | "\(.name) \(.buildForOSX) \(.rootDownloadForOSX)"')
 
 # # TODO these plugins are not built by GitHub so the downloaded files only contain AMD64 binary (TODO)
 # # CHANGE_VERSION_WSI
