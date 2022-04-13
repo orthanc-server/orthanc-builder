@@ -25,6 +25,9 @@ jobs:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       stable_unstable: stable
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build-stone-wasm-unstable:
     name: build-stone-wasm-stable
@@ -33,6 +36,9 @@ jobs:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       stable_unstable: stable
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build-osx-binaries-stable:
     name: osx-stable-build
