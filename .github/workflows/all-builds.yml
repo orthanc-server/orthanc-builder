@@ -15,7 +15,6 @@ on:
 
 jobs:
   pre-build:
-    name: pre-build
     uses: ./.github/workflows/pre-build.yml
 
   build-stone-wasm-stable:
@@ -40,8 +39,7 @@ jobs:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  build-osx-binaries-stable:
-    name: osx-stable-build
+  osx-stable-build:
     needs: [pre-build, build-stone-wasm-stable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
@@ -52,8 +50,7 @@ jobs:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  build-osx-binaries-unstable:
-    name: osx-unstable-build
+  osx-unstable-build:
     needs: [pre-build, build-stone-wasm-unstable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
@@ -65,9 +62,8 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 
-  build-osx-package-stable:
-    name: osx-stable-package
-    needs: [pre-build, build-osx-binaries-stable]
+  osx-stable-package:
+    needs: [pre-build, osx-stable-build]
     uses: ./.github/workflows/build-osx-package.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -77,9 +73,8 @@ jobs:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  build-osx-package-unstable:
-    name: osx-unstable-package
-    needs: [pre-build, build-osx-binaries-unstable]
+  osx-unstable-package:
+    needs: [pre-build, osx-unstable-build]
     uses: ./.github/workflows/build-osx-package.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -91,7 +86,6 @@ jobs:
 
 
   build-windows-installer:
-    name: build-windows-installer
     needs: [pre-build] #, TODO: build win binaries as well build-win-binaries-unstable]
     uses: ./.github/workflows/build-windows-installer.yml
     with:
@@ -104,7 +98,6 @@ jobs:
 
 
   build-docker:
-    name: build-docker
     needs: [pre-build]
     uses: ./.github/workflows/build-docker.yml
     with:
