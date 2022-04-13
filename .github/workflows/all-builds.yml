@@ -18,9 +18,25 @@ jobs:
     name: pre-build
     uses: ./.github/workflows/pre-build.yml
 
+  build-stone-wasm-stable:
+    name: build-stone-wasm-stable
+    uses: ./.github/workflows/build-stone-wasm.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: stable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+
+  build-stone-wasm-unstable:
+    name: build-stone-wasm-stable
+    uses: ./.github/workflows/build-stone-wasm.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: stable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+
   build-osx-binaries-stable:
     name: osx-stable-build
-    needs: [pre-build]
+    needs: [pre-build, build-stone-wasm-stable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -32,7 +48,7 @@ jobs:
 
   build-osx-binaries-unstable:
     name: osx-unstable-build
-    needs: [pre-build]
+    needs: [pre-build, build-stone-wasm-unstable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
