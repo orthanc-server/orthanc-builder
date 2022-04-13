@@ -31,7 +31,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build-stone-wasm-unstable:
-    name: build-stone-wasm-stable
+    name: build-stone-wasm-unstable
     needs: [pre-build]
     uses: ./.github/workflows/build-stone-wasm.yml
     with:
