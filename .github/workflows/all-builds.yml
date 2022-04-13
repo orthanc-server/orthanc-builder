@@ -33,7 +33,7 @@ jobs:
     uses: ./.github/workflows/build-stone-wasm.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: stable
+      stable_unstable: unstable
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
     secrets:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
