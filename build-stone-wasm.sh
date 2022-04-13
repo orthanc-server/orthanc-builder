@@ -40,6 +40,6 @@ if [[ $already_built == 0 ]]; then
     cd $workspace/sources
     zip -r wasm-binaries.zip wasm-binaries/
 
-    aws s3 --region eu-west-1 cp $workspace/sources/ s3://orthanc.osimis.io/nightly-stone-wasm-builds/$last_commit_id/ --include "wasm-binaries.zip" --cache-control=max-age=1
-    aws s3 --region eu-west-1 cp $workspace/sources/ s3://orthanc.osimis.io/nightly-stone-wasm-builds/$version/ --include "wasm-binaries.zip" --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp $workspace/sources/wasm-binaries.zip s3://orthanc.osimis.io/nightly-stone-wasm-builds/$last_commit_id/ --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp $workspace/sources/wasm-binaries.zip s3://orthanc.osimis.io/nightly-stone-wasm-builds/$version/  --cache-control=max-age=1
 fi
