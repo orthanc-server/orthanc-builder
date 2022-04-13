@@ -30,7 +30,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build Stone WASM
-      run: ./build-stone-wasm.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
+      run: ./build-stone-wasm.sh version=${{ inputs.stable_unstable }} workspace="${{github.workspace}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
