@@ -45,7 +45,7 @@
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
             "stable": "Orthanc-1.10.1",
-            "unstable": "default",
+            "unstable": "more-tags",
             "stableOSX": "d68b3a2cea17",
             "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
