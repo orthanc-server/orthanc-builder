@@ -126,38 +126,38 @@ docker $build \
 
 ###### builder-base
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$currentTag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$BASE_DEBIAN_IMAGE \
     $from_cache_arg_builder_base \
     $to_cache_arg_builder_base \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$currentTag \
+    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
 ###### builder-base-vcpkg
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$currentTag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$BASE_DEBIAN_IMAGE \
     $from_cache_arg_builder_vcpkg \
     $to_cache_arg_builder_vcpkg \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$currentTag \
+    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
 
 ###### builder-base-vcpkg-azure
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$currentTag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$BASE_DEBIAN_IMAGE \
     $from_cache_arg_builder_vcpkg_azure \
     $to_cache_arg_builder_vcpkg_azure \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$currentTag \
+    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
 
 ###### builder-base-vcpkg-google
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$currentTag \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$BASE_DEBIAN_IMAGE \
     $from_cache_arg_builder_vcpkg_google \
     $to_cache_arg_builder_vcpkg_google \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$currentTag \
+    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
 
 
@@ -192,7 +192,7 @@ docker $build \
     --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
-    --build-arg BASE_IMAGE_TAG=$currentTag \
+    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
     $from_cache_arg \
     $to_cache_arg \
     $push_load_arg \
