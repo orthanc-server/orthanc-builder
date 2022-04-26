@@ -48,6 +48,7 @@
             "unstable": "more-tags",
             "stableOSX": "d68b3a2cea17",
             "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib",
+            "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForOSX": true,
@@ -99,6 +100,20 @@
                     ],
                     "Artifacts32": [
                         ["Orthanc 1.10.1 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ]
+                },
+                {
+                    "Description": "Housekeeper",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["Orthanc 1.10.1 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.10.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Resources": [
+                        ["housekeeper.json", "Configuration"]
                     ]
                 },
                 {

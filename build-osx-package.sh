@@ -41,7 +41,8 @@ cp ${SCRIPTPATH}/WindowsInstaller/Resources/ca-certificates.crt ${TARGET}/${FOLD
 
 downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
     echo "downloading $1";
-    artifacts=$(getFromMatrix $1 artifactsOSX)
+
+    artifacts=$(getArtifactsOSX $1 $stable_unstable)
     branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do
@@ -51,7 +52,7 @@ downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
 
 downloadArtifacts() { # $1 config_name $2 root_download_for_osx
     echo "downloading $1 $2";
-    artifacts=$(getFromMatrix $1 artifactsOSX)
+    artifacts=$(getArtifactsOSX $1 $stable_unstable)
     branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do

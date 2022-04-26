@@ -14,6 +14,24 @@ getIntegTestsRevision() { # $1 = stable/unstable
     echo $value
 }
 
+getArtifactsOSX() { # $1 = name, $2 = version (stable or unstable) 
+    if [[ $2 == "unstable" ]]; then
+
+        artifacts=$(getFromMatrix $1 unstableArtifactsOSX)
+
+        if [[ $artifacts == "" ]]; then
+            artifacts=$(getFromMatrix $1 artifactsOSX)
+        fi
+
+    else
+
+        artifacts=$(getFromMatrix $1 artifactsOSX)
+
+    fi
+
+    echo $artifacts
+}
+
 getBranchTagToBuildOSX() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
 
