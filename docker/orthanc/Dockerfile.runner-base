@@ -3,7 +3,8 @@
 # base image to build and execute orthanc.  
 # This image should contain only the packages that are common to both !
 # The purpose of this intermediate image is to benefit from Docker cache.
-FROM debian:bullseye-20220328-slim
+ARG BASE_DEBIAN_IMAGE=unknown
+FROM debian:$BASE_DEBIAN_IMAGE
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \

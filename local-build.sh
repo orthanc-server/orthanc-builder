@@ -60,6 +60,9 @@ ORTHANC_AZURE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-azure-storage" $version d
 ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version docker $skipCommitChecks)
 ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks)
 
+BASE_DEBIAN_IMAGE=bullseye-20220328-slim
+
+
 if [[ $type == "local" ]]; then
     from_cache_arg_runner_base=
     to_cache_arg_runner_base=
@@ -83,23 +86,23 @@ if [[ $type == "local" ]]; then
     build="build"
     push_load_arg=
 else
-    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$currentTag"
-    to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$currentTag"
+    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$BASE_DEBIAN_IMAGE"
+    to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$BASE_DEBIAN_IMAGE"
 
-    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$currentTag"
-    to_cache_arg_builder_base="--cache-to=osimis/orthanc-builder-base:cache-$currentTag"
+    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$BASE_DEBIAN_IMAGE"
+    to_cache_arg_builder_base="--cache-to=osimis/orthanc-builder-base:cache-$BASE_DEBIAN_IMAGE"
 
-    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$currentTag"
-    to_cache_arg_builder_vcpkg="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-$currentTag"
+    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$BASE_DEBIAN_IMAGE"
+    to_cache_arg_builder_vcpkg="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-$BASE_DEBIAN_IMAGE"
 
-    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$currentTag"
-    to_cache_arg_builder_vcpkg_azure="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-azure-$currentTag"
+    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$BASE_DEBIAN_IMAGE"
+    to_cache_arg_builder_vcpkg_azure="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-azure-$BASE_DEBIAN_IMAGE"
 
-    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$currentTag"
-    to_cache_arg_builder_vcpkg_google="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-google-$currentTag"
+    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$BASE_DEBIAN_IMAGE"
+    to_cache_arg_builder_vcpkg_google="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-google-$BASE_DEBIAN_IMAGE"
 
-    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$currentTag"
-    to_cache_arg="--cache-to=osimis/orthanc-builder-base:cache-main-$currentTag"
+    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$BASE_DEBIAN_IMAGE"
+    to_cache_arg="--cache-to=osimis/orthanc-builder-base:cache-main-$BASE_DEBIAN_IMAGE"
 
     # when building in CI, use buildx
     build="buildx build"
@@ -112,10 +115,10 @@ fi
 # builder_vcpkg_azure_tag="vcpkg-azure-$final_image_temporary_tag"
 # builder_vcpkg_google_tag="vcpkg-google-$final_image_temporary_tag"
 
-
 ###### runner-base
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$currentTag \
+    --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
     $push_load_arg \
