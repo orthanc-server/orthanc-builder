@@ -2,10 +2,10 @@ set -o errexit
 set -o xtrace
 
 # example usage
-# test localy the '22.3.0' version, with the orthanc-tests version 'Orthanc-1.10.1'
-# ./run-integration-tests.sh tagToTest=22.3.0 testVersion=Orthanc-1.10.1
+# test localy the '22.4.0' version, with the orthanc-tests version 'Orthanc-1.10.1'
+# ./run-integration-tests.sh tagToTest=22.4.0 testVersion=Orthanc-1.10.1
 # test from CI
-# ./run-integration-tests.sh tagToTest=22.3.0 version=stable
+# ./run-integration-tests.sh tagToTest=22.4.0 version=stable
 
 source ../../bash-helpers.sh
 

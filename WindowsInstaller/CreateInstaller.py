@@ -20,7 +20,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 # example usage
-# python3 ./CreateInstaller.py --config=../build-matrix.json  --platform=64 --version=22.3.0 --force
+# python3 ./CreateInstaller.py --matrix=../build-matrix.json  --platform=64 --version=22.4.0 --force
 
 import os
 import subprocess
@@ -44,7 +44,7 @@ parser.add_argument('--platform',
                     help = '32/64')
 parser.add_argument('--version', 
                     default = None,
-                    help = 'the version of the installer (ex: 22.3.0)')
+                    help = 'the version of the installer (ex: 22.4.0)')
 parser.add_argument('--target', 
                     default = '/tmp/OsimisInstaller',
                     help = 'Working directory')
