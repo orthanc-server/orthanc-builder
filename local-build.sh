@@ -85,6 +85,7 @@ if [[ $type == "local" ]]; then
 
     # when building locally, use Docker builder (easier to reuse local images)
     build="build"
+    push_load_arg=
 else
     from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
     to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
@@ -106,6 +107,7 @@ else
 
     # when building in CI, use buildx
     build="buildx build"
+    push_load_arg="--push"
 fi
 
 
@@ -116,12 +118,10 @@ if [[ $step == "push" ]]; then
     fi
 
     final_tag=$pushTag
-    push_load_arg="--push"
 
 else
 
     final_tag=$currentTag
-    push_load_arg=
 
 fi
 
