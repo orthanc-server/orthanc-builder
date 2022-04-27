@@ -95,7 +95,7 @@ jobs:
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Push with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
 
     - name: Push with latest tag
       if: inputs.is_tag == 'true'

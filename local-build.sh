@@ -61,6 +61,7 @@ ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version
 ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks)
 
 BASE_DEBIAN_IMAGE=bullseye-20220328-slim
+BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 
 if [[ $type == "local" ]]; then
@@ -84,30 +85,46 @@ if [[ $type == "local" ]]; then
 
     # when building locally, use Docker builder (easier to reuse local images)
     build="build"
-    push_load_arg=
 else
-    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$BASE_DEBIAN_IMAGE"
-    to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$BASE_DEBIAN_IMAGE"
+    from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
+    to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
 
-    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$BASE_DEBIAN_IMAGE"
-    to_cache_arg_builder_base="--cache-to=osimis/orthanc-builder-base:cache-$BASE_DEBIAN_IMAGE"
+    from_cache_arg_builder_base="--cache-from=osimis/orthanc-builder-base:cache-$BASE_BUILDER_IMAGE_TAG"
+    to_cache_arg_builder_base="--cache-to=osimis/orthanc-builder-base:cache-$BASE_BUILDER_IMAGE_TAG"
 
-    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$BASE_DEBIAN_IMAGE"
-    to_cache_arg_builder_vcpkg="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-$BASE_DEBIAN_IMAGE"
+    from_cache_arg_builder_vcpkg="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-$BASE_BUILDER_IMAGE_TAG"
+    to_cache_arg_builder_vcpkg="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-$BASE_BUILDER_IMAGE_TAG"
 
-    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$BASE_DEBIAN_IMAGE"
-    to_cache_arg_builder_vcpkg_azure="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-azure-$BASE_DEBIAN_IMAGE"
+    from_cache_arg_builder_vcpkg_azure="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-azure-$BASE_BUILDER_IMAGE_TAG"
+    to_cache_arg_builder_vcpkg_azure="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-azure-$BASE_BUILDER_IMAGE_TAG"
 
-    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$BASE_DEBIAN_IMAGE"
-    to_cache_arg_builder_vcpkg_google="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-google-$BASE_DEBIAN_IMAGE"
+    from_cache_arg_builder_vcpkg_google="--cache-from=osimis/orthanc-builder-base:cache-vcpkg-google-$BASE_BUILDER_IMAGE_TAG"
+    to_cache_arg_builder_vcpkg_google="--cache-to=osimis/orthanc-builder-base:cache-vcpkg-google-$BASE_BUILDER_IMAGE_TAG"
 
-    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$BASE_DEBIAN_IMAGE"
-    to_cache_arg="--cache-to=osimis/orthanc-builder-base:cache-main-$BASE_DEBIAN_IMAGE"
+    from_cache_arg="--cache-from=osimis/orthanc-builder-base:cache-main-$BASE_BUILDER_IMAGE_TAG"
+    to_cache_arg="--cache-to=osimis/orthanc-builder-base:cache-main-$BASE_BUILDER_IMAGE_TAG"
 
     # when building in CI, use buildx
     build="buildx build"
-    push_load_arg="--push"
 fi
+
+
+if [[ $step == "push" ]]; then
+
+    if [[ $version == "unstable" ]]; then
+        final_tag=$pushTag-unstable
+    fi
+
+    final_tag=$pushTag
+    push_load_arg="--push"
+
+else
+
+    final_tag=$currentTag
+    push_load_arg=
+
+fi
+
 
 # runner_base_tag=$final_image_temporary_tag
 # builder_base_tag=$final_image_temporary_tag
@@ -117,7 +134,7 @@ fi
 
 ###### runner-base
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$BASE_DEBIAN_IMAGE \
+    --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$BASE_BUILDER_IMAGE_TAG \
     --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
@@ -126,50 +143,40 @@ docker $build \
 
 ###### builder-base
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$BASE_DEBIAN_IMAGE \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_base \
     $to_cache_arg_builder_base \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
 ###### builder-base-vcpkg
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$BASE_DEBIAN_IMAGE \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_vcpkg \
     $to_cache_arg_builder_vcpkg \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
 
 ###### builder-base-vcpkg-azure
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$BASE_DEBIAN_IMAGE \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_vcpkg_azure \
     $to_cache_arg_builder_vcpkg_azure \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
 
 ###### builder-base-vcpkg-google
 docker $build \
-    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$BASE_DEBIAN_IMAGE \
+    --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_vcpkg_google \
     $to_cache_arg_builder_vcpkg_google \
     $push_load_arg \
-    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
 
-
-if [[ $step == "push" ]]; then
-
-    final_tag=$pushTag
-
-else
-
-    final_tag=$currentTag
-
-fi
 
 ###### osimis/orthanc
 docker $build \
@@ -192,7 +199,7 @@ docker $build \
     --build-arg ORTHANC_AZURE_STORAGE_COMMIT_ID=$ORTHANC_AZURE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID \
     --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
-    --build-arg BASE_IMAGE_TAG=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg \
     $to_cache_arg \
     $push_load_arg \
