@@ -1,0 +1,43 @@
+{
+    "Housekeeper": {
+    
+        // Enables/disables the plugin
+        "Enable": false,
+
+        // the Global Prooperty ID in which the plugin progress
+        // is stored.  Must be > 1024 and must not be used by
+        // another plugin
+        "GlobalPropertyId": 1025,
+
+        // Forces execution even if the plugin did not detect
+        // any changes in configuration
+        "Force": false,
+
+        // Delay (in seconds) between reconstruction of 2 studies
+        // This avoids overloading Orthanc with the housekeeping
+        // process and leaves room for other operations.
+        "ThrottleDelay": 5,
+
+        // Runs the plugin only at certain period of time.
+        // If not specified, the plugin runs all the time
+        // Examples: 
+        // to run between 0AM and 6AM everyday + every night 
+        // from 8PM to 12PM and 24h a day on the weekend:
+        // "Schedule": {
+        //   "Monday": ["0-6", "20-24"],
+        //   "Tuesday": ["0-6", "20-24"],
+        //   "Wednesday": ["0-6", "20-24"],
+        //   "Thursday": ["0-6", "20-24"],
+        //   "Friday": ["0-6", "20-24"],
+        //   "Saturday": ["0-24"],
+        //   "Sunday": ["0-24"]
+        // },
+
+        // configure events that can trigger a housekeeping processing 
+        "Triggers" : {
+            "StorageCompressionChange": true,
+            "MainDicomTagsChange": true,
+            "UnnecessaryDicomAsJsonFiles": true
+        }
+    }
+}
