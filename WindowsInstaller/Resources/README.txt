@@ -14,7 +14,7 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 22.3.0
+Content of the package 22.4.0
 -----------------------------
 
 Orthanc server                        1.10.1
@@ -34,6 +34,7 @@ GDCM decoder/transcoder plugin        1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
+Orthanc neuroimaging plugin           1.0
 
 Folders
 -------

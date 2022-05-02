@@ -157,12 +157,21 @@
     },
     "libs" : ["libOrthancTcia.so"]
   },
+  
   "Indexer": {
     "enablingEnvVar" : "INDEXER_PLUGIN_ENABLED",
     "nonStandardDefaults" : {
       "Enable" : true
     },
     "libs" : ["libOrthancIndexer.so"]
+  },
+
+  "Neuro": {
+    "enablingEnvVar" : "NEURO_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "libs" : ["libOrthancNeuro.so"]
   },
 
   "AzureBlobStorage": {

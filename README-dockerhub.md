@@ -14,7 +14,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.3.0
+#### 22.4.0
 ```
 
 component                             version
@@ -38,6 +38,7 @@ GDCM plugin                           1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
+Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         1.3.3
 Azure Blob Storage plugin             1.3.3
 Google Cloud Storage plugin           1.3.3

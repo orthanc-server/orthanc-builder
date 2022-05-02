@@ -589,6 +589,29 @@
                     ["webviewer.json", "Configuration"]
                 ]
             }]
+        },
+        {
+            "name": "Orthanc-neuro", 
+            "repo": "https://hg.orthanc-server.com/orthanc-neuro/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_NEURO",
+            "stable": "OrthancNeuro-1.0",
+            "unstable": "default",
+            "artifactsOSX": "libOrthancNeuro.dylib",
+            "buildForOSX": true,
+            "windows": [{
+                "Description": "Neuroimaging plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["Neuro 1.0 - VC2015-64 Release/OrthancNeuro.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
+                ],
+                "Artifacts32": [
+                    ["Neuro 1.0 - VC2008-32 Release/OrthancNeuro.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
+                ],
+                "Resources": [
+                ]
+            }]
         }
     ]
     

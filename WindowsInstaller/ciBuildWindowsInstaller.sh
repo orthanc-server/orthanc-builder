@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# to run locally: ./ciBuildWindowsInstaller.sh false test
+# to run locally: ./ciBuildWindowsInstaller.sh false test local
 
 set -x #to debug the script
 set -e #to exit the script at the first failure
@@ -8,6 +8,7 @@ set -e #to exit the script at the first failure
 
 is_tag=${1:-false}
 branch_tag_name=${2:-unknown}
+type=${3:-local}
 
 
 # the version must always be X.Y.Z
@@ -17,7 +18,32 @@ else
     version=0.0.0
 fi
 
-docker build --progress=plain -t installer-builder-32 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=32 ..
+if [[ $type == "local" ]]; then
+    from_cache_arg=
+    to_cache_arg=
+
+    # when building locally, use Docker builder (easier to reuse local images)
+    build="build"
+else
+    from_cache_arg="--cache-from=osimis/orthanc-builder-base:win-installer"
+    to_cache_arg="--cache-to=osimis/orthanc-builder-base:win-installer"
+
+    # when building in CI, use buildx
+    build="buildx build"
+fi
+
+
+# docker build --progress=plain -t installer-builder-32 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=32 ..
+
+docker $build \
+    --progress=plain -t installer-builder-32 \
+    --build-arg VERSION=$version \
+    --build-arg PLATFORM=32 \
+    $from_cache_arg \
+    $to_cache_arg \
+    -f Dockerfile \
+    ..
+
 
 # build Windows 32 bits
 dockerContainerId=$(docker create installer-builder-32)
@@ -29,7 +55,16 @@ docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win32.exe .
 docker rm $dockerContainerId
 
 # build Windows 64 bits
-docker build --progress=plain -t installer-builder-64 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=64 ..
+docker $build \
+    --progress=plain -t installer-builder-64 \
+    --build-arg VERSION=$version \
+    --build-arg PLATFORM=64 \
+    $from_cache_arg \
+    $to_cache_arg \
+    -f Dockerfile \
+    ..
+
+
 dockerContainerId=$(docker create installer-builder-64)
 docker cp $dockerContainerId:/tmp/OsimisInstaller/OrthancInstaller-Win64.exe .
 docker rm $dockerContainerId
