@@ -125,6 +125,14 @@
     "libs" : ["libModalityWorklists.so"]
   },
 
+  "Housekeeper" : {
+    "nonStandardDefaults" : {
+      "Enable" : false
+    },
+    "enablingEnvVar" : "HOUSEKEEPER_PLUGIN_ENABLED",
+    "libs" : ["libHousekeeper.so"]
+  },
+
   "Wsi": {
     "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WSI_ENABLED",

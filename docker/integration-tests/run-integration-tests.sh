@@ -30,7 +30,7 @@ echo "version            = $version"
 
 docker build --build-arg IMAGE_TAG=$tagToTest -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
 
-pushd ../..
+pushd ../..  # we need to be at 'root' to use bash-helpers !
 
 if [[ "$version" == "unknown" ]]; then
     integ_tests_branch_tag=${2:-default}
@@ -40,7 +40,29 @@ fi
 
 orthanc_tests_revision=$(getHgCommitId https://hg.orthanc-server.com/orthanc-tests/ $integ_tests_branch_tag)
 
+popd  # back to docker/integration-tests folder
+
+
+############ run NewTests first
+
+hg clone https://hg.orthanc-server.com/orthanc-tests/ -r $ORTHANC_TESTS_REVISION orthanc-tests-repo
+
+pushd orthanc-tests-repo/NewTests
+
+python3 -m venv .env
+source .env/bin/activate
+
+pip3 install -r requirements.txt
+
+python3 main.py --pattern=* \
+                --orthanc_under_tests_docker_image=orthanc-under-tests \
+                --orthanc_previous_version_docker_image=osimis/orthanc:22.4.0 \
+                --orthanc_under_tests_http_port=8043
+
 popd
+############ run NewTests
+
+
 
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
