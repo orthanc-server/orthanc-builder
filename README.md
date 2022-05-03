@@ -26,7 +26,6 @@ Windows Installer and OSX package are collecting build artifacts from the Orthan
 - [OSX package (Universal)](https://orthanc.osimis.io/osx/releases/Orthanc-OSX-master-unstable.zip)
 
 
-
 **Notes**: 
 
 - you can use this repo to build `linux/arm64` docker images but we are currently not able to build them on our build slaves because, with QEMU emulation, a build would take more than 12 hours which is the limit of github.  Simply use `./local-build.sh platform=linux/arm64` to build these images.
