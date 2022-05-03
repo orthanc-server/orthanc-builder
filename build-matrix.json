@@ -44,7 +44,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "Orthanc-1.10.1",
+            "stable": "default",
             "unstable": "default",
             "stableOSX": "d68b3a2cea17",
             "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib",
