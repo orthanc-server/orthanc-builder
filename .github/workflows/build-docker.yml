@@ -90,6 +90,11 @@ jobs:
     - name: Build with local-build.sh
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
 
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+
     - name: Run integration tests
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} tagToTest=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
