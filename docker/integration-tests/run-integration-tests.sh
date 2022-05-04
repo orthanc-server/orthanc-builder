@@ -54,10 +54,10 @@ source .env/bin/activate
 
 pip3 install -r requirements.txt
 
-python3 main.py --pattern=* \
-                --orthanc_under_tests_docker_image=orthanc-under-tests \
-                --orthanc_previous_version_docker_image=osimis/orthanc:22.4.0 \
-                --orthanc_under_tests_http_port=8043
+python3 -u main.py --pattern=* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_previous_version_docker_image=osimis/orthanc:22.4.0 \
+                   --orthanc_under_tests_http_port=8043
 
 popd
 ############ run NewTests
