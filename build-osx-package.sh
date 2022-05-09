@@ -87,7 +87,7 @@ echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
 # upload files to AWS
 #####################
 
-if [[ $is_tag == "true" ]]; then
+if [[ $is_tag == "true" ]] && [[ $stable_unstable == "stable" ]]; then
     
     cp ${TARGET}/${FOLDER}.zip ${TARGET}/orthancAndPluginsOSX.stable.zip
     aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://orthanc.osimis.io/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1
