@@ -116,6 +116,15 @@ COMPOSE_FILE=docker-compose.recycling.yml                   docker-compose up --
 COMPOSE_FILE=docker-compose.worklists.yml                   docker-compose down -v
 COMPOSE_FILE=docker-compose.worklists.yml                   docker-compose up --build --exit-code-from orthanc-tests-worklists --abort-on-container-exit
 
+# TODO: add tests:
+# - CheckScuTranscoding.py
+# - CheckIngestTranscoding.py
+# - CheckHttpServerSecurity.py
+# - CheckDicomTls.py
+
+
+
+
 # TODO: reenable sqlserver odbc drivers
 # COMPOSE_FILE=docker-compose.odbc-sql-server.yml          docker-compose down -v
 # COMPOSE_FILE=docker-compose.odbc-sql-server.yml          docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
