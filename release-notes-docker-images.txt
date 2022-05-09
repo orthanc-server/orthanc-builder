@@ -1,3 +1,4 @@
+22.5.0 :  - upgraded Orthanc to 1.11.0
 22.4.0 :  - added the neuroimaging plugin
           - upgraded base image to debian:bullseye-20220328-slim
 22.3.0 :  - upgraded Stone Web viewer plugin to 2.3

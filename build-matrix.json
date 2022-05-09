@@ -44,10 +44,10 @@
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "default",
+            "stable": "Orthanc-1.11.0",
             "unstable": "default",
-            "stableOSX": "d68b3a2cea17",
-            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib",
+            "stableOSX": "Orthanc-1.11.0",
+            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib",
             "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
@@ -57,10 +57,10 @@
                     "Description": "Orthanc server",
                     "Mandatory": true,
                     "Artifacts64": [
-                        ["Orthanc 1.10.1 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.10.1 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 },
                 {
@@ -68,10 +68,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.10.1 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.10.1 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["worklists.json", "Configuration"]
@@ -82,10 +82,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.10.1 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.10.1 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["serve-folders.json", "Configuration"]
@@ -96,10 +96,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.10.1 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.10.1 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 },
                 {
@@ -107,10 +107,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc mainline - VC2015-64 Release/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2015-64 Release/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc mainline - VC2008-32 Release/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2008-32 Release/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["housekeeper.json", "Configuration"]
@@ -121,10 +121,10 @@
                     "Mandatory": false,
                     "Category": "tools",
                     "Artifacts64": [
-                        ["Orthanc 1.10.1 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.10.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["Orthanc 1.11.0 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 }
             ]
