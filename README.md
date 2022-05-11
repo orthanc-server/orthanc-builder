@@ -30,7 +30,17 @@ Windows Installer and OSX package are collecting build artifacts from the Orthan
 
 - you can use this repo to build `linux/arm64` docker images but we are currently not able to build them on our build slaves because, with QEMU emulation, a build would take more than 12 hours which is the limit of github.  Simply use `./local-build.sh platform=linux/arm64` to build these images.
 - to build stable Docker images locally, use `./local-build.sh skipCommitChecks=1`
-- The OSX package does not contain the WSI plugin that can currently be built only for Intel processors.
+- The MacOS package does not contain the WSI plugin that can currently be built only for Intel processors.
+
+Full instructions to run ARM64 docker build on MacOS (note: this won't build Azure & Google object-storage plugins).  Note, the StoneViewer build can last very long (multiple hours) because it is using an emulated container:
+```
+brew install jq
+brew install hg
+
+git clone https://github.com/orthanc-server/orthanc-builder.git
+cd orthanc-builder
+./local-build.sh platform=linux/arm64 skipVcpkg=1
+```
 
 # Continuous Builds
 

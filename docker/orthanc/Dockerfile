@@ -172,6 +172,20 @@ RUN make -j 4
 
 FROM jodogne/wasm-builder:2.0.23 as build-wasm-stone-viewer
 
+# TODO for ARM64,... problem: emsdk 2.0.23 does not exist for ARM64 and stone is not ready to build with 3.1.8
+# this is equivalent to the jodogne/wasm-builder:2.0.23 image (it is copied here such that it builds smoothly on ARM64 platform too!)
+# FROM ubuntu:18.04 as build-wasm-stone-viewer
+
+# RUN apt-get -y clean && apt-get -y update
+# RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget nano unzip cmake git ninja-build python-clang-4.0 libclang-4.0-dev python-pystache python-pip alien lsb-core g++-4.8 && apt-get clean && rm -rf /var/lib/apt/lists/*
+# RUN DEBIAN_FRONTEND=noninteractive apt-get -y install alien ninja-build 
+
+# WORKDIR /opt
+# RUN git clone https://github.com/emscripten-core/emsdk.git
+# RUN /opt/emsdk/emsdk install 3.1.8
+# RUN /opt/emsdk/emsdk actviate 3.1.8
+
+
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 
 RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $ORTHANC_STONE_VIEWER_COMMIT_ID /source
@@ -310,8 +324,8 @@ RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/li
 RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 
 
-################################# the image that will run Orthanc dynamicaly linked
-FROM orthanc-runner-base
+################################# the image that will run Orthanc dynamicaly linked (intermediate version without vcpkg builds)
+FROM orthanc-runner-base as orthanc-no-vcpkg
 
 RUN mkdir -p /etc/orthanc
 RUN mkdir -p /usr/share/orthanc/plugins-available && \
@@ -350,8 +364,6 @@ COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-a
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
 
-COPY --from=build-google-object-storage /build/cloud-storage/google/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-azure-object-storage /build/cloud-storage/azure/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-s3-object-storage /build/cloud-storage/aws/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
@@ -388,3 +400,14 @@ RUN apt purge --assume-yes bzip2
 RUN apt purge --assume-yes gnupg
 RUN apt purge --assume-yes xdg-user-dirs
 RUN apt --assume-yes autoremove
+
+
+################################# the image that will run Orthanc dynamicaly linked (final version with vcpkg builds)
+FROM orthanc-no-vcpkg as orthanc-with-vcpkg
+
+COPY --from=build-google-object-storage /build/cloud-storage/google/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-azure-object-storage /build/cloud-storage/azure/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+
+RUN chmod +x /usr/share/orthanc/plugins-available/*
+RUN chmod +x /usr/local/bin/*
+

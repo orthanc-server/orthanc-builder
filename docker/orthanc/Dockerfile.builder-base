@@ -8,7 +8,6 @@ RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install wget
 RUN apt-get --assume-yes install build-essential
 RUN apt-get --assume-yes install unzip
-RUN apt-get --assume-yes install cmake
 RUN apt-get --assume-yes install uuid-dev
 RUN apt-get --assume-yes install apt-utils
 RUN apt-get --assume-yes install libcurl4-openssl-dev
@@ -25,11 +24,23 @@ RUN apt-get --assume-yes install zip
 RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
 RUN apt-get --assume-yes install python3-dev
 RUN apt-get --assume-yes install unixodbc-dev
+RUN apt-get --assume-yes install libgmock-dev
 
 # on recent Debian, the libmysql-dev package is not available anymore
 # and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
 RUN apt-get --assume-yes install default-libmysqlclient-dev
 # RUN apt-get --assume-yes install libmariadb-dev
+
+RUN apt-get --assume-yes install cmake
+# # install a recent cmake version (required later by recent vcpkg versions that we don't use now !)
+# WORKDIR /tmp
+# RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1.tar.gz
+# RUN tar -zxvf cmake-3.23.1.tar.gz
+# WORKDIR /tmp/cmake-3.23.1
+# RUN ./bootstrap
+# RUN make -j 8
+# RUN make install
+RUN cmake --version
 
 # no need to clean apt-cache, it's a build image, we don't care about its size
 
