@@ -14,7 +14,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.5.1
+#### 22.5.2
 ```
 
 component                             version
@@ -32,7 +32,7 @@ DICOMweb plugin                       1.8
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
-Authorization plugin                  0.2.4
+Authorization plugin                  0.2.5
 Transfers accelerator plugin          1.0
 GDCM plugin                           1.5
 ODBC plugin                           1.1
@@ -42,4 +42,5 @@ Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         1.3.3
 Azure Blob Storage plugin             1.3.3
 Google Cloud Storage plugin           1.3.3
+Orthanc Explorer 2                    0.2.0
 ```

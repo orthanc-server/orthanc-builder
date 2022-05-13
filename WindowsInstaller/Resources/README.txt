@@ -29,12 +29,13 @@ PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
 Transfers accelerator plugin          1.0
-Authorization plugin                  0.2.4
+Authorization plugin                  0.2.5
 GDCM decoder/transcoder plugin        1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
+Orthanc Explorer 2                    0.2.0          (Win64 installers only !)  
 
 Folders
 -------

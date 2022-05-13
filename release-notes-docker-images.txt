@@ -1,3 +1,5 @@
+22.5.2 :  - added Orthanc Explorer 2 plugin (version 0.2.0)
+          - upgraded advanced authorization plugin to 0.2.5
 22.5.1 :  - upgraded DICOMweb plugin to 1.8
 22.5.0 :  - upgraded Orthanc to 1.11.0
 22.4.0 :  - added the neuroimaging plugin
