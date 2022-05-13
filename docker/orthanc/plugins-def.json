@@ -203,6 +203,7 @@
   },
   
   "OrthancExplorer2": {
+    "enabledByDefault": true,
     "enablingEnvVar" : "ORTHANC_EXPLORER_2_ENABLED",
     "nonStandardDefaults" : {
       "Enable" : true,
