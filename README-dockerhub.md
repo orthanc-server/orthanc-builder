@@ -42,5 +42,5 @@ Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         1.3.3
 Azure Blob Storage plugin             1.3.3
 Google Cloud Storage plugin           1.3.3
-Orthanc Explorer 2                    0.2.0
+Orthanc Explorer 2                    0.2.1
 ```
