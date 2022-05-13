@@ -296,6 +296,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     rm -rf /var/lib/apt/lists/*
 
 ARG ORTHANC_OE2_COMMIT_ID
+ARG ORTHANC_OE2_VERSION
+
 WORKDIR /sources
 
 RUN git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
@@ -308,9 +310,8 @@ RUN npm install
 RUN npm run build
 
 WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/orthanc-explorer-2/
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$ORTHANC_OE2_VERSION /sources/orthanc-explorer-2/
 RUN make -j 4
-
 
 ########################## Orthanc downloads (since wget is not in the runner image)
 
