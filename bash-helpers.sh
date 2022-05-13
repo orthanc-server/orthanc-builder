@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# rewrite pushd/popd such that they do not produce any output in bash functions (https://stackoverflow.com/questions/25288194/dont-display-pushd-popd-stack-across-several-bash-scripts-quiet-pushd-popd)
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
+
 getFromMatrix() { # $1 = name, $2 = field, $3 = defaultValue
     value=$(cat build-matrix.json | jq -r ".configs[] | select( .name == \"$1\").$2")
     if [[ $value == "null" ]]; then
@@ -123,6 +133,16 @@ getHgCommitId() { # $1 = repo, $2 = branch/tag/revision
     echo $commit_id
 }
 
+getGitCommitId() { # $1 = repo, $2 = branch/tag/revision
+    tmp=$(mktemp -d -t git-check-last-commit-XXXXXXXXXXX)
+    git clone --quiet --filter=blob:none --no-checkout $1 $tmp
+    pushd $tmp
+    local commit_id=$(git rev-parse $2)
+    popd
+    rm -rf $tmp
+
+    echo $commit_id
+}
 
 getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (osx/win/docker), $4 = skipCommitCheck (0/1)
 
@@ -149,11 +169,7 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (o
 
     elif [[ $repoType == "git" ]]; then
 
-        tmp=$(mktemp -d -t git-check-last-commit-XXXXXXXXXXX)
-        git clone --filter=blob:none --no-checkout  https://bitbucket.org/osimis/osimis-webviewer-plugin/ $tmp
-        pushd $tmp
-        commit_id=$(git rev-parse $revision)
-        popd
+        commit_id=$(getGitCommitId $repo $revision)
 
     fi
 
