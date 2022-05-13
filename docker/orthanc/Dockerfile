@@ -295,12 +295,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# CHANGE_VERSION_ORTHANC_EXPLORER_2
+ARG ORTHANC_OE2_COMMIT_ID
 WORKDIR /sources
 
 RUN git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
     cd /sources/orthanc-explorer-2 && \
-	git checkout 5b20c3f07d4ae82ea79a69dba1a9d4173f0abef0
+	git checkout $ORTHANC_OE2_COMMIT_ID
 
 WORKDIR /sources/orthanc-explorer-2/WebApplication
 
