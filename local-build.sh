@@ -137,9 +137,9 @@ if [[ $step == "push" ]]; then
 
     if [[ $version == "unstable" ]]; then
         final_tag=$pushTag-unstable
+    else
+        final_tag=$pushTag
     fi
-
-    final_tag=$pushTag
 
 else
 
