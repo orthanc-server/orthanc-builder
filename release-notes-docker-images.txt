@@ -1,3 +1,4 @@
+22.5.4 :  - upgraded Orthanc Explorer 2 plugin to 0.3.0
 22.5.3 :  - upgraded Orthanc Explorer 2 plugin to 0.2.2
 22.5.2 :  - added Orthanc Explorer 2 plugin (version 0.2.1)
           - upgraded advanced authorization plugin to 0.2.5
