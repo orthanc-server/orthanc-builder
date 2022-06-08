@@ -1,7 +1,7 @@
 version: "2"
 services:
   orthanc-under-tests:
-    image: orthanc-under-tests-mssql 
+    image: orthanc-under-tests 
     depends_on:
       - sql-server
     environment:
