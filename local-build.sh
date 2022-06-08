@@ -136,10 +136,6 @@ fi
 
 if [[ $step == "push" ]]; then
 
-    if [[ $image == "full" ]]; then
-        pushTag = $pushTag-full
-    fi
-
     if [[ $version == "unstable" ]]; then
         final_tag=$pushTag-unstable
     else
