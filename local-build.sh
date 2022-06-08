@@ -4,22 +4,23 @@ set -ex
 # To build locally:
 # ./local-build.sh 
 # ./local-build.sh version=unstable skipCommitChecks=1
+# ./local-build.sh version=unstable skipCommitChecks=1 image=full
 # To build from CI:
 # ./local-build.sh version=stable platform=linux/amd64 type=ci step=push pushTag=22.4.0
 # TO build locally on ARM64
-# ./local-build.sh skipCommitChecks=1 platform=linux/arm64 skipVcpkg=1
+# ./local-build.sh skipCommitChecks=1 platform=linux/arm64 image=normal
 
 source bash-helpers.sh
 
 # default arg values
 version=stable
 skipCommitChecks=0
-skipVcpkg=0
 platform=linux/amd64
 type=local
 step=build
 currentTag=current
 pushTag=unknown
+image=normal
 
 
 for argument in "$@"
@@ -36,10 +37,10 @@ echo "version          = $version"
 echo "platform         = $platform"
 echo "type             = $type"
 echo "skipCommitChecks = $skipCommitChecks"
-echo "skipVcpkg        = $skipVcpkg"
 echo "step             = $step"
 echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
+echo "image            = $image"
 
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
@@ -71,10 +72,10 @@ BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
 buildTargets="build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-auth build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2"
 
-# by default, we try to build the full image with vcpkg related builds
-finalImageTarget=orthanc-with-vcpkg
-if [[ $skipVcpkg == "1" ]]; then
-    finalImageTarget=orthanc-no-vcpkg
+# by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
+finalImageTarget=orthanc-no-vcpkg
+if [[ $image == "full" ]]; then
+    finalImageTarget=orthanc-with-vcpkg
 fi
 
 buildTargets="$buildTargets $finalImageTarget"
@@ -135,6 +136,10 @@ fi
 
 if [[ $step == "push" ]]; then
 
+    if [[ $image == "full" ]]; then
+        pushTag = $pushTag-full
+    fi
+
     if [[ $version == "unstable" ]]; then
         final_tag=$pushTag-unstable
     else
@@ -172,7 +177,7 @@ docker $build \
     --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
-if [[ $skipVcpkg == "0" ]]; then
+if [[ $image == "full" ]]; then
 
     ###### builder-base-vcpkg
     docker $build \

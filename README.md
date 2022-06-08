@@ -42,7 +42,7 @@ brew install hg
 
 git clone https://github.com/orthanc-server/orthanc-builder.git
 cd orthanc-builder
-./local-build.sh version=stable platform=linux/arm64 skipVcpkg=1
+./local-build.sh version=stable platform=linux/arm64 image=normal
 ```
 
 This produces an image `osimis/orthanc:current`.

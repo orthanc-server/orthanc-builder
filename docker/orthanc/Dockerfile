@@ -403,8 +403,22 @@ RUN apt purge --assume-yes xdg-user-dirs
 RUN apt --assume-yes autoremove
 
 
-################################# the image that will run Orthanc dynamicaly linked (final version with vcpkg builds)
+################################# the "full" image that will run Orthanc dynamicaly linked (final version with vcpkg builds and Microsoft unixodbc)
 FROM orthanc-no-vcpkg as orthanc-with-vcpkg
+
+RUN apt-get update
+RUN apt-get --assume-yes install curl gnupg2
+
+RUN mkdir /downloads
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc > /downloads/microsoft.asc
+RUN curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+RUN apt-key add /downloads/microsoft.asc
+RUN apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=build-google-object-storage /build/cloud-storage/google/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-azure-object-storage /build/cloud-storage/azure/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/

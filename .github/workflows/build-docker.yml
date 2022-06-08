@@ -87,8 +87,9 @@ jobs:
     #   with:
     #     limit-access-to-actor: true
 
+      # build full image (and, therefore, the normal image as well)
     - name: Build with local-build.sh
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=build currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
 
     - name: Run integration tests
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} tagToTest=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }}
@@ -99,12 +100,19 @@ jobs:
     #   with:
     #     limit-access-to-actor: true
 
-    - name: Push with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
+    - name: Push normal image with branch/tag
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
 
-    - name: Push with latest tag
+    - name: Push full image with branch/tag
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
+
+    - name: Push normal image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=latest
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=latest
+
+    - name: Push full image with latest tag
+      if: inputs.is_tag == 'true'
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-${{ matrix.config.stableUnstable }} pushTag=latest
 
     - name: Update DockerHub repo description
       uses: peter-evans/dockerhub-description@v2
