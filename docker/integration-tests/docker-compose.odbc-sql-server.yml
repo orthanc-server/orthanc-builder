@@ -5,8 +5,8 @@ services:
     depends_on:
       - sql-server
     environment:
-      ORTHANC__ODBC__INDEX_CONNECTION_STRING: "DSN=mssql17;Uid=sa;Pwd=MyStrOngPa55word!"
-      ORTHANC__ODBC__STORAGE_CONNECTION_STRING: "DSN=mssql17;Uid=sa;Pwd=MyStrOngPa55word!"
+      ORTHANC__ODBC__INDEX_CONNECTION_STRING: "DSN=mssql18;Uid=sa;Pwd=MyStrOngPa55word!"
+      ORTHANC__ODBC__STORAGE_CONNECTION_STRING: "DSN=mssql18;Uid=sa;Pwd=MyStrOngPa55word!"
       ORTHANC__ODBC__ENABLE_INDEX: "true"
       ORTHANC__ODBC__ENABLE_STORAGE: "true"
       VERBOSE_STARTUP: "true"
