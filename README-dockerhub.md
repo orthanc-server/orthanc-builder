@@ -39,7 +39,7 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         1.3.3
-Orthanc Explorer 2                    0.3.2
+Orthanc Explorer 2                    0.3.3
 ```
 
 #### 22.6.1-full image 

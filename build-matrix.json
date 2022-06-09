@@ -543,9 +543,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "0.3.2",
+            "stable": "0.3.3",
             "unstable": "master",
-            "unstableOSX": "0.3.2", 
+            "unstableOSX": "0.3.3", 
             "comment2": "this plugin has its own build process on Github -> OSX and Win64 are built by Github",
             "buildForOSX": false,
             "artifactsOSX": "libOrthancExplorer2-universal.dylib",
@@ -555,7 +555,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.3.2/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.3.3/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
                 ],
                 "Resources": [
                     ["orthanc-explorer-2.json", "Configuration"]
