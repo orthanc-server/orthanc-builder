@@ -107,7 +107,7 @@
    "HttpThreadsCount": 50, 
    "HttpTimeout": 2, 
    "HttpVerbose": false, 
-   "HttpsCACertificates": "", 
+   "HttpsCACertificates": "/etc/ssl/certs/ca-certificates.crt", 
    "HttpsVerifyPeers": true, 
    "IndexDirectory": "OrthancStorage", 
    "IngestTranscodingOfCompressed": true, 
