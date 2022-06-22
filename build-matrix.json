@@ -219,7 +219,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-transfers/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TRANSFERS",
-            "stable": "49e9245b4005",
+            "stable": "OrthancTransfers-1.1",
             "unstable": "default",
             "artifactsOSX": "libOrthancTransfers.dylib",
             "buildForOSX": true,
@@ -229,10 +229,10 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["Transfers 1.0 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                    ["Transfers 1.1 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
                 ],
                 "Artifacts32": [
-                    ["Transfers 1.0 - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                    ["Transfers 1.1 - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
                 ],
                 "Resources": [
                     ["transfers.json", "Configuration"]
