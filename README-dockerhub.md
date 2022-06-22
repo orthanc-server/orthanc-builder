@@ -34,7 +34,7 @@ PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
 Authorization plugin                  0.2.5
-Transfers accelerator plugin          1.0
+Transfers accelerator plugin          1.1
 GDCM plugin                           1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
