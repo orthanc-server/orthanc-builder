@@ -1,0 +1,7 @@
+{
+    "DelayedDeletion" : {
+        "Enable": false
+        // "ThrottleDelayMs": 0,
+        // "Path": ""
+    }
+}

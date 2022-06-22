@@ -339,6 +339,7 @@ COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plug
 COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc /build/libHousekeeper.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc /build/libDelayedDeletion.so /usr/share/orthanc/plugins-available/
 # RUN ldd /usr/bin/Orthanc
 
 COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/

@@ -127,10 +127,18 @@
 
   "Housekeeper" : {
     "nonStandardDefaults" : {
-      "Enable" : false
+      "Enable" : true
     },
     "enablingEnvVar" : "HOUSEKEEPER_PLUGIN_ENABLED",
     "libs" : ["libHousekeeper.so"]
+  },
+
+  "DelayedDeletion" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "DELAYED_DELETION_PLUGIN_ENABLED",
+    "libs" : ["libDelayedDeletion.so"]
   },
 
   "Wsi": {
