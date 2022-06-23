@@ -2,8 +2,17 @@
 Docker image with [Orthanc](https://www.orthanc-server.com/) and its official plugins. Orthanc is a lightweight, RESTful Vendor Neutral Archive for medical imaging.
 
 Note: the Orthanc version included in this image is exactly the same as the Orthanc included in the `jodogne/orthanc` image.  However,
-this image contain the Osimis Web Viewer plugin which is not included in the `jodogne/orthanc-plugins` image.  Furthermore,
+this image contains a few plugins that are not included in the `jodogne/orthanc-plugins` image.  Furthermore,
 this image provides an easy configuration through environment variables which is not the case of the `jodogne/orthanc` image.
+
+Starting from the `22.6.1`` release, we are providing 2 types of images:
+  - the default image with the usual tag: e.g `22.6.1`
+  - the full image with a e.g `22.6.1-full` tag
+The default image is suitable for 99.9% of users.
+You should use the full image only if you need to use one of these:
+  - the Azure Blob storage plugin
+  - the Google Cloud storage plugin
+  - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 
 Full documentation is available [here](https://book.orthanc-server.com/users/docker-osimis.html).
 
