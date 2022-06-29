@@ -12,6 +12,7 @@ source ../../bash-helpers.sh
 tagToTest=latest
 testVersion=0
 version=unknown
+image=normal
 
 for argument in "$@"
 do
@@ -26,6 +27,7 @@ done
 echo "tagToTest          = $tagToTest"
 echo "testVersion        = $testVersion"
 echo "version            = $version"
+echo "image              = $image"
 
 # build to orthanc-under-tests image
 docker build --build-arg IMAGE_TAG=$tagToTest -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
@@ -44,10 +46,11 @@ popd  # back to docker/integration-tests folder
 
 
 ############ run NewTests first
-rm -rf orthanc-tests-repo/
-hg clone https://hg.orthanc-server.com/orthanc-tests/ -r $orthanc_tests_revision orthanc-tests-repo
+testRepoFolder=orthanc-tests-repo-$image
+rm -rf $testRepoFolder/
+hg clone https://hg.orthanc-server.com/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
 
-pushd orthanc-tests-repo/NewTests
+pushd $testRepoFolder/NewTests
 
 python3 -m venv .env
 source .env/bin/activate
@@ -75,7 +78,7 @@ python3 -u main.py --pattern=DelayedDeletion.* \
                    --orthanc_under_tests_http_port=8043
 
 popd
-############ run NewTests
+############ end run NewTests
 
 ############ run legacy tests
 
