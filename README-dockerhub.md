@@ -23,7 +23,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.6.3 Default image
+#### 22.6.4 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -38,7 +38,7 @@ Osimis Web viewer plugin              1.4.2
 Osimis Web viewer plugin (alpha)      1.4.2
 Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
-DICOMweb plugin                       1.8
+DICOMweb plugin                       1.9
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
@@ -53,7 +53,7 @@ AWS S3 plugin                         1.3.3
 Orthanc Explorer 2                    0.3.3
 ```
 
-#### 22.6.3-full image 
+#### 22.6.4-full image 
 ```
 additional component                  version
 ---------------------------------------------
