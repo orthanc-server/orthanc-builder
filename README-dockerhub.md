@@ -23,7 +23,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.6.4 Default image
+#### 22.7.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -43,7 +43,7 @@ PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
 Authorization plugin                  0.2.5
-Transfers accelerator plugin          1.1
+Transfers accelerator plugin          1.2
 GDCM plugin                           1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
@@ -53,7 +53,7 @@ AWS S3 plugin                         1.3.3
 Orthanc Explorer 2                    0.3.3
 ```
 
-#### 22.6.4-full image 
+#### 22.7.0-full image 
 ```
 additional component                  version
 ---------------------------------------------
