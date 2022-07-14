@@ -2,15 +2,14 @@ set -o errexit
 set -o xtrace
 
 # example usage
-# test localy the '22.4.0' version, with the orthanc-tests version 'Orthanc-1.10.1'
-# ./run-integration-tests.sh tagToTest=22.4.0 testVersion=Orthanc-1.10.1
-# test from CI
-# ./run-integration-tests.sh tagToTest=22.4.0 version=stable
+# sudo rm -rf orthanc-tests-repo-full/
+# sudo rm -rf orthanc-tests-repo/
+# ./run-integration-tests.sh tagToTest=22.4.0 version=unstable
+# ./run-integration-tests.sh tagToTest=22.7.0-full version=stable image=full
 
 source ../../bash-helpers.sh
 
 tagToTest=latest
-testVersion=0
 version=unknown
 image=normal
 
@@ -25,7 +24,6 @@ do
 done
 
 echo "tagToTest          = $tagToTest"
-echo "testVersion        = $testVersion"
 echo "version            = $version"
 echo "image              = $image"
 
