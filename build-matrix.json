@@ -49,7 +49,7 @@
             "stableOSX": "Orthanc-1.11.1",
             "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib",
             "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForOSX": true,
             "windows": [
