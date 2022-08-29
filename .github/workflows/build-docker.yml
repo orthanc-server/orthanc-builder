@@ -127,6 +127,7 @@ jobs:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_password }}
         repository: osimis/orthanc
+        readme-filepath: README-dockerhub.md
 
 
     - name: Setup tmate session
