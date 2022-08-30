@@ -351,6 +351,7 @@
             "stable": "OrthancDicomWeb-1.9",
             "unstable": "default",
             "artifactsOSX": "libOrthancDicomWeb.dylib",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "buildForOSX": true,
             "unitTests": "./UnitTests",
             "windows": [{
