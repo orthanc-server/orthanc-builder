@@ -55,25 +55,39 @@ source .env/bin/activate
 
 pip3 install -r requirements.txt
 
-# ######## housekeeper
+######## housekeeper
 
-# previous_image=osimis/orthanc:22.4.0
+previous_image=osimis/orthanc:22.4.0
 
-# docker pull $previous_image
+docker pull $previous_image
 
-# python3 -u main.py --pattern=Housekeeper.* \
-#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-#                    --orthanc_previous_version_docker_image=$previous_image \
-#                    --orthanc_under_tests_http_port=8043
+python3 -u main.py --pattern=Housekeeper.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_previous_version_docker_image=$previous_image \
+                   --orthanc_under_tests_http_port=8043
 
-# ######## delayed-deletion
+######## delayed-deletion
 
-# previous_image=osimis/orthanc:$tagToTest
+previous_image=osimis/orthanc:$tagToTest
 
-# python3 -u main.py --pattern=DelayedDeletion.* \
-#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-#                    --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
-#                    --orthanc_under_tests_http_port=8043
+python3 -u main.py --pattern=DelayedDeletion.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
+                   --orthanc_under_tests_http_port=8043
+
+######## Other new tests
+
+python3 -u main.py --pattern=ExtraMainDicomTags.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
+python3 -u main.py --pattern=MaxStorageReject.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
+python3 -u main.py --pattern=StorageCompression.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
 
 popd
 ############ end run NewTests
