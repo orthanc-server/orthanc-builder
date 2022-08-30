@@ -18,3 +18,5 @@ RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install libsqliteodbc
 
 COPY orthanc.json /etc/orthanc/orthanc.json
 COPY odbc.ini /etc/
+
+ENV DICOM_WEB_PLUGIN_ENABLED=true

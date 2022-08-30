@@ -3,7 +3,7 @@ set -o xtrace
 
 # example usage
 # sudo rm -rf orthanc-tests-repo-full/
-# sudo rm -rf orthanc-tests-repo/
+# sudo rm -rf orthanc-tests-repo-normal/
 # ./run-integration-tests.sh tagToTest=22.4.0 version=unstable
 # ./run-integration-tests.sh tagToTest=22.7.0-full version=stable image=full
 
