@@ -8,6 +8,7 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+          - upgraded object-storage plugins to 2.0.0
           - upgraded base image to debian:bullseye-20220801-slim
           - force latest OpenSSL version (static link instead of dynamic)          
 22.7.0 :  - upgraded transfers accelerator plugin 1.2
