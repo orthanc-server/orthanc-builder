@@ -23,22 +23,22 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.7.0 Default image
+#### 22.8.0 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.11.1
-Modality worklists plugin             1.11.1
-Serve folders plugin                  1.11.1
-Connectivity check plugin             1.11.1
-Housekeeper plugin                    1.11.1
-Delayed Deletion plugin               1.11.1
+Orthanc server                        1.11.2
+Modality worklists plugin             1.11.2
+Serve folders plugin                  1.11.2
+Connectivity check plugin             1.11.2
+Housekeeper plugin                    1.11.2
+Delayed Deletion plugin               1.11.2
 Stone Web viewer plugin               2.3
 Osimis Web viewer plugin              1.4.2
 Osimis Web viewer plugin (alpha)      1.4.2
 Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
-DICOMweb plugin                       1.9
+DICOMweb plugin                       1.10
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
@@ -49,14 +49,14 @@ ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-AWS S3 plugin                         1.3.3
+AWS S3 plugin                         2.0.0
 Orthanc Explorer 2                    0.3.3
 ```
 
-#### 22.7.0-full image 
+#### 22.8.0-full image 
 ```
 additional component                  version
 ---------------------------------------------
-Azure Blob Storage plugin             1.3.3
-Google Cloud Storage plugin           1.3.3
+Azure Blob Storage plugin             2.0.0
+Google Cloud Storage plugin           2.0.0
 ````
