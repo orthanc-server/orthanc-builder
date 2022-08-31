@@ -37,7 +37,7 @@ ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-Orthanc Explorer 2                    0.3.3          (Win64 installers only !)  
+Orthanc Explorer 2                    0.4.0          (Win64 installers only !)  
 
 Folders
 -------

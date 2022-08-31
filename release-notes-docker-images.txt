@@ -9,6 +9,7 @@ You should use the full image only if you need to use one of these:
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
           - upgraded Orthanc to 1.11.2
+          - upgraded Orthanc Explorer 2 plugin to 0.4.0
           - upgraded DicomWeb plugin to 1.10
           - upgraded object-storage plugins to 2.0.0 (BREAKING CHANGE if using client-side encryption, check the plugin release notes)
           - upgraded base image to debian:bullseye-20220801-slim
