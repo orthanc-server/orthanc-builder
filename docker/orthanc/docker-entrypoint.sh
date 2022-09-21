@@ -24,10 +24,6 @@ elif [[ ! $GENERATE_HOST_ID_IF_MISSING || $GENERATE_HOST_ID_IF_MISSING == true ]
 	fi
 fi
 
-cd /startup
-python3 generateConfiguration.py
-
-
 # generate the configuration file
 cd /startup
 python3 generateConfiguration.py
