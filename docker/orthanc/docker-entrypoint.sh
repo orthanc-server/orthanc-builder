@@ -6,6 +6,28 @@ if [[ $# -ne 1 ]]; then
 	exit 2
 fi
 
+
+# DCMTK calls gethostid() when generating DICOM UIDs (used, e.g, in modifications/anonymizations).
+# When /etc/hostid is missing, the system tries to generate it from the IP of the system.
+# On some system, in particular circumstances, we have observed that the system performs a DNS query
+# to get the IP of the system.  This DNS can timeout (after multiple with retries) and, in particular cases,
+# we have observed a delay of 40 seconds to generate a single DICOM UID in Orthanc.
+# Therefore, if /etc/hostid is missing, we generate it with a random number.  This behaviour can still be deactivated by 
+# defining GENERATE_HOST_ID_IF_MISSING=false.  The host id can also be forced by defining FORCE_HOST_ID
+if [[ ! -z $FORCE_HOST_ID ]];then
+	echo "Forcing hostid in /etc/hostid"
+	echo $FORCE_HOST_ID > /etc/hostid
+elif [[ ! $GENERATE_HOST_ID_IF_MISSING || $GENERATE_HOST_ID_IF_MISSING == true ]]; then
+	if [ ! -f /etc/hostid ]; then
+		echo "Generating random hostid in /etc/hostid"
+		printf '%x' $(shuf -i 268435456-4294967295 -n 1) > /etc/hostid
+	fi
+fi
+
+cd /startup
+python3 generateConfiguration.py
+
+
 # generate the configuration file
 cd /startup
 python3 generateConfiguration.py
