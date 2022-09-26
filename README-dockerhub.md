@@ -23,7 +23,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.8.0 Default image
+#### 22.9.2 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -42,7 +42,7 @@ DICOMweb plugin                       1.10
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
-Authorization plugin                  0.2.5
+Authorization plugin                  0.3.0
 Transfers accelerator plugin          1.2
 GDCM plugin                           1.5
 ODBC plugin                           1.1

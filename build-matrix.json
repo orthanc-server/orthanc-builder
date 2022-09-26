@@ -504,7 +504,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.2.5",
+            "stable": "0.3.0",
             "unstable": "default",
             "artifactsOSX": "libOrthancAuthorization.dylib",
             "buildForOSX": false,
@@ -513,10 +513,10 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["Authorization 0.2.5 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                    ["Authorization 0.3.0 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
                 ],
                 "Artifacts32": [
-                    ["Authorization 0.2.5 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                    ["Authorization 0.3.0 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
                 ]
             }]
         },
