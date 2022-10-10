@@ -8,6 +8,7 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+          - upgraded DicomWeb plugin to 1.10.1
 22.9.2 :  - upgraded advanced authorization plugin to 0.3.0
 22.9.1 :  - 2 new environment variables to force the hostid or disable generation of a random one if it is missing.
             DCMTK calls gethostid() when generating DICOM UIDs (used, e.g, in modifications/anonymizations).
