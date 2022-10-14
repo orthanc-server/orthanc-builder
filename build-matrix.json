@@ -327,6 +327,7 @@
             "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Stone Web viewer (AGPL license)",
                 "Name": "stone_web_viewer",
