@@ -237,6 +237,7 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancTransfers.dylib",
             "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
                 "Description": "Transfers accelerator (AGPL license)",
