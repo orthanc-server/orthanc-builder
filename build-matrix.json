@@ -527,7 +527,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
-            "stable": "2.0.0",
+            "stable": "2.1.0",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
@@ -538,7 +538,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
-            "stable": "2.0.0",
+            "stable": "2.1.0",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
@@ -549,7 +549,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
-            "stable": "2.0.0",
+            "stable": "2.1.0",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
