@@ -23,7 +23,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.10.3 Default image
+#### 22.10.4 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -50,7 +50,7 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.1.0
-Orthanc Explorer 2                    0.4.1
+Orthanc Explorer 2                    0.4.2
 ```
 
 #### 22.10.3-full image 
