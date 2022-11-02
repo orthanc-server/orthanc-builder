@@ -9,6 +9,15 @@
     // "DateFormat" : "DD/MM/YYYY",
 
     /**
+     * Defines how times are displayed in the UI. If this option is not
+     * set, the DICOM tags will be displayed as such. "hh" will be
+     * replaced by the hour, "mm" by the minutes, "ss" by the seconds
+     * and ".f" by the fractions of seconds.
+     **/
+    // "TimeFormat" : "hh:mm:ss.f",
+
+
+    /**
      * This option allows you to define windowing presets.
      * For each preset, you must provide a name, the window width
      * and window center.
@@ -28,7 +37,8 @@
      * windowing, zoom and pan from a single mouse configuration. The
      * behaviour of the combined tool is defined in
      * CombinedToolBehaviour. The available mouse actions are
-     * "Crosshair", "Windowing", "Pan", "Rotate" and "Zoom".
+     * "Crosshair", "Windowing", "Pan", "Rotate", "Zoom" and
+     * "MagnifyingGlass".
      **/
     "CombinedToolEnabled" : true,
     "CombinedToolBehaviour" : {
@@ -105,6 +115,40 @@
      * image, this logo will be displayed at the bottom-left of the
      * Stone Web viewer.
      **/
-    "InstitutionLogo" : ""
+    "InstitutionLogo" : "",
+
+    /**
+     * Define a list of modality type that the viewer will ignore.
+     **/
+    "SkipSeriesFromModalities": ["SR", "SEG", "PR"],
+
+    /**
+     * Whether to display the info panel at startup. Allowed values:
+     * "Always", "Never", "User". With "User", the user can decide to
+     * show or not the info panel in the user preferences panel (this
+     * is implemented using a cookie). (New in Stone Web viewer 2.4)
+     **/
+    "ShowInfoPanelAtStartup": "User",
+
+    /**
+     * Whether to give access to the user preferences window. (New in
+     * Stone Web viewer 2.4)
+     **/
+    "ShowUserPreferencesButton" : true,
+
+    /**
+     * Display a "not for diagnostic usage" disclaimer above the list
+     * of studies/series. (New in Stone Web viewer 2.4)
+     **/
+    "ShowNotForDiagnosticUsageDisclaimer": true,
+
+    /**
+     * HTTP headers to be set in each request to the DICOMweb server.
+     * Note that the value of the headers can be taken from the
+     * environment variables.
+     **/
+    "DicomWebHttpHeaders" : {
+      /* "Authorization" : "Bearer ${USER}" */
+    }
   }
 }
