@@ -8,6 +8,9 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+          - upgraded base image to debian:bullseye-20221024-slim
+          - upgraded Orthanc Explorer 2 plugin to 0.4.3
+          - fixed Stone Web Viewer frontend version
 22.11.0:  - upgraded Stone Web viewer to 2.4
 22.10.4:  - upgraded Orthanc Explorer 2 plugin to 0.4.2
 22.10.3:  - upgraded DICOMweb plugin to 1.12
