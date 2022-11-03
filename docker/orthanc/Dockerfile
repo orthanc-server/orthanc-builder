@@ -193,7 +193,7 @@ RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $ORTHANC_STONE_VIEW
 
 WORKDIR /source/Applications/StoneWebViewer/WebAssembly
 RUN chmod +x docker-internal.sh
-RUN ./docker-internal.sh Release
+RUN STONE_BRANCH=${ORTHANC_STONE_VIEWER_COMMIT_ID} ./docker-internal.sh Release
 
 
 FROM orthanc-builder-base as build-stone-viewer
