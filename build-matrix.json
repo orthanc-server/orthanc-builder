@@ -353,11 +353,11 @@
             "stable": "OrthancDicomWeb-1.12",
             "unstable": "default",
             "artifactsOSX": "libOrthancDicomWeb.dylib",
-            "artifactsWin": "libOrthancDicomWeb.dll",    in ./Release
+            "artifactsWin": "libOrthancDicomWeb.dll",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "buildForOSX": true,
             "buildForWin": true,
-            "unitTests": "UnitTests",      win unit tests are in ./Release/UnitTests.exe
+            "unitTests": "UnitTests",
             "windows": [{
                 "Description": "DICOMweb support (AGPL license)",
                 "Mandatory": false,
