@@ -85,9 +85,9 @@ if [[ $already_built == 0 ]]; then
     else
     
         # generic build steps
-        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsWin -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsWin -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF $workspace/sources$sourcesSubPath
         cd $workspace/build
-        make -j 6
+        cmake --build . --config Release
     
     fi
 
