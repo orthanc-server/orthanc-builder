@@ -93,7 +93,7 @@ if [[ $already_built == 0 ]]; then
 
     ########## test
     if [[ $unitTests ]]; then
-        $unitTests
+        ./$unitTests
     fi
 
     ########## post-build

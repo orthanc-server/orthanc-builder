@@ -93,7 +93,7 @@ if [[ $already_built == 0 ]]; then
 
     ########## test
     if [[ $unitTests ]]; then
-        $unitTests
+        ./Release/$unitTests.exe
     fi
 
     ########## post-build
@@ -105,10 +105,10 @@ if [[ $already_built == 0 ]]; then
 
     for artifact in $artifacts; do
 
-        if [ -f "$workspace/build/$artifact" ]; then  # some artifacts may not exist for some branches
+        if [ -f "$workspace/build/Release/$artifact" ]; then  # some artifacts may not exist for some branches
 
-            cp $workspace/build/$artifact /tmp/artifacts/$last_commit_id/$artifact
-            cp $workspace/build/$artifact /tmp/artifacts/$branchTag/$artifact
+            cp $workspace/build/Release/$artifact /tmp/artifacts/$last_commit_id/$artifact
+            cp $workspace/build/Release/$artifact /tmp/artifacts/$branchTag/$artifact
         fi
 
     done
