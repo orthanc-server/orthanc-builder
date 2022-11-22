@@ -84,6 +84,67 @@ getCustomBuildOSX() { # $1 = name, $2 = version (stable or unstable)
     echo $prebuild
 }
 
+getArtifactsWin() { # $1 = name, $2 = version (stable or unstable) 
+    if [[ $2 == "unstable" ]]; then
+
+        artifacts=$(getFromMatrix $1 unstableArtifactsWin)
+
+        if [[ $artifacts == "" ]]; then
+            artifacts=$(getFromMatrix $1 artifactsWin)
+        fi
+
+    else
+
+        artifacts=$(getFromMatrix $1 artifactsWin)
+
+    fi
+
+    echo $artifacts
+}
+
+getBranchTagToBuildWin() { # $1 = name, $2 = version (stable or unstable)
+    if [[ $2 == "stable" ]]; then
+
+        revision=$(getFromMatrix $1 stableWin)
+
+        if [[ $revision == "" ]]; then
+            revision=$(getFromMatrix $1 stable)
+        fi
+
+    else
+
+        revision=$(getFromMatrix $1 unstableWin)
+
+        if [[ $revision == "" ]]; then
+            revision=$(getFromMatrix $1 unstable)
+        fi
+
+    fi
+
+    echo $revision
+}
+
+getPrebuildStepWin() { # $1 = name, $2 = version (stable or unstable)
+    if [[ $2 == "stable" ]]; then
+        prebuild=$(getFromMatrix $1 preBuildStableWin "")
+    else
+        prebuild=$(getFromMatrix $1 preBuildUnstableWin "")
+    fi
+
+    echo $prebuild
+}
+
+getCustomBuildWin() { # $1 = name, $2 = version (stable or unstable)
+    if [[ $2 == "stable" ]]; then
+        prebuild=$(getFromMatrix $1 customBuildWin "")
+    else
+        prebuild=$(getFromMatrix $1 customBuildWin "")
+    fi
+
+    echo $prebuild
+}
+
+
 getBranchTagToBuildDocker() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
 
@@ -149,7 +210,7 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (o
     if [[ $3 == "osx" ]]; then
         revision=$(getBranchTagToBuildOSX $1 $2)
     elif [[ $3 == "win" ]]; then
-        exit 1 # TODO
+        revision=$(getBranchTagToBuildWin $1 $2)
     else
         revision=$(getBranchTagToBuildDocker $1 $2)
     fi

@@ -42,7 +42,7 @@ jobs:
 
   build:
     name: build
-    runs-on: "windows-latest"
+    runs-on: "windows-2022"
     needs: [get-build-matrix]
     strategy:
       fail-fast: false
@@ -54,8 +54,7 @@ jobs:
     - name: Build if required
       id: build-binaries
       run: |
-        brew install mercurial
-        ./build-osx-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
+        ./build-win-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

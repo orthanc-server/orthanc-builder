@@ -22,16 +22,16 @@ do
 done
 
 
-commit_id=$(getCommitId $configName $version osx)
-branchTag=$(getBranchTagToBuildOSX $configName $version)
+commit_id=$(getCommitId $configName $version win)
+branchTag=$(getBranchTagToBuildWin $configName $version)
 repo=$(getFromMatrix $configName repo)
 repoType=$(getFromMatrix $configName repoType)
 extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags)
 sourcesSubPath=$(getFromMatrix $configName sourcesSubPath)
 unitTests=$(getFromMatrix $configName unitTests)
 artifacts=$(getArtifactsWin $configName $version)
-prebuildStep=$(getPrebuildStepOSX $configName $version)
-customBuild=$(getCustomBuildOSX $configName $version)
+prebuildStep=$(getPrebuildStepWin $configName $version)
+customBuild=$(getCustomBuildWin $configName $version)
 extraCMakeFlagsWin=$(getFromMatrix $configName extraCMakeFlagsWin)
 
 
