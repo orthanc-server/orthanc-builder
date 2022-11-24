@@ -535,6 +535,7 @@
             "artifactsWin": "OrthancAzureBlobStorage.dll",
             "buildForOSX": false,
             "buildForWin": true,
+            "preBuildStableWin": "cd /c/vcpkg && git checkout 2021.05.12 && vcpkg install cryptopp boost azure-storage-cpp",
             "windows": [{
             }]
         },
