@@ -81,7 +81,7 @@ if [[ $already_built == 0 ]]; then
     if [[ "$customBuild" ]]; then
         
         eval $customBuild
-    
+
     else
     
         # generic build steps

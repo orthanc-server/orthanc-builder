@@ -12,7 +12,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 RUN git clone https://github.com/Microsoft/vcpkg.git && \
   cd vcpkg/ && \
-  git checkout 2021.05.12
+  git checkout 2022.11.14
 WORKDIR /vcpkg
 # RUN ls -al /vcpkg
 RUN ./bootstrap-vcpkg.sh
