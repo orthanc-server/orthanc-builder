@@ -82,7 +82,7 @@ buildTargets="$buildTargets $finalImageTarget"
 
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
 # buildTargets=build-plugin-neuro
-
+buildTargets="orthanc-build-vcpkg"
 
 if [[ $type == "local" ]]; then
     from_cache_arg_runner_base=

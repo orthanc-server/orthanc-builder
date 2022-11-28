@@ -127,8 +127,16 @@ getBranchTagToBuildWin() { # $1 = name, $2 = version (stable or unstable)
 getPrebuildStepWin() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
         prebuild=$(getFromMatrix $1 preBuildStableWin "")
+
+        if [[ $prebuild == "" ]]; then
+            prebuild=$(getFromMatrix $1 preBuildWin "")
+        fi
     else
         prebuild=$(getFromMatrix $1 preBuildUnstableWin "")
+
+        if [[ $prebuild == "" ]]; then
+            prebuild=$(getFromMatrix $1 preBuildWin "")
+        fi
     fi
 
     echo $prebuild

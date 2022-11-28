@@ -10,6 +10,16 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# update CMake (required by latest vcpkg version)
+WORKDIR /cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.24.2/cmake-3.24.2.tar.gz --quiet
+RUN tar -zxvf cmake-3.24.2.tar.gz
+WORKDIR /cmake/cmake-3.24.2
+RUN ./bootstrap
+RUN make -j 6
+RUN make install
+
+WORKDIR /
 RUN git clone https://github.com/Microsoft/vcpkg.git && \
   cd vcpkg/ && \
   git checkout 2022.11.14
@@ -17,6 +27,8 @@ WORKDIR /vcpkg
 # RUN ls -al /vcpkg
 RUN ./bootstrap-vcpkg.sh
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
+RUN mkdir ~/.vcpkg/
+
 RUN ./vcpkg integrate install
 
 # object storage prerequisites

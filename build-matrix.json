@@ -18,6 +18,7 @@
             "stableDocker": "4b8fd4b10742                      OPTIONAL specific stable branch/tag for Docker",
             "unstableDocker": "4b8fd4b10742                    OPTIONAL specific unstable branch/tag for Docker",
             "artifactsOSX": "libOrthancGdcm.dylib libZZ.dylib  list of space separated artifacts for OSX",
+            "preBuildWin": "                                   OPTIONAL custom pre-build step for OSX",
             "preBuildStableOSX": "                             OPTIONAL custom pre-build step for OSX",
             "preBuildUnstableOSX": "                           OPTIONAL custom pre-build step for OSX",
             "customBuildOSX": "                                OPTIONAL custom pre-build step for OSX",
@@ -535,7 +536,8 @@
             "artifactsWin": "OrthancAzureBlobStorage.dll",
             "buildForOSX": false,
             "buildForWin": true,
-            "preBuildStableWin": "cd /c/vcpkg && git checkout 2022.11.14 && vcpkg install cryptopp boost azure-storage-cpp",
+            "preBuildWin": "cd /c/vcpkg && git checkout 2022.11.14 && vcpkg install cryptopp:x64-windows-static cpprestsdk:x64-windows-static azure-storage-cpp:x64-windows-static",
+            "extraCMakeFlagsWin": "-DCMAKE_TOOLCHAIN_FILE=/c/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static",
             "windows": [{
             }]
         },
