@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Get branch/tag name
       id: branch_name
-      uses: tj-actions/branch-names@v6
+      uses: tj-actions/branch-names@main
       # output: steps.branch_name.outputs.current_branch contains the branch or the tag
 
     - name: Echo pre_build
