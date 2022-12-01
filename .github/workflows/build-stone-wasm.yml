@@ -27,7 +27,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Build Stone WASM
       run: ./build-stone-wasm.sh version=${{ inputs.stable_unstable }} workspace="${{github.workspace}}"

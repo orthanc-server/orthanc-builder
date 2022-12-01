@@ -27,7 +27,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Build OSX Package
       run: ./build-osx-package.sh is_tag=${{ inputs.is_tag }} stable_unstable=${{ inputs.stable_unstable }} current_branch_tag=${{ inputs.current_branch_tag }}

@@ -65,7 +65,7 @@ jobs:
         remove-dotnet: 'true'
         remove-android: 'true'
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up QEMU
       if: ${{ matrix.config.platform == 'linux/arm64' }}

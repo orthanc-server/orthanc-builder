@@ -12,20 +12,18 @@ jobs:
     name: pre_build
     runs-on: "ubuntu-latest"
     outputs:
-      current_branch_tag: ${{steps.branch_name.outputs.current_branch}}
+      current_branch_tag: ${{steps.branch_name.outputs.current_branch_tag}}
       is_tag: ${{steps.branch_name.outputs.is_tag}}
-      ref_branch: ${{steps.branch_name.outputs.ref_branch}}
-      default_branch: ${{steps.branch_name.outputs.default_branch}}
-      is_default: ${{steps.branch_name.outputs.is_default}}
 
     steps:
     - name: Get branch/tag name
       id: branch_name
-      uses: tj-actions/branch-names@v5.1
-      # output: steps.branch_name.outputs.current_branch contains the branch or the tag
+      run: |
+        echo "current_branch_tag=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+        [[ "${GITHUB_REF_TYPE}" == "tag" ]] && echo "is_tag=true" >> $GITHUB_OUTPUT || echo "is_tag=false" >> $GITHUB_OUTPUT
 
     - name: Echo pre_build
       run: |
-        echo ${{ steps.branch_name.outputs.is_tag }} ${{ steps.branch_name.outputs.current_branch }}
+        echo ${{ steps.branch_name.outputs.is_tag }} ${{ steps.branch_name.outputs.current_branch_tag }}
         echo ${{ github.ref}}
 

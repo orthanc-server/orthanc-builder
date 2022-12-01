@@ -14,7 +14,7 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 22.11.3
+Content of the package 22.11.4
 ------------------------------
 
 Orthanc server                        1.11.2
@@ -30,7 +30,7 @@ DICOMweb plugin                       1.12
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
-Transfers accelerator plugin          1.2
+Transfers accelerator plugin          1.3
 Authorization plugin                  0.4.1
 GDCM decoder/transcoder plugin        1.5
 ODBC plugin                           1.1
