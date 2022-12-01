@@ -18,11 +18,19 @@ jobs:
       default_branch: ${{steps.branch_name.outputs.default_branch}}
       is_default: ${{steps.branch_name.outputs.is_default}}
 
-    steps:
-    - name: Get branch/tag name
-      id: branch_name
-      uses: tj-actions/branch-names@main
-      # output: steps.branch_name.outputs.current_branch contains the branch or the tag
+    # steps:
+    # - name: Get branch/tag name
+    #   id: branch_name
+    #   run: |
+    #     echo "{current_branch}={}" >> $GITHUB_OUTPUT
+
+    #   uses: tj-actions/branch-names@main
+    #   # output: steps.branch_name.outputs.current_branch contains the branch or the tag
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
 
     - name: Echo pre_build
       run: |
