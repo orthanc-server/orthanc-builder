@@ -18,7 +18,7 @@ jobs:
       default_branch: ${{steps.branch_name.outputs.default_branch}}
       is_default: ${{steps.branch_name.outputs.is_default}}
 
-    # steps:
+    steps:
     # - name: Get branch/tag name
     #   id: branch_name
     #   run: |
