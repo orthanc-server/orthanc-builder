@@ -320,7 +320,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
-            "stable": "StoneWebViewer-2.4",
+            "stable": "StoneWebViewer-2.5",
             "unstable": "default",
             "artifactsOSX": "libStoneWebViewer.dylib",
             "commentOSX": "# currently always building with wasm-binaries from latest offical version",
@@ -335,10 +335,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["Stone 2.4 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                    ["Stone 2.5 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
                 ],
                 "Artifacts32": [
-                    ["Stone 2.4 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                    ["Stone 2.5 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
                 ],
                 "Resources": [
                     ["stone-webviewer.json", "Configuration"]
