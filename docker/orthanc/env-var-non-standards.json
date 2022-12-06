@@ -7,6 +7,7 @@
   "ORTHANC__ORTHANC_EXPLORER_2__ENABLE_LINK_TO_LEGACY_UI": "OrthancExplorer2.EnableLinkToLegacyUi",
   "OE2_ENABLED": "OrthancExplorer2.IsDefaultOrthancUI",
 
+  "ORTHANC__POSTGRESQL": "PostgreSQL",
   "ORTHANC__POSTGRESQL__ENABLE_INDEX": "PostgreSQL.EnableIndex",
   "ORTHANC__POSTGRESQL__ENABLE_STORAGE": "PostgreSQL.EnableStorage",
   "ORTHANC__POSTGRESQL__HOST": "PostgreSQL.Host",
@@ -16,12 +17,12 @@
   "ORTHANC__POSTGRESQL__PASSWORD": "PostgreSQL.Password",
   "ORTHANC__POSTGRESQL__ENABLE_SSL": "PostgreSQL.EnableSsl",
   "ORTHANC__POSTGRESQL__LOCK": "PostgreSQL.Lock",
-
   "ORTHANC__POSTGRESQL__CONNECTION_URI": "PostgreSQL.ConnectionUri",
   "ORTHANC__POSTGRESQL__MAXIMUM_CONNECTION_RETRIES": "PostgreSQL.MaximumConnectionRetries",
   "ORTHANC__POSTGRESQL__CONNECTION_RETRY_INTERVAL": "PostgreSQL.ConnectionRetryInterval",
   "ORTHANC__POSTGRESQL__INDEX_CONNECTIONS_COUNT": "PostgreSQL.IndexConnectionsCount",
   
+  "ORTHANC__MYSQL": "MySQL",
   "ORTHANC__MYSQL__ENABLE_INDEX": "MySQL.EnableIndex",
   "ORTHANC__MYSQL__ENABLE_STORAGE": "MySQL.EnableStorage",
   "ORTHANC__MYSQL__HOST": "MySQL.Host",
