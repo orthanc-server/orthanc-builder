@@ -155,6 +155,7 @@
             "artifactsOSX": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForOSX": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "PostgreSQL backend (AGPL license)",
                 "Mandatory": false,
@@ -183,6 +184,7 @@
             "artifactsOSX": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
             "buildForOSX": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "MySQL backend (AGPL license)",
                 "Name": "mysql",
@@ -212,6 +214,7 @@
             "artifactsOSX": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
             "buildForOSX": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "ODBC backend (AGPL license)",
                 "Mandatory": false,
@@ -264,6 +267,7 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancIndexer.dylib",
             "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Folder indexer plugin",
                 "Mandatory": false,
@@ -288,6 +292,7 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancTcia.dylib",
             "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "The Cancer Imaging Archive plugin",
                 "Mandatory": false,
@@ -384,6 +389,7 @@
             "stableOSX": "4b8fd4b10742",
             "artifactsOSX": "libOrthancGdcm.dylib",
             "customBuildOSX" : "cmake -B $workspace/build-arm64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "buildForOSX": true,
             "windows": [{
                 "Description": "GDCM decoder/transcoder",
@@ -491,6 +497,7 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancWebViewer.dylib",
             "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
                 "Description": "Web Viewer of medical images (AGPL license)",
@@ -633,6 +640,7 @@
             "unstable": "default",
             "artifactsOSX": "libOrthancNeuro.dylib",
             "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Neuroimaging plugin",
                 "Mandatory": false,
