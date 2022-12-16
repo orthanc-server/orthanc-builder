@@ -23,7 +23,7 @@ Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/
 
 # packages content
 
-#### 22.11.4 Default image
+#### 22.12.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -33,7 +33,7 @@ Serve folders plugin                  1.11.2
 Connectivity check plugin             1.11.2
 Housekeeper plugin                    1.11.2
 Delayed Deletion plugin               1.11.2
-Stone Web viewer plugin               2.4
+Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
 Osimis Web viewer plugin (alpha)      1.4.2
 Python plugin                         4.0
@@ -53,7 +53,7 @@ AWS S3 plugin                         2.1.0
 Orthanc Explorer 2                    0.4.3
 ```
 
-#### 22.11.4-full image 
+#### 22.12.0-full image 
 ```
 additional component                  version
 ---------------------------------------------
