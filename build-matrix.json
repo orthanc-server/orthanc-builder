@@ -539,6 +539,15 @@
             "preBuildWin": "cd /c/vcpkg && git checkout 2022.11.14 && vcpkg install cryptopp:x64-windows-static cpprestsdk:x64-windows-static azure-storage-cpp:x64-windows-static",
             "extraCMakeFlagsWin": "-DCMAKE_TOOLCHAIN_FILE=/c/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static",
             "windows": [{
+                "Description": "Orthanc Azure blob storage plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Downloads64": [
+                    ["https://orthanc.osimis.io/nightly-win-builds/2.1.1/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                ],
+                "Resources": [
+                    ["azure.json", "Configuration"]
+                ]
             }]
         },
         {
