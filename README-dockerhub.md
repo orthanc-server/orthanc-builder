@@ -18,7 +18,7 @@ Full documentation is available [here](https://book.orthanc-server.com/users/doc
 
 Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
 
-Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/src/master/release-notes-docker-images.txt)
+Release notes are available [here](https://github.com/orthanc-server/orthanc-builder/blob/master/release-notes-docker-images.txt)
 
 
 # packages content
