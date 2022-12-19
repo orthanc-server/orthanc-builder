@@ -538,7 +538,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/Azure",
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
-            "stable": "2.1.1",
+            "stable": "2.1.2",
             "unstable": "default",
             "artifactsWin": "OrthancAzureBlobStorage.dll",
             "buildForOSX": false,
@@ -550,7 +550,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/2.1.1/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/2.1.2/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
                 ],
                 "Resources": [
                     ["azure.json", "Configuration"]
@@ -562,7 +562,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
-            "stable": "2.1.1",
+            "stable": "2.1.2",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
@@ -573,7 +573,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
-            "stable": "2.1.1",
+            "stable": "2.1.2",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{

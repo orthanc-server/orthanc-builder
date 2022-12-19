@@ -8,7 +8,7 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-          - upgraded object-storage plugins to 2.1.1
+          - upgraded object-storage plugins to 2.1.2
           - upgraded Orthanc Explorer 2 plugin to 0.5.0
           - 2 new special env vars: ORTHANC__POSTGRESQL and ORTHANC__MYSQL to define the "PostgreSQL"
             and "MySQL" whole configuration nodes in one go

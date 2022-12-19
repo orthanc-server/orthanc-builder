@@ -49,7 +49,7 @@ ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-AWS S3 plugin                         2.1.1
+AWS S3 plugin                         2.1.2
 Orthanc Explorer 2                    0.5.0
 ```
 
@@ -57,6 +57,6 @@ Orthanc Explorer 2                    0.5.0
 ```
 additional component                  version
 ---------------------------------------------
-Azure Blob Storage plugin             2.1.1
-Google Cloud Storage plugin           2.1.1
+Azure Blob Storage plugin             2.1.2
+Google Cloud Storage plugin           2.1.2
 ````
