@@ -22,17 +22,17 @@ do
 done
 
 
-commit_id=$(getCommitId $configName $version osx)
-branchTag=$(getBranchTagToBuildOSX $configName $version)
+commit_id=$(getCommitId $configName $version win)
+branchTag=$(getBranchTagToBuildWin $configName $version)
 repo=$(getFromMatrix $configName repo)
 repoType=$(getFromMatrix $configName repoType)
 extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags)
 sourcesSubPath=$(getFromMatrix $configName sourcesSubPath)
 unitTests=$(getFromMatrix $configName unitTests)
-artifacts=$(getArtifactsOSX $configName $version)
-prebuildStep=$(getPrebuildStepOSX $configName $version)
-customBuild=$(getCustomBuildOSX $configName $version)
-extraCMakeFlagsOSX=$(getFromMatrix $configName extraCMakeFlagsOSX)
+artifacts=$(getArtifactsWin $configName $version)
+prebuildStep=$(getPrebuildStepWin $configName $version)
+customBuild=$(getCustomBuildWin $configName $version)
+extraCMakeFlagsWin=$(getFromMatrix $configName extraCMakeFlagsWin)
 
 
 echo "configName = $configName"
@@ -47,7 +47,7 @@ echo "unitTests = $unitTests"
 echo "artifacts = $artifacts"
 echo "prebuildStep = $prebuildStep"
 echo "customBuild = $customBuild"
-echo "extraCMakeFlagsOSX = $extraCMakeFlagsOSX"
+echo "extraCMakeFlagsWin = $extraCMakeFlagsWin"
 
 if [[ $repoType == "hg" ]]; then
 
@@ -68,7 +68,7 @@ fi
 read -a artifacts_array <<< "$artifacts"
 first_artifact=${artifacts_array[0]}
 
-already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-win-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
 
@@ -81,19 +81,19 @@ if [[ $already_built == 0 ]]; then
     if [[ "$customBuild" ]]; then
         
         eval $customBuild
-    
+
     else
     
         # generic build steps
-        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsWin -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF $workspace/sources$sourcesSubPath
         cd $workspace/build
-        make -j 6
+        cmake --build . --config Release
     
     fi
 
     ########## test
     if [[ $unitTests ]]; then
-        ./$unitTests
+        ./Release/$unitTests.exe
     fi
 
     ########## post-build
@@ -105,14 +105,14 @@ if [[ $already_built == 0 ]]; then
 
     for artifact in $artifacts; do
 
-        if [ -f "$workspace/build/$artifact" ]; then  # some artifacts may not exist for some branches
+        if [ -f "$workspace/build/Release/$artifact" ]; then  # some artifacts may not exist for some branches
 
-            cp $workspace/build/$artifact /tmp/artifacts/$last_commit_id/$artifact
-            cp $workspace/build/$artifact /tmp/artifacts/$branchTag/$artifact
+            cp $workspace/build/Release/$artifact /tmp/artifacts/$last_commit_id/$artifact
+            cp $workspace/build/Release/$artifact /tmp/artifacts/$branchTag/$artifact
         fi
 
     done
 
-    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-win-builds/ --recursive --cache-control=max-age=1
 
 fi

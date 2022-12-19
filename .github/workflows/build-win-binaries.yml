@@ -1,0 +1,66 @@
+on:
+  workflow_call:
+    inputs:
+      is_tag:
+        description: 'Is a Git Tag'
+        type: string
+        required: true
+      current_branch_tag:
+        description: 'Git branch or Tag'
+        type: string
+        required: true
+      stable_unstable:
+        description: 'stable/unstable'
+        type: string
+        required: true
+    secrets:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
+        required: true
+
+jobs:
+
+  get-build-matrix:
+    name: get-build-matrix
+    runs-on: "ubuntu-latest"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      # Required as the JSON input file needs to be read
+      - uses: actions/checkout@v2
+    
+      - id: set-matrix
+        uses: JoshuaTheMiller/conditional-build-matrix@main        
+        with:
+          inputFile: 'build-matrix.json'
+          filter: 'configs[?buildForWin]'
+
+      - name: output
+        run: |
+          echo ${{steps.set-matrix.outputs.matrix}}
+
+  build:
+    name: build
+    runs-on: "windows-2022"
+    needs: [get-build-matrix]
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJSON(needs.get-build-matrix.outputs.matrix)}}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build if required
+      id: build-binaries
+      run: |
+        bash ./build-win-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true

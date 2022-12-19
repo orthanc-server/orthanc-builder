@@ -1,0 +1,13 @@
+{
+//     "AzureBlobStorage" : {
+//         "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=xxxxxxxxx;AccountKey=yyyyyyyy===;EndpointSuffix=core.windows.net",
+//         "ContainerName" : "test-orthanc-storage-plugin",
+//         //"CreateContainerIfNotExists": true,       // available from version 1.2.0
+//         //"RootPath": "",                           // see below
+//         //"MigrationFromFileSystemEnabled": false,  // see below
+//         //"StorageStructure": "flat",               // see below
+//         //"EnableLegacyUnknownFiles": true,         // optional: see below
+//         //"StorageEncryption" : {},                 // optional: see the section related to encryption
+//         //"HybridMode": "Disabled"                  // optional: see the section related to Hybrid storage
+//   }
+}
