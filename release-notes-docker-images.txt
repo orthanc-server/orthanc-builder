@@ -8,11 +8,12 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-          - upgraded base image to debian:bullseye-20221205-slim
+22.12.1:  - upgraded base image to debian:bullseye-20221205-slim
           - upgraded object-storage plugins to 2.1.2
           - upgraded Orthanc Explorer 2 plugin to 0.5.0
           - 2 new special env vars: ORTHANC__POSTGRESQL and ORTHANC__MYSQL to define the "PostgreSQL"
             and "MySQL" whole configuration nodes in one go
+          - WIN-INSTALLER: added the Azure storage plugin (64bits only)
 22.12.0:  - upgraded Stone Web viewer to 2.5
 22.11.4:  - upgraded transfers accelerator plugin 1.3
 22.11.3:  - upgraded advanced authorization plugin to 0.4.1
