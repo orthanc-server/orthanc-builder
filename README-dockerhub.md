@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 22.12.0 Default image
+#### 22.12.1 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -35,7 +35,6 @@ Housekeeper plugin                    1.11.2
 Delayed Deletion plugin               1.11.2
 Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
-Osimis Web viewer plugin (alpha)      1.4.2
 Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.12
@@ -50,10 +49,10 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.1.2
-Orthanc Explorer 2                    0.5.0
+Orthanc Explorer 2                    0.5.1
 ```
 
-#### 22.12.0-full image 
+#### 22.12.1-full image 
 ```
 additional component                  version
 ---------------------------------------------
