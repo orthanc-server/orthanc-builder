@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 22.12.1 Default image
+#### 22.12.2 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -52,7 +52,7 @@ AWS S3 plugin                         2.1.2
 Orthanc Explorer 2                    0.5.1
 ```
 
-#### 22.12.1-full image 
+#### 22.12.2-full image 
 ```
 additional component                  version
 ---------------------------------------------
