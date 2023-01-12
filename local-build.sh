@@ -66,7 +66,7 @@ ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docke
 ORTHANC_OE2_COMMIT_ID=$(getCommitId "Orthanc-explorer-2" $version docker $skipCommitChecks)
 ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version)
 
-BASE_DEBIAN_IMAGE=bullseye-20221205-slim
+BASE_DEBIAN_IMAGE=bullseye-20230109-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
