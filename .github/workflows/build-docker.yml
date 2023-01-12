@@ -104,10 +104,10 @@ jobs:
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
-    # - name: Setup tmate session
-    #   uses: mxschmitt/action-tmate@v3
-    #   with:
-    #     limit-access-to-actor: true
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
 
     - name: Push normal image with branch/tag
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
