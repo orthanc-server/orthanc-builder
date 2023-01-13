@@ -142,6 +142,10 @@ if [[ $step == "push" ]]; then
         final_tag=$pushTag
     fi
 
+    # tag previously build images and push them
+    docker tag osimis/orthanc:$currentTag osimis/orthanc:$pushTag
+    docker push osimis/orthanc:$pushTag
+    exit 0
 else
 
     final_tag=$currentTag
