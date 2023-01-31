@@ -82,19 +82,13 @@ jobs:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_token }}
 
-    # - name: Setup tmate session
-    #   uses: mxschmitt/action-tmate@v3
-    #   with:
-    #     limit-access-to-actor: true
-
-    - name: DF
-      run: df -h
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
 
     - name: Build normal image with local-build.sh
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
-
-    - name: DF
-      run: df -h
 
     - name: Install Integration tests prerequisites
       run: sudo apt-get install -y dcmtk
@@ -103,21 +97,12 @@ jobs:
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
-    - name: DF
-      run: df -h
-
     - name: Build full image with local-build.sh
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
-
-    - name: DF
-      run: df -h
 
     - name: Run full image integration tests
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
-
-    - name: DF
-      run: df -h
 
     # - name: Setup tmate session
     #   uses: mxschmitt/action-tmate@v3
@@ -127,21 +112,12 @@ jobs:
     - name: Push normal image with branch/tag
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
 
-    - name: DF
-      run: df -h
-
     - name: Push full image with branch/tag
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}-full
-
-    - name: DF
-      run: df -h
 
     - name: Push normal image with latest tag
       if: inputs.is_tag == 'true'
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=latest
-
-    - name: DF
-      run: df -h
 
     - name: Push full image with latest tag
       if: inputs.is_tag == 'true'
