@@ -66,6 +66,15 @@ jobs:
         remove-android: 'true'
         remove-haskell: 'true'
 
+    - name: Maximize build space (2)
+      # to list folder sizes:
+      # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
+      run: |
+        rm -rf /opt/microsoft && rm -rf /opt/google && rm -rf /opt/az \
+        rm -rf /usr/share/swift && rm -rf /usr/share/miniconda && rm -rf /usr/share/az_* && rm -rf /usr/share/gradle-* && rm -rf /usr/share/sbt
+        sudo rm -rf /etc/skel
+
+
     - uses: actions/checkout@v3
 
     - name: Set up QEMU
@@ -83,10 +92,10 @@ jobs:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_token }}
 
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@v3
+    #   with:
+    #     limit-access-to-actor: true
 
     - name: Build normal image with local-build.sh
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
