@@ -26,7 +26,7 @@ Delayed Deletion plugin               1.11.3
 Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
 Orthanc Web viewer plugin             2.8
-DICOMweb plugin                       1.12
+DICOMweb plugin                       1.13
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
