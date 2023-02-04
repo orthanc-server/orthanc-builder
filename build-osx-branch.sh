@@ -111,6 +111,14 @@ if [[ $already_built == 0 ]]; then
             cp $workspace/build/$artifact /tmp/artifacts/$branchTag/$artifact
         fi
 
+        # hack: check in subfolders
+        if [ -f "$workspace/build/ConnectivityChecks-build/$artifact" ]; then  # some artifacts may not exist for some branches
+
+            cp $workspace/build/ConnectivityChecks-build/$artifact /tmp/artifacts/$last_commit_id/$artifact
+            cp $workspace/build/ConnectivityChecks-build/$artifact /tmp/artifacts/$branchTag/$artifact
+        fi
+       
+
     done
 
     aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --cache-control=max-age=1
