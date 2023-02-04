@@ -109,15 +109,19 @@ if [[ $already_built == 0 ]]; then
 
             cp $workspace/build/$artifact /tmp/artifacts/$last_commit_id/$artifact
             cp $workspace/build/$artifact /tmp/artifacts/$branchTag/$artifact
-        fi
 
         # hack: check in subfolders
-        if [ -f "$workspace/build/ConnectivityChecks-build/$artifact" ]; then  # some artifacts may not exist for some branches
+        elif [ -f "$workspace/build/ConnectivityChecks-build/$artifact" ]; then  # some artifacts may not exist for some branches
 
             cp $workspace/build/ConnectivityChecks-build/$artifact /tmp/artifacts/$last_commit_id/$artifact
             cp $workspace/build/ConnectivityChecks-build/$artifact /tmp/artifacts/$branchTag/$artifact
-        fi
        
+        # hack: check in subfolders
+        elif [ -f "$workspace/build/DelayedDeletion-build/$artifact" ]; then  # some artifacts may not exist for some branches
+
+            cp $workspace/build/DelayedDeletion-build/$artifact /tmp/artifacts/$last_commit_id/$artifact
+            cp $workspace/build/DelayedDeletion-build/$artifact /tmp/artifacts/$branchTag/$artifact
+        fi
 
     done
 
