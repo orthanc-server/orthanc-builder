@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 23.X.X Default image
+#### 23.2.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -42,7 +42,7 @@ PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
 Authorization plugin                  0.4.1
-Transfers accelerator plugin          1.3
+Transfers accelerator plugin          1.4
 GDCM plugin                           1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
@@ -52,7 +52,7 @@ AWS S3 plugin                         2.1.2
 Orthanc Explorer 2                    0.6.0
 ```
 
-#### 22.12.2-full image 
+#### 23.2.0-full image 
 ```
 additional component                  version
 ---------------------------------------------
