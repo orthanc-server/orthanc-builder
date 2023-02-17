@@ -585,7 +585,7 @@
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
             "stable": "0.6.0",
-            "unstable": "master",
+            "unstable": "keycloak",
             "unstableOSX": "0.6.0", 
             "comment2": "this plugin has its own build process on Github -> OSX and Win64 are built by Github",
             "buildForOSX": false,
