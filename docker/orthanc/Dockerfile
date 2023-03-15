@@ -115,7 +115,7 @@ RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AU
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /build/UnitTests
 
 ########################## Orthanc Python
 
