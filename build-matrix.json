@@ -260,7 +260,7 @@
         },
         {
             "name": "Orthanc-indexer", 
-            "repo": "https://hg.orthanc-server.com/orthanc-indexer/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-indexer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_INDEXER",
             "stable": "OrthancIndexer-1.0",
@@ -285,7 +285,7 @@
         },
         {
             "name": "Orthanc-tcia", 
-            "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-tcia/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TCIA",
             "stable": "OrthancTcia-1.1",
@@ -633,7 +633,7 @@
         },
         {
             "name": "Orthanc-neuro", 
-            "repo": "https://hg.orthanc-server.com/orthanc-neuro/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-neuro/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_NEURO",
             "stable": "OrthancNeuro-1.0",
