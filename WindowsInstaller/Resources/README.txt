@@ -14,7 +14,7 @@ clicking the link in the Start Menu or by opening your web browser at
 http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
-Content of the package 23.2.0
+Content of the package 23.3.0
 ------------------------------
 
 Orthanc server                        1.11.3
@@ -31,13 +31,13 @@ PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
 Transfers accelerator plugin          1.4
-Authorization plugin                  0.4.1
+Authorization plugin                  0.5.0
 GDCM decoder/transcoder plugin        1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-Orthanc Explorer 2                    0.6.0          (Win64 installers only !)
+Orthanc Explorer 2                    0.7.0          (Win64 installers only !)
 Azure blob storage plugin             2.1.2          (Win64 installers only !)
 
 Folders
