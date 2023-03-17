@@ -115,7 +115,7 @@ RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AU
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /build/UnitTests
 
 ########################## Orthanc Python
 
@@ -139,12 +139,12 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: needs a ODBC server # RUN /build/UnitTests
 
-########################## Orthanc Indexer
+# ########################## Orthanc Indexer
 
 FROM orthanc-builder-base as build-plugin-indexer
 
 ARG ORTHANC_INDEXER_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
 RUN make -j 4
@@ -154,7 +154,7 @@ RUN make -j 4
 FROM orthanc-builder-base as build-plugin-neuro
 
 ARG ORTHANC_NEURO_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF /sources
 RUN make -j 4
@@ -164,7 +164,7 @@ RUN make -j 4
 FROM orthanc-builder-base as build-plugin-tcia
 
 ARG ORTHANC_TCIA_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
 RUN make -j 4
@@ -294,9 +294,12 @@ FROM orthanc-builder-base as build-oe2
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
-	apt-get --assume-yes install nodejs npm && \
+	apt-get --assume-yes install npm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
+    apt-get install -y nodejs
 
 ARG ORTHANC_OE2_COMMIT_ID
 ARG ORTHANC_OE2_VERSION
@@ -360,9 +363,9 @@ COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/pl
 COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
+# COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
+# COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
+# COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
 

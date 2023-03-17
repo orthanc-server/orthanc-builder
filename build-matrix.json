@@ -260,7 +260,7 @@
         },
         {
             "name": "Orthanc-indexer", 
-            "repo": "https://hg.orthanc-server.com/orthanc-indexer/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-indexer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_INDEXER",
             "stable": "OrthancIndexer-1.0",
@@ -285,7 +285,7 @@
         },
         {
             "name": "Orthanc-tcia", 
-            "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-tcia/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TCIA",
             "stable": "OrthancTcia-1.1",
@@ -585,7 +585,7 @@
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
             "stable": "0.6.0",
-            "unstable": "master",
+            "unstable": "keycloak",
             "unstableOSX": "0.6.0", 
             "comment2": "this plugin has its own build process on Github -> OSX and Win64 are built by Github",
             "buildForOSX": false,
@@ -633,7 +633,7 @@
         },
         {
             "name": "Orthanc-neuro", 
-            "repo": "https://hg.orthanc-server.com/orthanc-neuro/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-neuro/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_NEURO",
             "stable": "OrthancNeuro-1.0",
