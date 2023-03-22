@@ -322,17 +322,23 @@ RUN make -j 4
 
 ########################## Kitware's VolView for Orthanc
 
-FROM node:19.7.0-bullseye-slim as volview-dist-builder
+FROM node:19.7.0-bullseye-slim as build-volview-dist
 
 RUN apt-get -y clean && apt-get -y update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install patch && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install patch mercurial wget && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ARG ORTHANC_VOLVIEW_COMMIT_ID
-ARG VOLVIEW_VERSION
+# CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
+ARG VOLVIEW_VERSION=20147b7
 
-RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
-RUN wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${VOLVIEW_VERSION}.tar.gz
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /source
+RUN wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${VOLVIEW_VERSION}.tar.gz --quiet --output-document /source/VolView-${VOLVIEW_VERSION}.tar.gz
+RUN cp /source/VolView/VolView-*.patch /source
+
+RUN mkdir /target
+RUN chmod +x /source/Resources/CreateVolViewDist/build.sh
+RUN /source/Resources/CreateVolViewDist/build.sh ${VOLVIEW_VERSION}
 
 
 FROM orthanc-builder-base as build-plugin-volview
@@ -340,7 +346,9 @@ FROM orthanc-builder-base as build-plugin-volview
 ARG ORTHANC_VOLVIEW_COMMIT_ID
 RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
 WORKDIR /build
-RUN /sources/Resources/CreateVolViewDist.sh
+
+COPY --from=build-volview-dist /target/ /sources/VolView/dist
+
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
 

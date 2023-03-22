@@ -663,10 +663,9 @@
             "stable": "OrthancVolView-1.0",
             "unstable": "default",
             "artifactsOSX": "libOrthancVolView.dylib",
-            "buildForOSX": false,
+            "buildForOSX": true,
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
-                "Exclude": true,
                 "Description": "Kitware's VolView plugin for Orthanc",
                 "Mandatory": false,
                 "Category": "plugins",
