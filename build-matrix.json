@@ -654,6 +654,30 @@
                 "Resources": [
                 ]
             }]
+        },
+        {
+            "name": "Orthanc-volview", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-volview/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_VOLVIEW",
+            "stable": "OrthancVolView-1.0",
+            "unstable": "default",
+            "artifactsOSX": "libOrthancVolView.dylib",
+            "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "windows": [{
+                "Description": "Kitware's VolView plugin for Orthanc",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["VolView 1.0 - LSB Release/libOrthancVolView-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                ],
+                "Artifacts32": [
+                    ["VolView 1.0 - LSB Release/libOrthancVolView-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                ],
+                "Resources": [
+                ]
+            }]
         }
     ]
     

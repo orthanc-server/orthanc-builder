@@ -319,6 +319,19 @@ WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$ORTHANC_OE2_VERSION /sources/orthanc-explorer-2/
 RUN make -j 4
 
+
+########################## Kitware's VolView for Orthanc
+
+FROM orthanc-builder-base as build-plugin-volview
+
+ARG ORTHANC_VOLVIEW_COMMIT_ID
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
+WORKDIR /build
+RUN ./Resources/CreateVolViewDist.sh
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
+
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM orthanc-builder-base as build-downloader
@@ -368,6 +381,7 @@ COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/
 COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
