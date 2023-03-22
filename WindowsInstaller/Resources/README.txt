@@ -40,6 +40,7 @@ Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 Orthanc Explorer 2                    0.8.0          (Win64 installers only !)
 Azure blob storage plugin             2.1.2          (Win64 installers only !)
+Kitware's VolView plugin              1.0
 
 
 Folders

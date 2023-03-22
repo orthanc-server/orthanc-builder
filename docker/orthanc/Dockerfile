@@ -320,29 +320,29 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_OR
 RUN make -j 4
 
 
-# ########################## Kitware's VolView for Orthanc
+########################## Kitware's VolView for Orthanc
 
-# FROM node:19.7.0-bullseye-slim as volview-dist-builder
+FROM node:19.7.0-bullseye-slim as volview-dist-builder
 
-# RUN apt-get -y clean && apt-get -y update && \
-#     DEBIAN_FRONTEND=noninteractive apt-get -y install patch && \
-#     apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get -y clean && apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install patch && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# ARG ORTHANC_VOLVIEW_COMMIT_ID
-# ARG VOLVIEW_VERSION
+ARG ORTHANC_VOLVIEW_COMMIT_ID
+ARG VOLVIEW_VERSION
 
-# RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
-# RUN wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${VOLVIEW_VERSION}.tar.gz
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
+RUN wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${VOLVIEW_VERSION}.tar.gz
 
 
-# FROM orthanc-builder-base as build-plugin-volview
+FROM orthanc-builder-base as build-plugin-volview
 
-# ARG ORTHANC_VOLVIEW_COMMIT_ID
-# RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
-# WORKDIR /build
-# RUN /sources/Resources/CreateVolViewDist.sh
-# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-# RUN make -j 4
+ARG ORTHANC_VOLVIEW_COMMIT_ID
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
+WORKDIR /build
+RUN /sources/Resources/CreateVolViewDist.sh
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
 
 
 ########################## Orthanc downloads (since wget is not in the runner image)
@@ -394,7 +394,7 @@ COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/
 COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
-#COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
