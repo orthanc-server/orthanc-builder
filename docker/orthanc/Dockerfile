@@ -327,7 +327,7 @@ FROM orthanc-builder-base as build-plugin-volview
 ARG ORTHANC_VOLVIEW_COMMIT_ID
 RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
 WORKDIR /build
-RUN ./Resources/CreateVolViewDist.sh
+RUN /sources/Resources/CreateVolViewDist.sh
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
 
