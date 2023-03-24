@@ -40,6 +40,6 @@ if [[ $already_built == 0 ]]; then
     cd $workspace/sources/VolView/dist/
     zip -r dist.zip .
 
-    aws s3 --region eu-west-1 cp $workspace/sources/dist.zip s3://orthanc.osimis.io/nightly-volview-dist-builds/$last_commit_id/ --cache-control=max-age=1
-    aws s3 --region eu-west-1 cp $workspace/sources/dist.zip s3://orthanc.osimis.io/nightly-volview-dist-builds/$version/  --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp $workspace/sources/VolView/dist.zip s3://orthanc.osimis.io/nightly-volview-dist-builds/$last_commit_id/ --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp $workspace/sources/VolView/dist.zip s3://orthanc.osimis.io/nightly-volview-dist-builds/$version/  --cache-control=max-age=1
 fi
