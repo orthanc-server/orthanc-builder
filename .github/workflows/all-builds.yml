@@ -84,7 +84,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   osx-stable-build:
-    needs: [pre-build, build-stone-wasm-stable]
+    needs: [pre-build, build-stone-wasm-stable, build-volview-dist-stable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -95,7 +95,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   osx-unstable-build:
-    needs: [pre-build, build-stone-wasm-unstable]
+    needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
