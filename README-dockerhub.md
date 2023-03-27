@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 23.3.2 Default image
+#### 23.3.4 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -49,11 +49,11 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.1.2
-Orthanc Explorer 2                    0.8.0
+Orthanc Explorer 2                    0.8.1
 Kitware's VolView plugin              1.0
 ```
 
-#### 23.3.2-full image 
+#### 23.3.4-full image 
 ```
 additional component                  version
 ---------------------------------------------
