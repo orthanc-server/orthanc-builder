@@ -336,6 +336,36 @@
             }]
         },
         {
+            "name": "Orthanc-python-3-10", 
+            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-4.0",
+            "unstable": "default",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForOSX": false,
+            "buildForWin": true,
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.10 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.10.10/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+            }]
+        },
+        {
+            "name": "Orthanc-python-3-11", 
+            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-4.0",
+            "unstable": "default",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForOSX": false,
+            "buildForWin": true,
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.2/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+            }]
+        },
+        {
             "name": "Orthanc-stone", 
             "repo": "https://hg.orthanc-server.com/orthanc-stone/",
             "repoType": "hg",
