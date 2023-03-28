@@ -115,7 +115,7 @@ RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AU
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
 RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /build/UnitTests
 
 ########################## Orthanc Python
 
@@ -139,12 +139,12 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GO
 RUN make -j 4
 # disabled: needs a ODBC server # RUN /build/UnitTests
 
-########################## Orthanc Indexer
+# ########################## Orthanc Indexer
 
 FROM orthanc-builder-base as build-plugin-indexer
 
 ARG ORTHANC_INDEXER_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
 RUN make -j 4
@@ -154,7 +154,7 @@ RUN make -j 4
 FROM orthanc-builder-base as build-plugin-neuro
 
 ARG ORTHANC_NEURO_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF /sources
 RUN make -j 4
@@ -164,7 +164,7 @@ RUN make -j 4
 FROM orthanc-builder-base as build-plugin-tcia
 
 ARG ORTHANC_TCIA_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
 RUN make -j 4
@@ -294,9 +294,12 @@ FROM orthanc-builder-base as build-oe2
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --assume-yes update && \
-	apt-get --assume-yes install nodejs npm && \
+	apt-get --assume-yes install npm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
+    apt-get install -y nodejs
 
 ARG ORTHANC_OE2_COMMIT_ID
 ARG ORTHANC_OE2_VERSION
@@ -315,6 +318,40 @@ RUN npm run build
 WORKDIR /build
 RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$ORTHANC_OE2_VERSION /sources/orthanc-explorer-2/
 RUN make -j 4
+
+
+########################## Kitware's VolView for Orthanc
+
+FROM node:19.7.0-bullseye-slim as build-volview-dist
+
+RUN apt-get -y clean && apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install patch mercurial wget && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ARG ORTHANC_VOLVIEW_COMMIT_ID
+# CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
+ARG VOLVIEW_VERSION=20147b7
+
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /source
+RUN wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${VOLVIEW_VERSION}.tar.gz --quiet --output-document /source/VolView-${VOLVIEW_VERSION}.tar.gz
+RUN cp /source/VolView/VolView-*.patch /source
+
+RUN mkdir /target
+RUN chmod +x /source/Resources/CreateVolViewDist/build.sh
+RUN /source/Resources/CreateVolViewDist/build.sh ${VOLVIEW_VERSION}
+
+
+FROM orthanc-builder-base as build-plugin-volview
+
+ARG ORTHANC_VOLVIEW_COMMIT_ID
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /sources
+WORKDIR /build
+
+COPY --from=build-volview-dist /target/ /sources/VolView/dist
+
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
+
 
 ########################## Orthanc downloads (since wget is not in the runner image)
 
@@ -365,6 +402,7 @@ COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/
 COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/

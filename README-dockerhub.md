@@ -18,45 +18,45 @@ Full documentation is available [here](https://book.orthanc-server.com/users/doc
 
 Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
 
-Release notes are available [here](https://bitbucket.org/osimis/orthanc-builder/src/master/release-notes-docker-images.txt)
+Release notes are available [here](https://github.com/orthanc-server/orthanc-builder/blob/master/release-notes-docker-images.txt)
 
 
 # packages content
 
-#### 22.12.0 Default image
+#### 23.3.4 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.11.2
-Modality worklists plugin             1.11.2
-Serve folders plugin                  1.11.2
-Connectivity check plugin             1.11.2
-Housekeeper plugin                    1.11.2
-Delayed Deletion plugin               1.11.2
+Orthanc server                        1.11.3
+Modality worklists plugin             1.11.3
+Serve folders plugin                  1.11.3
+Connectivity check plugin             1.11.3
+Housekeeper plugin                    1.11.3
+Delayed Deletion plugin               1.11.3
 Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
-Osimis Web viewer plugin (alpha)      1.4.2
 Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
-DICOMweb plugin                       1.12
+DICOMweb plugin                       1.13
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
-Authorization plugin                  0.4.1
-Transfers accelerator plugin          1.3
+Authorization plugin                  0.5.0
+Transfers accelerator plugin          1.4
 GDCM plugin                           1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-AWS S3 plugin                         2.1.1
-Orthanc Explorer 2                    0.5.0
+AWS S3 plugin                         2.1.2
+Orthanc Explorer 2                    0.8.2
+Kitware's VolView plugin              1.0
 ```
 
-#### 22.12.0-full image 
+#### 23.3.4-full image 
 ```
 additional component                  version
 ---------------------------------------------
-Azure Blob Storage plugin             2.1.1
-Google Cloud Storage plugin           2.1.1
+Azure Blob Storage plugin             2.1.2
+Google Cloud Storage plugin           2.1.2
 ````

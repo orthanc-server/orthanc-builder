@@ -81,6 +81,10 @@ python3 -u main.py --pattern=ExtraMainDicomTags.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 
+python3 -u main.py --pattern=WithIngestTranscoding.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
 python3 -u main.py --pattern=MaxStorageReject.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043

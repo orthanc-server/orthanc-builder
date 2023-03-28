@@ -206,6 +206,7 @@ getGitCommitId() { # $1 = repo, $2 = branch/tag/revision
     tmp=$(mktemp -d -t git-check-last-commit-XXXXXXXXXXX)
     git clone --quiet --filter=blob:none --no-checkout $1 $tmp
     pushd $tmp
+    git checkout $2 &> /dev/null
     local commit_id=$(git rev-parse $2)
     popd
     rm -rf $tmp
