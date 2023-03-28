@@ -331,6 +331,7 @@
             "buildForOSX": false,
             "buildForWin": true,
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.9 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.9.13/x64/",
+            "artifactsWin": "OrthancPython.dll",
             "windows": [{
             }]
         },
@@ -564,7 +565,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/2.1.2/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/Orthanc-azure-storage/2.1.2/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
                 ],
                 "Resources": [
                     ["azure.json", "Configuration"]
