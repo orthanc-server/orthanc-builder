@@ -54,7 +54,7 @@ jobs:
     - name: Show python versions
       id: show-python-versions
       run: |
-        bash ls -al /c/hostedtoolcache/windows/Python/
+        bash -c "ls -al /c/hostedtoolcache/windows/Python/"
 
     - name: Build if required
       id: build-binaries
