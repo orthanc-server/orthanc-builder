@@ -30,6 +30,8 @@
                 "Description": "Osimis Web viewer (AGPL license)",
                 "Name": "osimis_web_viewer",
                 "Mandatory": false,
+                "CheckedComment": "true by default, false if you do not want to install the plugin by default",
+                "Checked": false,
                 "Category": "osimis",
                 "Artifacts64": [
                     ["OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
@@ -333,6 +335,19 @@
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.8 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.8.10/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
+                "Description": "Python plugin for Python 3.8 (AGPL license)",
+                "Name": "python_3_8",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-8/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.8-4.0.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Target": "OrthancPython3.8.dll"
             }]
         },
         {
@@ -348,6 +363,18 @@
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.9 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.9.13/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
+                "Description": "Python plugin for Python 3.9 (AGPL license)",
+                "Name": "python_3_9",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-9/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.9-4.0.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ]
             }]
         },
         {
@@ -363,6 +390,18 @@
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.10 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.10.10/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
+                "Description": "Python plugin for Python 3.10 (AGPL license)",
+                "Name": "python_3_10",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-10/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.10-4.0.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ]
             }]
         },
         {
@@ -378,6 +417,18 @@
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.2/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
+                "Description": "Python plugin for Python 3.11 (AGPL license)",
+                "Name": "python_3_11",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-11/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.11-4.0.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ]
             }]
         },
         {
@@ -610,7 +661,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-azure-storage/2.1.2/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-azure-storage/2.1.2/OrthancAzureBlobStorage.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
                 ],
                 "Resources": [
                     ["azure.json", "Configuration"]
@@ -656,7 +707,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.8.2/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.8.2/OrthancExplorer2-win64.dll", "Plugins", "OrthancExplorer2.dll", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
                 ],
                 "Resources": [
                     ["orthanc-explorer-2.json", "Configuration"]
