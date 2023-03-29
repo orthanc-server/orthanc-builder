@@ -105,7 +105,6 @@ def CheckNotExisting(path):
         print('ERROR- Two distinct files with the same name exist: %s' % path)
         exit(-1)
 
-
 SafeMakedirs('Artifacts')
 SafeMakedirs('Configuration')
 SafeMakedirs('Downloads')
@@ -129,15 +128,19 @@ def Download(url, target):
     with open(target, 'wb') as g:
         g.write(r.content)
 
-def GetDownloadBasename(f):
-    return os.path.basename(f).split('?')[0]
+def GetDownloadBasename(download):
+    if len(download) <= 2:
+        return os.path.basename(download[0]).split('?')[0]
+    else:
+        return download[2]
 
 CATEGORIES = {
     'none': None,
     'plugins' : 'Official plugins',
     'osimis' : 'Plugins by Osimis',
+    'python_plugins' : 'Python plugins (requires Python installed on your system)',
     'tools' : 'Command-line tools',
-    'tools/wsi' : 'WSI Command-line tools',
+    'tools/wsi' : 'WSI Command-line tools'
     }
 
 COMPONENTS_BY_CATEGORIES = {}
@@ -167,7 +170,7 @@ for repo in MATRIX['configs']:
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
-                    target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download[0]))
+                    target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download))
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
@@ -190,11 +193,22 @@ for repo in MATRIX['configs']:
             if not category in COMPONENTS_BY_CATEGORIES:
                 COMPONENTS_BY_CATEGORIES[category] = []
 
-
+            flags = []
             if component['Mandatory']:
-                options = 'Types: full compact custom; Flags: fixed'
+                options = 'Types: standard compact custom'
+                flags.append('fixed')
+            elif 'Checked' in component and not component['Checked']: 
+                options = 'Types: '
             else:
-                options = 'Types: full'
+                options = 'Types: standard'
+
+            if 'Exclusive' in component and component['Exclusive']:
+                flags.append("exclusive")
+            if len(flags) > 0:
+                if len(options) > 0:
+                    options += '; '
+                options += "Flags: " + " ".join(flags)
+
 
             COMPONENTS_BY_CATEGORIES[category].append('Name: "%s"; Description: "%s"; %s' % (
                                                       name, component['Description'], options))
@@ -207,7 +221,7 @@ for repo in MATRIX['configs']:
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
                     FILES.append('Source: "Downloads/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                                GetDownloadBasename(download[0]), download[1], name))
+                                GetDownloadBasename(download), download[1], name))
 
             if 'Resources' in component:
                 for resource in component['Resources']:
@@ -222,7 +236,10 @@ for repo in MATRIX['configs']:
 for category in CATEGORIES:
     if category in COMPONENTS_BY_CATEGORIES:
         if category != 'none':
-            COMPONENTS.append('Name: "%s"; Description: "%s"; Types: full' % (category, CATEGORIES[category]))
+            if category == 'python_plugins':
+                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: ' % (category, CATEGORIES[category]))
+            else:
+                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: standard' % (category, CATEGORIES[category]))
 
         for c in COMPONENTS_BY_CATEGORIES[category]:
             COMPONENTS.append(c)

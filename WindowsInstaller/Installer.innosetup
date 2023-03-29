@@ -26,6 +26,10 @@ ${ORTHANC_SETUP}
 ; Uncomment the next line to speed-up the building of the installer
 ; Compression=none
 
+[Types]
+Name: "standard"; Description: "Standard installation"
+Name: "compact"; Description: "Compact installation"
+Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
 ${ORTHANC_COMPONENTS}
