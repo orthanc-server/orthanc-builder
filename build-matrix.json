@@ -437,7 +437,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
-            "stable": "27213468a3bf",
+            "stable": "StoneWebViewer-2.5",
             "unstable": "default",
             "artifactsOSX": "libStoneWebViewer.dylib",
             "commentOSX": "# currently always building with wasm-binaries from latest offical version",
