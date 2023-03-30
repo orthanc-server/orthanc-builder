@@ -8,6 +8,7 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+          - upgraded StoneViewer to 27213468a3bf (drag drop)
 23.3.5 :  - WIN-INSTALLER: added the Python plugins
           - WIN-INSTALLER: replaced the "full" installation by a "standard" installation in
             which the Python plugins are not included by default.
