@@ -25,7 +25,7 @@ RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
 RUN apt-get --assume-yes install python3-dev
 RUN apt-get --assume-yes install unixodbc-dev
 RUN apt-get --assume-yes install libgmock-dev
-
+RUN apt-get --assume-yes install protobuf-compiler
 # on recent Debian, the libmysql-dev package is not available anymore
 # and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
 RUN apt-get --assume-yes install default-libmysqlclient-dev
