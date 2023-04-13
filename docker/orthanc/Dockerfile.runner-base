@@ -32,6 +32,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install libopenslide0 && \
   apt-get --assume-yes install libcrypto++ && \
   apt-get --assume-yes install libcpprest && \
+  apt-get --assume-yes install libprotobuf23 && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
 
