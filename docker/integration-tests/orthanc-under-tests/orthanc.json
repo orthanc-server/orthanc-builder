@@ -178,13 +178,15 @@
  "TranscodeDicomProtocol": true, 
  "UnknownSopClassAccepted": false, 
  "UserContentType": {}, 
- "UserMetadata": {}, 
+ "UserMetadata": {
+   "my-metadata": 1098
+ },
  "WebDavDeleteAllowed": true, 
  "WebDavEnabled": true, 
  "WebDavUploadAllowed": true, 
  "Worklists": {
-  "Database": "/worklists", 
-  "Enable": true
+   "Database": "/worklists", 
+   "Enable": true
  }, 
  "ZipLoaderThreads": 0
 }

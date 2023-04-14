@@ -141,6 +141,14 @@
     "libs" : ["libDelayedDeletion.so"]
   },
 
+  "MultitenantDicom" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "MULTITENANT_DICOM_PLUGIN_ENABLED",
+    "libs" : ["libMultitenantDicom.so"]
+  },
+
   "Wsi": {
     "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WSI_ENABLED",

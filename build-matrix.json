@@ -47,11 +47,11 @@
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "Orthanc-1.11.3",
+            "stable": "Orthanc-1.12.0",
             "unstable": "default",
-            "stableOSX": "Orthanc-1.11.3",
-            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib",
-            "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib",
+            "stableOSX": "Orthanc-1.12.0",
+            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForOSX": true,
@@ -131,6 +131,20 @@
                     ],
                     "Resources": [
                         ["delayed-deletion.json", "Configuration"]
+                    ]
+                },
+                {
+                    "Description": "Multitenant DICOM",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["Orthanc 1.11.3 - VC2015-64 Release/MultitenantDicom.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["Orthanc 1.11.3 - VC2008-32 Release/MultitenantDicom.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Resources": [
+                        ["multitenant-dicom.json", "Configuration"]
                     ]
                 },
                 {
