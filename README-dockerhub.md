@@ -23,16 +23,17 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 23.3.4 Default image
+#### 23.4.0 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.11.3
-Modality worklists plugin             1.11.3
-Serve folders plugin                  1.11.3
-Connectivity check plugin             1.11.3
-Housekeeper plugin                    1.11.3
-Delayed Deletion plugin               1.11.3
+Orthanc server                        1.12.0
+Modality worklists plugin             1.12.0
+Serve folders plugin                  1.12.0
+Connectivity check plugin             1.12.0
+Housekeeper plugin                    1.12.0
+Delayed Deletion plugin               1.12.0
+Multitenant DICOM plugin              1.12.0
 Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
 Python plugin                         4.0
@@ -41,7 +42,7 @@ DICOMweb plugin                       1.13
 PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
-Authorization plugin                  0.5.0
+Authorization plugin                  0.5.1
 Transfers accelerator plugin          1.4
 GDCM plugin                           1.5
 ODBC plugin                           1.1

@@ -15,15 +15,16 @@ http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
 
-Content of the package 23.3.4
+Content of the package 23.4.0
 ------------------------------
 
-Orthanc server                        1.11.3
-Modality worklists plugin             1.11.3
-Serve folders plugin                  1.11.3
-Connectivity check plugin             1.11.3
-Housekeeper plugin                    1.11.3
-Delayed Deletion plugin               1.11.3
+Orthanc server                        1.12.0
+Modality worklists plugin             1.12.0
+Serve folders plugin                  1.12.0
+Connectivity check plugin             1.12.0
+Housekeeper plugin                    1.12.0
+Delayed Deletion plugin               1.12.0
+Multitenant DICOM plugin              1.12.0
 Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
 Orthanc Web viewer plugin             2.8
@@ -32,7 +33,7 @@ PostgreSQL plugin                     4.0
 MySQL plugin                          4.3
 WSI Web viewer plugin                 1.1
 Transfers accelerator plugin          1.4
-Authorization plugin                  0.5.0
+Authorization plugin                  0.5.1
 GDCM decoder/transcoder plugin        1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
