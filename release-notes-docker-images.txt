@@ -10,6 +10,8 @@ Only the default tags are listed here.  You just need to append `-full` for the 
 
           - upgraded Orthanc to 1.12.0
           - upgraded advanced authorization plugin to 0.5.1
+          - upgraded PostgreSQL plugins to 5.0
+          - upgraded MySQL plugins to 5.0
 23.3.5 :  - WIN-INSTALLER: added the Python plugins
           - WIN-INSTALLER: replaced the "full" installation by a "standard" installation in
             which the Python plugins are not included by default.

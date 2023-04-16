@@ -163,7 +163,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-4.0",
+            "stable": "OrthancPostgreSQL-5.0",
             "unstable": "c1fe28de1bf6",
             "artifactsOSX": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForOSX": true,
@@ -174,12 +174,12 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
-                    ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                    ["PostgreSQL 5.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                    ["PostgreSQL 5.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
                 ],
                 "Artifacts32": [
-                    ["PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
-                    ["PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                    ["PostgreSQL 5.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                    ["PostgreSQL 5.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
                 ],
                 "Resources": [
                     ["postgresql.json", "Configuration"]
@@ -192,7 +192,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/MySQL",
             "comment": "# CHANGE_VERSION_MYSQL",
-            "stable": "OrthancMySQL-4.3",
+            "stable": "OrthancMySQL-5.0",
             "unstable": "c1fe28de1bf6",
             "artifactsOSX": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
             "buildForOSX": true,
@@ -204,12 +204,12 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
-                    ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                    ["MySQL 5.0 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                    ["MySQL 5.0 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
                 ],
                 "Artifacts32": [
-                    ["MySQL 4.3 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
-                    ["MySQL 4.3 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                    ["MySQL 5.0 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                    ["MySQL 5.0 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
                 ],
                 "Resources": [
                     ["mysql.json", "Configuration"]
