@@ -39,7 +39,7 @@ ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-Orthanc Explorer 2                    0.8.2          (Win64 installers only !)
+Orthanc Explorer 2                    0.9.0
 Azure blob storage plugin             2.1.2          (Win64 installers only !)
 Kitware's VolView plugin              1.0
 
