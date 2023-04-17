@@ -134,6 +134,15 @@ def GetDownloadBasename(download):
     else:
         return download[2]
 
+def GetArtifactBasename(artifact):
+    # 2 of artifact can be a comment or a rename
+    if len(artifact) >=3 and ".dll" in artifact[2] or ".exe" in artifact[2]:
+        # rename the artifact
+        return artifact[2]
+    else:
+        return os.path.basename(artifact[0])
+
+
 CATEGORIES = {
     'none': None,
     'plugins' : 'Official plugins',
@@ -162,12 +171,7 @@ for repo in MATRIX['configs']:
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
-                    # 2 of artifact can be a comment or a rename
-                    if len(artifact) >=3 and ".dll" in artifact[2] or ".exe" in artifact[2]:
-                        # rename the artifact
-                        target = os.path.join(TARGET, 'Artifacts', artifact[2])
-                    else:
-                        target = os.path.join(TARGET, 'Artifacts', os.path.basename(artifact[0]))
+                    target = os.path.join(TARGET, 'Artifacts', GetArtifactBasename(artifact))
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
@@ -221,7 +225,7 @@ for repo in MATRIX['configs']:
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
                     FILES.append('Source: "Artifacts/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                                os.path.basename(artifact[0]), artifact[1], name))
+                                GetArtifactBasename(artifact), artifact[1], name))
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:

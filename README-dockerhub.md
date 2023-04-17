@@ -54,7 +54,7 @@ Orthanc Explorer 2                    0.9.1
 Kitware's VolView plugin              1.0
 ```
 
-#### 23.3.4-full image 
+#### 23.4.0-full image 
 ```
 additional component                  version
 ---------------------------------------------
