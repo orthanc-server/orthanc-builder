@@ -706,9 +706,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "0.9.0",
+            "stable": "0.9.1",
             "unstable": "master",
-            "unstableOSX": "0.9.0", 
+            "unstableOSX": "0.9.1", 
             "comment2": "this plugin has its own build process on Github -> OSX and Win64 are built by Github",
             "buildForOSX": false,
             "artifactsOSX": "libOrthancExplorer2-universal.dylib",
@@ -717,11 +717,12 @@
                 "Description": "Orthanc Explorer 2 User Interface",
                 "Mandatory": false,
                 "Category": "plugins",
-                "Artifacts64": [
-                    ["OrthancExplorer2 0.9.0 - LSB Release/libOrthancExplorer2-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                "Comment": "Win64 is coming from Github while Win32 is coming from buildbot",
+                "Downloads64": [
+                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.9.1/OrthancExplorer2-win64.dll", "Plugins", "OrthancExplorer2.dll", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
                 ],
                 "Artifacts32": [
-                    ["OrthancExplorer2 0.9.0 - LSB Release/libOrthancExplorer2-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                    ["OrthancExplorer2 0.9.1 - LSB Release/libOrthancExplorer2-Windows32.dll", "Plugins", "OrthancExplorer2.dll", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
                 ],
                 "Resources": [
                     ["orthanc-explorer-2.json", "Configuration"]

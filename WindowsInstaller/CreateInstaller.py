@@ -162,7 +162,12 @@ for repo in MATRIX['configs']:
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
-                    target = os.path.join(TARGET, 'Artifacts', os.path.basename(artifact[0]))
+                    # 2 of artifact can be a comment or a rename
+                    if len(artifact) >=3 and ".dll" in artifact[2] or ".exe" in artifact[2]:
+                        # rename the artifact
+                        target = os.path.join(TARGET, 'Artifacts', artifact[2])
+                    else:
+                        target = os.path.join(TARGET, 'Artifacts', os.path.basename(artifact[0]))
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
