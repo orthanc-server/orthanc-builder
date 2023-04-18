@@ -72,7 +72,7 @@ previous_image=osimis/orthanc:$tagToTest
 
 python3 -u main.py --pattern=DelayedDeletion.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
+                   --orthanc_previous_version_docker_image=$previous_image \
                    --orthanc_under_tests_http_port=8043
 
 ######## Other new tests
