@@ -81,9 +81,9 @@ jobs:
 
     - uses: actions/checkout@v3
 
-    - name: Set up QEMU
-      if: ${{ matrix.config.platform == 'linux/arm64' }}
-      uses: docker/setup-qemu-action@v1
+    # - name: Set up QEMU
+    #   if: ${{ matrix.config.platform == 'linux/arm64' }}
+    #   uses: docker/setup-qemu-action@v1
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -102,7 +102,7 @@ jobs:
     #     limit-access-to-actor: true
 
     - name: Build normal image with local-build.sh
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=local step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
 
     - name: Install Integration tests prerequisites
       run: sudo apt-get install -y dcmtk
@@ -112,7 +112,7 @@ jobs:
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Build full image with local-build.sh
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=local step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
 
     - name: Run full image integration tests
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
@@ -124,18 +124,18 @@ jobs:
     #     limit-access-to-actor: true
 
     - name: Push normal image with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=local step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
 
     - name: Push full image with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}-full
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=local step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}-full
 
     - name: Push normal image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=latest
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=local step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=latest
 
     - name: Push full image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=local step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full
 
     - name: Update DockerHub repo description
       uses: peter-evans/dockerhub-description@v2
@@ -147,8 +147,8 @@ jobs:
         readme-filepath: README-dockerhub.md
 
 
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
+    # - name: Setup tmate session
+    #   if: ${{ failure() }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   with:
+    #     limit-access-to-actor: true

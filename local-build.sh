@@ -70,16 +70,19 @@ ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipC
 BASE_DEBIAN_IMAGE=bullseye-20230320-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
-# list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-auth build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview"
-
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
 if [[ $image == "full" ]]; then
     finalImageTarget=orthanc-with-vcpkg
 fi
 
-buildTargets="$buildTargets $finalImageTarget"
+if [[ $type == "local" ]]; then
+    buildTargets="$finalImageTarget"
+else
+    # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
+    buildTargets="build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-auth build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview"
+    buildTargets="$buildTargets $finalImageTarget"
+fi
 
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
 # buildTargets=build-plugin-neuro
