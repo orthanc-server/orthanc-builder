@@ -22,7 +22,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python wget dcmtk python-p
 RUN wget http://orthanc.osimis.io/ThirdPartyDownloads/linux-standard-base/getscu-3.6.5 -O /usr/bin/getscu
 RUN chmod +x /usr/bin/getscu
 
-RUN wget https://lsb.orthanc-server.com/orthanc/1.11.0/Orthanc -O /usr/bin/Orthanc
+# This is "getscu" from DCMTK 3.6.5 compiled using LSB,
+# and running in a GNU/Linux distribution running DCMTK
+# 3.6.0. Tell "getscu" where it can find the DICOM dictionary.
+ENV DCMDICTPATH=/usr/share/libdcmtk14/dicom.dic
+
+RUN wget https://lsb.orthanc-server.com/orthanc/1.11.2/Orthanc -O /usr/bin/Orthanc
 RUN chmod +x /usr/bin/Orthanc
 
 RUN mkdir /tests
