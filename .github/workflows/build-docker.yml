@@ -24,7 +24,7 @@ jobs:
     name: build-docker
 #    runs-on: "ubuntu-latest"
 #   we use a self-hosted runner to benefit from Docker cache
-    runs-on: [self-hosted, linux, X64]
+    runs-on: [self-hosted, Linux, X64]
     strategy:
       fail-fast: false
       matrix:
