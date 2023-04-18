@@ -58,7 +58,10 @@ jobs:
 
     steps:
     
+
+
     - name: Maximize build space
+      if: ${{ vars.RUNNER_NAME != 'builder-debian' }}
       uses: easimon/maximize-build-space@v5
       with:
         # reserve space for docker
@@ -69,6 +72,7 @@ jobs:
         remove-haskell: 'true'
 
     - name: Maximize build space (2)
+      if: ${{ vars.RUNNER_NAME != 'builder-debian' }}
       # to list folder sizes:
       # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
       run: |
