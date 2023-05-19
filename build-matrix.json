@@ -786,7 +786,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-volview/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_VOLVIEW",
-            "stable": "OrthancVolView-1.0",
+            "stable": "OrthancVolView-1.1",
             "unstable": "default",
             "artifactsOSX": "libOrthancVolView.dylib",
             "buildForOSX": true,
@@ -798,10 +798,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["VolView 1.0 - LSB Release/libOrthancVolView-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                    ["VolView 1.1 - LSB Release/libOrthancVolView-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
                 ],
                 "Artifacts32": [
-                    ["VolView 1.0 - LSB Release/libOrthancVolView-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                    ["VolView 1.1 - LSB Release/libOrthancVolView-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
                 ],
                 "Resources": [
                 ]
