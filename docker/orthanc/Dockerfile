@@ -330,7 +330,7 @@ RUN apt-get -y clean && apt-get -y update && \
 
 ARG ORTHANC_VOLVIEW_COMMIT_ID
 # CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
-ARG VOLVIEW_VERSION=20147b7
+ARG VOLVIEW_VERSION=4.1.1
 
 RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $ORTHANC_VOLVIEW_COMMIT_ID /source
 RUN wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${VOLVIEW_VERSION}.tar.gz --quiet --output-document /source/VolView-${VOLVIEW_VERSION}.tar.gz
