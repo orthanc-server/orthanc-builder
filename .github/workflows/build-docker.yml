@@ -12,8 +12,6 @@ on:
     secrets:
       docker_hub_username:
         required: true
-      docker_hub_password:
-        required: true
       docker_hub_token:
         required: true
 
@@ -134,11 +132,11 @@ jobs:
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full
 
     - name: Update DockerHub repo description
-      uses: peter-evans/dockerhub-description@v2
+      uses: peter-evans/dockerhub-description@v3
       if: inputs.is_tag == 'true'
       with:
         username: ${{ secrets.docker_hub_username }}
-        password: ${{ secrets.docker_hub_password }}
+        password: ${{ secrets.docker_hub_token }}
         repository: osimis/orthanc
         readme-filepath: README-dockerhub.md
 
