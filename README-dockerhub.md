@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 23.5.0 Default image
+#### 23.5.1 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -54,7 +54,7 @@ Orthanc Explorer 2                    0.9.3
 Kitware's VolView plugin              1.1
 ```
 
-#### 23.4.0-full image 
+#### 23.5.1-full image 
 ```
 additional component                  version
 ---------------------------------------------
