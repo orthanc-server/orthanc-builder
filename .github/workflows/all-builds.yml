@@ -149,7 +149,6 @@ jobs:
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
     secrets:
       docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker_hub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
       docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
 
 
