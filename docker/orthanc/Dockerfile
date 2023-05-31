@@ -449,6 +449,21 @@ RUN apt purge --assume-yes xdg-user-dirs
 RUN apt --assume-yes autoremove
 
 
+# always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
+# and grants him all permissions on files that can be modified by the docker-entrypoint.sh
+# The default root users can still access these files too.
+# for the /etc/hostid -> we must make sure the file exists to grant the permission
+RUN groupadd --system orthanc --gid=999; \
+    useradd --system --gid=orthanc --uid=999 --home-dir=/var/lib/orthanc --shell=/bin/bash orthanc; \
+    mkdir -p /var/lib/orthanc; \
+    chown -R orthanc:orthanc /var/lib/orthanc; \
+    chown -R orthanc:orthanc /tmp; \
+    chown -R orthanc:orthanc /usr/share/orthanc/plugins; \
+    chown -R orthanc:orthanc /usr/share/orthanc/plugins-available; \
+    echo not-generated > /etc/hostid; \
+    chown orthanc:orthanc /etc/hostid
+
+
 ################################# the "full" image that will run Orthanc dynamicaly linked (final version with vcpkg builds and Microsoft unixodbc)
 FROM orthanc-no-vcpkg as orthanc-with-vcpkg
 
