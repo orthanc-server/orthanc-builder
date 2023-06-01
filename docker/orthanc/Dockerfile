@@ -454,7 +454,7 @@ RUN apt --assume-yes autoremove
 # The default root users can still access these files too.
 # for the /etc/hostid -> we must make sure the file exists to grant the permission
 RUN groupadd --system orthanc --gid=999; \
-    useradd --system --gid=orthanc --uid=999 --home-dir=/var/lib/orthanc --shell=/bin/bash orthanc; \
+    useradd --system --gid=orthanc --uid=999 --home-dir=/var/lib/orthanc --shell=/bin/false orthanc; \
     mkdir -p /var/lib/orthanc; \
     chown -R orthanc:orthanc /var/lib/orthanc; \
     chown -R orthanc:orthanc /tmp; \
