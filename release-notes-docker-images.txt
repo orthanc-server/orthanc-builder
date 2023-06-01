@@ -9,8 +9,12 @@ You should use the full image only if you need to use one of these:
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
-          - created an 'orthanc' user (uid = 999) and 'orthanc' group (gid = 999) inside the image
-            to allow executing the image as a non root user
+23.6.0 :  - POSSIBLE BREAKING CHANGE:
+            Created an 'orthanc' user (uid = 999) and 'orthanc' group (gid = 999) inside the image
+            to allow executing the image as a non root user.  The image is still executing as root
+            by default but some files/folders ownership have been changed to 'orthanc:orthanc' (they 
+            should still be accessible to the root user).  Be extra carefull if you have derived 
+            from this image and/or if you were already running as non root.
           - upgraded base image to debian:bullseye-20230522-slim
 23.5.1 :  - upgraded Kitware's VolView plugin to 1.1 (which corresponds to VolView 4.1)
 23.5.0 :  - upgraded advanced authorization plugin to 0.5.2
