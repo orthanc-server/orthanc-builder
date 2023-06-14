@@ -9,6 +9,8 @@ You should use the full image only if you need to use one of these:
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
+          - During startup, now performing standard env var substitution when reading the 
+            configuration files.
 23.6.0 :  - POSSIBLE BREAKING CHANGE:
             Created an 'orthanc' user (uid = 999) and 'orthanc' group (gid = 999) inside the image
             to allow executing the image as a non root user.  The image is still executing as root
