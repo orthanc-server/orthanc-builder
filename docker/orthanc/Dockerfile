@@ -366,7 +366,8 @@ ARG ORTHANC_OHIF_COMMIT_ID
 ARG OHIF_VERSION=3.6.0
 
 RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $ORTHANC_OHIF_COMMIT_ID /source
-RUN wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-${OHIF_VERSION}.tar.gz --quiet --output-document /source/OHIF/Viewers-${OHIF_VERSION}.tar.gz
+# RUN mkdir /source/OHIF/
+RUN wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-${OHIF_VERSION}.tar.gz --quiet --output-document /source/Viewers-${OHIF_VERSION}.tar.gz
 
 RUN mkdir /target
 RUN chmod +x /source/Resources/CreateOHIFDist/build.sh
