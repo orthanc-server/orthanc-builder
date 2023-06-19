@@ -228,5 +228,10 @@
   "VolView": {
     "enablingEnvVar" : "VOLVIEW_PLUGIN_ENABLED",
     "libs" : ["libOrthancVolView.so"]
+  },
+
+  "Ohif": {
+    "enablingEnvVar" : "OHIF_PLUGIN_ENABLED",
+    "libs" : ["libOrthancOHIF.so"]
   }  
 }

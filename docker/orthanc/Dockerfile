@@ -353,6 +353,38 @@ RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_OR
 RUN make -j 4
 
 
+########################## OHIF for Orthanc
+
+FROM node:19.7.0-bullseye-slim as build-ohif-dist
+
+RUN apt-get -y clean && apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install mercurial wget && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ARG ORTHANC_OHIF_COMMIT_ID
+# CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
+ARG OHIF_VERSION=3.6.0
+
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $ORTHANC_OHIF_COMMIT_ID /source
+RUN wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-${OHIF_VERSION}.tar.gz --quiet --output-document /source/OHIF/Viewers-${OHIF_VERSION}.tar.gz
+
+RUN mkdir /target
+RUN chmod +x /source/Resources/CreateOHIFDist/build.sh
+RUN /source/Resources/CreateOHIFDist/build.sh Viewers-${OHIF_VERSION}
+
+
+FROM orthanc-builder-base as build-plugin-ohif
+
+ARG ORTHANC_OHIF_COMMIT_ID
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $ORTHANC_OHIF_COMMIT_ID /sources
+WORKDIR /build
+
+COPY --from=build-ohif-dist /target/ /sources/OHIF/dist
+
+RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+RUN make -j 4
+
+
 ########################## Orthanc downloads (since wget is not in the runner image)
 
 FROM orthanc-builder-base as build-downloader
@@ -407,6 +439,7 @@ COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plug
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-ohif /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/

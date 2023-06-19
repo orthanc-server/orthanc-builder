@@ -66,12 +66,13 @@ ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docke
 ORTHANC_OE2_COMMIT_ID=$(getCommitId "Orthanc-explorer-2" $version docker $skipCommitChecks)
 ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version)
 ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipCommitChecks)
+ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks)
 
 BASE_DEBIAN_IMAGE=bullseye-20230522-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-auth build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview"
+buildTargets="build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-auth build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif"
 
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
@@ -242,6 +243,7 @@ for target in $buildTargets; do
         --build-arg ORTHANC_OE2_COMMIT_ID=$ORTHANC_OE2_COMMIT_ID \
         --build-arg ORTHANC_OE2_VERSION=$ORTHANC_OE2_VERSION \
         --build-arg ORTHANC_VOLVIEW_COMMIT_ID=$ORTHANC_VOLVIEW_COMMIT_ID \
+        --build-arg ORTHANC_OHIF_COMMIT_ID=$ORTHANC_OHIF_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg \
         $to_cache_arg \

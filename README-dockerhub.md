@@ -52,6 +52,7 @@ Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.1.2
 Orthanc Explorer 2                    0.9.3
 Kitware's VolView plugin              1.1
+OHIF plugin                           1.0
 ```
 
 #### 23.5.1-full image 
