@@ -155,8 +155,8 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker-compose down -v
     COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.scu-transcoding.yml          docker-compose down -v
-    COMPOSE_FILE=docker-compose.scu-transcoding.yml          docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker-compose down -v
+    COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
 
 # note: not functional yet:
 # COMPOSE_FILE=docker-compose.odbc-mysql.yml               docker-compose down -v
