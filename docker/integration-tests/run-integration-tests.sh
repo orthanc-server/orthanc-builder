@@ -108,6 +108,7 @@ if [[ $image == "normal" ]]; then
     docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
     docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
     docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
+    docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision --build-arg IMAGE_TAG=$tagToTest -f orthanc-transcoding-tests/Dockerfile -t orthanc-transcoding-tests orthanc-transcoding-tests
 
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose down -v
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
@@ -151,15 +152,20 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.worklists.yml                   docker-compose down -v
     COMPOSE_FILE=docker-compose.worklists.yml                   docker-compose up --build --exit-code-from orthanc-tests-worklists --abort-on-container-exit
 
+    COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker-compose down -v
+    COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+
+    COMPOSE_FILE=docker-compose.scu-transcoding.yml          docker-compose down -v
+    COMPOSE_FILE=docker-compose.scu-transcoding.yml          docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+
 # note: not functional yet:
 # COMPOSE_FILE=docker-compose.odbc-mysql.yml               docker-compose down -v
 # COMPOSE_FILE=docker-compose.odbc-mysql.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
 # TODO: add tests:
-# - CheckScuTranscoding.py
-# - CheckIngestTranscoding.py
 # - CheckHttpServerSecurity.py
 # - CheckDicomTls.py
+# - CheckZipStream.py
 
 else  # full images (MSSQL only !)
 
