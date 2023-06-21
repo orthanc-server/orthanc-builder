@@ -1,5 +1,5 @@
 # mercurial does not work anymore on jodogne/orthanc-tests -> use a specific image
-FROM ubuntu:20.04 as ubuntu-hg
+FROM ubuntu:22.04 as ubuntu-hg
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install mercurial
