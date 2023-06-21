@@ -9,8 +9,8 @@ You should use the full image only if you need to use one of these:
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
-          - added OHIF plugin 1.0
-          - upgraded Orthanc Explorer 2 plugin to 1.0.0
+23.6.1 :  - added OHIF plugin 1.0
+          - upgraded Orthanc Explorer 2 plugin to 1.0.1
           - upgraded advanced authorization plugin to 0.5.3
           - During startup, now performing standard env var substitution when reading the 
             configuration files.
