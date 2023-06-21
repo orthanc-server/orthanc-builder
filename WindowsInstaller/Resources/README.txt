@@ -33,13 +33,13 @@ PostgreSQL plugins                    5.0
 MySQL plugins                         5.0
 WSI Web viewer plugin                 1.1
 Transfers accelerator plugin          1.4
-Authorization plugin                  0.5.2
+Authorization plugin                  0.5.3
 GDCM decoder/transcoder plugin        1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-Orthanc Explorer 2                    0.9.3
+Orthanc Explorer 2                    1.0.0
 Azure blob storage plugin             2.1.2          (Win64 installers only !)
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.0
