@@ -817,8 +817,8 @@
             "artifactsOSX": "libOrthancOHIF.dylib",
             "buildForOSX": true,
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
-            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/OHIF/dist",
-            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/OHIF/dist",
+            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist",
+            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist",
             "windows": [{
                 "Description": "OHIF plugin for Orthanc",
                 "Mandatory": false,
