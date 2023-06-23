@@ -8,7 +8,9 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-
+          - Added a new special env var: ORTHANC__OHIF to define the "OHIF" configuration in one go.
+            Also added 4 non standard env vars for OHIF configuration ORTHANC__OHIF__DATA_SOURCE,
+            ORTHANC__OHIF__USER_CONFIGURATION, ORTHANC__OHIF__ROUTER_BASE_NAME, ORTHANC__OHIF__PRELOAD
 23.6.1 :  - added OHIF plugin 1.0
           - upgraded Orthanc Explorer 2 plugin to 1.0.1
           - upgraded advanced authorization plugin to 0.5.3
