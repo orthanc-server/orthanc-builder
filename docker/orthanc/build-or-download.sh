@@ -71,13 +71,13 @@ upload() { # $1 file
 
 if [[ $target == "orthanc" ]]; then
 
-    dl=$(expr $dl + $(download Orthanc))
-    dl=$(expr $dl + $(download libModalityWorklists.so))
-    dl=$(expr $dl + $(download libServeFolders.so))
-    dl=$(expr $dl + $(download libHousekeeper.so))
-    dl=$(expr $dl + $(download libConnectivityChecks.so))
-    dl=$(expr $dl + $(download libDelayedDeletion.so))
-    dl=$(expr $dl + $(download libMultitenantDicom.so))
+    dl=$(( $dl + $(download Orthanc) ))
+    dl=$(( $dl + $(download libModalityWorklists.so) ))
+    dl=$(( $dl + $(download libServeFolders.so) ))
+    dl=$(( $dl + $(download libHousekeeper.so) ))
+    dl=$(( $dl + $(download libConnectivityChecks.so) ))
+    dl=$(( $dl + $(download libDelayedDeletion.so) ))
+    dl=$(( $dl + $(download libMultitenantDicom.so) ))
 
     if [[ $dl != 0 ]]; then
 
@@ -95,7 +95,7 @@ if [[ $target == "orthanc" ]]; then
 
 elif [[ $target == "orthanc-authorization" ]]; then
 
-    dl=$(expr $dl + $(download libOrthancAuthorization.so))
+    dl=$(( $dl + $(download libOrthancAuthorization.so) ))
 
     if [[ $dl != 0 ]]; then
 
@@ -107,4 +107,124 @@ elif [[ $target == "orthanc-authorization" ]]; then
 
         upload libOrthancAuthorization.so
     fi
+
+elif [[ $target == "orthanc-python" ]]; then
+
+    dl=$(( $dl + $(download libOrthancPython.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-python/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.9 $sourcesRootPath
+        make -j 4
+
+        upload libOrthancPython.so
+    fi
+
+elif [[ $target == "orthanc-gdcm" ]]; then
+
+    dl=$(( $dl + $(download libOrthancGdcm.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
+        make -j 4
+
+        upload libOrthancGdcm.so
+    fi
+
+elif [[ $target == "orthanc-pg" ]]; then
+
+    dl=$(( $dl + $(download libOrthancPostgreSQLIndex.so) ))
+    dl=$(( $dl + $(download libOrthancPostgreSQLStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/PostgreSQL
+        make -j 4
+
+        upload libOrthancPostgreSQLIndex.so
+        upload libOrthancPostgreSQLStorage.so
+    fi
+
+elif [[ $target == "orthanc-mysql" ]]; then
+
+    dl=$(( $dl + $(download libOrthancMySQLIndex.so) ))
+    dl=$(( $dl + $(download libOrthancMySQLStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/MySQL
+        make -j 4
+
+        upload libOrthancMySQLIndex.so
+        upload libOrthancMySQLStorage.so
+    fi
+
+elif [[ $target == "orthanc-odbc" ]]; then
+
+    dl=$(( $dl + $(download libOrthancOdbcIndex.so) ))
+    dl=$(( $dl + $(download libOrthancOdbcStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/MySQL
+        make -j 4
+
+        upload libOrthancOdbcIndex.so
+        upload libOrthancOdbcStorage.so
+    fi
+
+elif [[ $target == "orthanc-indexer" ]]; then
+
+    dl=$(( $dl + $(download libOrthancIndexer.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-indexer/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancIndexer.so
+    fi
+
+elif [[ $target == "orthanc-neuro" ]]; then
+
+    dl=$(( $dl + $(download libOrthancNeuro.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-neuro/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancNeuro.so
+    fi
+
+elif [[ $target == "orthanc-tcia" ]]; then
+
+    dl=$(( $dl + $(download libOrthancTcia.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancTcia.so
+    fi
+
 fi
+

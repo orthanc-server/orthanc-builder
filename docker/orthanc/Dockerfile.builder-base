@@ -49,7 +49,5 @@ RUN mkdir -p /sources
 RUN mkdir -p /build
 RUN mkdir -p /scripts
 
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY
-
 COPY build-or-download.sh /scripts
+

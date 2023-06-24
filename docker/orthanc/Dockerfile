@@ -1,6 +1,15 @@
 ARG BASE_IMAGE_TAG=current
 
 FROM osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+
+
 
 FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 
@@ -13,7 +22,7 @@ FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-o
 FROM orthanc-builder-base as build-orthanc
 
 ARG ORTHANC_COMMIT_ID
-RUN /scripts/build-or-download.sh baseImage=$BASE_IMAGE_TAG target=orthanc commitId=$ORTHANC_COMMIT_ID preferDownloads=1 enableUploads=1
+RUN /scripts/build-or-download.sh target=orthanc commitId=$ORTHANC_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 # RUN hg clone https://hg.orthanc-server.com/orthanc/ -r $ORTHANC_COMMIT_ID /sources
 # WORKDIR /build
 
@@ -28,20 +37,25 @@ RUN /scripts/build-or-download.sh baseImage=$BASE_IMAGE_TAG target=orthanc commi
 FROM orthanc-builder-base as build-gdcm
 
 ARG ORTHANC_GDCM_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r $ORTHANC_GDCM_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh target=orthanc-gdcm commitId=$ORTHANC_GDCM_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+
+# RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r $ORTHANC_GDCM_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
+# RUN make -j 4
 
 ########################## Orthanc PG
 
 FROM orthanc-builder-base as build-plugin-pg
 
 ARG ORTHANC_PG_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_PG_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/PostgreSQL
-RUN make -j 4
+RUN /scripts/build-or-download.sh target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_PG_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/PostgreSQL
+# RUN make -j 4
 # disabled: needs a PG server # RUN /build/UnitTests
 
 ########################## Orthanc MySQL
@@ -49,10 +63,12 @@ RUN make -j 4
 FROM orthanc-builder-base as build-plugin-mysql
 
 ARG ORTHANC_MYSQL_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_MYSQL_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/MySQL
-RUN make -j 4
+RUN /scripts/build-or-download.sh target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_MYSQL_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/MySQL
+# RUN make -j 4
 # disabled: needs a MySQL server # RUN /build/UnitTests
 
 ########################## Orthanc Transfers
@@ -112,63 +128,76 @@ RUN /build/UnitTests
 FROM orthanc-builder-base as build-plugin-auth
 
 ARG ORTHANC_AUTH_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AUTH_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-RUN make -j 4
-RUN /build/UnitTests
+RUN /scripts/build-or-download.sh target=orthanc-authorization commitId=$ORTHANC_AUTH_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AUTH_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
+# RUN make -j 4
+# RUN /build/UnitTests
 
 ########################## Orthanc Python
 
 FROM orthanc-builder-base as build-plugin-python
 
 ARG ORTHANC_PYTHON_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r $ORTHANC_PYTHON_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.9 /sources
-RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+
+# RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r $ORTHANC_PYTHON_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.9 /sources
+# RUN make -j 4
+# # disabled: no unit tests: # RUN /build/UnitTests
 
 ########################## Orthanc ODBC
 
 FROM orthanc-builder-base as build-plugin-odbc
 
 ARG ORTHANC_ODBC_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_ODBC_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/Odbc
-RUN make -j 4
-# disabled: needs a ODBC server # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_ODBC_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/Odbc
+# RUN make -j 4
+# # disabled: needs a ODBC server # RUN /build/UnitTests
 
 # ########################## Orthanc Indexer
 
 FROM orthanc-builder-base as build-plugin-indexer
 
 ARG ORTHANC_INDEXER_COMMIT_ID
-RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh target=orthanc-indexer commitId=$ORTHANC_INDEXER_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
+# RUN make -j 4
 
 ########################## Orthanc Neuro
 
 FROM orthanc-builder-base as build-plugin-neuro
 
 ARG ORTHANC_NEURO_COMMIT_ID
-RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh target=orthanc-neuro commitId=$ORTHANC_NEURO_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF /sources
+# RUN make -j 4
 
 ########################## Orthanc TCIA
 
 FROM orthanc-builder-base as build-plugin-tcia
 
 ARG ORTHANC_TCIA_COMMIT_ID
-RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh target=orthanc-tcia commitId=$ORTHANC_TCIA_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
+# RUN make -j 4
 
 ########################## Stone Web Viewer
 

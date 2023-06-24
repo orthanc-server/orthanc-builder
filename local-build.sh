@@ -108,6 +108,9 @@ if [[ $type == "local" ]]; then
     # when building locally, use Docker builder (easier to reuse local images)
     build="build"
     push_load_arg=
+
+    prefer_downloads=1
+    enable_upload=0
 else
     from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
     to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
@@ -133,6 +136,9 @@ else
     
     # when building in CI, don't use intermediate targets (it would push plenty of images)
     buildTargets=$finalImageTarget
+
+    prefer_downloads=1
+    enable_upload=1
 fi
 
 
@@ -245,8 +251,11 @@ for target in $buildTargets; do
         --build-arg ORTHANC_VOLVIEW_COMMIT_ID=$ORTHANC_VOLVIEW_COMMIT_ID \
         --build-arg ORTHANC_OHIF_COMMIT_ID=$ORTHANC_OHIF_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
-        --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-        --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+        --build-arg ARG_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+        --build-arg ARG_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+        --build-arg PREFER_DOWNLOADS=$prefer_downloads \
+        --build-arg ENABLE_UPLOAD=$enable_upload \
+        --build-arg PLATFORM=$platform \
         $from_cache_arg \
         $to_cache_arg \
         $push_load_arg \
