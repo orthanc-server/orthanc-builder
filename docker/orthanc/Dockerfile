@@ -8,7 +8,7 @@ ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
 ARG PREFER_DOWNLOADS=1
 ARG ENABLE_UPLOAD=0
 ARG PLATFORM=linux/amd64
-
+ARG BASE_IMAGE_TAG=unknown
 
 
 FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
@@ -22,7 +22,7 @@ FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-o
 FROM orthanc-builder-base as build-orthanc
 
 ARG ORTHANC_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc commitId=$ORTHANC_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc commitId=$ORTHANC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 # RUN hg clone https://hg.orthanc-server.com/orthanc/ -r $ORTHANC_COMMIT_ID /sources
 # WORKDIR /build
 
@@ -37,7 +37,7 @@ RUN /scripts/build-or-download.sh target=orthanc commitId=$ORTHANC_COMMIT_ID bas
 FROM orthanc-builder-base as build-gdcm
 
 ARG ORTHANC_GDCM_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-gdcm commitId=$ORTHANC_GDCM_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-gdcm commitId=$ORTHANC_GDCM_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 
 # RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r $ORTHANC_GDCM_COMMIT_ID /sources
@@ -50,7 +50,7 @@ RUN /scripts/build-or-download.sh target=orthanc-gdcm commitId=$ORTHANC_GDCM_COM
 FROM orthanc-builder-base as build-plugin-pg
 
 ARG ORTHANC_PG_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_PG_COMMIT_ID /sources
 # WORKDIR /build
@@ -63,7 +63,7 @@ RUN /scripts/build-or-download.sh target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_
 FROM orthanc-builder-base as build-plugin-mysql
 
 ARG ORTHANC_MYSQL_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_MYSQL_COMMIT_ID /sources
 # WORKDIR /build
@@ -128,7 +128,7 @@ RUN /build/UnitTests
 FROM orthanc-builder-base as build-plugin-auth
 
 ARG ORTHANC_AUTH_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-authorization commitId=$ORTHANC_AUTH_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-authorization commitId=$ORTHANC_AUTH_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AUTH_COMMIT_ID /sources
 # WORKDIR /build
@@ -141,7 +141,7 @@ RUN /scripts/build-or-download.sh target=orthanc-authorization commitId=$ORTHANC
 FROM orthanc-builder-base as build-plugin-python
 
 ARG ORTHANC_PYTHON_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 
 # RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r $ORTHANC_PYTHON_COMMIT_ID /sources
@@ -155,7 +155,7 @@ RUN /scripts/build-or-download.sh target=orthanc-python commitId=$ORTHANC_PYTHON
 FROM orthanc-builder-base as build-plugin-odbc
 
 ARG ORTHANC_ODBC_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_ODBC_COMMIT_ID /sources
 # WORKDIR /build
@@ -168,7 +168,7 @@ RUN /scripts/build-or-download.sh target=orthanc-odbc commitId=$ORTHANC_ODBC_COM
 FROM orthanc-builder-base as build-plugin-indexer
 
 ARG ORTHANC_INDEXER_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-indexer commitId=$ORTHANC_INDEXER_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-indexer commitId=$ORTHANC_INDEXER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
 # WORKDIR /build
@@ -180,7 +180,7 @@ RUN /scripts/build-or-download.sh target=orthanc-indexer commitId=$ORTHANC_INDEX
 FROM orthanc-builder-base as build-plugin-neuro
 
 ARG ORTHANC_NEURO_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-neuro commitId=$ORTHANC_NEURO_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-neuro commitId=$ORTHANC_NEURO_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
 # WORKDIR /build
@@ -192,7 +192,7 @@ RUN /scripts/build-or-download.sh target=orthanc-neuro commitId=$ORTHANC_NEURO_C
 FROM orthanc-builder-base as build-plugin-tcia
 
 ARG ORTHANC_TCIA_COMMIT_ID
-RUN /scripts/build-or-download.sh target=orthanc-tcia commitId=$ORTHANC_TCIA_COMMIT_ID baseImage=$PLATFORM$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh target=orthanc-tcia commitId=$ORTHANC_TCIA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
 # WORKDIR /build
@@ -322,32 +322,36 @@ RUN make -j 4
 
 FROM orthanc-builder-base as build-oe2
 
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get --assume-yes update && \
-	apt-get --assume-yes install npm && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
-    apt-get install -y nodejs
-
 ARG ORTHANC_OE2_COMMIT_ID
 ARG ORTHANC_OE2_VERSION
 
-WORKDIR /sources
+RUN /scripts/build-or-download.sh target=orthanc-explorer-2 commitId=$ORTHANC_OE2_COMMIT_ID extraArg1=$ORTHANC_OE2_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-RUN git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
-    cd /sources/orthanc-explorer-2 && \
-	git checkout $ORTHANC_OE2_COMMIT_ID
 
-WORKDIR /sources/orthanc-explorer-2/WebApplication
+# RUN export DEBIAN_FRONTEND=noninteractive && \
+# 	apt-get --assume-yes update && \
+# 	apt-get --assume-yes install npm && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
-RUN npm install
-RUN npm run build
+# RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
+#     apt-get install -y nodejs
 
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$ORTHANC_OE2_VERSION /sources/orthanc-explorer-2/
-RUN make -j 4
+
+# WORKDIR /sources
+
+# RUN git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
+#     cd /sources/orthanc-explorer-2 && \
+# 	git checkout $ORTHANC_OE2_COMMIT_ID
+
+# WORKDIR /sources/orthanc-explorer-2/WebApplication
+
+# RUN npm install
+# RUN npm run build
+
+# WORKDIR /build
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$ORTHANC_OE2_VERSION /sources/orthanc-explorer-2/
+# RUN make -j 4
 
 
 ########################## Kitware's VolView for Orthanc

@@ -19,7 +19,7 @@ preferDownloads=0
 enableUploads=0
 baseImage=unknown
 commitId=xxx
-
+extraArg1=
 
 for argument in "$@"
 do
@@ -36,10 +36,13 @@ echo "preferDownloads    = $preferDownloads"
 echo "enableUploads      = $enableUploads"
 echo "baseImage          = $baseImage"
 echo "commitId           = $commitId"
+echo "extraArg1          = $extraArg1"
 
 # while debugging the script on your local machine, you might want to change these paths
-buildRootPath=/tmp/build
-sourcesRootPath=/tmp/sources
+# buildRootPath=/tmp/build
+# sourcesRootPath=/tmp/sources
+buildRootPath=/build
+sourcesRootPath=/sources
 dl=0
 
 # rewrite pushd/popd such that they do not produce any output in bash functions (https://stackoverflow.com/questions/25288194/dont-display-pushd-popd-stack-across-several-bash-scripts-quiet-pushd-popd)
@@ -177,7 +180,7 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
         hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/MySQL
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Odbc
         make -j 4
 
         upload libOrthancOdbcIndex.so
@@ -190,7 +193,7 @@ elif [[ $target == "orthanc-indexer" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://hg.orthanc-server.com/orthanc-indexer/ -r $commitId $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
         make -j 4
@@ -204,7 +207,7 @@ elif [[ $target == "orthanc-neuro" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://hg.orthanc-server.com/orthanc-neuro/ -r $commitId $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
         make -j 4
@@ -218,13 +221,42 @@ elif [[ $target == "orthanc-tcia" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r $commitId $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancTcia.so
     fi
+
+elif [[ $target == "orthanc-explorer-2" ]]; then
+
+    dl=$(( $dl + $(download libOrthancExplorer2.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+        curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
+
+        pushd $sourcesRootPath
+
+        git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
+        cd $sourcesRootPath/orthanc-explorer-2 && \
+	    git checkout $commitId
+
+        pushd $sourcesRootPath/orthanc-explorer-2/WebApplication
+
+        npm install
+        npm run build
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$extraArg1 $sourcesRootPath/orthanc-explorer-2/
+        make -j 4
+
+        upload libOrthancExplorer2.so
+    fi
+
 
 fi
 
