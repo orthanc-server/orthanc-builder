@@ -150,5 +150,7 @@ jobs:
     secrets:
       docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
       docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 

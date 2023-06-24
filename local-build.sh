@@ -245,6 +245,8 @@ for target in $buildTargets; do
         --build-arg ORTHANC_VOLVIEW_COMMIT_ID=$ORTHANC_VOLVIEW_COMMIT_ID \
         --build-arg ORTHANC_OHIF_COMMIT_ID=$ORTHANC_OHIF_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
+        --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+        --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
         $from_cache_arg \
         $to_cache_arg \
         $push_load_arg \

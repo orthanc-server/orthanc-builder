@@ -13,14 +13,15 @@ FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-o
 FROM orthanc-builder-base as build-orthanc
 
 ARG ORTHANC_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r $ORTHANC_COMMIT_ID /sources
-WORKDIR /build
+RUN /scripts/build-or-download.sh baseImage=$BASE_IMAGE_TAG target=orthanc commitId=$ORTHANC_COMMIT_ID preferDownloads=1 enableUploads=1
+# RUN hg clone https://hg.orthanc-server.com/orthanc/ -r $ORTHANC_COMMIT_ID /sources
+# WORKDIR /build
 
-# note: building with static DCMTK while waiting for Debian bullseye to update to latest DCMTK issues (we need DCMTK 3.6.7: https://www.hipaajournal.com/warning-issued-about-3-high-severity-vulnerabilities-in-offis-dicom-software/)
-# also force latest OpenSSL (and therefore, we need to force static libcurl)
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF /sources/OrthancServer
-RUN make -j 4
-RUN /build/UnitTests
+# # note: building with static DCMTK while waiting for Debian bullseye to update to latest DCMTK issues (we need DCMTK 3.6.7: https://www.hipaajournal.com/warning-issued-about-3-high-severity-vulnerabilities-in-offis-dicom-software/)
+# # also force latest OpenSSL (and therefore, we need to force static libcurl)
+# RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF /sources/OrthancServer
+# RUN make -j 4
+# RUN /build/UnitTests
 
 ########################## Orthanc GDCM
 
