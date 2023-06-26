@@ -476,6 +476,7 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
         STONE_BRANCH=${commitId} ./docker-internal.sh Release
 
         mkdir -p $buildRootPath
+        mkdir -p /target
         pushd /target
         tar -zcvf $buildRootPath/stone.wasm.tar.gz StoneWebViewer/
 
@@ -484,6 +485,7 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
     else
 
         # since this is a multi-stage build, we must uncompress the tar.gz where the next step expects it (in /target)
+        mkdir -p /target
         pushd /target
         tar xvf $buildRootPath/stone.wasm.tar.gz
 
