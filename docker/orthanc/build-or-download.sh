@@ -257,6 +257,205 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         upload libOrthancExplorer2.so
     fi
 
+elif [[ $target == "orthanc-volview" ]]; then
+
+    dl=$(( $dl + $(download libOrthancVolView.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+        curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
+
+        pushd $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
+
+        # CreateVolViewDist/build.sh needs to work with /target and /source
+        wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${extraArg1}.tar.gz
+        cp $sourcesRootPath/VolView/VolView-*.patch $sourcesRootPath
+
+        # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
+        mkdir /target
+        mkdir /source
+        cp -r $sourcesRootPath/* /source
+        chmod +x /source/Resources/CreateVolViewDist/build.sh
+        /source/Resources/CreateVolViewDist/build.sh ${extraArg1}
+        mkdir -p $sourcesRootPath/VolView
+        cp -r /target $sourcesRootPath/VolView/dist
+        
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancVolView.so
+    fi
+
+elif [[ $target == "orthanc-ohif" ]]; then
+
+    dl=$(( $dl + $(download libOrthancOHIF.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+        curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
+        npm install --global yarn
+
+        pushd $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
+
+        wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
+
+        # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
+        mkdir /target
+        mkdir /source
+        cp -r $sourcesRootPath/* /source
+        chmod +x /source/Resources/CreateOHIFDist/build.sh
+        /source/Resources/CreateOHIFDist/build.sh Viewers-${extraArg1}
+        mkdir -p $sourcesRootPath/OHIF
+        cp -r /target $sourcesRootPath/OHIF/dist
+        
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancOHIF.so
+    fi
+
+elif [[ $target == "orthanc-s3" ]]; then
+
+    dl=$(( $dl + $(download libOrthancAwsS3Storage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install libcrypto++-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+        cd $sourcesRootPath
+        hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $commitId
+        # (framework version used to build the cloud storage plugins)
+        hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
+
+        pushd $buildRootPath
+
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_VCPKG_PACKAGES=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-object-storage/Aws/
+        make -j 4
+
+        upload libOrthancAwsS3Storage.so
+    fi
+
+elif [[ $target == "orthanc-google-storage" ]]; then
+
+    dl=$(( $dl + $(download libOrthancGoogleCloudStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install libcrypto++-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+        cd $sourcesRootPath
+        hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $commitId
+        # (framework version used to build the cloud storage plugins)
+        hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
+
+        # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
+        sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' $sourcesRootPath/orthanc-object-storage/Google/CMakeLists.txt
+
+        pushd $buildRootPath
+
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-object-storage/Google/
+        make -j 4
+
+        upload libOrthancGoogleCloudStorage.so
+    fi
+
+
+elif [[ $target == "orthanc-azure-storage" ]]; then
+
+    dl=$(( $dl + $(download libOrthancAzureBlobStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install libcrypto++-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+        cd $sourcesRootPath
+        hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $commitId
+        # (framework version used to build the cloud storage plugins)
+        hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
+
+        # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
+        sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' $sourcesRootPath/orthanc-object-storage/Google/CMakeLists.txt
+        # todo: remove
+        sed -i 's/cryptopp-static/cryptopp::cryptopp/g' $sourcesRootPath/orthanc-object-storage/Azure/CMakeLists.txt
+
+        pushd $buildRootPath
+
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-object-storage/Azure/
+        make -j 4
+
+        upload libOrthancAzureBlobStorage.so
+    fi
+
+elif [[ $target == "orthanc-webviewer" ]]; then
+
+    dl=$(( $dl + $(download libOrthancWebViewer.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+        $buildRootPath/UnitTests
+
+        upload libOrthancWebViewer.so
+    fi
+
+elif [[ $target == "orthanc-transfers" ]]; then
+
+    dl=$(( $dl + $(download libOrthancTransfers.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+        $buildRootPath/UnitTests
+
+        upload libOrthancTransfers.so
+    fi
+
+
+elif [[ $target == "orthanc-dicomweb" ]]; then
+
+    dl=$(( $dl + $(download libOrthancDicomWeb.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+        $buildRootPath/UnitTests
+
+        upload libOrthancDicomWeb.so
+    fi
+
+elif [[ $target == "orthanc-wsi" ]]; then
+
+    dl=$(( $dl + $(download libOrthancWSI.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF $sourcesRootPath/ViewerPlugin
+        make -j 4
+
+        # TODO: build dicomizer tools ?
+
+        upload libOrthancWSI.so
+
+    fi
 
 fi
 
