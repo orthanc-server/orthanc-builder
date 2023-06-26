@@ -457,5 +457,45 @@ elif [[ $target == "orthanc-wsi" ]]; then
 
     fi
 
+elif [[ $target == "orthanc-stone-wasm" ]]; then
+
+    dl=$(( $dl + $(download stone.wasm.tar.gz) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $commitId /source
+        pushd /source/Applications/StoneWebViewer/WebAssembly
+        chmod +x docker-internal.sh
+        STONE_BRANCH=${commitId} ./docker-internal.sh Release
+
+        mkdir -p $buildRootPath
+        pushd /target
+        tar -zcvf $buildRootPath/stone.wasm.tar.gz StoneWebViewer/
+
+        upload stone.wasm.tar.gz
+
+    else
+
+        # since this is a multi-stage build, we must uncompress the tar.gz where the next step expects it (in /target)
+        pushd /target
+        tar xvf $buildRootPath/stone.wasm.tar.gz
+
+    fi
+
+elif [[ $target == "orthanc-stone-so" ]]; then
+
+    dl=$(( $dl + $(download libStoneWebViewer.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer $sourcesRootPath/Applications/StoneWebViewer/Plugin/
+        make -j 4
+
+        upload libStoneWebViewer.so
+
+    fi
+
 fi
 

@@ -10,6 +10,18 @@ ARG ENABLE_UPLOAD=0
 ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 
+FROM jodogne/wasm-builder:2.0.23 as wasm-builder-base
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
+RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
+RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
+
 
 FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 
@@ -123,28 +135,18 @@ RUN /scripts/build-or-download.sh target=orthanc-tcia commitId=$ORTHANC_TCIA_COM
 
 ########################## Stone Web Viewer
 
-FROM jodogne/wasm-builder:2.0.23 as build-wasm-stone-viewer
+FROM wasm-builder-base as build-wasm-stone-viewer
 
-# TODO for ARM64,... problem: emsdk 2.0.23 does not exist for ARM64 and stone is not ready to build with 3.1.8
-# this is equivalent to the jodogne/wasm-builder:2.0.23 image (it is copied here such that it builds smoothly on ARM64 platform too!)
-# FROM ubuntu:18.04 as build-wasm-stone-viewer
 
-# RUN apt-get -y clean && apt-get -y update
-# RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget nano unzip cmake git ninja-build python-clang-4.0 libclang-4.0-dev python-pystache python-pip alien lsb-core g++-4.8 && apt-get clean && rm -rf /var/lib/apt/lists/*
-# RUN DEBIAN_FRONTEND=noninteractive apt-get -y install alien ninja-build 
+COPY --from=orthanc-builder-base /scripts/build-or-download.sh /scripts/
 
-# WORKDIR /opt
-# RUN git clone https://github.com/emscripten-core/emsdk.git
-# RUN /opt/emsdk/emsdk install 3.1.8
-# RUN /opt/emsdk/emsdk actviate 3.1.8
-
+RUN ls -al /
+RUN env
+RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
+RUN /scripts/build-or-download.sh target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $ORTHANC_STONE_VIEWER_COMMIT_ID /source
 
-WORKDIR /source/Applications/StoneWebViewer/WebAssembly
-RUN chmod +x docker-internal.sh
-RUN STONE_BRANCH=${ORTHANC_STONE_VIEWER_COMMIT_ID} ./docker-internal.sh Release
 
 
 FROM orthanc-builder-base as build-stone-viewer
@@ -155,16 +157,8 @@ RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
 COPY --from=build-wasm-stone-viewer /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
 RUN ls -al /downloads/wasm-binaries/StoneWebViewer
 
-# RUN mkdir /downloads
-# # CHANGE_VERSION_STONE_WEB_VIEWER
-# RUN wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /downloads/wasm-binaries.zip --quiet
-# RUN unzip /downloads/wasm-binaries.zip -d /downloads
+RUN /scripts/build-or-download.sh target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-# CHANGE_VERSION_STONE_WEB_VIEWER
-RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $ORTHANC_STONE_VIEWER_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer /sources/Applications/StoneWebViewer/Plugin/
-RUN make -j 4
 
 
 ########################## Orthanc azure storage plugins
