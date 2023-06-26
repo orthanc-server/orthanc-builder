@@ -94,6 +94,13 @@ if [[ $target == "orthanc" ]]; then
         $buildRootPath/UnitTests
 
         upload Orthanc
+        upload libModalityWorklists.so
+        upload libServeFolders.so
+        upload libHousekeeper.so
+        upload libConnectivityChecks.so
+        upload libDelayedDeletion.so
+        upload libMultitenantDicom.so
+
     fi
 
 elif [[ $target == "orthanc-authorization" ]]; then
