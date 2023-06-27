@@ -40,7 +40,7 @@ Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.13
 PostgreSQL plugins                    5.1
-MySQL plugins                         5.0
+MySQL plugins                         5.1
 WSI Web viewer plugin                 1.1
 Authorization plugin                  0.5.3
 Transfers accelerator plugin          1.4
