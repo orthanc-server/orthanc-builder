@@ -389,7 +389,7 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
         hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
 
         # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
-        sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' $sourcesRootPath/orthanc-object-storage/Google/CMakeLists.txt
+        sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' $sourcesRootPath/orthanc-object-storage/Azure/CMakeLists.txt
         # todo: remove
         sed -i 's/cryptopp-static/cryptopp::cryptopp/g' $sourcesRootPath/orthanc-object-storage/Azure/CMakeLists.txt
 
