@@ -26,8 +26,24 @@ RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y 
 FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 
 FROM osimis/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
 
 FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
 
 ########################## Orthanc
 
