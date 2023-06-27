@@ -39,7 +39,7 @@ Osimis Web viewer plugin              1.4.2
 Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.13
-PostgreSQL plugins                    5.0
+PostgreSQL plugins                    5.1
 MySQL plugins                         5.0
 WSI Web viewer plugin                 1.1
 Authorization plugin                  0.5.3
@@ -50,7 +50,7 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.1.2
-Orthanc Explorer 2                    1.0.1
+Orthanc Explorer 2                    1.0.2
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.0
 ```
