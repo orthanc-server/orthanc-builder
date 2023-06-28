@@ -20,6 +20,7 @@ enableUploads=0
 baseImage=unknown
 commitId=xxx
 extraArg1=
+version=stable
 
 for argument in "$@"
 do
@@ -37,6 +38,7 @@ echo "enableUploads      = $enableUploads"
 echo "baseImage          = $baseImage"
 echo "commitId           = $commitId"
 echo "extraArg1          = $extraArg1"
+echo "version            = $version"
 
 # while debugging the script on your local machine, you might want to change these paths
 # buildRootPath=/tmp/build
@@ -438,11 +440,25 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $commitId $sourcesRootPath
-        pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
-        make -j 4
-        $buildRootPath/UnitTests
+        if [[ $version == "unstable" ]]; then
+
+            pushd $sourcesRootPath
+            hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $commitId
+            # TODO: remove: temporary code while waiting for SDK 1.12.1 to be released
+            hg clone https://hg.orthanc-server.com/orthanc/ -r 34781fb0172a 
+
+            pushd $buildRootPath
+            cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-dicomweb
+            make -j 4
+            $buildRootPath/UnitTests
+
+        else
+            hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $commitId $sourcesRootPath
+            pushd $buildRootPath
+            cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+            make -j 4
+            $buildRootPath/UnitTests
+        fi
 
         upload libOrthancDicomWeb.so
     fi

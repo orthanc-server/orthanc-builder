@@ -256,6 +256,7 @@ for target in $buildTargets; do
         --build-arg PREFER_DOWNLOADS=$prefer_downloads \
         --build-arg ENABLE_UPLOAD=$enable_upload \
         --build-arg PLATFORM=$platform \
+        --build-arg STABLE_OR_UNSTABLE=$version \
         $from_cache_arg \
         $to_cache_arg \
         $push_load_arg \
