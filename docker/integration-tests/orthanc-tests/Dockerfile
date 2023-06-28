@@ -44,7 +44,7 @@ COPY wait-for-it.sh /scripts
 
 
 ##############################################################
-FROM orthanc-tests as orthanc-tests-dicomweb
+FROM python-base-image as orthanc-tests-dicomweb
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/DicomWeb/Run.py --server=orthanc-under-tests --force -- -v
 
