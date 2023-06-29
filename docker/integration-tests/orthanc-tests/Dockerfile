@@ -24,7 +24,10 @@ COPY wait-for-it.sh /scripts
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Tests/Run.py --server=orthanc-under-tests --force --docker -- -v
 
 ##############################################################
-FROM python:2.7 as python-base-image
+FROM python:2.7 as python2-7-base-image
+
+RUN apt-get update
+RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
 
 RUN pip install easywebdav
 RUN pip install httplib2
@@ -44,7 +47,7 @@ COPY wait-for-it.sh /scripts
 
 
 ##############################################################
-FROM python-base-image as orthanc-tests-dicomweb
+FROM python2-7-base-image as orthanc-tests-dicomweb
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/DicomWeb/Run.py --server=orthanc-under-tests --force -- -v
 
@@ -79,11 +82,11 @@ RUN chmod +x /apps/*
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WSI/Run.py --server=orthanc-under-tests --force --dicomizer=/apps/OrthancWSIDicomizer --to-tiff=/apps/OrthancWSIDicomToTiff -- -v
 
 ##############################################################
-FROM python-base-image as orthanc-tests-webdav
+FROM python2-7-base-image as orthanc-tests-webdav
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WebDav/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM python-base-image as orthanc-tests-cget
+FROM python2-7-base-image as orthanc-tests-cget
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/CGet/Run.py --server=orthanc-under-tests --force -- -v
