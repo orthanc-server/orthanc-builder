@@ -47,7 +47,28 @@ COPY wait-for-it.sh /scripts
 
 
 ##############################################################
-FROM python2-7-base-image as orthanc-tests-dicomweb
+FROM python:3.10 as python3-base-image
+
+RUN apt-get update
+RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
+
+RUN pip install httplib2
+RUN pip install pillow
+RUN pip install pydicom
+RUN pip install pynetdicom
+
+RUN mkdir /tests
+WORKDIR /tests
+
+COPY --from=ubuntu-hg /orthanc-tests /tests/orthanc-tests
+RUN ls -al /tests/
+RUN mkdir /tmp/orthanc-tests/
+
+RUN mkdir /scripts
+COPY wait-for-it.sh /scripts
+
+##############################################################
+FROM python3-base-image as orthanc-tests-dicomweb
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/DicomWeb/Run.py --server=orthanc-under-tests --force -- -v
 

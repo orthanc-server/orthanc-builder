@@ -51,8 +51,11 @@ This produces an image `osimis/orthanc:current`.
 # Continuous Builds
 
 - MacOS stable/unstable binaries and packages are rebuilt every night (if needed) and on every commit
-- Window stable installer is rebuilt at every commit
-- Docker stable and unstable images are rebuilt every night and on every commit
+- Windows stable installers are rebuilt at every commit, they are available at:
+  - [https://orthanc.osimis.io/win-installer/OrthancInstaller-Win64-master.exe](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win64-master.exe)
+- Docker stable and unstable images are rebuilt every night and on every commit of this repo, they are available as:
+  - `osimis/orthanc:master-stable`
+  - `osimis/orthanc:master-unstable`
 - Integration tests are run for every Docker build
 
 # Troubleshooting (for dev)
