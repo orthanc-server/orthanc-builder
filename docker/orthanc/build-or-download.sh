@@ -69,9 +69,13 @@ download() { # $1 file
 }
 
 upload() { # $1 file
-    echo "uploading $1";
+    if [[ $enableUploads == 1 ]]; then
+        echo "uploading $1";
 
-    aws s3 --region eu-west-1 cp $buildRootPath/$1 s3://orthanc.osimis.io/docker-builds/$baseImage/$commitId-$1 --cache-control=max-age=1
+        aws s3 --region eu-west-1 cp $buildRootPath/$1 s3://orthanc.osimis.io/docker-builds/$baseImage/$commitId-$1 --cache-control=max-age=1
+    else
+        echo "skipping uploading of $1";
+    fi
 }
 
 if [[ $target == "orthanc" ]]; then
