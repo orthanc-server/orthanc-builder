@@ -478,7 +478,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
-            "stable": "OrthancDicomWeb-1.13",
+            "stable": "OrthancDicomWeb-1.14",
             "unstable": "default",
             "artifactsOSX": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",
@@ -491,10 +491,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["DicomWeb 1.13 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                    ["DicomWeb 1.14 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
                 ],
                 "Artifacts32": [
-                    ["DicomWeb 1.13 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                    ["DicomWeb 1.14 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
                 ],
                 "Resources": [
                     ["dicomweb.json", "Configuration"]
