@@ -491,7 +491,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-dicomweb/OrthancDicomWeb-1.14/OrthancDicomWeb.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-dicomweb/OrthancDicomWeb-1.14/OrthancDicomWeb.dll", "Plugins", "OrthancDicomWeb.dll", "Comment: # CHANGE_VERSION_DW"]
                 ],
                 "Artifacts32": [
                     ["DicomWeb 1.14 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
