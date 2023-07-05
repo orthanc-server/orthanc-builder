@@ -490,8 +490,8 @@
                 "Description": "DICOMweb support (AGPL license)",
                 "Mandatory": false,
                 "Category": "plugins",
-                "Artifacts64": [
-                    ["DicomWeb 1.14 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                "Downloads64": [
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-dicomweb/OrthancDicomWeb-1.14/OrthancDicomWeb.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
                 ],
                 "Artifacts32": [
                     ["DicomWeb 1.14 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
