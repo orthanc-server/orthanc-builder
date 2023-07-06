@@ -25,7 +25,7 @@ Connectivity check plugin             1.12.1
 Housekeeper plugin                    1.12.1
 Delayed Deletion plugin               1.12.1
 Multitenant DICOM plugin              1.12.1
-Stone Web viewer plugin               2.5+4087511e8eef
+Stone Web viewer plugin               2.5
 Osimis Web viewer plugin              1.4.2
 Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.14

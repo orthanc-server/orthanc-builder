@@ -8,11 +8,11 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-          - upgraded Orthanc to 1.12.1
+23.7.0 :  - upgraded Orthanc to 1.12.1
           - upgraded DICOMweb plugin to 1.14
           - upgraded PostgreSQL plugins to 5.1
           - upgraded PostgreSQL plugins to 5.1
-          - upgraded StoneWebViewer to 2.5+4087511e8eef
+          - upgraded StoneWebViewer to 2.5+4087511e8eef (Docker images only)
           - upgraded Orthanc Explorer 2 plugin to 1.0.2
           - Added a new special env var: ORTHANC__OHIF to define the "OHIF" configuration in one go.
             Also added 4 non standard env vars for OHIF configuration ORTHANC__OHIF__DATA_SOURCE,
