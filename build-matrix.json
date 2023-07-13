@@ -531,7 +531,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/ViewerPlugin",
             "comment": "# CHANGE_VERSION_WSI",
-            "stable": "OrthancWSI-1.1",
+            "stable": "OrthancWSI-2.0",
             "unstable": "default",
             "commentOSX": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
             "buildForOSX": false,
@@ -541,10 +541,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["WSI 1.1 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["WSI 2.0 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
                     ],
                     "Artifacts32": [
-                        ["WSI 1.1 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["WSI 2.0 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
                     ]
                 },
                 {
@@ -553,12 +553,12 @@
                     "Mandatory": false,
                     "Category": "tools/wsi",
                     "Artifacts64": [
-                        ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
-                        ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                        ["WSI 2.0 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
+                        ["WSI 2.0 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
                     ],
                     "Artifacts32": [
-                        ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
-                        ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                        ["WSI 2.0 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
+                        ["WSI 2.0 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
                     ]
                 },
                 {

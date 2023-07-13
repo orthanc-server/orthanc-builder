@@ -95,8 +95,8 @@ RUN	DEBIAN_FRONTEND=noninteractive apt-get install libtiff-tools
 
 RUN mkdir /apps
 
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancWSIDicomToTiff --output-document /apps/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancWSIDicomizer --output-document /apps/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/2.0/OrthancWSIDicomToTiff --output-document /apps/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/2.0/OrthancWSIDicomizer --output-document /apps/OrthancWSIDicomizer --quiet
 
 RUN chmod +x /apps/*
 

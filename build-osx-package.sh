@@ -75,7 +75,7 @@ done< <(cat $SCRIPTPATH/build-matrix.json | jq -r '.configs[] | "\(.name) \(.bui
 
 # # TODO these plugins are not built by GitHub so the downloaded files only contain AMD64 binary (TODO)
 # # CHANGE_VERSION_WSI
-# wget "${URL}/WSI 1.1 - OS X Release/libOrthancWSI.dylib"
+# wget "${URL}/WSI 2.0 - OS X Release/libOrthancWSI.dylib"
 
 chmod +x ${TARGET}/${FOLDER}/Orthanc
 
