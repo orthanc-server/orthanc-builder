@@ -88,10 +88,10 @@ FROM orthanc-tests as orthanc-tests-transfers
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/Transfers/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM orthanc-tests as orthanc-tests-wsi
+FROM python3-base-image as orthanc-tests-wsi
 
 RUN apt-get update
-RUN	DEBIAN_FRONTEND=noninteractive apt-get install libtiff-tools
+RUN	DEBIAN_FRONTEND=noninteractive apt-get install -y libtiff-tools
 
 RUN mkdir /apps
 
