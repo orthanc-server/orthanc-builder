@@ -8,7 +8,7 @@ set -ex
 
 # example
 # for a CI build
-# ./build-or-download baseImage=bullseye-20230522-slim commitId=xxxx target=orthanc preferDownloads=1 enableUploads=1
+# ./build-or-download baseImage=bullseye-20230703-slim commitId=xxxx target=orthanc preferDownloads=1 enableUploads=1
 # for a local build
 # ./build-or-download.sh target=orthanc baseImage=test commitId=68e15471b408 preferDownloads=1 enableUploads=1
 
