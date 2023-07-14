@@ -62,7 +62,7 @@ jobs:
     steps:
     
     - name: Maximize build space
-      uses: easimon/maximize-build-space@v5
+      uses: easimon/maximize-build-space@v7
       with:
         # reserve space for docker
         root-reserve-mb: 38000
