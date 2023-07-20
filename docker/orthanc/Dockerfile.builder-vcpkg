@@ -19,36 +19,6 @@ RUN ./bootstrap
 RUN make -j 6
 RUN make install
 
-
-########################## Orthanc builder vcpkg-google
-
-FROM osimis/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-google
-
-WORKDIR /
-RUN git clone https://github.com/Microsoft/vcpkg.git && \
-  cd vcpkg/ && \
-  git checkout 2021.05.12
-
-WORKDIR /vcpkg
-# RUN ls -al /vcpkg
-RUN ./bootstrap-vcpkg.sh
-ENV VCPKG_FORCE_SYSTEM_BINARIES=1
-RUN mkdir ~/.vcpkg/
-
-RUN ./vcpkg integrate install
-
-# object storage prerequisites
-RUN ./vcpkg install cryptopp
-
-# since we upgraded from Orthanc Framework 1.7.3 to 1.9.1
-# RUN ./vcpkg install boost
-
-RUN  ./vcpkg install google-cloud-cpp
-
-########################## Orthanc builder vcpkg-azure
-
-FROM osimis/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-azure
-
 WORKDIR /
 RUN git clone https://github.com/Microsoft/vcpkg.git && \
   cd vcpkg/ && \
@@ -65,7 +35,18 @@ RUN ./vcpkg integrate install
 # object storage prerequisites
 RUN ./vcpkg install cryptopp
 
+
+########################## Orthanc builder vcpkg-google
+
+FROM osimis/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-google
+
+WORKDIR /vcpkg
+RUN  ./vcpkg install google-cloud-cpp[storage]
+
+########################## Orthanc builder vcpkg-azure
+
+FROM osimis/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-azure
+
+WORKDIR /vcpkg
 RUN  ./vcpkg install azure-core-cpp azure-storage-blobs-cpp
 
-# since we upgraded from Orthanc Framework 1.7.3 to 1.9.1
-#   RUN ./vcpkg install boost
