@@ -684,7 +684,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
-            "stable": "2.1.2",
+            "stable": "default",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
