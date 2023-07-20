@@ -40,7 +40,7 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 Orthanc Explorer 2                    1.0.3
-Azure blob storage plugin             2.1.2          (Win64 installers only !)
+Azure blob storage plugin             2.2.0          (Win64 installers only !)
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.0
 

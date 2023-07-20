@@ -9,13 +9,14 @@ You should use the full image only if you need to use one of these:
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
+          - upgraded object-storage plugins to 2.2.0
 23.7.1 :  - upgraded base image to debian:bullseye-20230703-slim
           - upgraded WSI framework to 2.0
           - upgraded Orthanc Explorer 2 plugin to 1.0.3
 23.7.0 :  - upgraded Orthanc to 1.12.1
           - upgraded DICOMweb plugin to 1.14
           - upgraded PostgreSQL plugins to 5.1
-          - upgraded PostgreSQL plugins to 5.1
+          - upgraded MySQL plugins to 5.1
           - upgraded StoneWebViewer to 2.5+4087511e8eef (Docker images only)
           - upgraded Orthanc Explorer 2 plugin to 1.0.2
           - Added a new special env var: ORTHANC__OHIF to define the "OHIF" configuration in one go.
