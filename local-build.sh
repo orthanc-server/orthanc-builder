@@ -107,7 +107,9 @@ if [[ $type == "local" ]]; then
 
     # when building locally, use Docker builder (easier to reuse local images)
     build="build"
-    push_load_arg=
+    push_load_arg_final_image=
+    push_load_arg_builder_image=
+
 
     prefer_downloads=1
     enable_upload=0
@@ -132,7 +134,12 @@ else
 
     # when building in CI, use buildx
     build="buildx build"
-    push_load_arg="--push"
+    push_load_arg_final_image="--load"
+    push_load_arg_builder_image="--push"
+    if [[ $step == "push" ]]; then
+        push_load_arg_final_image="--push"
+        push_load_arg_builder_image=
+    fi
     
     # when building in CI, don't use intermediate targets (it would push plenty of images)
     buildTargets=$finalImageTarget
@@ -173,7 +180,7 @@ docker $build \
     --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
-    $push_load_arg \
+    $push_load_arg_builder_image \
     -f docker/orthanc/Dockerfile.runner-base docker/orthanc
 
 ###### builder-base
@@ -181,7 +188,7 @@ docker $build \
     --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_base \
     $to_cache_arg_builder_base \
-    $push_load_arg \
+    $push_load_arg_builder_image \
     --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
@@ -192,7 +199,7 @@ if [[ $image == "full" ]]; then
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg \
         $to_cache_arg_builder_vcpkg \
-        $push_load_arg \
+        $push_load_arg_builder_image \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
 
@@ -201,7 +208,7 @@ if [[ $image == "full" ]]; then
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg_azure \
         $to_cache_arg_builder_vcpkg_azure \
-        $push_load_arg \
+        $push_load_arg_builder_image \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
 
@@ -210,7 +217,7 @@ if [[ $image == "full" ]]; then
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg_google \
         $to_cache_arg_builder_vcpkg_google \
-        $push_load_arg \
+        $push_load_arg_builder_image \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
 fi
@@ -259,7 +266,7 @@ for target in $buildTargets; do
         --build-arg STABLE_OR_UNSTABLE=$version \
         $from_cache_arg \
         $to_cache_arg \
-        $push_load_arg \
+        $push_load_arg_final_image \
         $tag_arg \
         --target $target \
         -f docker/orthanc/Dockerfile  docker/orthanc/
