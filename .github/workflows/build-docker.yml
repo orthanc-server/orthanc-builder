@@ -144,8 +144,8 @@ jobs:
       uses: peter-evans/dockerhub-description@v3
       if: inputs.is_tag == 'true'
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
         repository: osimis/orthanc
         readme-filepath: README-dockerhub.md
 
