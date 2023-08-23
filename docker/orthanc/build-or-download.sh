@@ -448,8 +448,8 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
 
             pushd $sourcesRootPath
             hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $commitId
-            # TODO: remove: temporary code while waiting for SDK 1.12.1 to be released
-            hg clone https://hg.orthanc-server.com/orthanc/ -r 34781fb0172a 
+            # TODO: remove: temporary code while waiting for SDK 1.12.2 to be released
+            hg clone https://hg.orthanc-server.com/orthanc/ -r 4ab905749aed
 
             pushd $buildRootPath
             cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-dicomweb
