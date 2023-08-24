@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 23.8.0 Default image
+#### 23.8.1 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -38,7 +38,7 @@ Stone Web viewer plugin               2.5+4087511e8eef
 Osimis Web viewer plugin              1.4.2
 Python plugin                         4.0
 Orthanc Web viewer plugin             2.8
-DICOMweb plugin                       1.14
+DICOMweb plugin                       1.15
 PostgreSQL plugins                    5.1
 MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
