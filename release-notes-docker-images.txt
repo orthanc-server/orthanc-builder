@@ -8,6 +8,7 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+23.8.2 :  - upgraded Python plugin to 4.1
 23.8.1 :  - upgraded DICOMweb plugin to 1.15
           - upgraded base image to debian:bullseye-20230814-slim
 23.8.0 :  - upgraded Orthanc Explorer 2 plugin to 1.1.0

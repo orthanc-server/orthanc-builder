@@ -326,7 +326,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.0",
+            "stable": "OrthancPython-4.1",
             "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
@@ -338,7 +338,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.0",
+            "stable": "OrthancPython-4.1",
             "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
@@ -353,10 +353,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-8/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-8/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ],
                 "Downloads32": [
-                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.8-4.0.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.1-Windows/OrthancPython-Win32-Python3.8-4.1.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ],
                 "Target": "OrthancPython3.8.dll"
             }]
@@ -366,7 +366,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.0",
+            "stable": "OrthancPython-4.1",
             "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
@@ -381,10 +381,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-9/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-9/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ],
                 "Downloads32": [
-                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.9-4.0.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.1-Windows/OrthancPython-Win32-Python3.9-4.1.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ]
             }]
         },
@@ -393,7 +393,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.0",
+            "stable": "OrthancPython-4.1",
             "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
@@ -408,10 +408,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-10/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-10/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ],
                 "Downloads32": [
-                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.10-4.0.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.1-Windows/OrthancPython-Win32-Python3.10-4.1.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ]
             }]
         },
@@ -420,7 +420,7 @@
             "repo": "https://hg.orthanc-server.com/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.0",
+            "stable": "OrthancPython-4.1",
             "unstable": "default",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
@@ -435,10 +435,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-11/OrthancPython-4.0/OrthancPython.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.osimis.io/nightly-win-builds/stable/Orthanc-python-3-11/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ],
                 "Downloads32": [
-                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.0-Windows/OrthancPython-Win32-Python3.11-4.0.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://www.orthanc-server.com/downloads/get.php?path=/plugin-python/OrthancPython-4.1-Windows/OrthancPython-Win32-Python3.11-4.1.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ]
             }]
         },
