@@ -93,6 +93,10 @@ python3 -u main.py --pattern=StorageCompression.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 
+python3 -u main.py --pattern=Authorization.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
 popd
 ############ end run NewTests
 
