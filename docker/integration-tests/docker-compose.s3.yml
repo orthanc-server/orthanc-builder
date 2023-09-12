@@ -1,10 +1,12 @@
-version: "2"
+version: "3"
 services:
   orthanc-under-tests:
     image: orthanc-under-tests
     depends_on:
-      - minio
-      - createbuckets
+      minio:
+        condition: service_healthy
+      createbuckets:
+        condition: service_healthy
     environment:
       ORTHANC__AWS_S3_STORAGE__BUCKET_NAME: "my-sample-bucket"
       ORTHANC__AWS_S3_STORAGE__REGION: "eu-west-1"
@@ -17,7 +19,8 @@ services:
   orthanc-tests:
     image: orthanc-tests
     depends_on:
-      - orthanc-under-tests
+      orthanc-under-tests:
+        condition: service_started
 
   minio:
     command: server /data --console-address ":9001"
@@ -27,15 +30,27 @@ services:
       MINIO_REGION: "eu-west-1"
       MINIO_ROOT_USER: "minio"
       MINIO_ROOT_PASSWORD: "miniopwd"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 2s
+      timeout: 1s
+      retries: 3
 
   createbuckets:
     image: minio/mc:RELEASE.2022-03-17T20-25-06Z
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "cat", "/tmp/initialized"]
+      interval: 2s
+      timeout: 1s
+      retries: 10
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc alias set myminio http://minio:9000 minio miniopwd;
       /usr/bin/mc mb myminio/my-sample-bucket;
       /usr/bin/mc policy set public myminio/my-sample-bucket;
-      sleep 600
+      touch /tmp/initialized;
+      sleep 600; #otherwise the docker-compose exits once this container has completed !!!
       "
