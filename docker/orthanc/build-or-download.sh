@@ -248,9 +248,13 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm && apt-get clean && rm -rf /var/lib/apt/lists/*
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-        curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
+        export DEBIAN_FRONTEND=noninteractive && \
+            mkdir -p /etc/apt/keyrings && \
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+            apt-get update && apt-get install --assume-yes nodejs
 
         pushd $sourcesRootPath
 
@@ -276,9 +280,13 @@ elif [[ $target == "orthanc-volview" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm && apt-get clean && rm -rf /var/lib/apt/lists/*
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-        curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
+        export DEBIAN_FRONTEND=noninteractive && \
+            mkdir -p /etc/apt/keyrings && \
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+            apt-get update && apt-get install --assume-yes nodejs
 
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
@@ -309,9 +317,13 @@ elif [[ $target == "orthanc-ohif" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm && apt-get clean && rm -rf /var/lib/apt/lists/*
+        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-        curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
+        export DEBIAN_FRONTEND=noninteractive && \
+            mkdir -p /etc/apt/keyrings && \
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+            apt-get update && apt-get install --assume-yes nodejs
         npm install --global yarn
 
         pushd $sourcesRootPath
@@ -319,7 +331,7 @@ elif [[ $target == "orthanc-ohif" ]]; then
 
         wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
 
-        # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
+        # CreateOHIFDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target
         mkdir /source
         cp -r $sourcesRootPath/* /source
