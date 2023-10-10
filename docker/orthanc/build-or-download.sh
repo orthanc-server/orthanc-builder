@@ -376,15 +376,10 @@ elif [[ $target == "orthanc-google-storage" ]]; then
 
         cd $sourcesRootPath
         hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $commitId
-        # (framework version used to build the cloud storage plugins)
-        hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
-
-        # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
-        sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' $sourcesRootPath/orthanc-object-storage/Google/CMakeLists.txt
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-object-storage/Google/
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Google/
         make -j 4
 
         upload libOrthancGoogleCloudStorage.so
@@ -401,17 +396,10 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
 
         cd $sourcesRootPath
         hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $commitId
-        # (framework version used to build the cloud storage plugins)
-        hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
-
-        # upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
-        sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' $sourcesRootPath/orthanc-object-storage/Azure/CMakeLists.txt
-        # todo: remove
-        sed -i 's/cryptopp-static/cryptopp::cryptopp/g' $sourcesRootPath/orthanc-object-storage/Azure/CMakeLists.txt
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-object-storage/Azure/
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
         make -j 4
 
         upload libOrthancAzureBlobStorage.so
