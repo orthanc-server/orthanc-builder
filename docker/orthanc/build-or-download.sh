@@ -357,12 +357,10 @@ elif [[ $target == "orthanc-s3" ]]; then
 
         cd $sourcesRootPath
         hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $commitId
-        # (framework version used to build the cloud storage plugins)
-        hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_VCPKG_PACKAGES=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-object-storage/Aws/
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_VCPKG_PACKAGES=OFF $sourcesRootPath/orthanc-object-storage/Aws/
         make -j 4
 
         upload libOrthancAwsS3Storage.so
