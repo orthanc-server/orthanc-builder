@@ -329,6 +329,9 @@ RUN apt purge --assume-yes xdg-user-dirs
 RUN apt --assume-yes autoremove
 
 
+RUN apt update
+RUN apt install --assume-yes gdb procps
+
 # always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
 # and grants him all permissions on files that can be modified by the docker-entrypoint.sh
 # The default root users can still access these files too.

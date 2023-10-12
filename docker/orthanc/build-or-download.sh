@@ -80,7 +80,7 @@ upload() { # $1 file
 
 if [[ $target == "orthanc" ]]; then
 
-    dl=$(( $dl + $(download Orthanc) ))
+    dl=$(( $dl + $(download OrthancWithDebugInfo) ))
     dl=$(( $dl + $(download libModalityWorklists.so) ))
     dl=$(( $dl + $(download libServeFolders.so) ))
     dl=$(( $dl + $(download libHousekeeper.so) ))
@@ -95,11 +95,12 @@ if [[ $target == "orthanc" ]]; then
 
         # note: building with static DCMTK while waiting for Debian bullseye to update to latest DCMTK issues (we need DCMTK 3.6.7: https://www.hipaajournal.com/warning-issued-about-3-high-severity-vulnerabilities-in-offis-dicom-software/)
         # also force latest OpenSSL (and therefore, we need to force static libcurl)
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF $sourcesRootPath/OrthancServer
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF $sourcesRootPath/OrthancServer
         make -j 4
         $buildRootPath/UnitTests
 
-        upload Orthanc
+        mv /build/Orthanc /build/OrthancWithDebugInfo
+        upload OrthancWithDebugInfo
         upload libModalityWorklists.so
         upload libServeFolders.so
         upload libHousekeeper.so
@@ -107,6 +108,7 @@ if [[ $target == "orthanc" ]]; then
         upload libDelayedDeletion.so
         upload libMultitenantDicom.so
 
+        mv /build/OrthancWithDebugInfo /build/Orthanc
     fi
 
 elif [[ $target == "orthanc-authorization" ]]; then
@@ -422,23 +424,25 @@ elif [[ $target == "orthanc-webviewer" ]]; then
 
 elif [[ $target == "orthanc-transfers" ]]; then
 
-    dl=$(( $dl + $(download libOrthancTransfers.so) ))
+    dl=$(( $dl + $(download libOrthancTransfersWithDebugInfo.so) ))
 
     if [[ $dl != 0 ]]; then
 
         hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
-        upload libOrthancTransfers.so
+        mv /build/libOrthancTransfers.so /build/libOrthancTransfersWithDebugInfo.so
+        upload libOrthancTransfersWithDebugInfo.so
+        mv /build/libOrthancTransfersWithDebugInfo.so /build/libOrthancTransfers.so
     fi
 
 
 elif [[ $target == "orthanc-dicomweb" ]]; then
 
-    dl=$(( $dl + $(download libOrthancDicomWeb.so) ))
+    dl=$(( $dl + $(download libOrthancDicomWebWithDebugInfo.so) ))
 
     if [[ $dl != 0 ]]; then
 
@@ -457,12 +461,15 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
         # else
         hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
         # fi
 
-        upload libOrthancDicomWeb.so
+        mv /build/libOrthancDicomWeb.so /build/libOrthancDicomWebWithDebugInfo.so
+        upload libOrthancDicomWebWithDebugInfo.so
+        mv /build/libOrthancDicomWebWithDebugInfo.so /build/libOrthancDicomWeb.so
+
     fi
 
 elif [[ $target == "orthanc-wsi" ]]; then

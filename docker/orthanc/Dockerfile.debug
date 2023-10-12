@@ -1,0 +1,27 @@
+# to build:
+# ./local-build.sh
+# pushd docker/orthanc && docker build -f Dockerfile.debug -t osimis/orthanc:debug-script . && popd
+#
+# to test:
+# mkdir -p /tmp/cores
+# docker run -v /tmp/cores:/cores -p 8044:8042 osimis/orthanc:debug-script 
+# curl -v http://orthanc:orthanc@localhost:8044/generate-core
+#
+# to analyse core:
+# docker run -v /tmp/cores:/cores -it --entrypoint=bash osimis/orthanc:debug-script
+## gdb /usr/local/bin/Orthanc /cores/core.1
+### thread apply all bt
+
+
+FROM osimis/orthanc:current
+
+RUN apt update
+RUN apt install --assume-yes gdb procps
+
+RUN pip install requests
+
+RUN mkdir /cores
+
+COPY generate-core.py /scripts/
+
+ENV ORTHANC__PYTHON_SCRIPT=/scripts/generate-core.py
