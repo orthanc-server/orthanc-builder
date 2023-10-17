@@ -15,7 +15,7 @@ http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
 
-Content of the package 23.9.2
+Content of the package 23.9.3
 ------------------------------
 
 Orthanc server                        1.12.1
@@ -40,7 +40,7 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 Orthanc Explorer 2                    1.1.3
-Azure blob storage plugin             2.2.0          (Win64 installers only !)
+Azure blob storage plugin             2.3.0          (Win64 installers only !)
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.0
 Python plugin                         4.1
