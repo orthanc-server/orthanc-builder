@@ -25,7 +25,8 @@ def JobsRouteMonitoring():
 
         r = requests.get(
             #url='http://localhost:8042/sleep-1min',  # to test the timeout and core dump generation
-            url='http://localhost:8042/jobs',
+            url='http://localhost:8042/jobs',         # this times out everytime !!!!!  
+            #url='http://localhost:8042/studies',
             headers={ 'Authorization' : TOKEN },
             timeout=10)
         is_alive = True
@@ -62,5 +63,5 @@ def OnRestSleep1min(output, uri, **request):
     output.AnswerBuffer('ok\n', 'text/plain')
 
 orthanc.RegisterRestCallback('/generate-core', OnRestGenerateCore)
-orthanc.RegisterRestCallback('/sleep-1min', OnRestSleep1min)
-orthanc.RegisterOnChangeCallback(OnChange)
+# orthanc.RegisterRestCallback('/sleep-1min', OnRestSleep1min)
+# orthanc.RegisterOnChangeCallback(OnChange)
