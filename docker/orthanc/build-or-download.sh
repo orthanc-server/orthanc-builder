@@ -108,8 +108,9 @@ if [[ $target == "orthanc" ]]; then
         upload libDelayedDeletion.so
         upload libMultitenantDicom.so
 
-        mv /build/OrthancWithDebugInfo /build/Orthanc
     fi
+    
+    mv /build/OrthancWithDebugInfo /build/Orthanc
 
 elif [[ $target == "orthanc-authorization" ]]; then
 
@@ -436,8 +437,9 @@ elif [[ $target == "orthanc-transfers" ]]; then
 
         mv /build/libOrthancTransfers.so /build/libOrthancTransfersWithDebugInfo.so
         upload libOrthancTransfersWithDebugInfo.so
-        mv /build/libOrthancTransfersWithDebugInfo.so /build/libOrthancTransfers.so
     fi
+
+    mv /build/libOrthancTransfersWithDebugInfo.so /build/libOrthancTransfers.so
 
 
 elif [[ $target == "orthanc-dicomweb" ]]; then
@@ -468,9 +470,10 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
 
         mv /build/libOrthancDicomWeb.so /build/libOrthancDicomWebWithDebugInfo.so
         upload libOrthancDicomWebWithDebugInfo.so
-        mv /build/libOrthancDicomWebWithDebugInfo.so /build/libOrthancDicomWeb.so
 
     fi
+
+    mv /build/libOrthancDicomWebWithDebugInfo.so /build/libOrthancDicomWeb.so
 
 elif [[ $target == "orthanc-wsi" ]]; then
 

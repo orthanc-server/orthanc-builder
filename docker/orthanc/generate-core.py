@@ -4,6 +4,7 @@ import os
 
 import threading
 import requests
+import time
 
 TIMER = None
 TOKEN = orthanc.GenerateRestApiAuthorizationToken()
@@ -22,8 +23,11 @@ def JobsRouteMonitoring():
     try:
         orthanc.LogWarning("Monitoring /jobs route to check it is still responding")
 
-        r = requests.get('http://localhost:8042/jobs',
-                     headers = { 'Authorization' : TOKEN })
+        r = requests.get(
+            #url='http://localhost:8042/sleep-1min',  # to test the timeout and core dump generation
+            url='http://localhost:8042/jobs',
+            headers={ 'Authorization' : TOKEN },
+            timeout=10)
         is_alive = True
 
     except Exception as ex:
@@ -33,7 +37,7 @@ def JobsRouteMonitoring():
         generate_core()
 
 
-    TIMER = threading.Timer(1, JobsRouteMonitoring)  # Re-schedule after 10 seconds
+    TIMER = threading.Timer(10, JobsRouteMonitoring)  # Re-schedule after 10 seconds
     TIMER.start()
 
 
@@ -53,5 +57,10 @@ def OnRestGenerateCore(output, uri, **request):
     generate_core()
     output.AnswerBuffer('ok\n', 'text/plain')
 
-orthanc.RegisterRestCallback('/generate-core', OnRestGenerateCore)
+def OnRestSleep1min(output, uri, **request):
+    time.sleep(60)
+    output.AnswerBuffer('ok\n', 'text/plain')
 
+orthanc.RegisterRestCallback('/generate-core', OnRestGenerateCore)
+orthanc.RegisterRestCallback('/sleep-1min', OnRestSleep1min)
+orthanc.RegisterOnChangeCallback(OnChange)
