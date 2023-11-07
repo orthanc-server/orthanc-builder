@@ -9,7 +9,9 @@
 #
 # to analyse core:
 # docker run -v /tmp/cores:/cores -it --entrypoint=bash osimis/orthanc:debug-script
+## cp /usr/share/orthanc/plugins-available/*.so /usr/share/orthanc/plugins/
 ## gdb /usr/local/bin/Orthanc /cores/core.1
+
 ### thread apply all bt
 
 
