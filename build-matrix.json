@@ -7,7 +7,7 @@
     "configs": [
         {
             "name": "XXXXX Sample configuration for documentation to list all fields", 
-            "repo": "https://hg.orthanc-server.com/orthanc/    path to repo",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc/    path to repo",
             "repoType": "hg                                    or git",
             "sourcesSubPath": "/OrthancServer                  OPTIONAL path to CMakeLists.txt",
             "comment": "# CHANGE_VERSION_XXX",
@@ -43,7 +43,7 @@
         },
         {
             "name": "Orthanc", 
-            "repo": "https://hg.orthanc-server.com/orthanc/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc/",
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
@@ -159,7 +159,7 @@
         },
         {
             "name": "Orthanc-postgresql", 
-            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-databases/",
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
@@ -188,7 +188,7 @@
         },
         {
             "name": "Orthanc-mysql", 
-            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-databases/",
             "repoType": "hg",
             "sourcesSubPath": "/MySQL",
             "comment": "# CHANGE_VERSION_MYSQL",
@@ -218,7 +218,7 @@
         },
         {
             "name": "Orthanc-odbc", 
-            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-databases/",
             "repoType": "hg",
             "sourcesSubPath": "/Odbc",
             "comment": "# CHANGE_VERSION_ODBC",
@@ -247,7 +247,7 @@
         },
         {
             "name": "Orthanc-transfers", 
-            "repo": "https://hg.orthanc-server.com/orthanc-transfers/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-transfers/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TRANSFERS",
             "stable": "OrthancTransfers-1.4",
@@ -323,7 +323,7 @@
         },
         {
             "name": "Orthanc-python", 
-            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
@@ -335,7 +335,7 @@
         },
         {
             "name": "Orthanc-python-3-8", 
-            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
@@ -363,7 +363,7 @@
         },
         {
             "name": "Orthanc-python-3-9", 
-            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
@@ -390,7 +390,7 @@
         },
         {
             "name": "Orthanc-python-3-10", 
-            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
@@ -417,7 +417,7 @@
         },
         {
             "name": "Orthanc-python-3-11", 
-            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
@@ -444,7 +444,7 @@
         },
         {
             "name": "Orthanc-stone", 
-            "repo": "https://hg.orthanc-server.com/orthanc-stone/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-stone/",
             "repoType": "hg",
             "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
@@ -475,7 +475,7 @@
         },
         {
             "name": "Orthanc-dicomweb", 
-            "repo": "https://hg.orthanc-server.com/orthanc-dicomweb/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
             "stable": "OrthancDicomWeb-1.15",
@@ -503,7 +503,7 @@
         },
         {
             "name": "Orthanc-gdcm", 
-            "repo": "https://hg.orthanc-server.com/orthanc-gdcm/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-gdcm/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GDCM",
             "stable": "OrthancGdcm-1.5",
@@ -527,7 +527,7 @@
         },
         {
             "name": "Orthanc-wsi", 
-            "repo": "https://hg.orthanc-server.com/orthanc-wsi/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-wsi/",
             "repoType": "hg",
             "sourcesSubPath": "/ViewerPlugin",
             "comment": "# CHANGE_VERSION_WSI",
@@ -612,7 +612,7 @@
         },
         {
             "name": "Orthanc-webviewer", 
-            "repo": "https://hg.orthanc-server.com/orthanc-webviewer/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-webviewer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
             "stable": "OrthancWebViewer-2.8",
@@ -635,7 +635,7 @@
         },
         {
             "name": "Orthanc-auth", 
-            "repo": "https://hg.orthanc-server.com/orthanc-authorization/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
             "stable": "0.6.0",
@@ -656,7 +656,7 @@
         },
         {
             "name": "Orthanc-azure-storage", 
-            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "sourcesSubPath": "/Azure",
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
@@ -681,7 +681,7 @@
         },
         {
             "name": "Orthanc-google-storage", 
-            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
             "stable": "2.3.0",
@@ -692,7 +692,7 @@
         },
         {
             "name": "Orthanc-aws-storage", 
-            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
             "stable": "2.3.0",
