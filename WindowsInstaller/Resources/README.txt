@@ -15,7 +15,7 @@ http://127.0.0.1:8042/app/explorer.html. Please remember that Orthanc
 Explorer does not support Microsoft Internet Explorer.
 
 
-Content of the package 23.9.3
+Content of the package 23.11.0
 ------------------------------
 
 Orthanc server                        1.12.1
