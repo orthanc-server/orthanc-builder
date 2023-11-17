@@ -279,14 +279,9 @@ elif [[ $target == "orthanc-volview" ]]; then
     dl=$(( $dl + $(download libOrthancVolView.so) ))
 
     if [[ $dl != 0 ]]; then
-
-        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-        export DEBIAN_FRONTEND=noninteractive && \
-            mkdir -p /etc/apt/keyrings && \
-            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
-            apt-get update && apt-get install --assume-yes nodejs
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+        source /root/.bashrc
+        nvm install v19.7.0
 
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
@@ -317,13 +312,9 @@ elif [[ $target == "orthanc-ohif" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-        export DEBIAN_FRONTEND=noninteractive && \
-            mkdir -p /etc/apt/keyrings && \
-            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
-            apt-get update && apt-get install --assume-yes nodejs
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+        source /root/.bashrc
+        nvm install v20.3.0
         npm install --global yarn
 
         pushd $sourcesRootPath
