@@ -1,6 +1,6 @@
 {
   // orthanc configuration file reference: available here:
-  // https://hg.orthanc-server.com/orthanc/file/tip/OrthancServer/Resources/Configuration.json
+  // https://orthanc.uclouvain.be/hg/orthanc/file/tip/OrthancServer/Resources/Configuration.json
   "Name" : "MyOrthanc",
 
   // Orthanc Explorer 2 configuration.  Reference available here:

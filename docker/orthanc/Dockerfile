@@ -230,7 +230,7 @@ FROM orthanc-builder-base as build-plugin-ohif
 
 ARG ORTHANC_OHIF_COMMIT_ID
 # CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
-ARG OHIF_VERSION=3.6.0
+ARG OHIF_VERSION=3.7.0
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc downloads (since wget is not in the runner image)

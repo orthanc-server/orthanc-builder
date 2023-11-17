@@ -28,30 +28,6 @@ keyfile = None
 keypwd = None
 http_scheme = 'http'
 
-# first try to read port number + user credentials from the configuration file
-try:
-    with open('/tmp/orthanc.json', 'rb') as config_file:
-        config = json.load(config_file)
-
-        if 'HttpPort' in config:
-            http_port = config['HttpPort']
-        
-        if 'AuthenticationEnabled' in config and config['AuthenticationEnabled']:
-            if 'RegisteredUsers' in config and len(config['RegisteredUsers']):
-                for u, p in config['RegisteredUsers'].items():
-                    user = u
-                    pwd = p
-                    break
-        
-        if 'SslEnabled' in config and config['SslEnabled']:
-            http_scheme = 'https'
-
-except:
-    pass
-
-
-# override the values from the config file with the values from the command line
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--http_port', type=int)
 parser.add_argument('--http_scheme', type=str)
@@ -62,6 +38,33 @@ parser.add_argument('--keyfile', type=str)
 parser.add_argument('--keypwd', type=str)
 
 args = parser.parse_args()
+
+# first try to read port number + user credentials from the configuration file
+try:
+    with open('/tmp/orthanc.json', 'rb') as config_file:
+        config = json.load(config_file)
+
+        if 'HttpPort' in config:
+            http_port = config['HttpPort']
+
+        if 'AuthenticationEnabled' in config and config['AuthenticationEnabled']:
+            if 'RegisteredUsers' in config and len(config['RegisteredUsers']):
+                if args.user:
+                    pwd = config['RegisteredUsers'].get(args.user, '')
+                else:
+                    for u, p in config['RegisteredUsers'].items():
+                        user = u
+                        pwd = p
+                        break
+
+        if 'SslEnabled' in config and config['SslEnabled']:
+            http_scheme = 'https'
+
+except:
+    pass
+
+
+# override the values from the config file with the values from the command line
 
 if args.http_port:
     http_port = args.http_port
@@ -102,7 +105,7 @@ try:
     with urllib.request.urlopen(req, context=ssl_context) as f:
         if f.status == 200:
             sys.exit(0)
-    
+
 except Exception:
     print(traceback.format_exc())
 sys.exit(1)

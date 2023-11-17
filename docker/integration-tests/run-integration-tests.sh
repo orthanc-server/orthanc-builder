@@ -38,7 +38,7 @@ else
     integ_tests_branch_tag=$(getIntegTestsRevision $version)
 fi
 
-orthanc_tests_revision=$(getHgCommitId https://hg.orthanc-server.com/orthanc-tests/ $integ_tests_branch_tag)
+orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
 
 popd  # back to docker/integration-tests folder
 
@@ -46,7 +46,7 @@ popd  # back to docker/integration-tests folder
 ############ run NewTests first
 testRepoFolder=orthanc-tests-repo-$image
 rm -rf $testRepoFolder/
-hg clone https://hg.orthanc-server.com/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
 
 pushd $testRepoFolder/NewTests
 
@@ -90,6 +90,10 @@ python3 -u main.py --pattern=MaxStorageReject.* \
                    --orthanc_under_tests_http_port=8043
 
 python3 -u main.py --pattern=StorageCompression.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
+python3 -u main.py --pattern=Authorization.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 

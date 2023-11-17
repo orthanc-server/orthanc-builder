@@ -68,7 +68,7 @@ ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version)
 ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipCommitChecks)
 ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks)
 
-BASE_DEBIAN_IMAGE=bookworm-20230814-slim
+BASE_DEBIAN_IMAGE=bookworm-20231030-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
@@ -174,8 +174,11 @@ fi
 # builder_vcpkg_azure_tag="vcpkg-azure-$final_image_temporary_tag"
 # builder_vcpkg_google_tag="vcpkg-google-$final_image_temporary_tag"
 
+add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
+
 ###### runner-base
 docker $build \
+    $add_host_cmd \
     --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$BASE_BUILDER_IMAGE_TAG \
     --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
     $from_cache_arg_runner_base \
@@ -185,6 +188,7 @@ docker $build \
 
 ###### builder-base
 docker $build \
+    $add_host_cmd \
     --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_base \
     $to_cache_arg_builder_base \
@@ -196,6 +200,7 @@ if [[ $image == "full" ]]; then
 
     ###### builder-base-vcpkg
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg \
         $to_cache_arg_builder_vcpkg \
@@ -205,6 +210,7 @@ if [[ $image == "full" ]]; then
 
     ###### builder-base-vcpkg-azure
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg_azure \
         $to_cache_arg_builder_vcpkg_azure \
@@ -214,6 +220,7 @@ if [[ $image == "full" ]]; then
 
     ###### builder-base-vcpkg-google
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg_google \
         $to_cache_arg_builder_vcpkg_google \
@@ -234,6 +241,7 @@ for target in $buildTargets; do
     # sleep 5
     ###### osimis/orthanc
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform \
         --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
         --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
