@@ -301,7 +301,7 @@ RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]];
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*
 
-RUN pip install envsubst==0.1.5
+RUN pipx install envsubst==0.1.5
 
 # configure SSL for azure rest sdk (azure object storage plugin)
 ENV SSL_CERT_DIR=/etc/ssl/certs
