@@ -11,7 +11,7 @@ Only the default tags are listed here.  You just need to append `-full` for the 
           - upgraded base image to debian:bookworm-slim which implies:
             - python has been upgraded to 3.11.
             - when using 'pip install ...', you may need to add the `--break-system-package` argument
-              or use 'pipx install ...' instead (pipx has been installed)
+              since the system python is now considered as an 'external environment'
 23.11.0:  - upgraded advanced authorization plugin to 0.6.1
           - upgraded object-storage plugins to 2.3.0
 23.9.2 :  - upgraded Orthanc Explorer 2 plugin to 1.1.3
