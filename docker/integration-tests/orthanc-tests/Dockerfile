@@ -29,11 +29,11 @@ FROM python:2.7 as python2-7-base-image
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
 
-RUN pip install easywebdav
-RUN pip install httplib2
-RUN pip install pillow
-RUN pip install pydicom==1.4.1
-RUN pip install pynetdicom==1.5.6
+RUN pip install easywebdav --break-system-package
+RUN pip install httplib2 --break-system-package
+RUN pip install pillow --break-system-package
+RUN pip install pydicom==1.4.1 --break-system-package
+RUN pip install pynetdicom==1.5.6 --break-system-package
 
 RUN mkdir /tests
 WORKDIR /tests
@@ -52,10 +52,10 @@ FROM python:3.10 as python3-base-image
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
 
-RUN pip install httplib2
-RUN pip install pillow
-RUN pip install pydicom
-RUN pip install pynetdicom
+RUN pip install httplib2 --break-system-package
+RUN pip install pillow --break-system-package
+RUN pip install pydicom --break-system-package
+RUN pip install pynetdicom --break-system-package
 
 RUN mkdir /tests
 WORKDIR /tests

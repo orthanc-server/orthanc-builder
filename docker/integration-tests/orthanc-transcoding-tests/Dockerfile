@@ -4,8 +4,8 @@ FROM osimis/orthanc:$IMAGE_TAG
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk mercurial
-RUN pip install httplib2
-RUN pip install pillow
+RUN pip install httplib2 --break-system-package
+RUN pip install pillow --break-system-package
 
 WORKDIR /
 
