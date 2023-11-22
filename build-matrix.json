@@ -155,6 +155,18 @@
                         ["Orthanc 1.12.1 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 }
+            ],
+            "downloadsOSX" : [
+              {
+                "url" : "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Orthanc",
+                "executable" : true
+              },
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ConnectivityChecks.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/DelayedDeletion.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Housekeeper.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ModalityWorklists.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/MultitenantDicom.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ServeFolders.dylib"
             ]
         },
         {
@@ -184,7 +196,11 @@
                 "Resources": [
                     ["postgresql.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-mysql", 
@@ -214,7 +230,11 @@
                 "Resources": [
                     ["mysql.json", "Configuration"]
                 ]            
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-odbc", 
@@ -243,7 +263,11 @@
                 "Resources": [
                     ["odbc.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-transfers", 
@@ -269,7 +293,10 @@
                 "Resources": [
                     ["transfers.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-transfers/OrthancTransfers-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-indexer", 
@@ -477,7 +504,10 @@
                 "Resources": [
                     ["stone-webviewer.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/stone-web-viewer/StoneWebViewer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-dicomweb", 
@@ -505,7 +535,10 @@
                 "Resources": [
                     ["dicomweb.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-gdcm", 
@@ -529,7 +562,10 @@
                 "Artifacts32": [
                     ["Gdcm 1.5 - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-gdcm/OrthancGdcm-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-wsi", 
@@ -614,6 +650,9 @@
                         ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/zlib1.dll", "Tools"]
                     ]
                 }
+            ],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-wsi/OrthancWSI-${VERSION}.dylib"
             ]
         },
         {
@@ -637,7 +676,10 @@
                 "Artifacts32": [
                     ["WebViewer 2.8 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-webviewer/OrthancWebViewer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-auth", 
