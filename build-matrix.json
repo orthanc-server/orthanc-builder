@@ -294,7 +294,10 @@
                 "Resources": [
                     ["indexer.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-indexer/OrthancIndexer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-tcia", 
@@ -319,7 +322,10 @@
                 "Resources": [
                     ["tcia.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-tcia/OrthancTcia-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-python", 
@@ -727,7 +733,10 @@
                 "Resources": [
                     ["orthanc-explorer-2.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dylib"
+            ]
         },
         {
             "name": "osimis-viewer", 
@@ -779,7 +788,10 @@
                 ],
                 "Resources": [
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-neuro/OrthancNeuro-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-volview", 
@@ -805,7 +817,10 @@
                 ],
                 "Resources": [
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-volview/OrthancVolView-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-ohif", 
@@ -831,7 +846,10 @@
                 ],
                 "Resources": [
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-ohif/OrthancOHIF-${VERSION}.dylib"
+            ]
         }
     ]
     
