@@ -327,7 +327,7 @@
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
-            "unstable": "default",
+            "unstable": "41cd08e0e878",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
             "windows": [{
