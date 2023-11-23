@@ -78,8 +78,8 @@ if not ARCHITECTURE in [ "32", "64" ]:
     print('ERROR- The "Architecture" option must be set to 32 or 64')
     exit(-1)
 
-ARTIFACTS_KEY = f"Artifacts{ARCHITECTURE}"
-DOWNLOADS_KEY = f"Downloads{ARCHITECTURE}"
+ARTIFACTS_KEY = "Artifacts%s" % ARCHITECTURE
+DOWNLOADS_KEY = "Downloads%s" % ARCHITECTURE
 CIS = "https://orthanc.uclouvain.be/downloads"
 
 ##
@@ -142,7 +142,7 @@ for resource in os.listdir(os.path.join(SOURCE, 'Resources')):
 
 
 def Download(url, target):
-    print (f"Downloading: {url} to {target}")
+    print("Downloading: %s to %s" % (url, target))
     r = requests.get(url)
     if r.status_code != 200:
         raise Exception('Cannot download: %s' % url)
@@ -199,7 +199,7 @@ for repo in MATRIX['configs']:
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
-                        Download(f"{CIS}/{artifact[0]}", target)
+                        Download("%s/%s" % (CIS, artifact[0]), target)
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
@@ -341,7 +341,7 @@ ArchitecturesInstallIn64BitMode=x64
 with open(os.path.join(SOURCE, 'Installer.innosetup'), 'r') as f:
     installer = f.read()
 
-installer = installer.replace('${ORTHANC_NAME}', f"Orthanc for Windows {ARCHITECTURE}")
+installer = installer.replace('${ORTHANC_NAME}', 'Orthanc for Windows %s' % ARCHITECTURE)
 installer = installer.replace('${ORTHANC_VERSION}', VERSION)
 installer = installer.replace('${ORTHANC_COMPONENTS}', '\n'.join(COMPONENTS))
 installer = installer.replace('${ORTHANC_FILES}', '\n'.join(FILES))
