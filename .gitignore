@@ -1,3 +1,4 @@
 .vscode/
 WindowsInstaller/Configuration/ThirdPartyDownloads/
 *~
+UCLouvain/__pycache__/

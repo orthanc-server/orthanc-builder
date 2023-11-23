@@ -22,12 +22,16 @@
 # example usage
 # python3 ./CreateInstaller.py --matrix=../build-matrix.json  --platform=64 --version=22.4.0 --force
 
-import os
-import subprocess
 import argparse
 import json
-import shutil
+import os
 import requests
+import shutil
+import subprocess
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'UCLouvain'))
+import Toolbox
 
 
 ##
@@ -76,7 +80,7 @@ if not ARCHITECTURE in [ "32", "64" ]:
 
 ARTIFACTS_KEY = f"Artifacts{ARCHITECTURE}"
 DOWNLOADS_KEY = f"Downloads{ARCHITECTURE}"
-CIS = "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries"
+CIS = "https://orthanc.uclouvain.be/downloads"
 
 ##
 ## Prepare the working directory
@@ -105,6 +109,7 @@ def CheckNotExisting(path):
         print('ERROR- Two distinct files with the same name exist: %s' % path)
         exit(-1)
 
+
 SafeMakedirs('Artifacts')
 SafeMakedirs('Configuration')
 SafeMakedirs('Downloads')
@@ -116,7 +121,24 @@ for resource in os.listdir(os.path.join(SOURCE, 'Resources')):
 
     if os.path.isfile(source):
         CheckNotExisting(target)
-        shutil.copy(source, target);
+
+        if resource == 'README.txt':
+            with open(source, 'r') as f:
+                readme = f.read()
+
+            readme = readme.replace('${VERSION}', VERSION)
+            readme = readme.replace('${VERSION_DASHES}', '-' * len(VERSION))
+
+            for repo in MATRIX['configs']:
+                if 'windows' in repo and len(repo['windows']) > 0:
+                    key = '${%s}' % repo['name'].upper().replace('-', '_')
+                    readme = readme.replace(key, Toolbox.GetVersion(repo))
+
+            with open(target, 'w') as f:
+                f.write(readme)
+
+        else:
+            shutil.copy(source, target)
 
 
 def Download(url, target):
@@ -171,6 +193,8 @@ for repo in MATRIX['configs']:
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
+                    artifact[0] = artifact[0].replace('${VERSION}', Toolbox.GetVersion(repo))
+
                     target = os.path.join(TARGET, 'Artifacts', GetArtifactBasename(artifact))
                     CheckNotExisting(target)
 
@@ -179,6 +203,8 @@ for repo in MATRIX['configs']:
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
+                    download[0] = download[0].replace('${VERSION}', Toolbox.GetVersion(repo))
+
                     target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download))
                     CheckNotExisting(target)
 
