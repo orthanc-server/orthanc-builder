@@ -506,7 +506,7 @@
                 ]
             }],
             "downloadsOSX" : [
-              "https://orthanc.uclouvain.be/downloads/macos/stone-web-viewer/StoneWebViewer-${VERSION}.dylib"
+              "https://orthanc.uclouvain.be/downloads/macos/stone-web-viewer/StoneWebViewer-2.5.dylib"
             ]
         },
         {
@@ -700,7 +700,10 @@
                 "Artifacts32": [
                     ["Authorization 0.6.1 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-authorization/OrthancAuthorization-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-azure-storage", 
@@ -806,7 +809,10 @@
                 "Resources": [
                     ["webviewer.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/osimis-web-viewer/OsimisWebViewer-1.4.2.dylib"
+            ]
         },
         {
             "name": "Orthanc-neuro", 

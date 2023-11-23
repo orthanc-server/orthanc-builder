@@ -39,6 +39,7 @@ PREFIX = 'Orthanc-OSX-%s' % sys.argv[2]
 
 def AddContentToZip(archive, content, targetPath, isExecutable):
     info = zipfile.ZipInfo(os.path.join(PREFIX, targetPath))
+    info.compress_type = zipfile.ZIP_DEFLATED  # If not set, no compression takes place
     info.date_time = time.localtime()
 
     if isExecutable:
