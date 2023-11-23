@@ -75,8 +75,7 @@ with open(os.path.join(BASE, 'build-matrix.json')) as f:
     matrix = json.loads(f.read())
 
 
-with zipfile.ZipFile(TARGET, 'w', compression = zipfile.ZIP_DEFLATED,
-                     compresslevel = 9) as archive:
+with zipfile.ZipFile(TARGET, 'w', compression = zipfile.ZIP_DEFLATED) as archive:
     AddFile(archive, 'orthancBuildResources/readmeOSX.txt', 'readme.txt')
     AddFile(archive, 'orthancBuildResources/configOSX.json')
     AddFile(archive, 'orthancBuildResources/startOrthanc.command', isExecutable = True)
