@@ -28,6 +28,8 @@ import sys
 import time
 import zipfile
 
+import Toolbox
+
 if len(sys.argv) != 3:
     print('Usage: %s [target ZIP] [version]' % sys.argv[0])
     print('Example: %s /tmp/macos.zip 23.11.0' % sys.argv[0])
@@ -89,7 +91,7 @@ with zipfile.ZipFile(TARGET, 'w', compression = zipfile.ZIP_DEFLATED) as archive
             print('Skipping project without macOS binaries: %s' % project['name'])
             continue
 
-        version = project['stable'].split('-') [-1]
+        version = Toolbox.GetVersion(project)
 
         for f in project['downloadsOSX']:
             if isinstance(f, str):
