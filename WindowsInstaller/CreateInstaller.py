@@ -268,7 +268,7 @@ for repo in MATRIX['configs']:
                     
                     FILES.append(s)
 
-for category in CATEGORIES:
+for category in sorted(CATEGORIES.keys()):
     if category in COMPONENTS_BY_CATEGORIES:
         if category != 'none':
             if category == 'python_plugins':
