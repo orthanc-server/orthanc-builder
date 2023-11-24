@@ -134,7 +134,7 @@ for resource in os.listdir(os.path.join(SOURCE, 'Resources')):
                     key = '${%s}' % repo['name'].upper().replace('-', '_')
                     readme = readme.replace(key, Toolbox.GetVersion(repo))
 
-            with open(target, 'w') as f:
+            with open(target, 'w', newline='\r\n') as f:
                 f.write(readme)
 
         else:
