@@ -54,7 +54,7 @@ jobs:
     - name: Build if required
       id: build-binaries
       run: |
-        brew install mercurial
+        pip install mercurial
         ./build-osx-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
