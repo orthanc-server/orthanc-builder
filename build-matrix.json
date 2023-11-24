@@ -889,10 +889,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-ohif/OrthancOHIF-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
+                    ["windows-64/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-ohif/OrthancOHIF-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
+                    ["windows-32/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
                 ],
                 "Resources": [
                 ]
