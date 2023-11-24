@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Orthanc - A Lightweight, RESTful DICOM Store
 # Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
@@ -38,19 +38,19 @@ import Toolbox
 ## Parse the command-line arguments
 ##
 
-parser = argparse.ArgumentParser(description = 'Create the Osimis installer.')
+parser = argparse.ArgumentParser(description = 'Create the Orthanc Windows installers.')
 parser.add_argument('--matrix', 
-                    default = None,
+                    default = '../build-matrix.json',
                     help = 'Build matrix of the build')
 parser.add_argument('--platform', 
                     default = "64",
                     type=str,
                     help = '32/64')
 parser.add_argument('--version', 
-                    default = None,
+                    default = '0.0.0',
                     help = 'the version of the installer (ex: 22.4.0)')
 parser.add_argument('--target', 
-                    default = '/tmp/OsimisInstaller',
+                    default = '/tmp/OrthancInstaller',
                     help = 'Working directory')
 parser.add_argument('--force', help = 'Reuse the working directory if it already exists',
                     action = 'store_true')

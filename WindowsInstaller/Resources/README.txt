@@ -1,9 +1,8 @@
 Using Orthanc
 =============
 
-You have successfully installed the Windows package of Orthanc by
-Osimis! Orthanc is now running as a Windows service in the
-background.
+You have successfully installed the Windows installers of Orthanc!
+Orthanc is now running as a Windows service in the background.
 
 By default, Orthanc listens to incoming DICOM connections on TCP port
 4242 and incoming HTTP connections on TCP port 8042.
