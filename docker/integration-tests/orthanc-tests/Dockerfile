@@ -7,7 +7,7 @@ RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install mercurial
 WORKDIR /
 
 ARG ORTHANC_TESTS_REVISION=default
-RUN hg clone https://hg.orthanc-server.com/orthanc-tests/ -r $ORTHANC_TESTS_REVISION
+RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $ORTHANC_TESTS_REVISION
 
 ##############################################################
 FROM jodogne/orthanc-tests as orthanc-tests

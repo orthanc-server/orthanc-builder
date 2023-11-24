@@ -199,7 +199,7 @@ private:
      * has not the time to finalize its termination as it cannot
      * report the "SERVICE_STOP_PENDING" per se. This leads to issue
      * 48 "Windows service not stopped properly on system shutdown or
-     * restart" (https://bugs.orthanc-server.com/show_bug.cgi?id=48).
+     * restart" (https://orthanc.uclouvain.be/bugs/show_bug.cgi?id=48).
      *
      * Unfortunately, if "Orthanc.exe" is in the same process group
      * than "OrthancService.exe", Windows shutdown works, but the

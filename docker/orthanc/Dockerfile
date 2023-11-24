@@ -106,8 +106,8 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-wsi
 RUN mkdir /downloads
 
 # TODO: we should probably build these tools here as well
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/2.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/2.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
 
 ########################## Orthanc Webviewer
 
@@ -230,7 +230,7 @@ FROM orthanc-builder-base as build-plugin-ohif
 
 ARG ORTHANC_OHIF_COMMIT_ID
 # CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
-ARG OHIF_VERSION=3.6.0
+ARG OHIF_VERSION=3.7.0
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc downloads (since wget is not in the runner image)
@@ -240,9 +240,9 @@ FROM orthanc-builder-base as build-downloader
 RUN mkdir /downloads
 
 # CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
-RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 
 
 ################################# the image that will run Orthanc dynamicaly linked (intermediate version without vcpkg builds)

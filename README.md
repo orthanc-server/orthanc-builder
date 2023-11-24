@@ -14,9 +14,9 @@ Windows Installer and MacOS package are collecting build artifacts from the Orth
 ## stable releases
 
 - [Docker image (linux/amd64)](https://hub.docker.com/r/osimis/orthanc)
-- [Windows 64 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win64-latest.exe)
-- [Windows 32 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win32-latest.exe)
-- [MacOS package (Universal)](https://orthanc.osimis.io/osx/stable/orthancAndPluginsOSX.stable.zip)
+- [Windows 64 bits installer](https://orthanc.uclouvain.be/downloads/windows-64/installers/index.html)
+- [Windows 32 bits installer](https://orthanc.uclouvain.be/downloads/windows-32/installers/index.html)
+- [MacOS package (Universal)](https://orthanc.uclouvain.be/downloads/macos/packages/universal/index.html)
 
 ## unstable releases (nightly builds)
 
