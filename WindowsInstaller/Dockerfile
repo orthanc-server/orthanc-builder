@@ -25,9 +25,10 @@ RUN cd innosetup && \
 RUN pip3 install requests
 
 COPY build-matrix.json /
-COPY WindowsInstaller/ /tmp
+COPY WindowsInstaller/ /tmp/WindowsInstaller
+COPY UCLouvain/ /tmp/UCLouvain
 
-WORKDIR /tmp
+WORKDIR /tmp/WindowsInstaller
 
 ARG PLATFORM
 ARG VERSION
