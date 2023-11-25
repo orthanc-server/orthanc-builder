@@ -43,15 +43,15 @@ Build
 
 Windows 32 package:
 
-# rm -rf /tmp/OsimisInstaller
+# rm -rf /tmp/WindowsInstaller
 # ./CreateInstaller.py --matrix=../build-matrix.json --platform=32 --version=22.4.0
 
 Windows 64 package:
 
-# rm -rf /tmp/OsimisInstaller
+# rm -rf /tmp/WindowsInstaller
 # ./CreateInstaller.py --matrix=../build-matrix.json --platform=64 --version=22.4.0
 
-The resulting installers are located in "/tmp/OsimisInstaller/"
+The resulting installers are located in "/tmp/WindowsInstaller/"
 
 
 
