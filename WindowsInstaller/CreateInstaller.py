@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Orthanc - A Lightweight, RESTful DICOM Store
 # Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
@@ -22,31 +22,35 @@
 # example usage
 # python3 ./CreateInstaller.py --matrix=../build-matrix.json  --platform=64 --version=22.4.0 --force
 
-import os
-import subprocess
 import argparse
 import json
-import shutil
+import os
 import requests
+import shutil
+import subprocess
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'UCLouvain'))
+import Toolbox
 
 
 ##
 ## Parse the command-line arguments
 ##
 
-parser = argparse.ArgumentParser(description = 'Create the Osimis installer.')
+parser = argparse.ArgumentParser(description = 'Create the Orthanc Windows installers.')
 parser.add_argument('--matrix', 
-                    default = None,
+                    default = '../build-matrix.json',
                     help = 'Build matrix of the build')
 parser.add_argument('--platform', 
                     default = "64",
                     type=str,
                     help = '32/64')
 parser.add_argument('--version', 
-                    default = None,
+                    default = '0.0.0',
                     help = 'the version of the installer (ex: 22.4.0)')
 parser.add_argument('--target', 
-                    default = '/tmp/OsimisInstaller',
+                    default = '/tmp/OrthancInstaller',
                     help = 'Working directory')
 parser.add_argument('--force', help = 'Reuse the working directory if it already exists',
                     action = 'store_true')
@@ -74,9 +78,9 @@ if not ARCHITECTURE in [ "32", "64" ]:
     print('ERROR- The "Architecture" option must be set to 32 or 64')
     exit(-1)
 
-ARTIFACTS_KEY = f"Artifacts{ARCHITECTURE}"
-DOWNLOADS_KEY = f"Downloads{ARCHITECTURE}"
-CIS = "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries"
+ARTIFACTS_KEY = "Artifacts%s" % ARCHITECTURE
+DOWNLOADS_KEY = "Downloads%s" % ARCHITECTURE
+CIS = "https://orthanc.uclouvain.be/downloads"
 
 ##
 ## Prepare the working directory
@@ -105,6 +109,7 @@ def CheckNotExisting(path):
         print('ERROR- Two distinct files with the same name exist: %s' % path)
         exit(-1)
 
+
 SafeMakedirs('Artifacts')
 SafeMakedirs('Configuration')
 SafeMakedirs('Downloads')
@@ -116,11 +121,28 @@ for resource in os.listdir(os.path.join(SOURCE, 'Resources')):
 
     if os.path.isfile(source):
         CheckNotExisting(target)
-        shutil.copy(source, target);
+
+        if resource == 'README.txt':
+            with open(source, 'r') as f:
+                readme = f.read()
+
+            readme = readme.replace('${VERSION}', VERSION)
+            readme = readme.replace('${VERSION_DASHES}', '-' * len(VERSION))
+
+            for repo in MATRIX['configs']:
+                if 'windows' in repo and len(repo['windows']) > 0:
+                    key = '${%s}' % repo['name'].upper().replace('-', '_')
+                    readme = readme.replace(key, Toolbox.GetVersion(repo))
+
+            with open(target, 'w', newline='\r\n') as f:
+                f.write(readme)
+
+        else:
+            shutil.copy(source, target)
 
 
 def Download(url, target):
-    print (f"Downloading: {url} to {target}")
+    print("Downloading: %s to %s" % (url, target))
     r = requests.get(url)
     if r.status_code != 200:
         raise Exception('Cannot download: %s' % url)
@@ -171,14 +193,18 @@ for repo in MATRIX['configs']:
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
+                    artifact[0] = artifact[0].replace('${VERSION}', Toolbox.GetVersion(repo))
+
                     target = os.path.join(TARGET, 'Artifacts', GetArtifactBasename(artifact))
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
-                        Download(f"{CIS}/{artifact[0]}", target)
+                        Download("%s/%s" % (CIS, artifact[0]), target)
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
+                    download[0] = download[0].replace('${VERSION}', Toolbox.GetVersion(repo))
+
                     target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download))
                     CheckNotExisting(target)
 
@@ -242,7 +268,7 @@ for repo in MATRIX['configs']:
                     
                     FILES.append(s)
 
-for category in CATEGORIES:
+for category in sorted(CATEGORIES.keys()):
     if category in COMPONENTS_BY_CATEGORIES:
         if category != 'none':
             if category == 'python_plugins':
@@ -315,7 +341,7 @@ ArchitecturesInstallIn64BitMode=x64
 with open(os.path.join(SOURCE, 'Installer.innosetup'), 'r') as f:
     installer = f.read()
 
-installer = installer.replace('${ORTHANC_NAME}', f"Orthanc for Windows {ARCHITECTURE}")
+installer = installer.replace('${ORTHANC_NAME}', 'Orthanc for Windows %s' % ARCHITECTURE)
 installer = installer.replace('${ORTHANC_VERSION}', VERSION)
 installer = installer.replace('${ORTHANC_COMPONENTS}', '\n'.join(COMPONENTS))
 installer = installer.replace('${ORTHANC_FILES}', '\n'.join(FILES))
