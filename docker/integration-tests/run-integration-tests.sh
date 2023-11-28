@@ -28,7 +28,8 @@ echo "version            = $version"
 echo "image              = $image"
 
 # build to orthanc-under-tests image
-docker build --build-arg IMAGE_TAG=$tagToTest -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
+add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
+docker build $add_host_cmd --build-arg IMAGE_TAG=$tagToTest -f orthanc-under-tests/Dockerfile -t orthanc-under-tests orthanc-under-tests
 
 pushd ../..  # we need to be at 'root' to use bash-helpers !
 

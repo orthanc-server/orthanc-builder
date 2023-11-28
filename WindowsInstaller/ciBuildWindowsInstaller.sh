@@ -32,10 +32,12 @@ else
     build="buildx build"
 fi
 
+add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 
 # docker build --progress=plain -t installer-builder-32 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=32 ..
 
 docker $build \
+    $add_host_cmd \
     --progress=plain -t installer-builder-32 \
     --build-arg VERSION=$version \
     --build-arg PLATFORM=32 \
@@ -56,6 +58,7 @@ docker rm $dockerContainerId
 
 # build Windows 64 bits
 docker $build \
+    $add_host_cmd \
     --progress=plain -t installer-builder-64 \
     --build-arg VERSION=$version \
     --build-arg PLATFORM=64 \
