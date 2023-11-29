@@ -148,8 +148,6 @@ elif [[ $target == "orthanc-gdcm" ]]; then
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
         
-        sed -i 's/#if PTHREAD_STACK_MIN > 0/#ifdef PTHREAD_STACK_MIN/g' $buildRootPath/boost_1_69_0/boost/thread/pthread/thread_data.hpp
-
         make -j 4
 
         upload libOrthancGdcm.so
