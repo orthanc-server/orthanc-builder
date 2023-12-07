@@ -159,9 +159,12 @@ elif [[ $target == "orthanc-pg" ]]; then
 
     if [[ $dl != 0 ]]; then
 
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r pg-transactions /orthanc
+
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/PostgreSQL
+        # TODO: remove -DORTHANC_SDK_VERSION=pg-transactions
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources  $sourcesRootPath/PostgreSQL
         make -j 4
 
         upload libOrthancPostgreSQLIndex.so
