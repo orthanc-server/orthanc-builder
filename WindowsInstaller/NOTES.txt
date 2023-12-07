@@ -43,15 +43,15 @@ Build
 
 Windows 32 package:
 
-# rm -rf /tmp/OsimisInstaller
+# rm -rf /tmp/WindowsInstaller
 # ./CreateInstaller.py --matrix=../build-matrix.json --platform=32 --version=22.4.0
 
 Windows 64 package:
 
-# rm -rf /tmp/OsimisInstaller
+# rm -rf /tmp/WindowsInstaller
 # ./CreateInstaller.py --matrix=../build-matrix.json --platform=64 --version=22.4.0
 
-The resulting installers are located in "/tmp/OsimisInstaller/"
+The resulting installers are located in "/tmp/WindowsInstaller/"
 
 
 
@@ -76,7 +76,7 @@ packages:
 # wget https://anonscm.debian.org/cgit/debian-med/orthanc.git/plain/debian/configuration/worklists.json -O Resources/worklists.json
 # unix2dos Resources/worklists.json
 
-# wget https://hg.orthanc-server.com/orthanc-stone/raw-file/StoneWebViewer-2.3/Applications/StoneWebViewer/WebApplication/configuration.json -O Resources/stone-webviewer.json
+# wget https://orthanc.uclouvain.be/hg/orthanc-stone/raw-file/StoneWebViewer-2.3/Applications/StoneWebViewer/WebApplication/configuration.json -O Resources/stone-webviewer.json
 # unix2dos Resources/stone-webviewer.json
 
 
@@ -103,6 +103,9 @@ http://www.imagemagick.org/Usage/formats/#bmp
 # convert -resize 55x58 ./Resources/OsimisLogo.png -background white -alpha remove -flatten -alpha off BMP3:./Resources/OsimisWizardLogo.bmp
 # convert -resize 164x314 ./Resources/OsimisWizard.png -background white -alpha remove -flatten -alpha off BMP3:./Resources/OsimisWizard.bmp
 
+# convert -resize 55x58 ./Resources/OrthancH.png -background white -alpha remove -flatten -alpha off BMP3:./Resources/OrthancWizardLogo.bmp
+# convert -resize 164x314 ./Resources/OrthancWizard.png -background white -alpha remove -flatten -alpha off BMP3:./Resources/OrthancWizard.bmp
+
 
 Icons
 -----
@@ -121,3 +124,10 @@ http://www.imagemagick.org/Usage/thumbnails/#favicon
   convert /tmp/icon-64.png -filter Gaussian -define filter:sigma=.5 -resize 32x32 /tmp/icon-32.png &&
   convert /tmp/icon-32.png -filter Gaussian -define filter:sigma=.5 -resize 16x16 /tmp/icon-16.png &&
   convert /tmp/icon-16.png /tmp/icon-32.png /tmp/icon-64.png /tmp/icon-128.png /tmp/icon-256.png ./Resources/Osimis.ico
+
+# convert ./Resources/OrthancH.png -resize 256x256 /tmp/icon-256.png &&
+  convert /tmp/icon-256.png -filter Gaussian -define filter:sigma=.5 -resize 128x128 /tmp/icon-128.png &&
+  convert /tmp/icon-128.png -filter Gaussian -define filter:sigma=.5 -resize 64x64 /tmp/icon-64.png && 
+  convert /tmp/icon-64.png -filter Gaussian -define filter:sigma=.5 -resize 32x32 /tmp/icon-32.png &&
+  convert /tmp/icon-32.png -filter Gaussian -define filter:sigma=.5 -resize 16x16 /tmp/icon-16.png &&
+  convert /tmp/icon-16.png /tmp/icon-32.png /tmp/icon-64.png /tmp/icon-128.png /tmp/icon-256.png ./Resources/Orthanc.ico

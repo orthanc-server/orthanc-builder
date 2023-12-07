@@ -25,13 +25,14 @@ RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
 RUN apt-get --assume-yes install python3-dev
 RUN apt-get --assume-yes install unixodbc-dev
 RUN apt-get --assume-yes install libgmock-dev
-
+RUN apt-get --assume-yes install protobuf-compiler
 # on recent Debian, the libmysql-dev package is not available anymore
 # and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
 RUN apt-get --assume-yes install default-libmysqlclient-dev
 # RUN apt-get --assume-yes install libmariadb-dev
 
 RUN apt-get --assume-yes install cmake
+RUN apt-get --assume-yes install awscli
 # # install a recent cmake version (required later by recent vcpkg versions that we don't use now !)
 # WORKDIR /tmp
 # RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1.tar.gz
@@ -46,3 +47,7 @@ RUN cmake --version
 
 RUN mkdir -p /sources
 RUN mkdir -p /build
+RUN mkdir -p /scripts
+
+COPY build-or-download.sh /scripts
+

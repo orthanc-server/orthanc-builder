@@ -23,39 +23,42 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 23.2.0 Default image
+#### 23.11.1 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.11.3
-Modality worklists plugin             1.11.3
-Serve folders plugin                  1.11.3
-Connectivity check plugin             1.11.3
-Housekeeper plugin                    1.11.3
-Delayed Deletion plugin               1.11.3
-Stone Web viewer plugin               2.5
+Orthanc server                        1.12.1
+Modality worklists plugin             1.12.1
+Serve folders plugin                  1.12.1
+Connectivity check plugin             1.12.1
+Housekeeper plugin                    1.12.1
+Delayed Deletion plugin               1.12.1
+Multitenant DICOM plugin              1.12.1
+Stone Web viewer plugin               2.5+4087511e8eef
 Osimis Web viewer plugin              1.4.2
-Python plugin                         4.0
+Python plugin                         4.1
 Orthanc Web viewer plugin             2.8
-DICOMweb plugin                       1.13
-PostgreSQL plugin                     4.0
-MySQL plugin                          4.3
-WSI Web viewer plugin                 1.1
-Authorization plugin                  0.4.1
+DICOMweb plugin                       1.15
+PostgreSQL plugins                    5.1
+MySQL plugins                         5.1
+WSI Web viewer plugin                 2.0
+Authorization plugin                  0.6.1
 Transfers accelerator plugin          1.4
 GDCM plugin                           1.5
 ODBC plugin                           1.1
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
-AWS S3 plugin                         2.1.2
-Orthanc Explorer 2                    0.6.0
+AWS S3 plugin                         2.3.0
+Orthanc Explorer 2                    1.1.3
+Kitware's VolView plugin              1.1
+OHIF plugin                           1.1
 ```
 
-#### 23.2.0-full image 
+#### 23.11.1-full image 
 ```
 additional component                  version
 ---------------------------------------------
-Azure Blob Storage plugin             2.1.2
-Google Cloud Storage plugin           2.1.2
+Azure Blob Storage plugin             2.3.0
+Google Cloud Storage plugin           2.3.0
 ````

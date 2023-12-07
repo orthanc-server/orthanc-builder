@@ -2,7 +2,7 @@ name: all-builds
 
 on:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 23 * * *"
   push:
     branches: 
       - '*'
@@ -39,6 +39,28 @@ jobs:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  build-volview-dist-stable:
+    needs: [pre-build]
+    uses: ./.github/workflows/build-volview-dist.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: stable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  build-volview-dist-unstable:
+    needs: [pre-build]
+    uses: ./.github/workflows/build-volview-dist.yml
+    with:
+      is_tag: ${{ needs.pre-build.outputs.is_tag }}
+      stable_unstable: unstable
+      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   win-stable-build:
     needs: [pre-build, build-stone-wasm-stable]
     uses: ./.github/workflows/build-win-binaries.yml
@@ -62,7 +84,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   osx-stable-build:
-    needs: [pre-build, build-stone-wasm-stable]
+    needs: [pre-build, build-stone-wasm-stable, build-volview-dist-stable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -73,7 +95,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   osx-unstable-build:
-    needs: [pre-build, build-stone-wasm-unstable]
+    needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
     uses: ./.github/workflows/build-osx-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -127,7 +149,8 @@ jobs:
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
     secrets:
       docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker_hub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
       docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 

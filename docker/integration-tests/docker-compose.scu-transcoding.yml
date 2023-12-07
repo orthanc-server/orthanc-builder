@@ -1,0 +1,10 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-transcoding-tests
+    environment:
+      # VERBOSE_STARTUP: "true"
+      # VERBOSE_ENABLED: "true"
+      GDCM_PLUGIN_ENABLED: "false"
+    entrypoint: "python3 /orthanc-tests/Tests/CheckScuTranscoding.py /usr/local/bin/Orthanc"
+

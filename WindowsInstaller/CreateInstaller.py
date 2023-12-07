@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Orthanc - A Lightweight, RESTful DICOM Store
 # Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
 # Department, University Hospital of Liege, Belgium
-# Copyright (C) 2017-2022 Osimis S.A., Belgium
-# Copyright (C) 2021-2022 Sebastien Jodogne, ICTEAM UCLouvain, Belgium
+# Copyright (C) 2017-2023 Osimis S.A., Belgium
+# Copyright (C) 2021-2023 Sebastien Jodogne, ICTEAM UCLouvain, Belgium
 #
 # This program is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -22,31 +22,35 @@
 # example usage
 # python3 ./CreateInstaller.py --matrix=../build-matrix.json  --platform=64 --version=22.4.0 --force
 
-import os
-import subprocess
 import argparse
 import json
-import shutil
+import os
 import requests
+import shutil
+import subprocess
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'UCLouvain'))
+import Toolbox
 
 
 ##
 ## Parse the command-line arguments
 ##
 
-parser = argparse.ArgumentParser(description = 'Create the Osimis installer.')
+parser = argparse.ArgumentParser(description = 'Create the Orthanc Windows installers.')
 parser.add_argument('--matrix', 
-                    default = None,
+                    default = '../build-matrix.json',
                     help = 'Build matrix of the build')
 parser.add_argument('--platform', 
                     default = "64",
                     type=str,
                     help = '32/64')
 parser.add_argument('--version', 
-                    default = None,
+                    default = '0.0.0',
                     help = 'the version of the installer (ex: 22.4.0)')
 parser.add_argument('--target', 
-                    default = '/tmp/OsimisInstaller',
+                    default = '/tmp/OrthancInstaller',
                     help = 'Working directory')
 parser.add_argument('--force', help = 'Reuse the working directory if it already exists',
                     action = 'store_true')
@@ -74,9 +78,9 @@ if not ARCHITECTURE in [ "32", "64" ]:
     print('ERROR- The "Architecture" option must be set to 32 or 64')
     exit(-1)
 
-ARTIFACTS_KEY = f"Artifacts{ARCHITECTURE}"
-DOWNLOADS_KEY = f"Downloads{ARCHITECTURE}"
-CIS = "https://alain:koo4oCah@buildbot.orthanc-server.com/artifacts/Binaries"
+ARTIFACTS_KEY = "Artifacts%s" % ARCHITECTURE
+DOWNLOADS_KEY = "Downloads%s" % ARCHITECTURE
+CIS = "https://orthanc.uclouvain.be/downloads"
 
 ##
 ## Prepare the working directory
@@ -117,11 +121,28 @@ for resource in os.listdir(os.path.join(SOURCE, 'Resources')):
 
     if os.path.isfile(source):
         CheckNotExisting(target)
-        shutil.copy(source, target);
+
+        if resource == 'README.txt':
+            with open(source, 'r') as f:
+                readme = f.read()
+
+            readme = readme.replace('${VERSION}', VERSION)
+            readme = readme.replace('${VERSION_DASHES}', '-' * len(VERSION))
+
+            for repo in MATRIX['configs']:
+                if 'windows' in repo and len(repo['windows']) > 0:
+                    key = '${%s}' % repo['name'].upper().replace('-', '_')
+                    readme = readme.replace(key, Toolbox.GetVersion(repo))
+
+            with open(target, 'w', newline='\r\n') as f:
+                f.write(readme)
+
+        else:
+            shutil.copy(source, target)
 
 
 def Download(url, target):
-    print (f"Downloading: {url} to {target}")
+    print("Downloading: %s to %s" % (url, target))
     r = requests.get(url)
     if r.status_code != 200:
         raise Exception('Cannot download: %s' % url)
@@ -129,15 +150,28 @@ def Download(url, target):
     with open(target, 'wb') as g:
         g.write(r.content)
 
-def GetDownloadBasename(f):
-    return os.path.basename(f).split('?')[0]
+def GetDownloadBasename(download):
+    if len(download) <= 2:
+        return os.path.basename(download[0]).split('?')[0]
+    else:
+        return download[2]
+
+def GetArtifactBasename(artifact):
+    # 2 of artifact can be a comment or a rename
+    if len(artifact) >=3 and ".dll" in artifact[2] or ".exe" in artifact[2]:
+        # rename the artifact
+        return artifact[2]
+    else:
+        return os.path.basename(artifact[0])
+
 
 CATEGORIES = {
     'none': None,
     'plugins' : 'Official plugins',
     'osimis' : 'Plugins by Osimis',
+    'python_plugins' : 'Python plugins (requires Python installed on your system)',
     'tools' : 'Command-line tools',
-    'tools/wsi' : 'WSI Command-line tools',
+    'tools/wsi' : 'WSI Command-line tools'
     }
 
 COMPONENTS_BY_CATEGORIES = {}
@@ -159,15 +193,19 @@ for repo in MATRIX['configs']:
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
-                    target = os.path.join(TARGET, 'Artifacts', os.path.basename(artifact[0]))
+                    artifact[0] = artifact[0].replace('${VERSION}', Toolbox.GetVersion(repo))
+
+                    target = os.path.join(TARGET, 'Artifacts', GetArtifactBasename(artifact))
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
-                        Download(f"{CIS}/{artifact[0]}", target)
+                        Download("%s/%s" % (CIS, artifact[0]), target)
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
-                    target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download[0]))
+                    download[0] = download[0].replace('${VERSION}', Toolbox.GetVersion(repo))
+
+                    target = os.path.join(TARGET, 'Downloads', GetDownloadBasename(download))
                     CheckNotExisting(target)
 
                     if not os.path.exists(target):
@@ -190,11 +228,22 @@ for repo in MATRIX['configs']:
             if not category in COMPONENTS_BY_CATEGORIES:
                 COMPONENTS_BY_CATEGORIES[category] = []
 
-
+            flags = []
             if component['Mandatory']:
-                options = 'Types: full compact custom; Flags: fixed'
+                options = 'Types: standard compact custom'
+                flags.append('fixed')
+            elif 'Checked' in component and not component['Checked']: 
+                options = 'Types: '
             else:
-                options = 'Types: full'
+                options = 'Types: standard'
+
+            if 'Exclusive' in component and component['Exclusive']:
+                flags.append("exclusive")
+            if len(flags) > 0:
+                if len(options) > 0:
+                    options += '; '
+                options += "Flags: " + " ".join(flags)
+
 
             COMPONENTS_BY_CATEGORIES[category].append('Name: "%s"; Description: "%s"; %s' % (
                                                       name, component['Description'], options))
@@ -202,12 +251,12 @@ for repo in MATRIX['configs']:
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
                     FILES.append('Source: "Artifacts/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                                os.path.basename(artifact[0]), artifact[1], name))
+                                GetArtifactBasename(artifact), artifact[1], name))
 
             if DOWNLOADS_KEY in component:
                 for download in component[DOWNLOADS_KEY]:
                     FILES.append('Source: "Downloads/%s"; DestDir: "{app}/%s"; Components: %s' % (
-                                GetDownloadBasename(download[0]), download[1], name))
+                                GetDownloadBasename(download), download[1], name))
 
             if 'Resources' in component:
                 for resource in component['Resources']:
@@ -219,10 +268,13 @@ for repo in MATRIX['configs']:
                     
                     FILES.append(s)
 
-for category in CATEGORIES:
+for category in sorted(CATEGORIES.keys()):
     if category in COMPONENTS_BY_CATEGORIES:
         if category != 'none':
-            COMPONENTS.append('Name: "%s"; Description: "%s"; Types: full' % (category, CATEGORIES[category]))
+            if category == 'python_plugins':
+                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: ' % (category, CATEGORIES[category]))
+            else:
+                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: standard' % (category, CATEGORIES[category]))
 
         for c in COMPONENTS_BY_CATEGORIES[category]:
             COMPONENTS.append(c)
@@ -289,7 +341,7 @@ ArchitecturesInstallIn64BitMode=x64
 with open(os.path.join(SOURCE, 'Installer.innosetup'), 'r') as f:
     installer = f.read()
 
-installer = installer.replace('${ORTHANC_NAME}', f"Orthanc for Windows {ARCHITECTURE}")
+installer = installer.replace('${ORTHANC_NAME}', 'Orthanc for Windows %s' % ARCHITECTURE)
 installer = installer.replace('${ORTHANC_VERSION}', VERSION)
 installer = installer.replace('${ORTHANC_COMPONENTS}', '\n'.join(COMPONENTS))
 installer = installer.replace('${ORTHANC_FILES}', '\n'.join(FILES))

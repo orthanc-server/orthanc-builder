@@ -5,6 +5,7 @@ import json
 import typing
 import tempfile
 import subprocess
+from envsubst import envsubst
 
 from helpers import JsonPath, logInfo, logWarning, logError, removeCppCommentsFromJson, isEnvVarDefinedEmptyOrTrue, enableVerboseModeForConfigGeneration
 from configurator import OrthancConfigurator
@@ -35,6 +36,9 @@ for filePath in configFiles:
   logInfo("reading configuration from " + filePath)
   with open(filePath, "r") as f:
     content = f.read()
+    
+    # perform standard env var substitution before trying to read the json file (https://github.com/orthanc-server/orthanc-builder/issues/9)
+    content = envsubst(content)
     try:
       cleanedContent = removeCppCommentsFromJson(content)
       configFromFile = json.loads(cleanedContent)

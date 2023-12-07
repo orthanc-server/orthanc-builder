@@ -2,23 +2,23 @@
 AppName=${ORTHANC_NAME}
 ; AppVersion=${ORTHANC_VERSION}.${MERCURIAL_REVISION}
 AppVersion=${ORTHANC_VERSION}
-AppPublisher=The Orthanc project
-AppPublisherURL=https://www.orthanc-server.com/
+AppPublisher=Osimis S.A., Belgium
+AppPublisherURL=https://osimis.io/
 SourceDir=.
 OutputDir=.
 ; OutputBaseFilename=OrthancInstaller-Win${ORTHANC_ARCHITECTURE}-${ORTHANC_VERSION}.${MERCURIAL_REVISION}
 OutputBaseFilename=OrthancInstaller-Win${ORTHANC_ARCHITECTURE}
 DefaultDirName={pf}\Orthanc Server
-DefaultGroupName=Orthanc
+DefaultGroupName=Orthanc by Osimis
 LicenseFile=Resources/License.rtf
-UninstallDisplayName=Orthanc ${ORTHANC_VERSION}
+UninstallDisplayName=Orthanc ${ORTHANC_VERSION} by Osimis
 ; VersionInfoVersion=${ORTHANC_VERSION}.${MERCURIAL_REVISION}
 VersionInfoVersion=${ORTHANC_VERSION}
 
 DisableWelcomePage=no
-SetupIconFile=Resources/Orthanc.ico
-WizardImageFile=Resources/OrthancWizard.bmp
-WizardSmallImageFile=Resources/OrthancWizardLogo.bmp
+SetupIconFile=Resources/Osimis.ico
+WizardImageFile=Resources/OsimisWizard.bmp
+WizardSmallImageFile=Resources/OsimisWizardLogo.bmp
 WizardImageStretch=no
 
 ${ORTHANC_SETUP}
@@ -50,7 +50,8 @@ Name: "{group}\Open Orthanc Explorer"; Filename: "http://localhost:8042/app/expl
 Name: "{group}\Edit Orthanc settings"; Filename: "{app}\Configuration"
 Name: "{group}\Help to use Orthanc"; Filename: "{app}\README.txt";
 Name: "{group}\Open Orthanc homepage"; Filename: "http://www.orthanc-server.com/"; IconFilename: "{app}\Orthanc.ico"
-Name: "{group}\Orthanc professional services"; Filename: "https://www.orthanc-server.com/orthanc-pro.php"; IconFilename: "{app}\Orthanc.ico"
+Name: "{group}\Open Osimis homepage"; Filename: "https://osimis.io/"; IconFilename: "{app}\Osimis.ico"
+Name: "{group}\Osimis professional services"; Filename: "https://www.osimis.io/en/services.html"; IconFilename: "{app}\Osimis.ico"
 Name: "{group}\Command prompt for Orthanc tools"; Filename: "cmd.exe"; WorkingDir: "{app}\Tools"
 Name: "{group}\Uninstall Orthanc ${ORTHANC_VERSION}"; Filename: "{uninstallexe}"
 

@@ -1,199 +1,177 @@
 ARG BASE_IMAGE_TAG=current
 
 FROM osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
+ARG STABLE_OR_UNSTABLE=stable
+
+
+FROM jodogne/wasm-builder:2.0.23 as wasm-builder-base
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
+ARG STABLE_OR_UNSTABLE=stable
+
+RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
+RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
+
 
 FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
+# never add secrets in this image !!!!
+
 
 FROM osimis/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
+ARG STABLE_OR_UNSTABLE=stable
+
 
 FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
+ARG ARG_AWS_ACCESS_KEY_ID
+ARG ARG_AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$ARG_AWS_SECRET_ACCESS_KEY
+ARG PREFER_DOWNLOADS=1
+ARG ENABLE_UPLOAD=0
+ARG PLATFORM=linux/amd64
+ARG BASE_IMAGE_TAG=unknown
+ARG STABLE_OR_UNSTABLE=stable
 
 ########################## Orthanc
 
 FROM orthanc-builder-base as build-orthanc
 
 ARG ORTHANC_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r $ORTHANC_COMMIT_ID /sources
-WORKDIR /build
-
-# note: building with static DCMTK while waiting for Debian bullseye to update to latest DCMTK issues (we need DCMTK 3.6.7: https://www.hipaajournal.com/warning-issued-about-3-high-severity-vulnerabilities-in-offis-dicom-software/)
-# also force latest OpenSSL (and therefore, we need to force static libcurl)
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF /sources/OrthancServer
-RUN make -j 4
-RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc commitId=$ORTHANC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc GDCM
 
 FROM orthanc-builder-base as build-gdcm
 
 ARG ORTHANC_GDCM_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-gdcm/ -r $ORTHANC_GDCM_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-gdcm commitId=$ORTHANC_GDCM_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc PG
 
 FROM orthanc-builder-base as build-plugin-pg
 
 ARG ORTHANC_PG_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_PG_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/PostgreSQL
-RUN make -j 4
-# disabled: needs a PG server # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc MySQL
 
 FROM orthanc-builder-base as build-plugin-mysql
 
 ARG ORTHANC_MYSQL_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_MYSQL_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/MySQL
-RUN make -j 4
-# disabled: needs a MySQL server # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Transfers
 
 FROM orthanc-builder-base as build-plugin-transfers
 
 ARG ORTHANC_TRANSFERS_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-transfers/ -r $ORTHANC_TRANSFERS_COMMIT_ID /sources
-WORKDIR /build
-
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-RUN make -j 4
-
-RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-transfers commitId=$ORTHANC_TRANSFERS_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Dicomweb
 
 FROM orthanc-builder-base as build-plugin-dicomweb
 
 ARG ORTHANC_DW_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-dicomweb/ -r $ORTHANC_DW_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-RUN make -j 4
-RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-dicomweb commitId=$ORTHANC_DW_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc WSI
 
 FROM orthanc-builder-base as build-plugin-wsi
 
 ARG ORTHANC_WSI_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-wsi/ -r $ORTHANC_WSI_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF /sources/ViewerPlugin
-RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-wsi commitId=$ORTHANC_WSI_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 RUN mkdir /downloads
 
 # TODO: we should probably build these tools here as well
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/1.1/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
 
 ########################## Orthanc Webviewer
 
 FROM orthanc-builder-base as build-plugin-owv
 
 ARG ORTHANC_OWV_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-webviewer/ -r $ORTHANC_OWV_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-RUN make -j 4
-RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-webviewer commitId=$ORTHANC_OWV_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc authorization
 
 FROM orthanc-builder-base as build-plugin-auth
 
 ARG ORTHANC_AUTH_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-authorization/ -r $ORTHANC_AUTH_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources
-RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-authorization commitId=$ORTHANC_AUTH_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Python
 
 FROM orthanc-builder-base as build-plugin-python
 
 ARG ORTHANC_PYTHON_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-python/ -r $ORTHANC_PYTHON_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.9 /sources
-RUN make -j 4
-# disabled: no unit tests: # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc ODBC
 
 FROM orthanc-builder-base as build-plugin-odbc
 
 ARG ORTHANC_ODBC_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-databases/ -r $ORTHANC_ODBC_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF /sources/Odbc
-RUN make -j 4
-# disabled: needs a ODBC server # RUN /build/UnitTests
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-########################## Orthanc Indexer
+# ########################## Orthanc Indexer
 
 FROM orthanc-builder-base as build-plugin-indexer
 
 ARG ORTHANC_INDEXER_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-indexer/ -r $ORTHANC_INDEXER_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-indexer commitId=$ORTHANC_INDEXER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Neuro
 
 FROM orthanc-builder-base as build-plugin-neuro
 
 ARG ORTHANC_NEURO_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-neuro/ -r $ORTHANC_NEURO_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-neuro commitId=$ORTHANC_NEURO_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc TCIA
 
 FROM orthanc-builder-base as build-plugin-tcia
 
 ARG ORTHANC_TCIA_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-tcia/ -r $ORTHANC_TCIA_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF /sources
-RUN make -j 4
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-tcia commitId=$ORTHANC_TCIA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Stone Web Viewer
 
-FROM jodogne/wasm-builder:2.0.23 as build-wasm-stone-viewer
-
-# TODO for ARM64,... problem: emsdk 2.0.23 does not exist for ARM64 and stone is not ready to build with 3.1.8
-# this is equivalent to the jodogne/wasm-builder:2.0.23 image (it is copied here such that it builds smoothly on ARM64 platform too!)
-# FROM ubuntu:18.04 as build-wasm-stone-viewer
-
-# RUN apt-get -y clean && apt-get -y update
-# RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget nano unzip cmake git ninja-build python-clang-4.0 libclang-4.0-dev python-pystache python-pip alien lsb-core g++-4.8 && apt-get clean && rm -rf /var/lib/apt/lists/*
-# RUN DEBIAN_FRONTEND=noninteractive apt-get -y install alien ninja-build 
-
-# WORKDIR /opt
-# RUN git clone https://github.com/emscripten-core/emsdk.git
-# RUN /opt/emsdk/emsdk install 3.1.8
-# RUN /opt/emsdk/emsdk actviate 3.1.8
+FROM wasm-builder-base as build-wasm-stone-viewer
 
 
+COPY --from=orthanc-builder-base /scripts/build-or-download.sh /scripts/
+
+RUN ls -al /
+RUN env
+RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $ORTHANC_STONE_VIEWER_COMMIT_ID /source
 
-WORKDIR /source/Applications/StoneWebViewer/WebAssembly
-RUN chmod +x docker-internal.sh
-RUN STONE_BRANCH=${ORTHANC_STONE_VIEWER_COMMIT_ID} ./docker-internal.sh Release
 
 
 FROM orthanc-builder-base as build-stone-viewer
@@ -204,16 +182,8 @@ RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
 COPY --from=build-wasm-stone-viewer /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
 RUN ls -al /downloads/wasm-binaries/StoneWebViewer
 
-# RUN mkdir /downloads
-# # CHANGE_VERSION_STONE_WEB_VIEWER
-# RUN wget https://lsb.orthanc-server.com/stone-webviewer/2.3/wasm-binaries.zip --output-document /downloads/wasm-binaries.zip --quiet
-# RUN unzip /downloads/wasm-binaries.zip -d /downloads
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-# CHANGE_VERSION_STONE_WEB_VIEWER
-RUN hg clone https://hg.orthanc-server.com/orthanc-stone/ -r $ORTHANC_STONE_VIEWER_COMMIT_ID /sources
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer /sources/Applications/StoneWebViewer/Plugin/
-RUN make -j 4
 
 
 ########################## Orthanc azure storage plugins
@@ -221,100 +191,47 @@ RUN make -j 4
 FROM build-plugin-object-storage-azure as build-azure-object-storage
 
 ARG ORTHANC_AZURE_STORAGE_COMMIT_ID
-
-WORKDIR /sources
-RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $ORTHANC_AZURE_STORAGE_COMMIT_ID
-
-# (framework version used to build the cloud storage plugins)
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
-
-# upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
-RUN sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' /sources/orthanc-object-storage/Azure/CMakeLists.txt
-# todo: remove
-RUN sed -i 's/cryptopp-static/cryptopp::cryptopp/g' /sources/orthanc-object-storage/Azure/CMakeLists.txt
-
-RUN mkdir -p /build/cloud-storage/azure
-WORKDIR /build/cloud-storage/azure
-
-RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Azure/
-RUN make -j 4
-
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-azure-storage commitId=$ORTHANC_AZURE_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Google storage plugins
 
 FROM build-plugin-object-storage-google as build-google-object-storage
 
-WORKDIR /sources
-
 ARG ORTHANC_GOOGLE_STORAGE_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $ORTHANC_GOOGLE_STORAGE_COMMIT_ID
-
-# (framework version used to build the cloud storage plugins)
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
-
-# upgrade cmake minimum version to fix a Boost_FIND_COMPONENTS error: https://stackoverflow.com/questions/62930429/c-avro-cmake-failed
-RUN sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.3)/g' /sources/orthanc-object-storage/Google/CMakeLists.txt
-
-RUN mkdir -p /build/cloud-storage/google
-WORKDIR /build/cloud-storage/google
-RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Google/
-RUN make -j 4
-
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-google-storage commitId=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc s3 object storage plugins
 
 FROM orthanc-builder-base as build-s3-object-storage
 
-WORKDIR /
-
-# prerequisites (for object-storage client side encryption)
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get --assume-yes update && \
-		apt-get --assume-yes install libcrypto++-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-WORKDIR /sources
-
 ARG ORTHANC_AWS_STORAGE_COMMIT_ID
-RUN hg clone https://hg.orthanc-server.com/orthanc-object-storage/ -r $ORTHANC_AWS_STORAGE_COMMIT_ID
-
-# (framework version used to build the cloud storage plugins)
-RUN hg clone https://hg.orthanc-server.com/orthanc/ -r "Orthanc-1.10.1" 
-
-RUN mkdir -p /build/cloud-storage/aws
-WORKDIR /build/cloud-storage/aws
-RUN cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_VCPKG_PACKAGES=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/sources/orthanc/OrthancFramework/Sources /sources/orthanc-object-storage/Aws/
-RUN make -j 4
-
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-s3 commitId=$ORTHANC_AWS_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Explorer 2
 
 FROM orthanc-builder-base as build-oe2
 
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get --assume-yes update && \
-	apt-get --assume-yes install nodejs npm && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 ARG ORTHANC_OE2_COMMIT_ID
 ARG ORTHANC_OE2_VERSION
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-explorer-2 commitId=$ORTHANC_OE2_COMMIT_ID extraArg1=$ORTHANC_OE2_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-WORKDIR /sources
+########################## Kitware's VolView for Orthanc
 
-RUN git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
-    cd /sources/orthanc-explorer-2 && \
-	git checkout $ORTHANC_OE2_COMMIT_ID
+FROM orthanc-builder-base as build-plugin-volview
 
-WORKDIR /sources/orthanc-explorer-2/WebApplication
+ARG ORTHANC_VOLVIEW_COMMIT_ID
+# CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
+ARG VOLVIEW_VERSION=4.1.1
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID extraArg1=$VOLVIEW_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-RUN npm install
-RUN npm run build
+########################## OHIF for Orthanc
 
-WORKDIR /build
-RUN cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$ORTHANC_OE2_VERSION /sources/orthanc-explorer-2/
-RUN make -j 4
+FROM orthanc-builder-base as build-plugin-ohif
+
+ARG ORTHANC_OHIF_COMMIT_ID
+# CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
+ARG OHIF_VERSION=3.7.0
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc downloads (since wget is not in the runner image)
 
@@ -323,9 +240,9 @@ FROM orthanc-builder-base as build-downloader
 RUN mkdir /downloads
 
 # CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
-RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget https://orthanc.osimis.io/lsb/plugin-osimis-webviewer/releases/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 
 
 ################################# the image that will run Orthanc dynamicaly linked (intermediate version without vcpkg builds)
@@ -340,9 +257,10 @@ RUN mkdir -p /usr/share/orthanc/plugins/
 COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
 COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/ConnectivityChecks-build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc /build/libHousekeeper.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/DelayedDeletion-build/libDelayedDeletion.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc /build/libDelayedDeletion.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc /build/libMultitenantDicom.so /usr/share/orthanc/plugins-available/
 # RUN ldd /usr/bin/Orthanc
 
 COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/
@@ -365,11 +283,13 @@ COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/
 COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
 COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-ohif /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
 
-COPY --from=build-s3-object-storage /build/cloud-storage/aws/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-s3-object-storage /build/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
 # OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
@@ -380,6 +300,8 @@ RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]];
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*
+
+RUN pip install envsubst==0.1.5
 
 # configure SSL for azure rest sdk (azure object storage plugin)
 ENV SSL_CERT_DIR=/etc/ssl/certs
@@ -407,6 +329,21 @@ RUN apt purge --assume-yes xdg-user-dirs
 RUN apt --assume-yes autoremove
 
 
+# always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
+# and grants him all permissions on files that can be modified by the docker-entrypoint.sh
+# The default root users can still access these files too.
+# for the /etc/hostid -> we must make sure the file exists to grant the permission
+RUN groupadd --system orthanc --gid=999; \
+    useradd --system --gid=orthanc --uid=999 --home-dir=/var/lib/orthanc --shell=/bin/false orthanc; \
+    mkdir -p /var/lib/orthanc; \
+    chown -R orthanc:orthanc /var/lib/orthanc; \
+    chown -R orthanc:orthanc /tmp; \
+    chown -R orthanc:orthanc /usr/share/orthanc/plugins; \
+    chown -R orthanc:orthanc /usr/share/orthanc/plugins-available; \
+    echo not-generated > /etc/hostid; \
+    chown orthanc:orthanc /etc/hostid
+
+
 ################################# the "full" image that will run Orthanc dynamicaly linked (final version with vcpkg builds and Microsoft unixodbc)
 FROM orthanc-no-vcpkg as orthanc-with-vcpkg
 
@@ -424,8 +361,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-google-object-storage /build/cloud-storage/google/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-azure-object-storage /build/cloud-storage/azure/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-google-object-storage /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-azure-object-storage /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*

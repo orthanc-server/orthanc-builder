@@ -7,7 +7,7 @@
     "configs": [
         {
             "name": "XXXXX Sample configuration for documentation to list all fields", 
-            "repo": "https://hg.orthanc-server.com/orthanc/    path to repo",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc/    path to repo",
             "repoType": "hg                                    or git",
             "sourcesSubPath": "/OrthancServer                  OPTIONAL path to CMakeLists.txt",
             "comment": "# CHANGE_VERSION_XXX",
@@ -30,6 +30,8 @@
                 "Description": "Osimis Web viewer (AGPL license)",
                 "Name": "osimis_web_viewer",
                 "Mandatory": false,
+                "CheckedComment": "true by default, false if you do not want to install the plugin by default",
+                "Checked": false,
                 "Category": "osimis",
                 "Artifacts64": [
                     ["OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
@@ -41,15 +43,15 @@
         },
         {
             "name": "Orthanc", 
-            "repo": "https://hg.orthanc-server.com/orthanc/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc/",
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "Orthanc-1.11.3",
+            "stable": "Orthanc-1.12.1",
             "unstable": "default",
-            "stableOSX": "Orthanc-1.11.3",
-            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib",
-            "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib",
+            "stableOSX": "Orthanc-1.12.1",
+            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForOSX": true,
@@ -58,10 +60,10 @@
                     "Description": "Orthanc server",
                     "Mandatory": true,
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 },
                 {
@@ -69,10 +71,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["worklists.json", "Configuration"]
@@ -83,10 +85,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["serve-folders.json", "Configuration"]
@@ -97,10 +99,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 },
                 {
@@ -108,10 +110,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["housekeeper.json", "Configuration"]
@@ -122,13 +124,24 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/DelayedDeletion.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/DelayedDeletion.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/DelayedDeletion.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/DelayedDeletion.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Resources": [
                         ["delayed-deletion.json", "Configuration"]
+                    ]
+                },
+                {
+                    "Description": "Multitenant DICOM",
+                    "Mandatory": false,
+                    "Category": "plugins",
+                    "Artifacts64": [
+                        ["windows-64/orthanc/${VERSION}/MultitenantDicom.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                    ],
+                    "Artifacts32": [
+                        ["windows-32/orthanc/${VERSION}/MultitenantDicom.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 },
                 {
@@ -136,21 +149,33 @@
                     "Mandatory": false,
                     "Category": "tools",
                     "Artifacts64": [
-                        ["Orthanc 1.11.3 - VC2015-64 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ],
                     "Artifacts32": [
-                        ["Orthanc 1.11.3 - VC2008-32 Release/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
                     ]
                 }
+            ],
+            "downloadsOSX" : [
+              {
+                "url" : "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Orthanc",
+                "executable" : true
+              },
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ConnectivityChecks.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/DelayedDeletion.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Housekeeper.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ModalityWorklists.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/MultitenantDicom.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ServeFolders.dylib"
             ]
         },
         {
             "name": "Orthanc-postgresql", 
-            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-databases/",
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-4.0",
+            "stable": "OrthancPostgreSQL-5.1",
             "unstable": "pg-transactions",
             "artifactsOSX": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForOSX": true,
@@ -161,25 +186,29 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
-                    ["PostgreSQL 4.0 - VC2015-64 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                    ["windows-64/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                    ["windows-64/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
                 ],
                 "Artifacts32": [
-                    ["PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
-                    ["PostgreSQL 4.0 - VC2008-32 Release/OrthancPostgreSQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Index.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Storage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
                 ],
                 "Resources": [
                     ["postgresql.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-mysql", 
-            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-databases/",
             "repoType": "hg",
             "sourcesSubPath": "/MySQL",
             "comment": "# CHANGE_VERSION_MYSQL",
-            "stable": "OrthancMySQL-4.3",
+            "stable": "OrthancMySQL-5.1",
             "unstable": "default",
             "artifactsOSX": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
             "buildForOSX": true,
@@ -191,21 +220,25 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
-                    ["MySQL 4.3 - VC2015-64 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                    ["windows-64/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                    ["windows-64/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
                 ],
                 "Artifacts32": [
-                    ["MySQL 4.3 - VC2015-32 Release/OrthancMySQLIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
-                    ["MySQL 4.3 - VC2015-32 Release/OrthancMySQLStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Index.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
+                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Storage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
                 ],
                 "Resources": [
                     ["mysql.json", "Configuration"]
                 ]            
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-odbc", 
-            "repo": "https://hg.orthanc-server.com/orthanc-databases/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-databases/",
             "repoType": "hg",
             "sourcesSubPath": "/Odbc",
             "comment": "# CHANGE_VERSION_ODBC",
@@ -220,21 +253,25 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["Odbc 1.1 - VC2015-64 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
-                    ["Odbc 1.1 - VC2015-64 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+                    ["windows-64/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
+                    ["windows-64/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
                 ],
                 "Artifacts32": [
-                    ["Odbc 1.1 - VC2008-32 Release/OrthancOdbcIndex.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
-                    ["Odbc 1.1 - VC2008-32 Release/OrthancOdbcStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Index.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
+                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Storage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
                 ],
                 "Resources": [
                     ["odbc.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dylib",
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-transfers", 
-            "repo": "https://hg.orthanc-server.com/orthanc-transfers/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-transfers/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TRANSFERS",
             "stable": "OrthancTransfers-1.4",
@@ -248,19 +285,22 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["Transfers 1.4 - VC2015-64 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                    ["windows-64/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
                 ],
                 "Artifacts32": [
-                    ["Transfers 1.4 - VC2008-32 Release/OrthancTransfers.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                    ["windows-32/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
                 ],
                 "Resources": [
                     ["transfers.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-transfers/OrthancTransfers-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-indexer", 
-            "repo": "https://hg.orthanc-server.com/orthanc-indexer/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-indexer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_INDEXER",
             "stable": "OrthancIndexer-1.0",
@@ -273,19 +313,22 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["FolderIndexer 1.0 - VC2015-64 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+                    ["windows-64/orthanc-indexer/OrthancIndexer-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
                 ],
                 "Artifacts32": [
-                    ["FolderIndexer 1.0 - VC2008-32 Release/OrthancIndexer.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+                    ["windows-32/orthanc-indexer/OrthancIndexer-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
                 ],
                 "Resources": [
                     ["indexer.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-indexer/OrthancIndexer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-tcia", 
-            "repo": "https://hg.orthanc-server.com/orthanc-tcia/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-tcia/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TCIA",
             "stable": "OrthancTcia-1.1",
@@ -298,35 +341,148 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["Tcia 1.1 - VC2015-64 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                    ["windows-64/orthanc-tcia/OrthancTcia-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
                 ],
                 "Artifacts32": [
-                    ["Tcia 1.1 - VC2008-32 Release/OrthancTcia.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                    ["windows-32/orthanc-tcia/OrthancTcia-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
                 ],
                 "Resources": [
                     ["tcia.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-tcia/OrthancTcia-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-python", 
-            "repo": "https://hg.orthanc-server.com/orthanc-python/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.0",
-            "unstable": "default",
+            "stable": "OrthancPython-4.1",
+            "unstable": "41cd08e0e878",
             "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForOSX": false,
             "windows": [{
             }]
         },
         {
+            "name": "Orthanc-python-3-8", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-4.1",
+            "unstable": "default",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForOSX": false,
+            "buildForWin": true,
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.8 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.8.10/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.8 (AGPL license)",
+                "Name": "python_3_8",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Target": "OrthancPython3.8.dll"
+            }]
+        },
+        {
+            "name": "Orthanc-python-3-9", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-4.1",
+            "unstable": "default",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForOSX": false,
+            "buildForWin": true,
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.9 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.9.13/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.9 (AGPL license)",
+                "Name": "python_3_9",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ]
+            }]
+        },
+        {
+            "name": "Orthanc-python-3-10", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-4.1",
+            "unstable": "default",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForOSX": false,
+            "buildForWin": true,
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.10 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.10.11/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.10 (AGPL license)",
+                "Name": "python_3_10",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ]
+            }]
+        },
+        {
+            "name": "Orthanc-python-3-11", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-4.1",
+            "unstable": "default",
+            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForOSX": false,
+            "buildForWin": true,
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.6/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.11 (AGPL license)",
+                "Name": "python_3_11",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                ]
+            }]
+        },
+        {
             "name": "Orthanc-stone", 
-            "repo": "https://hg.orthanc-server.com/orthanc-stone/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-stone/",
             "repoType": "hg",
             "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
-            "stable": "StoneWebViewer-2.5",
+            "stable": "4087511e8eef",
+            "BuildbotVersion" : "2.5",
             "unstable": "default",
             "artifactsOSX": "libStoneWebViewer.dylib",
             "commentOSX": "# currently always building with wasm-binaries from latest offical version",
@@ -341,22 +497,25 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["Stone 2.5 - Web viewer/libStoneWebViewer-Windows64.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                    ["windows-64/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
                 ],
                 "Artifacts32": [
-                    ["Stone 2.5 - Web viewer/libStoneWebViewer-Windows32.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                    ["windows-32/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
                 ],
                 "Resources": [
                     ["stone-webviewer.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/stone-web-viewer/StoneWebViewer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-dicomweb", 
-            "repo": "https://hg.orthanc-server.com/orthanc-dicomweb/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
-            "stable": "OrthancDicomWeb-1.13",
+            "stable": "OrthancDicomWeb-1.15",
             "unstable": "default",
             "artifactsOSX": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",
@@ -369,26 +528,29 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["DicomWeb 1.13 - VC2015-64 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                    ["windows-64/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
                 ],
                 "Artifacts32": [
-                    ["DicomWeb 1.13 - VC2008-32 Release/OrthancDicomWeb.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                    ["windows-32/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
                 ],
                 "Resources": [
                     ["dicomweb.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-gdcm", 
-            "repo": "https://hg.orthanc-server.com/orthanc-gdcm/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-gdcm/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GDCM",
             "stable": "OrthancGdcm-1.5",
             "unstable": "default",
             "stableOSX": "4b8fd4b10742",
             "artifactsOSX": "libOrthancGdcm.dylib",
-            "customBuildOSX" : "cmake -B $workspace/build-arm64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlags -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
+            "customBuildOSX" : "cmake -B $workspace/build-arm64 $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "buildForOSX": true,
             "windows": [{
@@ -396,20 +558,23 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["Gdcm 1.5 - VC2015-64 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                    ["windows-64/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
                 ],
                 "Artifacts32": [
-                    ["Gdcm 1.5 - VC2015-32 Release/OrthancGdcm.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                    ["windows-32/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-gdcm/OrthancGdcm-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-wsi", 
-            "repo": "https://hg.orthanc-server.com/orthanc-wsi/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-wsi/",
             "repoType": "hg",
             "sourcesSubPath": "/ViewerPlugin",
             "comment": "# CHANGE_VERSION_WSI",
-            "stable": "OrthancWSI-1.1",
+            "stable": "OrthancWSI-2.0",
             "unstable": "default",
             "commentOSX": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
             "buildForOSX": false,
@@ -419,10 +584,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["WSI 1.1 - VC2015-64 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-64/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
                     ],
                     "Artifacts32": [
-                        ["WSI 1.1 - VC2008-32 Release/OrthancWSI.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-32/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
                     ]
                 },
                 {
@@ -431,12 +596,12 @@
                     "Mandatory": false,
                     "Category": "tools/wsi",
                     "Artifacts64": [
-                        ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
-                        ["WSI 1.1 - VC2015-64 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-64/orthanc-wsi/OrthancWSIDicomizer-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"],
+                        ["windows-64/orthanc-wsi/OrthancWSIDicomToTiff-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
                     ],
                     "Artifacts32": [
-                        ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomizer.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"],
-                        ["WSI 1.1 - VC2008-32 Release/OrthancWSIDicomToTiff.exe", "Tools", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-32/orthanc-wsi/OrthancWSIDicomizer-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"],
+                        ["windows-32/orthanc-wsi/OrthancWSIDicomToTiff-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
                     ]
                 },
                 {
@@ -444,53 +609,56 @@
                     "Mandatory": false,
                     "Category": "tools/wsi",
                     "Downloads64": [
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/iconv.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libffi-6.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libintl-8.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win64/zlib1.dll", "Tools"]
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/iconv.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libcairo-2.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libffi-6.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libgdk_pixbuf-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libgio-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libglib-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libgmodule-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libgobject-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libgthread-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libintl-8.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libjpeg-62.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libopenjp2.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libopenslide-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libpixman-1-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libpng16-16.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libsqlite3-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libtiff-5.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/libxml2-2.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win64/zlib1.dll", "Tools"]
                     ],
                     "Downloads32": [
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/iconv.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libcairo-2.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libffi-6.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgdk_pixbuf-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgio-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libglib-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgmodule-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgobject-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libgthread-2.0-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libintl-8.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libjpeg-62.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libopenjp2.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libopenslide-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libpixman-1-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libpng16-16.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libsqlite3-0.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libtiff-5.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/libxml2-2.dll", "Tools"],
-                        ["https://www.orthanc-server.com/downloads/third-party/WSI/openslide-20160717/win32/zlib1.dll", "Tools"]
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/iconv.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libcairo-2.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libffi-6.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libgdk_pixbuf-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libgio-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libglib-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libgmodule-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libgobject-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libgthread-2.0-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libintl-8.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libjpeg-62.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libopenjp2.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libopenslide-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libpixman-1-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libpng16-16.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libsqlite3-0.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libtiff-5.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/libxml2-2.dll", "Tools"],
+                        ["https://orthanc.uclouvain.be/downloads/third-party-downloads/WSI/openslide-20160717/win32/zlib1.dll", "Tools"]
                     ]
                 }
+            ],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-wsi/OrthancWSI-${VERSION}.dylib"
             ]
         },
         {
             "name": "Orthanc-webviewer", 
-            "repo": "https://hg.orthanc-server.com/orthanc-webviewer/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-webviewer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
             "stable": "OrthancWebViewer-2.8",
@@ -504,19 +672,22 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["WebViewer 2.8 - VC2015-64 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+                    ["windows-64/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
                 ],
                 "Artifacts32": [
-                    ["WebViewer 2.8 - VC2008-32 Release/OrthancWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+                    ["windows-32/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-webviewer/OrthancWebViewer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-auth", 
-            "repo": "https://hg.orthanc-server.com/orthanc-authorization/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.4.1",
+            "stable": "0.6.1",
             "unstable": "default",
             "artifactsOSX": "libOrthancAuthorization.dylib",
             "buildForOSX": false,
@@ -525,32 +696,35 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["Authorization 0.4.1 - VC2015-64 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                    ["windows-64/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
                 ],
                 "Artifacts32": [
-                    ["Authorization 0.4.1 - VC2008-32 Release/OrthancAuthorization.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                    ["windows-32/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-authorization/OrthancAuthorization-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-azure-storage", 
-            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "sourcesSubPath": "/Azure",
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
-            "stable": "2.1.2",
+            "stable": "2.3.0",
             "unstable": "default",
             "artifactsWin": "OrthancAzureBlobStorage.dll",
             "buildForOSX": false,
             "buildForWin": true,
-            "preBuildWin": "cd /c/vcpkg && git checkout 2022.11.14 && vcpkg install cryptopp:x64-windows-static cpprestsdk:x64-windows-static azure-storage-cpp:x64-windows-static",
+            "preBuildWin": "cd /c/vcpkg && git checkout 2023.06.20 && vcpkg install cryptopp:x64-windows-static azure-storage-blobs-cpp:x64-windows-static",
             "extraCMakeFlagsWin": "-DCMAKE_TOOLCHAIN_FILE=/c/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static",
             "windows": [{
                 "Description": "Orthanc Azure blob storage plugin",
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://orthanc.osimis.io/nightly-win-builds/2.1.2/OrthancAzureBlobStorage.dll", "Plugins", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-object-storage/OrthancAzureBlobStorage-${VERSION}.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
                 ],
                 "Resources": [
                     ["azure.json", "Configuration"]
@@ -559,10 +733,10 @@
         },
         {
             "name": "Orthanc-google-storage", 
-            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
-            "stable": "2.1.2",
+            "stable": "2.3.0",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
@@ -570,10 +744,10 @@
         },
         {
             "name": "Orthanc-aws-storage", 
-            "repo": "https://hg.orthanc-server.com/orthanc-object-storage/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
-            "stable": "2.1.2",
+            "stable": "2.3.0",
             "unstable": "default",
             "buildForOSX": false,
             "windows": [{
@@ -584,9 +758,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "0.6.0",
+            "stable": "1.1.3",
             "unstable": "master",
-            "unstableOSX": "0.6.0", 
+            "unstableOSX": "1.1.3", 
             "comment2": "this plugin has its own build process on Github -> OSX and Win64 are built by Github",
             "buildForOSX": false,
             "artifactsOSX": "libOrthancExplorer2-universal.dylib",
@@ -595,13 +769,20 @@
                 "Description": "Orthanc Explorer 2 User Interface",
                 "Mandatory": false,
                 "Category": "plugins",
-                "Downloads64": [
-                    ["https://github.com/orthanc-server/orthanc-explorer-2/releases/download/0.6.0/OrthancExplorer2-win64.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                "Comment": "Win64 is coming from Github while Win32 is coming from buildbot",
+                "Artifacts64": [
+                    ["windows-64/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
                 ],
                 "Resources": [
                     ["orthanc-explorer-2.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dylib"
+            ]
         },
         {
             "name": "osimis-viewer", 
@@ -611,6 +792,7 @@
             "comment": "# CHANGE_VERSION_WVB",
             "stable": "dev",
             "unstable": "dev",
+            "BuildbotVersion": "1.4.2",
             "buildForOSX": true,
             "customBuildOSX" : "cmake -B $workspace/build-arm64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-arm64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-amd64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOsimisWebViewer.dylib $workspace/build-amd64/libOsimisWebViewer.dylib $workspace/build-arm64/libOsimisWebViewer.dylib",
             "unitTests": "./UnitTests",
@@ -621,19 +803,22 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["OsimisWebViewer 1.4.2 - VC2015-64 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                    ["windows-64/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
                 ],
                 "Artifacts32": [
-                    ["OsimisWebViewer 1.4.2 - VC2015-32 Release/OsimisWebViewer.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                    ["windows-32/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
                 ],
                 "Resources": [
                     ["webviewer.json", "Configuration"]
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/osimis-web-viewer/OsimisWebViewer-${VERSION}.dylib"
+            ]
         },
         {
             "name": "Orthanc-neuro", 
-            "repo": "https://hg.orthanc-server.com/orthanc-neuro/",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-neuro/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_NEURO",
             "stable": "OrthancNeuro-1.0",
@@ -646,14 +831,75 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["Neuro 1.0 - VC2015-64 Release/OrthancNeuro.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
+                    ["windows-64/orthanc-neuro/OrthancNeuro-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
                 ],
                 "Artifacts32": [
-                    ["Neuro 1.0 - VC2008-32 Release/OrthancNeuro.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
+                    ["windows-32/orthanc-neuro/OrthancNeuro-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
                 ],
                 "Resources": [
                 ]
-            }]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-neuro/OrthancNeuro-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-volview", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-volview/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_VOLVIEW",
+            "stable": "OrthancVolView-1.1",
+            "unstable": "default",
+            "artifactsOSX": "libOrthancVolView.dylib",
+            "buildForOSX": true,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-volview-dist-builds/stable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
+            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-volview-dist-builds/unstable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
+            "windows": [{
+                "Description": "Kitware's VolView plugin for Orthanc",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-volview/OrthancVolView-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-volview/OrthancVolView-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                ],
+                "Resources": [
+                ]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-volview/OrthancVolView-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-ohif", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-ohif/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_OHIF",
+            "stable": "OrthancOHIF-1.1",
+            "unstable": "default",
+            "artifactsOSX": "libOrthancOHIF.dylib",
+            "buildForOSX": false,
+            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "preBuildStableOSX": "TODO viewer=Viewers-3.6.0 && rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/$viewer.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p /tmp/ohif && tar xvf /tmp/downloads/dist.tar.gz -C /tmp/ohif && cd /tmp/ohif/$viewer && npm install &&  mkdir -p ${GITHUB_WORKSPACE}/source/OHIF && cp -r /tmp/ohif",
+            "preBuildUnstableOSX": "TODO rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist",
+            "windows": [{
+                "Description": "OHIF plugin for Orthanc",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
+                ],
+                "Resources": [
+                ]
+            }],
+            "downloadsOSX" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-ohif/OrthancOHIF-${VERSION}.dylib"
+            ]
         }
     ]
     

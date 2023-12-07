@@ -163,7 +163,7 @@
  "SslMinimumProtocolVersion": 4, 
  "SslTrustedClientCertificates": "trustedClientCertificates.pem", 
  "SslVerifyPeers": false, 
- "StableAge": 60, 
+ "StableAge": 1, 
  "StorageAccessOnFind": "Always", 
  "StorageCommitmentReportsSize": 100, 
  "StorageCompression": false, 
@@ -178,13 +178,15 @@
  "TranscodeDicomProtocol": true, 
  "UnknownSopClassAccepted": false, 
  "UserContentType": {}, 
- "UserMetadata": {}, 
+ "UserMetadata": {
+   "my-metadata": 1098
+ },
  "WebDavDeleteAllowed": true, 
  "WebDavEnabled": true, 
  "WebDavUploadAllowed": true, 
  "Worklists": {
-  "Database": "/worklists", 
-  "Enable": true
+   "Database": "/worklists", 
+   "Enable": true
  }, 
  "ZipLoaderThreads": 0
 }

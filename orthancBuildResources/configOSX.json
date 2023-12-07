@@ -1,9 +1,12 @@
 {
-  // orthanc configuration file reference: available here:
-  // https://hg.orthanc-server.com/orthanc/file/tip/OrthancServer/Resources/Configuration.json
+  // The reference of the Orthanc configuration file is available at:
+  // https://orthanc.uclouvain.be/hg/orthanc/file/default/OrthancServer/Resources/Configuration.json
   "Name" : "MyOrthanc",
 
-  // Orthanc Explorer 2 configuration.  Reference available here:
+  // Load all the Orthanc plugins that are available in this folder:
+  "Plugins" : [ "." ],
+
+  // Orthanc Explorer 2 configuration. Reference is available at:
   // https://github.com/orthanc-server/orthanc-explorer-2/blob/master/Plugin/DefaultConfiguration.json
   "OrthancExplorer2" : {
     "Enable": true,

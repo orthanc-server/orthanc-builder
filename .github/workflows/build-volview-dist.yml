@@ -1,0 +1,36 @@
+on:
+  workflow_call:
+    inputs:
+      is_tag:
+        description: 'Is a Git Tag'
+        type: string
+        required: true
+      current_branch_tag:
+        description: 'Git branch or Tag'
+        type: string
+        required: true
+      stable_unstable:
+        description: 'stable/unstable (currently not used)'
+        type: string
+        required: true
+    secrets:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
+        required: true
+
+jobs:
+
+  build-volview-dist:
+    name: build-volview-dist
+    runs-on: "ubuntu-latest"
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Build Volview dist
+      run: ./build-volview-dist.sh version=${{ inputs.stable_unstable }} workspace="${{github.workspace}}"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

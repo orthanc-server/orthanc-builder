@@ -65,12 +65,14 @@ ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version
 ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks)
 ORTHANC_OE2_COMMIT_ID=$(getCommitId "Orthanc-explorer-2" $version docker $skipCommitChecks)
 ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version)
+ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipCommitChecks)
+ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks)
 
-BASE_DEBIAN_IMAGE=bullseye-20230202-slim
+BASE_DEBIAN_IMAGE=bullseye-20231030-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-auth build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2"
+buildTargets="build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif"
 
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
@@ -105,7 +107,12 @@ if [[ $type == "local" ]]; then
 
     # when building locally, use Docker builder (easier to reuse local images)
     build="build"
-    push_load_arg=
+    push_load_arg_final_image=
+    push_load_arg_builder_image=
+
+
+    prefer_downloads=1
+    enable_upload=0
 else
     from_cache_arg_runner_base="--cache-from=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
     to_cache_arg_runner_base="--cache-to=osimis/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
@@ -127,10 +134,18 @@ else
 
     # when building in CI, use buildx
     build="buildx build"
-    push_load_arg="--push"
+    push_load_arg_final_image="--load"
+    push_load_arg_builder_image="--push"
+    if [[ $step == "push" ]]; then
+        push_load_arg_final_image="--push"
+        push_load_arg_builder_image=
+    fi
     
     # when building in CI, don't use intermediate targets (it would push plenty of images)
     buildTargets=$finalImageTarget
+
+    prefer_downloads=1
+    enable_upload=1
 fi
 
 
@@ -159,21 +174,25 @@ fi
 # builder_vcpkg_azure_tag="vcpkg-azure-$final_image_temporary_tag"
 # builder_vcpkg_google_tag="vcpkg-google-$final_image_temporary_tag"
 
+add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
+
 ###### runner-base
 docker $build \
+    $add_host_cmd \
     --progress=plain --platform=$platform -t osimis/orthanc-runner-base:$BASE_BUILDER_IMAGE_TAG \
     --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
-    $push_load_arg \
+    $push_load_arg_builder_image \
     -f docker/orthanc/Dockerfile.runner-base docker/orthanc
 
 ###### builder-base
 docker $build \
+    $add_host_cmd \
     --progress=plain --platform=$platform -t osimis/orthanc-builder-base:$BASE_BUILDER_IMAGE_TAG \
     $from_cache_arg_builder_base \
     $to_cache_arg_builder_base \
-    $push_load_arg \
+    $push_load_arg_builder_image \
     --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
@@ -181,28 +200,31 @@ if [[ $image == "full" ]]; then
 
     ###### builder-base-vcpkg
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg \
         $to_cache_arg_builder_vcpkg \
-        $push_load_arg \
+        $push_load_arg_builder_image \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg docker/orthanc
 
     ###### builder-base-vcpkg-azure
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-azure-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg_azure \
         $to_cache_arg_builder_vcpkg_azure \
-        $push_load_arg \
+        $push_load_arg_builder_image \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-azure docker/orthanc
 
     ###### builder-base-vcpkg-google
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform -t osimis/orthanc-builder-base:vcpkg-google-$BASE_BUILDER_IMAGE_TAG \
         $from_cache_arg_builder_vcpkg_google \
         $to_cache_arg_builder_vcpkg_google \
-        $push_load_arg \
+        $push_load_arg_builder_image \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         -f docker/orthanc/Dockerfile.builder-vcpkg --target orthanc-build-vcpkg-google docker/orthanc
 fi
@@ -219,6 +241,7 @@ for target in $buildTargets; do
     # sleep 5
     ###### osimis/orthanc
     docker $build \
+        $add_host_cmd \
         --progress=plain --platform=$platform \
         --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
         --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
@@ -240,10 +263,18 @@ for target in $buildTargets; do
         --build-arg ORTHANC_AWS_STORAGE_COMMIT_ID=$ORTHANC_AWS_STORAGE_COMMIT_ID \
         --build-arg ORTHANC_OE2_COMMIT_ID=$ORTHANC_OE2_COMMIT_ID \
         --build-arg ORTHANC_OE2_VERSION=$ORTHANC_OE2_VERSION \
+        --build-arg ORTHANC_VOLVIEW_COMMIT_ID=$ORTHANC_VOLVIEW_COMMIT_ID \
+        --build-arg ORTHANC_OHIF_COMMIT_ID=$ORTHANC_OHIF_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
+        --build-arg ARG_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+        --build-arg ARG_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+        --build-arg PREFER_DOWNLOADS=$prefer_downloads \
+        --build-arg ENABLE_UPLOAD=$enable_upload \
+        --build-arg PLATFORM=$platform \
+        --build-arg STABLE_OR_UNSTABLE=$version \
         $from_cache_arg \
         $to_cache_arg \
-        $push_load_arg \
+        $push_load_arg_final_image \
         $tag_arg \
         --target $target \
         -f docker/orthanc/Dockerfile  docker/orthanc/

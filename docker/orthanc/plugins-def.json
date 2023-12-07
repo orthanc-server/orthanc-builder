@@ -141,6 +141,11 @@
     "libs" : ["libDelayedDeletion.so"]
   },
 
+  "MultitenantDicom" : {
+    "enablingEnvVar" : "MULTITENANT_DICOM_PLUGIN_ENABLED",
+    "libs" : ["libMultitenantDicom.so"]
+  },
+
   "Wsi": {
     "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WSI_ENABLED",
@@ -218,5 +223,15 @@
       "IsDefaultOrthancUI": false
     },
     "libs" : ["libOrthancExplorer2.so"]
-  }
+  },
+
+  "VolView": {
+    "enablingEnvVar" : "VOLVIEW_PLUGIN_ENABLED",
+    "libs" : ["libOrthancVolView.so"]
+  },
+
+  "Ohif": {
+    "enablingEnvVar" : "OHIF_PLUGIN_ENABLED",
+    "libs" : ["libOrthancOHIF.so"]
+  }  
 }

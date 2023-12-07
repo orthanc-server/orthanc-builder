@@ -12,9 +12,11 @@ on:
     secrets:
       docker_hub_username:
         required: true
-      docker_hub_password:
-        required: true
       docker_hub_token:
+        required: true
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
         required: true
 
 
@@ -23,6 +25,9 @@ jobs:
   build-docker:
     name: build-docker
     runs-on: "ubuntu-latest"
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
     strategy:
       fail-fast: false
       matrix:
@@ -57,14 +62,16 @@ jobs:
     steps:
     
     - name: Maximize build space
-      uses: easimon/maximize-build-space@v5
+      uses: easimon/maximize-build-space@v7
       with:
         # reserve space for docker
-        root-reserve-mb: 40000
+        root-reserve-mb: 38000
         swap-size-mb: 1024
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
 
     - name: Maximize build space (2)
       # to list folder sizes:
@@ -82,12 +89,12 @@ jobs:
       uses: docker/setup-qemu-action@v1
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      uses: docker/setup-buildx-action@v2
       with:
         config: .github/buildkitd.toml
 
     - name: Login to DockerHub
-      uses: docker/login-action@v1
+      uses: docker/login-action@v2
       with:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_token }}
@@ -134,11 +141,11 @@ jobs:
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full
 
     - name: Update DockerHub repo description
-      uses: peter-evans/dockerhub-description@v2
+      uses: peter-evans/dockerhub-description@v3
       if: inputs.is_tag == 'true'
       with:
         username: ${{ secrets.docker_hub_username }}
-        password: ${{ secrets.docker_hub_password }}
+        password: ${{ secrets.docker_hub_token }}
         repository: osimis/orthanc
         readme-filepath: README-dockerhub.md
 

@@ -15,12 +15,13 @@ fi
 # Therefore, if /etc/hostid is missing, we generate it with a random number.  This behaviour can still be deactivated by 
 # defining GENERATE_HOST_ID_IF_MISSING=false.  The host id can also be forced by defining FORCE_HOST_ID
 if [[ ! -z $FORCE_HOST_ID ]];then
-	echo "Forcing hostid in /etc/hostid"
+	echo "Forcing hostid in /etc/hostid: $FORCE_HOST_ID"
 	echo $FORCE_HOST_ID > /etc/hostid
 elif [[ ! $GENERATE_HOST_ID_IF_MISSING || $GENERATE_HOST_ID_IF_MISSING == true ]]; then
-	if [ ! -f /etc/hostid ]; then
-		echo "Generating random hostid in /etc/hostid"
-		printf '%x' $(shuf -i 268435456-4294967295 -n 1) > /etc/hostid
+	if [[ ! -f /etc/hostid || $(< /etc/hostid) = 'not-generated' ]]; then
+		host_id=$(printf '%x' $(shuf -i 268435456-4294967295 -n 1))
+		echo "Generating random hostid in /etc/hostid: $host_id"
+		echo $host_id > /etc/hostid
 	fi
 fi
 
@@ -51,5 +52,5 @@ if [[ ! -z $BEFORE_ORTHANC_STARTUP_SCRIPT ]]; then
 fi
 
 argv=(Orthanc $verbosity $logoption $jobs "$@")
-echo "Startup command: ${argv[*]}" >&2
+echo "Startup command: exec \"${argv[*]}\"" >&2
 exec "${argv[@]}"

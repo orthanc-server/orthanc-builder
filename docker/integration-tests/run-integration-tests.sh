@@ -38,7 +38,7 @@ else
     integ_tests_branch_tag=$(getIntegTestsRevision $version)
 fi
 
-orthanc_tests_revision=$(getHgCommitId https://hg.orthanc-server.com/orthanc-tests/ $integ_tests_branch_tag)
+orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
 
 popd  # back to docker/integration-tests folder
 
@@ -46,7 +46,7 @@ popd  # back to docker/integration-tests folder
 ############ run NewTests first
 testRepoFolder=orthanc-tests-repo-$image
 rm -rf $testRepoFolder/
-hg clone https://hg.orthanc-server.com/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
 
 pushd $testRepoFolder/NewTests
 
@@ -93,6 +93,10 @@ python3 -u main.py --pattern=StorageCompression.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 
+python3 -u main.py --pattern=Authorization.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
 popd
 ############ end run NewTests
 
@@ -108,6 +112,7 @@ if [[ $image == "normal" ]]; then
     docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
     docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
     docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
+    docker build --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision --build-arg IMAGE_TAG=$tagToTest -f orthanc-transcoding-tests/Dockerfile -t orthanc-transcoding-tests orthanc-transcoding-tests
 
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose down -v
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
@@ -151,15 +156,20 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.worklists.yml                   docker-compose down -v
     COMPOSE_FILE=docker-compose.worklists.yml                   docker-compose up --build --exit-code-from orthanc-tests-worklists --abort-on-container-exit
 
+    COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker-compose down -v
+    COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+
+    COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker-compose down -v
+    COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker-compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+
 # note: not functional yet:
 # COMPOSE_FILE=docker-compose.odbc-mysql.yml               docker-compose down -v
 # COMPOSE_FILE=docker-compose.odbc-mysql.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
 # TODO: add tests:
-# - CheckScuTranscoding.py
-# - CheckIngestTranscoding.py
 # - CheckHttpServerSecurity.py
 # - CheckDicomTls.py
+# - CheckZipStream.py
 
 else  # full images (MSSQL only !)
 
