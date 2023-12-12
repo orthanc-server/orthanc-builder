@@ -55,6 +55,13 @@ source .env/bin/activate
 
 pip3 install -r requirements.txt
 
+######## concurrency
+
+python3 -u main.py --pattern=Concurrency.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
+
 ######## housekeeper
 
 previous_image=osimis/orthanc:22.4.0
