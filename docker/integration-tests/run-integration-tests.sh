@@ -130,17 +130,20 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker-compose down -v
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker-compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres.yml                    docker-compose down -v
-    COMPOSE_FILE=docker-compose.postgres.yml                    docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker-compose down -v
+    COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose down -v
-    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker-compose down -v
+    COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose down -v
-    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose down -v
-    COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+
+    # COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose down -v
+    # COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.webdav.yml                      docker-compose down -v
     COMPOSE_FILE=docker-compose.webdav.yml                      docker-compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
