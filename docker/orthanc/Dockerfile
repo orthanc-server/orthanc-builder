@@ -12,7 +12,7 @@ ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
 
-FROM jodogne/wasm-builder:2.0.23 as wasm-builder-base
+FROM jodogne/wasm-builder:3.1.49 as wasm-builder-base
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID

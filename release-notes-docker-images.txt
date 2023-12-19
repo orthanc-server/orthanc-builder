@@ -12,6 +12,7 @@ Only the default tags are listed here.  You just need to append `-full` for the 
           - upgraded DICOMweb plugin to 1.16
           - upgraded Orthanc Explorer 2 plugin to 1.2.0
           - upgraded advanced authorization plugin to 0.6.2
+          - upgraded StoneWebViewer to 2.5+5970030a413c (Docker images only)
           - upgraded base image to debian:bullseye-20231120-slim
 23.11.1:  - upgraded OHIF plugin to 1.1
           - upgraded base image to debian:bullseye-20231030-slim
