@@ -33,5 +33,5 @@ jobs:
       run: ./ciBuildWindowsInstaller.sh ${{ inputs.is_tag }} ${{ inputs.current_branch_tag }}
       working-directory: ./WindowsInstaller
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

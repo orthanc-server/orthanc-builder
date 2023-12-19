@@ -61,8 +61,8 @@ jobs:
       run: |
         bash ./build-win-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
 
     - name: Setup tmate session
       if: ${{ failure() }}
