@@ -80,7 +80,7 @@ docker rm $dockerContainerId
 # we first need to create the container before we can copy files to it
 export AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY
-awsContainerId=$(docker create $add_host_cmd -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
+awsContainerId=$(docker create $add_host_cmd -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://public-files.orthanc.team/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
 
 # CHANGE_VERSION_WIN_INSTALLER
 docker cp OrthancInstaller-Win32.exe $awsContainerId:/tmp/OrthancInstaller-Win32-$branch_tag_name.exe

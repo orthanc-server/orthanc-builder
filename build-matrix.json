@@ -487,8 +487,8 @@
             "artifactsOSX": "libStoneWebViewer.dylib",
             "commentOSX": "# currently always building with wasm-binaries from latest offical version",
             "buildForOSX": true,
-            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
-            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
+            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
+            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
@@ -853,8 +853,8 @@
             "artifactsOSX": "libOrthancVolView.dylib",
             "buildForOSX": true,
             "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
-            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-volview-dist-builds/stable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
-            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.osimis.io/nightly-volview-dist-builds/unstable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
+            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/nightly-volview-dist-builds/stable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
+            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/nightly-volview-dist-builds/unstable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
             "windows": [{
                 "Description": "Kitware's VolView plugin for Orthanc",
                 "Mandatory": false,
