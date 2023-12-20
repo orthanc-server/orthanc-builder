@@ -495,10 +495,7 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.12-${VERSION}.dll", "Plugins", "OrthancPython3.12.dll", "Comment: # CHANGE_VERSION_PYTHON"]
-                ],
-                "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.12-${VERSION}.dll", "Plugins", "OrthancPython3.12.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/Orthanc-python-3.12/${VERSION}/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ]
             }]
         },
