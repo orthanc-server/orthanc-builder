@@ -736,7 +736,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/Azure",
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
-            "stable": "2.3.0",
+            "stable": "2.3.1",
             "unstable": "default",
             "artifactsWin": "OrthancAzureBlobStorage.dll",
             "buildForMacOS": false,
@@ -760,7 +760,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
-            "stable": "2.3.0",
+            "stable": "2.3.1",
             "unstable": "default",
             "buildForMacOS": false,
             "windows": [{
@@ -771,7 +771,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
-            "stable": "2.3.0",
+            "stable": "2.3.1",
             "unstable": "default",
             "buildForMacOS": false,
             "windows": [{
