@@ -46,7 +46,7 @@ downloadArtifactsFromOrthancOsimisIo() { # $1 config_name
     branchTag=$(getBranchTagToBuildOSX $1 $stable_unstable)
  
     for artifact in $artifacts; do
-        wget "https://public-files.orthanc.team/nightly-osx-builds/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact
+        wget "https://public-files.orthanc.team/tmp-builds/nightly-osx-builds/$branchTag/$artifact" --output-document ${TARGET}/${FOLDER}/$artifact
     done
 }
 
@@ -90,9 +90,9 @@ echo -e "\nThe archive can be found at: ${TARGET}/${FOLDER}.zip\n"
 if [[ $is_tag == "true" ]] && [[ $stable_unstable == "stable" ]]; then
     
     cp ${TARGET}/${FOLDER}.zip ${TARGET}/orthancAndPluginsOSX.stable.zip
-    aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://public-files.orthanc.team/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://public-files.orthanc.team/tmp-builds/osx/stable/ --recursive --exclude "*" --include "orthancAndPluginsOSX*" --cache-control=max-age=1
 
     cp ${TARGET}/${FOLDER}.zip ${TARGET}/Orthanc-OSX-$current_branch_tag.zip
 fi
 
-aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://public-files.orthanc.team/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1
+aws s3 --region eu-west-1 cp /tmp/osx-package/ s3://public-files.orthanc.team/tmp-builds/osx/releases/ --recursive --exclude "*" --include "Orthanc-OSX*.zip" --cache-control=max-age=1

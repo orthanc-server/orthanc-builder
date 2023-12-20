@@ -4,7 +4,7 @@ set -ex
 # This script is only meant to be run inside Docker during the build process.
 # It builds all Orthanc components individually and possibly try to download
 # the component before if it has already been built.
-# It possibly also uploads the components to public-files.orthanc.team
+# It possibly also uploads the components to public-files.orthanc.team/tmp-builds
 
 # example
 # for a CI build
@@ -59,9 +59,9 @@ popd () {
 download() { # $1 file
 
     mkdir -p $buildRootPath
-    already_built=$(($(curl --silent -I https://public-files.orthanc.team/docker-builds/$baseImage/$commitId-$1 | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/docker-builds/$baseImage/$commitId-$1 | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_built == 1 ]]; then
-        wget "https://public-files.orthanc.team/docker-builds/$baseImage/$commitId-$1" --output-document $buildRootPath/$1
+        wget "https://public-files.orthanc.team/tmp-builds/docker-builds/$baseImage/$commitId-$1" --output-document $buildRootPath/$1
         echo 0
     else
         echo 1
@@ -72,7 +72,7 @@ upload() { # $1 file
     if [[ $enableUploads == 1 ]]; then
         echo "uploading $1";
 
-        aws s3 --region eu-west-1 cp $buildRootPath/$1 s3://public-files.orthanc.team/docker-builds/$baseImage/$commitId-$1 --cache-control=max-age=1
+        aws s3 --region eu-west-1 cp $buildRootPath/$1 s3://public-files.orthanc.team/tmp-builds/docker-builds/$baseImage/$commitId-$1 --cache-control=max-age=1
     else
         echo "skipping uploading of $1";
     fi
