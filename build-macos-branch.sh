@@ -68,7 +68,7 @@ fi
 read -a artifacts_array <<< "$artifacts"
 first_artifact=${artifacts_array[0]}
 
-already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-macos-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-macos-universal-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
 
@@ -125,6 +125,6 @@ if [[ $already_built == 0 ]]; then
 
     done
 
-    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://public-files.orthanc.team/tmp-builds/nightly-macos-builds/ --recursive --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://public-files.orthanc.team/tmp-builds/nightly-macos-universal-builds/ --recursive --cache-control=max-age=1
 
 fi
