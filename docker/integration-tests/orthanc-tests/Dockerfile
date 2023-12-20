@@ -95,8 +95,8 @@ RUN	DEBIAN_FRONTEND=noninteractive apt-get install -y libtiff-tools
 
 RUN mkdir /apps
 
-RUN wget https://https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomToTiff --output-document /apps/OrthancWSIDicomToTiff --quiet
-RUN wget https://https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomizer --output-document /apps/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomToTiff --output-document /apps/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomizer --output-document /apps/OrthancWSIDicomizer --quiet
 
 RUN chmod +x /apps/*
 
