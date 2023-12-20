@@ -748,7 +748,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-object-storage/OrthancAzureBlobStorage-${VERSION}.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-azure-storage/${VERSION}/OrthancAzureBlobStorage.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
                 ],
                 "Resources": [
                     ["azure.json", "Configuration"]
