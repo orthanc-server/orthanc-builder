@@ -95,4 +95,4 @@ if [[ $is_tag == "true" ]] && [[ $stable_unstable == "stable" ]]; then
     cp ${TARGET}/${FOLDER}.zip ${TARGET}/Orthanc-MacOS-$current_branch_tag.zip
 fi
 
-aws s3 --region eu-west-1 cp /tmp/macoss-package/ s3://public-files.orthanc.team/MacOS-packages/ --recursive --exclude "*" --include "Orthanc-MacOS*.zip" --cache-control=max-age=1
+aws s3 --region eu-west-1 cp /tmp/macos-package/ s3://public-files.orthanc.team/MacOS-packages/ --recursive --exclude "*" --include "Orthanc-MacOS*.zip" --cache-control=max-age=1
