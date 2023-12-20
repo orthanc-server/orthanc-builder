@@ -495,7 +495,7 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/Orthanc-python-3.12/${VERSION}/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-python-3.12/OrthancPython-${VERSION}/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll", "Comment: # CHANGE_VERSION_PYTHON"]
                 ]
             }]
         },
