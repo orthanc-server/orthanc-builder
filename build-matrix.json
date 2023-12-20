@@ -11,20 +11,20 @@
             "repoType": "hg                                    or git",
             "sourcesSubPath": "/OrthancServer                  OPTIONAL path to CMakeLists.txt",
             "comment": "# CHANGE_VERSION_XXX",
-            "stable": "XXX-1.1                                 Name of the stable branch/tag: used by Docker/Win/OSX if not overriden",
-            "unstable": "default                               Name of the unstable branch: used by Docker/Win/OSX if not overriden",
-            "stableOSX": "4b8fd4b10742                         OPTIONAL specific stable branch/tag for OSX",
-            "unstableOSX": "4b8fd4b10742                       OPTIONAL specific unstable branch/tag for OSX",
+            "stable": "XXX-1.1                                 Name of the stable branch/tag: used by Docker/Win/MacOS if not overriden",
+            "unstable": "default                               Name of the unstable branch: used by Docker/Win/MacOS if not overriden",
+            "stableMacOS": "4b8fd4b10742                       OPTIONAL specific stable branch/tag for MacOS",
+            "unstableMacOS": "4b8fd4b10742                     OPTIONAL specific unstable branch/tag for MacOS",
             "stableDocker": "4b8fd4b10742                      OPTIONAL specific stable branch/tag for Docker",
             "unstableDocker": "4b8fd4b10742                    OPTIONAL specific unstable branch/tag for Docker",
-            "artifactsOSX": "libOrthancGdcm.dylib libZZ.dylib  list of space separated artifacts for OSX",
-            "preBuildWin": "                                   OPTIONAL custom pre-build step for OSX",
-            "preBuildStableOSX": "                             OPTIONAL custom pre-build step for OSX",
-            "preBuildUnstableOSX": "                           OPTIONAL custom pre-build step for OSX",
-            "customBuildOSX": "                                OPTIONAL custom pre-build step for OSX",
+            "artifactsMacOS": "libOrthancGdcm.dylib libZZ.dylib  list of space separated artifacts for MacOS",
+            "preBuildWin": "                                   OPTIONAL custom pre-build step for MacOS",
+            "preBuildStableMacOS": "                           OPTIONAL custom pre-build step for MacOS",
+            "preBuildUnstableMacOS": "                         OPTIONAL custom pre-build step for MacOS",
+            "customBuildMacOS": "                              OPTIONAL custom pre-build step for MacOS",
             "unitTests": "./UnitTests                          OPTIONAL",
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2    OPTIONAL",
-            "buildForOSX": false,
+            "buildForMacOS": false,
             "windows": [{
                 "Exclude": true,
                 "Description": "Osimis Web viewer (AGPL license)",
@@ -49,12 +49,12 @@
             "comment": "# CHANGE_VERSION_ORTHANC",
             "stable": "Orthanc-1.12.2",
             "unstable": "default",
-            "stableOSX": "Orthanc-1.12.2",
-            "artifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
-            "unstableArtifactsOSX": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
+            "stableMacOS": "Orthanc-1.12.2",
+            "artifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "unstableArtifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
-            "buildForOSX": true,
+            "buildForMacOS": true,
             "windows": [
                 {
                     "Description": "Orthanc server",
@@ -156,7 +156,7 @@
                     ]
                 }
             ],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               {
                 "url" : "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Orthanc",
                 "executable" : true
@@ -177,10 +177,10 @@
             "comment": "# CHANGE_VERSION_PG",
             "stable": "OrthancPostgreSQL-5.1",
             "unstable": "default",
-            "artifactsOSX": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
-            "buildForOSX": true,
+            "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
+            "buildForMacOS": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "PostgreSQL backend (AGPL license)",
                 "Mandatory": false,
@@ -197,7 +197,7 @@
                     ["postgresql.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dylib"
             ]
@@ -210,10 +210,10 @@
             "comment": "# CHANGE_VERSION_MYSQL",
             "stable": "OrthancMySQL-5.1",
             "unstable": "default",
-            "artifactsOSX": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
-            "buildForOSX": true,
+            "artifactsMacOS": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
+            "buildForMacOS": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "MySQL backend (AGPL license)",
                 "Name": "mysql",
@@ -231,7 +231,7 @@
                     ["mysql.json", "Configuration"]
                 ]            
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dylib"
             ]
@@ -244,10 +244,10 @@
             "comment": "# CHANGE_VERSION_ODBC",
             "stable": "OrthancOdbc-1.1",
             "unstable": "default",
-            "artifactsOSX": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
-            "buildForOSX": true,
+            "artifactsMacOS": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
+            "buildForMacOS": true,
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "ODBC backend (AGPL license)",
                 "Mandatory": false,
@@ -264,7 +264,7 @@
                     ["odbc.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dylib"
             ]
@@ -276,9 +276,9 @@
             "comment": "# CHANGE_VERSION_TRANSFERS",
             "stable": "OrthancTransfers-1.4",
             "unstable": "default",
-            "artifactsOSX": "libOrthancTransfers.dylib",
-            "buildForOSX": true,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "artifactsMacOS": "libOrthancTransfers.dylib",
+            "buildForMacOS": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
                 "Description": "Transfers accelerator (AGPL license)",
@@ -294,7 +294,7 @@
                     ["transfers.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-transfers/OrthancTransfers-${VERSION}.dylib"
             ]
         },
@@ -305,9 +305,9 @@
             "comment": "# CHANGE_VERSION_INDEXER",
             "stable": "OrthancIndexer-1.0",
             "unstable": "default",
-            "artifactsOSX": "libOrthancIndexer.dylib",
-            "buildForOSX": true,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "artifactsMacOS": "libOrthancIndexer.dylib",
+            "buildForMacOS": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Folder indexer plugin",
                 "Mandatory": false,
@@ -322,7 +322,7 @@
                     ["indexer.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-indexer/OrthancIndexer-${VERSION}.dylib"
             ]
         },
@@ -333,9 +333,9 @@
             "comment": "# CHANGE_VERSION_TCIA",
             "stable": "OrthancTcia-1.1",
             "unstable": "default",
-            "artifactsOSX": "libOrthancTcia.dylib",
-            "buildForOSX": true,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "artifactsMacOS": "libOrthancTcia.dylib",
+            "buildForMacOS": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "The Cancer Imaging Archive plugin",
                 "Mandatory": false,
@@ -350,7 +350,7 @@
                     ["tcia.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-tcia/OrthancTcia-${VERSION}.dylib"
             ]
         },
@@ -361,8 +361,8 @@
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
             "unstable": "41cd08e0e878",
-            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForOSX": false,
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
             "windows": [{
             }]
         },
@@ -373,8 +373,8 @@
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
             "unstable": "default",
-            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForOSX": false,
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
             "buildForWin": true,
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.8 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.8.10/x64/",
             "artifactsWin": "OrthancPython.dll",
@@ -401,8 +401,8 @@
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
             "unstable": "default",
-            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForOSX": false,
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
             "buildForWin": true,
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.9 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.9.13/x64/",
             "artifactsWin": "OrthancPython.dll",
@@ -428,8 +428,8 @@
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
             "unstable": "default",
-            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForOSX": false,
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
             "buildForWin": true,
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.10 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.10.11/x64/",
             "artifactsWin": "OrthancPython.dll",
@@ -455,8 +455,8 @@
             "comment": "# CHANGE_VERSION_PYTHON",
             "stable": "OrthancPython-4.1",
             "unstable": "default",
-            "commentOSX": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForOSX": false,
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
             "buildForWin": true,
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.6/x64/",
             "artifactsWin": "OrthancPython.dll",
@@ -484,13 +484,13 @@
             "stable": "5970030a413c",
             "BuildbotVersion" : "2.5",
             "unstable": "default",
-            "artifactsOSX": "libStoneWebViewer.dylib",
-            "commentOSX": "# currently always building with wasm-binaries from latest offical version",
-            "buildForOSX": true,
-            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
-            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
+            "artifactsMacOS": "libStoneWebViewer.dylib",
+            "commentMacOS": "# currently always building with wasm-binaries from latest offical version",
+            "buildForMacOS": true,
+            "preBuildStableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
+            "preBuildUnstableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Stone Web viewer (AGPL license)",
                 "Name": "stone_web_viewer",
@@ -506,7 +506,7 @@
                     ["stone-webviewer.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/stone-web-viewer/StoneWebViewer-${VERSION}.dylib"
             ]
         },
@@ -517,10 +517,10 @@
             "comment": "# CHANGE_VERSION_DW",
             "stable": "OrthancDicomWeb-1.16",
             "unstable": "default",
-            "artifactsOSX": "libOrthancDicomWeb.dylib",
+            "artifactsMacOS": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
-            "buildForOSX": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
+            "buildForMacOS": true,
             "buildForWin": true,
             "unitTests": "UnitTests",
             "windows": [{
@@ -537,7 +537,7 @@
                     ["dicomweb.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dylib"
             ]
         },
@@ -548,11 +548,11 @@
             "comment": "# CHANGE_VERSION_GDCM",
             "stable": "OrthancGdcm-1.5",
             "unstable": "default",
-            "stableOSX": "4b8fd4b10742",
-            "artifactsOSX": "libOrthancGdcm.dylib",
-            "customBuildOSX" : "cmake -B $workspace/build-arm64 $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
-            "buildForOSX": true,
+            "stableMacOS": "4b8fd4b10742",
+            "artifactsMacOS": "libOrthancGdcm.dylib",
+            "customBuildMacOS" : "cmake -B $workspace/build-arm64 $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
+            "buildForMacOS": true,
             "windows": [{
                 "Description": "GDCM decoder/transcoder",
                 "Mandatory": false,
@@ -564,7 +564,7 @@
                     ["windows-32/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-gdcm/OrthancGdcm-${VERSION}.dylib"
             ]
         },
@@ -576,8 +576,8 @@
             "comment": "# CHANGE_VERSION_WSI",
             "stable": "OrthancWSI-2.0",
             "unstable": "default",
-            "commentOSX": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
-            "buildForOSX": false,
+            "commentMacOS": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
+            "buildForMacOS": false,
             "windows": [
                 {
                     "Description": "Web viewer of whole-slide microscopic images (AGPL license)",
@@ -652,7 +652,7 @@
                     ]
                 }
             ],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-wsi/OrthancWSI-${VERSION}.dylib"
             ]
         },
@@ -663,9 +663,9 @@
             "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
             "stable": "OrthancWebViewer-2.8",
             "unstable": "default",
-            "artifactsOSX": "libOrthancWebViewer.dylib",
-            "buildForOSX": true,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "artifactsMacOS": "libOrthancWebViewer.dylib",
+            "buildForMacOS": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
                 "Description": "Web Viewer of medical images (AGPL license)",
@@ -678,7 +678,7 @@
                     ["windows-32/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-webviewer/OrthancWebViewer-${VERSION}.dylib"
             ]
         },
@@ -689,8 +689,8 @@
             "comment": "# CHANGE_VERSION_AUTH",
             "stable": "0.6.2",
             "unstable": "default",
-            "artifactsOSX": "libOrthancAuthorization.dylib",
-            "buildForOSX": false,
+            "artifactsMacOS": "libOrthancAuthorization.dylib",
+            "buildForMacOS": false,
             "windows": [{
                 "Description": "Advanced authorization plugin (AGPL license)",
                 "Mandatory": false,
@@ -702,7 +702,7 @@
                     ["windows-32/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-authorization/OrthancAuthorization-${VERSION}.dylib"
             ]
         },
@@ -715,7 +715,7 @@
             "stable": "2.3.0",
             "unstable": "default",
             "artifactsWin": "OrthancAzureBlobStorage.dll",
-            "buildForOSX": false,
+            "buildForMacOS": false,
             "buildForWin": true,
             "preBuildWin": "cd /c/vcpkg && git checkout 2023.06.20 && vcpkg install cryptopp:x64-windows-static azure-storage-blobs-cpp:x64-windows-static",
             "extraCMakeFlagsWin": "-DCMAKE_TOOLCHAIN_FILE=/c/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static",
@@ -738,7 +738,7 @@
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
             "stable": "2.3.0",
             "unstable": "default",
-            "buildForOSX": false,
+            "buildForMacOS": false,
             "windows": [{
             }]
         },
@@ -749,7 +749,7 @@
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
             "stable": "2.3.0",
             "unstable": "default",
-            "buildForOSX": false,
+            "buildForMacOS": false,
             "windows": [{
             }]
         },
@@ -760,11 +760,11 @@
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
             "stable": "1.2.0",
             "unstable": "master",
-            "unstableOSX": "1.2.0", 
-            "comment2": "this plugin has its own build process on Github -> OSX and Win64 are built by Github",
-            "buildForOSX": false,
-            "artifactsOSX": "libOrthancExplorer2-universal.dylib",
-            "rootDownloadForOSX": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/",
+            "unstableMacOS": "1.2.0", 
+            "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/",
             "windows": [{
                 "Description": "Orthanc Explorer 2 User Interface",
                 "Mandatory": false,
@@ -780,7 +780,7 @@
                     ["orthanc-explorer-2.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dylib"
             ]
         },
@@ -793,10 +793,10 @@
             "stable": "dev",
             "unstable": "dev",
             "BuildbotVersion": "1.4.2",
-            "buildForOSX": true,
-            "customBuildOSX" : "cmake -B $workspace/build-arm64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-arm64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-amd64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOsimisWebViewer.dylib $workspace/build-amd64/libOsimisWebViewer.dylib $workspace/build-arm64/libOsimisWebViewer.dylib",
+            "buildForMacOS": true,
+            "customBuildMacOS" : "cmake -B $workspace/build-arm64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-arm64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 -DVIEWER_VERSION_FULL=1.4.2-3-g644c3c5 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-amd64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOsimisWebViewer.dylib $workspace/build-amd64/libOsimisWebViewer.dylib $workspace/build-arm64/libOsimisWebViewer.dylib",
             "unitTests": "./UnitTests",
-            "artifactsOSX": "libOsimisWebViewer.dylib",
+            "artifactsMacOS": "libOsimisWebViewer.dylib",
             "windows": [{
                 "Description": "Osimis Web viewer (AGPL license)",
                 "Name": "osimis_web_viewer",
@@ -812,7 +812,7 @@
                     ["webviewer.json", "Configuration"]
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/osimis-web-viewer/OsimisWebViewer-${VERSION}.dylib"
             ]
         },
@@ -823,9 +823,9 @@
             "comment": "# CHANGE_VERSION_NEURO",
             "stable": "OrthancNeuro-1.0",
             "unstable": "default",
-            "artifactsOSX": "libOrthancNeuro.dylib",
-            "buildForOSX": true,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
+            "artifactsMacOS": "libOrthancNeuro.dylib",
+            "buildForMacOS": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Neuroimaging plugin",
                 "Mandatory": false,
@@ -839,7 +839,7 @@
                 "Resources": [
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-neuro/OrthancNeuro-${VERSION}.dylib"
             ]
         },
@@ -850,11 +850,11 @@
             "comment": "# CHANGE_VERSION_VOLVIEW",
             "stable": "OrthancVolView-1.1",
             "unstable": "default",
-            "artifactsOSX": "libOrthancVolView.dylib",
-            "buildForOSX": true,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
-            "preBuildStableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/stable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
-            "preBuildUnstableOSX": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/unstable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
+            "artifactsMacOS": "libOrthancVolView.dylib",
+            "buildForMacOS": true,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
+            "preBuildStableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/stable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
+            "preBuildUnstableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/unstable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
             "windows": [{
                 "Description": "Kitware's VolView plugin for Orthanc",
                 "Mandatory": false,
@@ -868,7 +868,7 @@
                 "Resources": [
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-volview/OrthancVolView-${VERSION}.dylib"
             ]
         },
@@ -879,11 +879,11 @@
             "comment": "# CHANGE_VERSION_OHIF",
             "stable": "OrthancOHIF-1.1",
             "unstable": "default",
-            "artifactsOSX": "libOrthancOHIF.dylib",
-            "buildForOSX": false,
-            "extraCMakeFlagsOSX": "-DUSE_LEGACY_BOOST=ON",
-            "preBuildStableOSX": "TODO viewer=Viewers-3.6.0 && rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/$viewer.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p /tmp/ohif && tar xvf /tmp/downloads/dist.tar.gz -C /tmp/ohif && cd /tmp/ohif/$viewer && npm install &&  mkdir -p ${GITHUB_WORKSPACE}/source/OHIF && cp -r /tmp/ohif",
-            "preBuildUnstableOSX": "TODO rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist",
+            "artifactsMacOS": "libOrthancOHIF.dylib",
+            "buildForMacOS": false,
+            "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
+            "preBuildStableMacOS": "TODO viewer=Viewers-3.6.0 && rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/$viewer.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p /tmp/ohif && tar xvf /tmp/downloads/dist.tar.gz -C /tmp/ohif && cd /tmp/ohif/$viewer && npm install &&  mkdir -p ${GITHUB_WORKSPACE}/source/OHIF && cp -r /tmp/ohif",
+            "preBuildUnstableMacOS": "TODO rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.6.0.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist",
             "windows": [{
                 "Description": "OHIF plugin for Orthanc",
                 "Mandatory": false,
@@ -897,7 +897,7 @@
                 "Resources": [
                 ]
             }],
-            "downloadsOSX" : [
+            "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-ohif/OrthancOHIF-${VERSION}.dylib"
             ]
         }

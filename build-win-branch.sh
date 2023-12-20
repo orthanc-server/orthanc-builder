@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sample command
-# ./build-osx-branch.sh version=stable configName="Orthanc-tcia" workspace="/tmp/orthanc-builder"
+# ./build-win-branch.sh version=stable configName="Orthanc-tcia" workspace="/tmp/orthanc-builder"
 
 set -ex
 

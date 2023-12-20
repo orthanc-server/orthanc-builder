@@ -83,9 +83,9 @@ jobs:
       aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
-  osx-stable-build:
+  macos-stable-build:
     needs: [pre-build, build-stone-wasm-stable, build-volview-dist-stable]
-    uses: ./.github/workflows/build-osx-binaries.yml
+    uses: ./.github/workflows/build-macos-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       stable_unstable: stable
@@ -94,9 +94,9 @@ jobs:
       aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
-  osx-unstable-build:
+  macos-unstable-build:
     needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
-    uses: ./.github/workflows/build-osx-binaries.yml
+    uses: ./.github/workflows/build-macos-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       stable_unstable: unstable
@@ -106,9 +106,9 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
 
-  osx-stable-package:
-    needs: [pre-build, osx-stable-build]
-    uses: ./.github/workflows/build-osx-package.yml
+  macos-stable-package:
+    needs: [pre-build, macos-stable-build]
+    uses: ./.github/workflows/build-macos-package.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       stable_unstable: stable
@@ -117,9 +117,9 @@ jobs:
       aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
-  osx-unstable-package:
-    needs: [pre-build, osx-unstable-build]
-    uses: ./.github/workflows/build-osx-package.yml
+  macos-unstable-package:
+    needs: [pre-build, macos-unstable-build]
+    uses: ./.github/workflows/build-macos-package.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       stable_unstable: unstable

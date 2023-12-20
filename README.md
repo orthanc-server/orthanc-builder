@@ -23,7 +23,7 @@ Windows Installer and MacOS package are collecting build artifacts from the Orth
 - [Docker image (linux/amd64)](https://hub.docker.com/r/osimis/orthanc) (`osimis/orthanc:master-unstable` image)
 <!-- - [Windows 64 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win64-master.exe) these are actually 'stable'!-->
 <!-- - [Windows 32 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win32-master.exe) these are actually 'stable'!-->
-- [MacOS package (Universal)](https://public-files.orthanc.team/tmp-builds/osx/releases/Orthanc-OSX-master-unstable.zip)
+- [MacOS package (Universal)](https://public-files.orthanc.team/MacOS-packages/Orthanc-MacOS-master-unstable.zip)
 
 
 **Notes**: 
