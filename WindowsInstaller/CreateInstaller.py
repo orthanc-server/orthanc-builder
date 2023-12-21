@@ -151,15 +151,25 @@ def Download(url, target):
         g.write(r.content)
 
 def GetDownloadBasename(download):
-    if len(download) <= 2:
-        return os.path.basename(download[0]).split('?')[0]
-    else:
+    assert(len(download) in [2, 3])
+    assert(download[0].endswith('.dll') or download[0].endswith('.exe'))
+
+    if len(download) == 3:
+        assert(not download[2].startswith('Comment:'))
+        assert(download[2].endswith('.dll') or download[2].endswith('.exe'))
         return download[2]
+    else:
+        assert(not '?' in download[0])
+        return os.path.basename(download[0])
+
 
 def GetArtifactBasename(artifact):
-    # 2 of artifact can be a comment or a rename
-    if len(artifact) >=3 and ".dll" in artifact[2] or ".exe" in artifact[2]:
-        # rename the artifact
+    assert(len(artifact) in [2, 3])
+    assert(artifact[0].endswith('.dll') or artifact[0].endswith('.exe'))
+
+    if len(artifact) == 3:
+        assert(not artifact[2].startswith('Comment:'))
+        assert(artifact[2].endswith('.dll') or artifact[2].endswith('.exe'))
         return artifact[2]
     else:
         return os.path.basename(artifact[0])
@@ -190,6 +200,8 @@ for repo in MATRIX['configs']:
                 continue
 
             # downloads
+
+            print('Downloading: %s' % component['Description'])
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:

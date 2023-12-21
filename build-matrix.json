@@ -60,10 +60,10 @@
                     "Description": "Orthanc server",
                     "Mandatory": true,
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/Orthanc.exe", ""]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/Orthanc.exe", "", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/Orthanc.exe", ""]
                     ]
                 },
                 {
@@ -71,10 +71,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins"]
                     ],
                     "Resources": [
                         ["worklists.json", "Configuration"]
@@ -85,10 +85,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/ServeFolders.dll", "Plugins"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/ServeFolders.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/ServeFolders.dll", "Plugins"]
                     ],
                     "Resources": [
                         ["serve-folders.json", "Configuration"]
@@ -99,10 +99,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/ConnectivityChecks.dll", "Plugins"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/ConnectivityChecks.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/ConnectivityChecks.dll", "Plugins"]
                     ]
                 },
                 {
@@ -110,10 +110,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/Housekeeper.dll", "Plugins"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/Housekeeper.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/Housekeeper.dll", "Plugins"]
                     ],
                     "Resources": [
                         ["housekeeper.json", "Configuration"]
@@ -124,10 +124,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/DelayedDeletion.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/DelayedDeletion.dll", "Plugins"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/DelayedDeletion.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/DelayedDeletion.dll", "Plugins"]
                     ],
                     "Resources": [
                         ["delayed-deletion.json", "Configuration"]
@@ -138,10 +138,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/MultitenantDicom.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/MultitenantDicom.dll", "Plugins"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/MultitenantDicom.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/MultitenantDicom.dll", "Plugins"]
                     ]
                 },
                 {
@@ -149,10 +149,10 @@
                     "Mandatory": false,
                     "Category": "tools",
                     "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-64/orthanc/${VERSION}/OrthancRecoverCompressedFile.exe", "Tools"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/OrthancRecoverCompressedFile.exe", "Tools", "Comment: # CHANGE_VERSION_ORTHANC"]
+                        ["windows-32/orthanc/${VERSION}/OrthancRecoverCompressedFile.exe", "Tools"]
                     ]
                 }
             ],
@@ -186,12 +186,12 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
-                    ["windows-64/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                    ["windows-64/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
+                    ["windows-64/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Index.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"],
-                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Storage.dll", "Plugins", "Comment: # CHANGE_VERSION_PG"]
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Index.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Storage.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
                 ],
                 "Resources": [
                     ["postgresql.json", "Configuration"]
@@ -220,12 +220,12 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["windows-64/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
-                    ["windows-64/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                    ["windows-64/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dll", "Plugins", "OrthancMySQLIndex.dll"],
+                    ["windows-64/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "OrthancMySQLStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Index.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"],
-                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Storage.dll", "Plugins", "Comment: # CHANGE_VERSION_MYSQL"]
+                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Index.dll", "Plugins", "OrthancMySQLIndex.dll"],
+                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Storage.dll", "Plugins", "OrthancMySQLStorage.dll"]
                 ],
                 "Resources": [
                     ["mysql.json", "Configuration"]
@@ -253,12 +253,12 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["windows-64/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
-                    ["windows-64/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+                    ["windows-64/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dll", "Plugins", "OrthancOdbcIndex.dll"],
+                    ["windows-64/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dll", "Plugins", "OrthancOdbcStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Index.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"],
-                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Storage.dll", "Plugins", "Comment: # CHANGE_VERSION_ODBC"]
+                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Index.dll", "Plugins", "OrthancOdbcIndex.dll"],
+                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Storage.dll", "Plugins", "OrthancOdbcStorage.dll"]
                 ],
                 "Resources": [
                     ["odbc.json", "Configuration"]
@@ -285,10 +285,10 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["windows-64/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                    ["windows-64/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "OrthancTransfers.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TRANSFERS"]
+                    ["windows-32/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "OrthancTransfers.dll"]
                 ],
                 "Resources": [
                     ["transfers.json", "Configuration"]
@@ -313,10 +313,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-indexer/OrthancIndexer-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+                    ["windows-64/orthanc-indexer/OrthancIndexer-Win64-${VERSION}.dll", "Plugins", "OrthancIndexer.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-indexer/OrthancIndexer-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_INDEXER"]
+                    ["windows-32/orthanc-indexer/OrthancIndexer-Win32-${VERSION}.dll", "Plugins", "OrthancIndexer.dll"]
                 ],
                 "Resources": [
                     ["indexer.json", "Configuration"]
@@ -341,10 +341,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-tcia/OrthancTcia-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                    ["windows-64/orthanc-tcia/OrthancTcia-Win64-${VERSION}.dll", "Plugins", "OrthancTcia.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-tcia/OrthancTcia-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_TCIA"]
+                    ["windows-32/orthanc-tcia/OrthancTcia-Win32-${VERSION}.dll", "Plugins", "OrthancTcia.dll"]
                 ],
                 "Resources": [
                     ["tcia.json", "Configuration"]
@@ -386,12 +386,11 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll", "Comment: # CHANGE_VERSION_PYTHON"]
-                ],
-                "Target": "OrthancPython3.8.dll"
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll"]
+                ]
             }]
         },
         {
@@ -414,10 +413,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll"]
                 ]
             }]
         },
@@ -441,10 +440,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll"]
                 ]
             }]
         },
@@ -468,10 +467,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll"]
                 ]
             }]
         },
@@ -495,7 +494,7 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-python-3-12/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll", "Comment: # CHANGE_VERSION_PYTHON"]
+                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-python-3-12/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll"]
                 ]
             }]
         },
@@ -521,10 +520,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                    ["windows-64/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "libStoneWebViewer-Windows64.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_STONE_WEB_VIEWER"]
+                    ["windows-32/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "libStoneWebViewer-Windows32.dll"]
                 ],
                 "Resources": [
                     ["stone-webviewer.json", "Configuration"]
@@ -552,10 +551,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                    ["windows-64/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dll", "Plugins", "OrthancDicomWeb.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_DW"]
+                    ["windows-32/orthanc-dicomweb/OrthancDicomWeb-${VERSION}.dll", "Plugins", "OrthancDicomWeb.dll"]
                 ],
                 "Resources": [
                     ["dicomweb.json", "Configuration"]
@@ -582,10 +581,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                    ["windows-64/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "OrthancGdcm.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_GDCM"]
+                    ["windows-32/orthanc-gdcm/OrthancGdcm-${VERSION}.dll", "Plugins", "OrthancGdcm.dll"]
                 ]
             }],
             "downloadsMacOS" : [
@@ -608,10 +607,10 @@
                     "Mandatory": false,
                     "Category": "plugins",
                     "Artifacts64": [
-                        ["windows-64/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-64/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "OrthancWSI.dll"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-32/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "OrthancWSI.dll"]
                     ]
                 },
                 {
@@ -620,12 +619,12 @@
                     "Mandatory": false,
                     "Category": "tools/wsi",
                     "Artifacts64": [
-                        ["windows-64/orthanc-wsi/OrthancWSIDicomizer-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"],
-                        ["windows-64/orthanc-wsi/OrthancWSIDicomToTiff-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-64/orthanc-wsi/OrthancWSIDicomizer-${VERSION}.exe", "Tools", "OrthancWSIDicomizer.exe"],
+                        ["windows-64/orthanc-wsi/OrthancWSIDicomToTiff-${VERSION}.exe", "Tools", "OrthancWSIDicomToTiff.exe"]
                     ],
                     "Artifacts32": [
-                        ["windows-32/orthanc-wsi/OrthancWSIDicomizer-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"],
-                        ["windows-32/orthanc-wsi/OrthancWSIDicomToTiff-${VERSION}.exe", "Plugins", "Comment: # CHANGE_VERSION_WSI"]
+                        ["windows-32/orthanc-wsi/OrthancWSIDicomizer-${VERSION}.exe", "Tools", "OrthancWSIDicomizer.exe"],
+                        ["windows-32/orthanc-wsi/OrthancWSIDicomToTiff-${VERSION}.exe", "Tools", "OrthancWSIDicomToTiff.exe"]
                     ]
                 },
                 {
@@ -696,10 +695,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+                    ["windows-64/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "OrthancWebViewer.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_WEB_VIEWER"]
+                    ["windows-32/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "OrthancWebViewer.dll"]
                 ]
             }],
             "downloadsMacOS" : [
@@ -720,10 +719,10 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["windows-64/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                    ["windows-64/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "OrthancAuthorization.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_AUTH"]
+                    ["windows-32/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "OrthancAuthorization.dll"]
                 ]
             }],
             "downloadsMacOS" : [
@@ -748,7 +747,7 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Downloads64": [
-                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-azure-storage/${VERSION}/OrthancAzureBlobStorage.dll", "Plugins", "OrthancAzureBlobStorage.dll", "Comment: # CHANGE_VERSION_AZURE_OBJECT_STORAGE"]
+                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-azure-storage/${VERSION}/OrthancAzureBlobStorage.dll", "Plugins", "OrthancAzureBlobStorage.dll"]
                 ],
                 "Resources": [
                     ["azure.json", "Configuration"]
@@ -795,10 +794,10 @@
                 "Category": "plugins",
                 "Comment": "Win64 is coming from Github while Win32 is coming from buildbot",
                 "Artifacts64": [
-                    ["windows-64/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                    ["windows-64/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "OrthancExplorer2.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_ORTHANC_EXPLORER_2"]
+                    ["windows-32/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "OrthancExplorer2.dll"]
                 ],
                 "Resources": [
                     ["orthanc-explorer-2.json", "Configuration"]
@@ -827,10 +826,10 @@
                 "Mandatory": false,
                 "Category": "osimis",
                 "Artifacts64": [
-                    ["windows-64/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                    ["windows-64/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "OsimisWebViewer.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_WVB"]
+                    ["windows-32/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "OsimisWebViewer.dll"]
                 ],
                 "Resources": [
                     ["webviewer.json", "Configuration"]
@@ -855,10 +854,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-neuro/OrthancNeuro-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
+                    ["windows-64/orthanc-neuro/OrthancNeuro-Win64-${VERSION}.dll", "Plugins", "OrthancNeuro.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-neuro/OrthancNeuro-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_NEURO"]
+                    ["windows-32/orthanc-neuro/OrthancNeuro-Win32-${VERSION}.dll", "Plugins", "OrthancNeuro.dll"]
                 ],
                 "Resources": [
                 ]
@@ -884,10 +883,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-volview/OrthancVolView-Win64-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                    ["windows-64/orthanc-volview/OrthancVolView-Win64-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows64.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-volview/OrthancVolView-Win32-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_VOLVIEW"]
+                    ["windows-32/orthanc-volview/OrthancVolView-Win32-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows32.dll"]
                 ],
                 "Resources": [
                 ]
@@ -913,10 +912,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
+                    ["windows-64/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "libOrthancOHIF-Windows64.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "Comment: # CHANGE_VERSION_OHIF"]
+                    ["windows-32/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "libOrthancOHIF-Windows32.dll"]
                 ],
                 "Resources": [
                 ]
