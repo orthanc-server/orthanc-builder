@@ -64,6 +64,11 @@ python3 -u main.py --pattern=Concurrency.* \
                    --orthanc_under_tests_http_port=8043
 
 
+######## PG upgrades
+
+python3 -u main.py --pattern=PostgresUpgrades.* \
+                   --orthanc_under_tests_docker_image=osimis/orthanc:$tagToTest
+
 ######## housekeeper
 
 previous_image=osimis/orthanc:22.4.0
