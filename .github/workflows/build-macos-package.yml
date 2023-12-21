@@ -21,16 +21,16 @@ on:
 
 jobs:
 
-  build-osx-package:
-    name: build-osx-package
+  build-macos-package:
+    name: build-macos-package
     runs-on: "ubuntu-latest"
 
     steps:
 
     - uses: actions/checkout@v3
 
-    - name: Build OSX Package
-      run: ./build-osx-package.sh is_tag=${{ inputs.is_tag }} stable_unstable=${{ inputs.stable_unstable }} current_branch_tag=${{ inputs.current_branch_tag }}
+    - name: Build MacOS Package
+      run: ./build-macos-package.sh is_tag=${{ inputs.is_tag }} stable_unstable=${{ inputs.stable_unstable }} current_branch_tag=${{ inputs.current_branch_tag }}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

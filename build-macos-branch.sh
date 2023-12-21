@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sample command
-# ./build-osx-branch.sh version=stable configName="Orthanc-tcia" workspace="/tmp/orthanc-builder"
+# ./build-macos-branch.sh version=stable configName="Orthanc-tcia" workspace="/tmp/orthanc-builder"
 
 set -ex
 
@@ -22,17 +22,17 @@ do
 done
 
 
-commit_id=$(getCommitId $configName $version osx)
-branchTag=$(getBranchTagToBuildOSX $configName $version)
+commit_id=$(getCommitId $configName $version macos)
+branchTag=$(getBranchTagToBuildMacOS $configName $version)
 repo=$(getFromMatrix $configName repo)
 repoType=$(getFromMatrix $configName repoType)
 extraCMakeFlags=$(getFromMatrix $configName extraCMakeFlags)
 sourcesSubPath=$(getFromMatrix $configName sourcesSubPath)
 unitTests=$(getFromMatrix $configName unitTests)
-artifacts=$(getArtifactsOSX $configName $version)
-prebuildStep=$(getPrebuildStepOSX $configName $version)
-customBuild=$(getCustomBuildOSX $configName $version)
-extraCMakeFlagsOSX=$(getFromMatrix $configName extraCMakeFlagsOSX)
+artifacts=$(getArtifactsMacOS $configName $version)
+prebuildStep=$(getPrebuildStepMacOS $configName $version)
+customBuild=$(getCustomBuildMacOS $configName $version)
+extraCMakeFlagsMacOS=$(getFromMatrix $configName extraCMakeFlagsMacOS)
 
 
 echo "configName = $configName"
@@ -47,7 +47,7 @@ echo "unitTests = $unitTests"
 echo "artifacts = $artifacts"
 echo "prebuildStep = $prebuildStep"
 echo "customBuild = $customBuild"
-echo "extraCMakeFlagsOSX = $extraCMakeFlagsOSX"
+echo "extraCMakeFlagsMacOS = $extraCMakeFlagsMacOS"
 
 if [[ $repoType == "hg" ]]; then
 
@@ -68,7 +68,7 @@ fi
 read -a artifacts_array <<< "$artifacts"
 first_artifact=${artifacts_array[0]}
 
-already_built=$(($(curl --silent -I https://orthanc.osimis.io/nightly-osx-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-macos-universal-builds/$last_commit_id/$first_artifact | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
 
@@ -85,7 +85,7 @@ if [[ $already_built == 0 ]]; then
     else
     
         # generic build steps
-        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsOSX -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
+        cmake -B $workspace/build $extraCMakeFlags $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"  $workspace/sources$sourcesSubPath
         cd $workspace/build
         make -j 6
     
@@ -125,6 +125,6 @@ if [[ $already_built == 0 ]]; then
 
     done
 
-    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://orthanc.osimis.io/nightly-osx-builds/ --recursive --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp /tmp/artifacts/ s3://public-files.orthanc.team/tmp-builds/nightly-macos-universal-builds/ --recursive --cache-control=max-age=1
 
 fi

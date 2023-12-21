@@ -34,7 +34,7 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@main        
         with:
           inputFile: 'build-matrix.json'
-          filter: 'configs[?buildForOSX]'
+          filter: 'configs[?buildForMacOS]'
 
       - name: output
         run: |
@@ -55,7 +55,7 @@ jobs:
       id: build-binaries
       run: |
         pip3 install mercurial
-        ./build-osx-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
+        ./build-macos-branch.sh version=${{ inputs.stable_unstable }} configName="${{matrix.name}}" workspace="${{github.workspace}}"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

@@ -33,9 +33,12 @@ else
 fi
 
 
+add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
+
 # docker build --progress=plain -t installer-builder-32 -f Dockerfile --build-arg VERSION=$version --build-arg PLATFORM=32 ..
 
 docker $build \
+    $add_host_cmd \
     --progress=plain -t installer-builder-32 \
     --build-arg VERSION=$version \
     --build-arg PLATFORM=32 \
@@ -56,6 +59,7 @@ docker rm $dockerContainerId
 
 # build Windows 64 bits
 docker $build \
+    $add_host_cmd \
     --progress=plain -t installer-builder-64 \
     --build-arg VERSION=$version \
     --build-arg PLATFORM=64 \
@@ -76,7 +80,7 @@ docker rm $dockerContainerId
 # we first need to create the container before we can copy files to it
 export AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY
-awsContainerId=$(docker create -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://orthanc.osimis.io/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
+awsContainerId=$(docker create $add_host_cmd -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY anigeo/awscli s3 --region eu-west-1 cp /tmp/ s3://public-files.orthanc.team/tmp-builds/win-installer/ --recursive --exclude "*" --include "OrthancInstaller*" --cache-control=max-age=1)
 
 # CHANGE_VERSION_WIN_INSTALLER
 docker cp OrthancInstaller-Win32.exe $awsContainerId:/tmp/OrthancInstaller-Win32-$branch_tag_name.exe

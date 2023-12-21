@@ -11,6 +11,14 @@ Only the default tags are listed here.  You just need to append `-full` for the 
           - temporaritly removed ODBC and MySQL plugin
           - upgraded PostgreSQL plugin to pg-transactions branch (in the -unstable builds)
           - new env var ORTHANC__POSTGRESQL__TRANSACTION_MODE
+23.12.1:  - WIN-INSTALLER: reverted old paths in Windows installers to allow reinstall/uninstall 
+                           (bug introduced in 23.11.1)
+23.12.0:  - upgraded Orthanc to 1.12.2
+          - upgraded DICOMweb plugin to 1.16
+          - upgraded Orthanc Explorer 2 plugin to 1.2.0
+          - upgraded advanced authorization plugin to 0.6.2
+          - upgraded StoneWebViewer to 2.5+5970030a413c (Docker images only)
+          - upgraded object-storage plugins to 2.3.1
           - upgraded base image to debian:bullseye-20231120-slim
 23.11.1:  - upgraded OHIF plugin to 1.1
           - upgraded base image to debian:bullseye-20231030-slim

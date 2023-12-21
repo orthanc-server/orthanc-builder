@@ -24,28 +24,28 @@ getIntegTestsRevision() { # $1 = stable/unstable
     echo $value
 }
 
-getArtifactsOSX() { # $1 = name, $2 = version (stable or unstable) 
+getArtifactsMacOS() { # $1 = name, $2 = version (stable or unstable) 
     if [[ $2 == "unstable" ]]; then
 
-        artifacts=$(getFromMatrix $1 unstableArtifactsOSX)
+        artifacts=$(getFromMatrix $1 unstableArtifactsMacOS)
 
         if [[ $artifacts == "" ]]; then
-            artifacts=$(getFromMatrix $1 artifactsOSX)
+            artifacts=$(getFromMatrix $1 artifactsMacOS)
         fi
 
     else
 
-        artifacts=$(getFromMatrix $1 artifactsOSX)
+        artifacts=$(getFromMatrix $1 artifactsMacOS)
 
     fi
 
     echo $artifacts
 }
 
-getBranchTagToBuildOSX() { # $1 = name, $2 = version (stable or unstable)
+getBranchTagToBuildMacOS() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
 
-        revision=$(getFromMatrix $1 stableOSX)
+        revision=$(getFromMatrix $1 stableMacOS)
 
         if [[ $revision == "" ]]; then
             revision=$(getFromMatrix $1 stable)
@@ -53,7 +53,7 @@ getBranchTagToBuildOSX() { # $1 = name, $2 = version (stable or unstable)
 
     else
 
-        revision=$(getFromMatrix $1 unstableOSX)
+        revision=$(getFromMatrix $1 unstableMacOS)
 
         if [[ $revision == "" ]]; then
             revision=$(getFromMatrix $1 unstable)
@@ -64,21 +64,21 @@ getBranchTagToBuildOSX() { # $1 = name, $2 = version (stable or unstable)
     echo $revision
 }
 
-getPrebuildStepOSX() { # $1 = name, $2 = version (stable or unstable)
+getPrebuildStepMacOS() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
-        prebuild=$(getFromMatrix $1 preBuildStableOSX "")
+        prebuild=$(getFromMatrix $1 preBuildStableMacOS "")
     else
-        prebuild=$(getFromMatrix $1 preBuildUnstableOSX "")
+        prebuild=$(getFromMatrix $1 preBuildUnstableMacOS "")
     fi
 
     echo $prebuild
 }
 
-getCustomBuildOSX() { # $1 = name, $2 = version (stable or unstable)
+getCustomBuildMacOS() { # $1 = name, $2 = version (stable or unstable)
     if [[ $2 == "stable" ]]; then
-        prebuild=$(getFromMatrix $1 customBuildOSX "")
+        prebuild=$(getFromMatrix $1 customBuildMacOS "")
     else
-        prebuild=$(getFromMatrix $1 customBuildOSX "")
+        prebuild=$(getFromMatrix $1 customBuildMacOS "")
     fi
 
     echo $prebuild
@@ -214,10 +214,10 @@ getGitCommitId() { # $1 = repo, $2 = branch/tag/revision
     echo $commit_id
 }
 
-getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (osx/win/docker), $4 = skipCommitCheck (0/1)
+getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1)
 
-    if [[ $3 == "osx" ]]; then
-        revision=$(getBranchTagToBuildOSX $1 $2)
+    if [[ $3 == "macos" ]]; then
+        revision=$(getBranchTagToBuildMacOS $1 $2)
     elif [[ $3 == "win" ]]; then
         revision=$(getBranchTagToBuildWin $1 $2)
     else
