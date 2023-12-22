@@ -184,7 +184,7 @@
             "windows": [{
                 "Description": "PostgreSQL backend (AGPL license)",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "databases",
                 "Artifacts64": [
                     ["windows-64/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
                     ["windows-64/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
@@ -218,7 +218,7 @@
                 "Description": "MySQL backend (AGPL license)",
                 "Name": "mysql",
                 "Mandatory": false,
-                "Category": "osimis",
+                "Category": "databases",
                 "Artifacts64": [
                     ["windows-64/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dll", "Plugins", "OrthancMySQLIndex.dll"],
                     ["windows-64/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "OrthancMySQLStorage.dll"]
@@ -251,7 +251,7 @@
             "windows": [{
                 "Description": "ODBC backend (AGPL license)",
                 "Mandatory": false,
-                "Category": "osimis",
+                "Category": "databases",
                 "Artifacts64": [
                     ["windows-64/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dll", "Plugins", "OrthancOdbcIndex.dll"],
                     ["windows-64/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dll", "Plugins", "OrthancOdbcStorage.dll"]
@@ -283,7 +283,7 @@
             "windows": [{
                 "Description": "Transfers accelerator (AGPL license)",
                 "Mandatory": false,
-                "Category": "osimis",
+                "Category": "plugins",
                 "Artifacts64": [
                     ["windows-64/orthanc-transfers/OrthancTransfers-${VERSION}.dll", "Plugins", "OrthancTransfers.dll"]
                 ],
@@ -518,7 +518,7 @@
                 "Description": "Stone Web viewer (AGPL license)",
                 "Name": "stone_web_viewer",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "viewers",
                 "Artifacts64": [
                     ["windows-64/stone-web-viewer/StoneWebViewer-${VERSION}.dll", "Plugins", "libStoneWebViewer-Windows64.dll"]
                 ],
@@ -605,7 +605,7 @@
                 {
                     "Description": "Web viewer of whole-slide microscopic images (AGPL license)",
                     "Mandatory": false,
-                    "Category": "plugins",
+                    "Category": "viewers",
                     "Artifacts64": [
                         ["windows-64/orthanc-wsi/OrthancWSI-${VERSION}.dll", "Plugins", "OrthancWSI.dll"]
                     ],
@@ -691,9 +691,9 @@
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
-                "Description": "Web Viewer of medical images (AGPL license)",
+                "Description": "Basic Orthanc Web viewer (AGPL license)",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "viewers",
                 "Artifacts64": [
                     ["windows-64/orthanc-webviewer/OrthancWebViewer-${VERSION}.dll", "Plugins", "OrthancWebViewer.dll"]
                 ],
@@ -717,7 +717,7 @@
             "windows": [{
                 "Description": "Advanced authorization plugin (AGPL license)",
                 "Mandatory": false,
-                "Category": "osimis",
+                "Category": "plugins",
                 "Artifacts64": [
                     ["windows-64/orthanc-authorization/OrthancAuthorization-${VERSION}.dll", "Plugins", "OrthancAuthorization.dll"]
                 ],
@@ -743,9 +743,9 @@
             "preBuildWin": "cd /c/vcpkg && git checkout 2023.06.20 && vcpkg install cryptopp:x64-windows-static azure-storage-blobs-cpp:x64-windows-static",
             "extraCMakeFlagsWin": "-DCMAKE_TOOLCHAIN_FILE=/c/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static",
             "windows": [{
-                "Description": "Orthanc Azure blob storage plugin",
+                "Description": "Orthanc Azure blob storage plugin (AGPL license)",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "databases",
                 "Downloads64": [
                     ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-azure-storage/${VERSION}/OrthancAzureBlobStorage.dll", "Plugins", "OrthancAzureBlobStorage.dll"]
                 ],
@@ -789,9 +789,9 @@
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/",
             "windows": [{
-                "Description": "Orthanc Explorer 2 User Interface",
+                "Description": "Orthanc Explorer 2 user interface (AGPL license)",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "viewers",
                 "Comment": "Win64 is coming from Github while Win32 is coming from buildbot",
                 "Artifacts64": [
                     ["windows-64/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dll", "Plugins", "OrthancExplorer2.dll"]
@@ -824,7 +824,7 @@
                 "Description": "Osimis Web viewer (AGPL license)",
                 "Name": "osimis_web_viewer",
                 "Mandatory": false,
-                "Category": "osimis",
+                "Category": "viewers",
                 "Artifacts64": [
                     ["windows-64/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "OsimisWebViewer.dll"]
                 ],
@@ -881,7 +881,7 @@
             "windows": [{
                 "Description": "Kitware's VolView plugin for Orthanc",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "viewers",
                 "Artifacts64": [
                     ["windows-64/orthanc-volview/OrthancVolView-Win64-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows64.dll"]
                 ],
@@ -910,7 +910,7 @@
             "windows": [{
                 "Description": "OHIF plugin for Orthanc",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Category": "viewers",
                 "Artifacts64": [
                     ["windows-64/orthanc-ohif/OrthancOHIF-${VERSION}.dll", "Plugins", "libOrthancOHIF-Windows64.dll"]
                 ],
