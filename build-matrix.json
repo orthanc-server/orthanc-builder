@@ -900,7 +900,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-ohif/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_OHIF",
-            "stable": "OrthancOHIF-1.1",
+            "stable": "OrthancOHIF-1.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancOHIF.dylib",
             "buildForMacOS": false,

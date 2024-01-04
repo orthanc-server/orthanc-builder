@@ -9,6 +9,7 @@ You should use the full image only if you need to use one of these:
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
+          - upgraded OHIF plugin to 1.2
           - upgraded Orthanc Explorer 2 plugin to 1.2.1
           - WIN-INSTALLER: improved the categories in the Windows installers
 23.12.1:  - WIN-INSTALLER: reverted old paths in Windows installers to allow reinstall/uninstall 
