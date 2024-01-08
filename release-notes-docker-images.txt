@@ -8,7 +8,7 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-
+          - DOCKER-IMAGES only: upgraded Osimis Web Viewer to 1.4.2.4-f829967f (security fix)
 24.1.0:   - upgraded GDCM plugin to 1.6
           - upgraded OHIF plugin to 1.2
           - upgraded Orthanc Explorer 2 plugin to 1.2.1
