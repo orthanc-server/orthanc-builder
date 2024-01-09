@@ -23,7 +23,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.1.1 Default image
+#### 24.1.2 Default image
 ```
 component                             version
 ---------------------------------------------

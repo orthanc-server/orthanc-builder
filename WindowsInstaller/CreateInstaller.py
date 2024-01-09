@@ -309,7 +309,7 @@ for repo in MATRIX['configs']:
 for category in CATEGORIES:
     if category['name'] in COMPONENTS_BY_CATEGORIES:
         if category['name'] != 'none':
-            if category == 'python_plugins':
+            if category['name'] == 'python_plugins':
                 COMPONENTS.append('Name: "%s"; Description: "%s"; Types: ' % (category['name'], category['description']))
             else:
                 COMPONENTS.append('Name: "%s"; Description: "%s"; Types: standard' % (category['name'], category['description']))
