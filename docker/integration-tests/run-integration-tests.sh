@@ -143,17 +143,14 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker-compose down -v
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    # TODO: reenable when closing pg-transactions branch
-    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose down -v
-    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose down -v
+    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    # TODO: reenable when closing pg-transactions branch
-    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose down -v
-    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose down -v
+    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    # TODO: reenable when closing pg-transactions branch
-    # COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose down -v
-    # COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose down -v
+    COMPOSE_FILE=docker-compose.mysql.yml                       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.webdav.yml                      docker-compose down -v
     COMPOSE_FILE=docker-compose.webdav.yml                      docker-compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
@@ -191,12 +188,11 @@ if [[ $image == "normal" ]]; then
 # - CheckDicomTls.py
 # - CheckZipStream.py
 
-    # TODO: reenable when closing pg-transactions branch
-# else  # full images (MSSQL only !)
-    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
+else  # full images (MSSQL only !)
+    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
-    # COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker-compose down -v
-    # COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker-compose down -v
+    COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
 fi
 
