@@ -11,6 +11,14 @@ Only the default tags are listed here.  You just need to append `-full` for the 
           - temporaritly removed ODBC and MySQL plugin
           - upgraded PostgreSQL plugin to pg-transactions branch (in the -unstable builds)
           - new env var ORTHANC__POSTGRESQL__TRANSACTION_MODE
+24.1.2 :  - WIN-INSTALLER: by default, do not install any python plugin (bug introduced in 24.1.0)
+          - upgraded Osimis Web Viewer to 1.4.3 (security fix)
+            reminder: the Osimis Web Viewer is deprecated, it's time to move to another viewer
+            like the StoneWebViewer that is equivalent.
+24.1.0:   - upgraded GDCM plugin to 1.6
+          - upgraded OHIF plugin to 1.2
+          - upgraded Orthanc Explorer 2 plugin to 1.2.1
+          - WIN-INSTALLER: improved the categories in the Windows installers
 23.12.1:  - WIN-INSTALLER: reverted old paths in Windows installers to allow reinstall/uninstall 
                            (bug introduced in 23.11.1)
 23.12.0:  - upgraded Orthanc to 1.12.2
