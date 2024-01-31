@@ -8,8 +8,10 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+
           - upgraded Orthanc to 1.12.3
           - upgraded base image to debian:bullseye-20240110-slim
+          - upgraded StoneWebViewer to 2.5+c23eef785569 (Docker images only)
 24.1.2 :  - WIN-INSTALLER: by default, do not install any python plugin (bug introduced in 24.1.0)
           - upgraded Osimis Web Viewer to 1.4.3 (security fix)
             reminder: the Osimis Web Viewer is deprecated, it's time to move to another viewer
