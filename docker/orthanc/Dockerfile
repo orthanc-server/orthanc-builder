@@ -12,7 +12,7 @@ ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
 
-FROM jodogne/wasm-builder:2.0.23 as wasm-builder-base
+FROM jodogne/wasm-builder:3.1.49 as wasm-builder-base
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -238,11 +238,11 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohi
 FROM orthanc-builder-base as build-downloader
 
 RUN mkdir /downloads
-
 # CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
 # CHANGE_VERSION_WVB_ALPHA
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.2/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+
 
 
 ################################# the image that will run Orthanc dynamicaly linked (intermediate version without vcpkg builds)

@@ -3,8 +3,8 @@
 # Orthanc - A Lightweight, RESTful DICOM Store
 # Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
 # Department, University Hospital of Liege, Belgium
-# Copyright (C) 2017-2023 Osimis S.A., Belgium
-# Copyright (C) 2021-2023 Sebastien Jodogne, ICTEAM UCLouvain, Belgium
+# Copyright (C) 2017-2024 Osimis S.A., Belgium
+# Copyright (C) 2021-2024 Sebastien Jodogne, ICTEAM UCLouvain, Belgium
 #
 # This program is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public License
@@ -32,11 +32,11 @@ import Toolbox
 
 if len(sys.argv) != 3:
     print('Usage: %s [target ZIP] [version]' % sys.argv[0])
-    print('Example: %s /tmp/macos.zip 23.11.0' % sys.argv[0])
+    print('Example: %s /tmp/MacOS.zip 23.11.0' % sys.argv[0])
     exit(-1)
 
 TARGET = sys.argv[1]
-PREFIX = 'Orthanc-OSX-%s' % sys.argv[2]
+PREFIX = 'Orthanc-MacOS-%s' % sys.argv[2]
 
 
 def AddContentToZip(archive, content, targetPath, isExecutable):
@@ -78,8 +78,8 @@ with open(os.path.join(BASE, 'build-matrix.json')) as f:
 
 
 with zipfile.ZipFile(TARGET, 'w', compression = zipfile.ZIP_DEFLATED) as archive:
-    AddFile(archive, 'orthancBuildResources/readmeOSX.txt', 'readme.txt')
-    AddFile(archive, 'orthancBuildResources/configOSX.json')
+    AddFile(archive, 'orthancBuildResources/readmeMacOS.txt', 'readme.txt')
+    AddFile(archive, 'orthancBuildResources/configMacOS.json')
     AddFile(archive, 'orthancBuildResources/startOrthanc.command', isExecutable = True)
     AddFile(archive, 'WindowsInstaller/Resources/ca-certificates.crt')
 
@@ -87,13 +87,13 @@ with zipfile.ZipFile(TARGET, 'w', compression = zipfile.ZIP_DEFLATED) as archive
         if project['name'].startswith('XXXX'):   # This is a documentation
             continue
 
-        if not 'downloadsOSX' in project:
-            print('Skipping project without macOS binaries: %s' % project['name'])
+        if not 'downloadsMacOS' in project:
+            print('Skipping project without MacOS binaries: %s' % project['name'])
             continue
 
         version = Toolbox.GetVersion(project)
 
-        for f in project['downloadsOSX']:
+        for f in project['downloadsMacOS']:
             if isinstance(f, str):
                 url = f.replace('${VERSION}', version)
                 DownloadFile(archive, url)

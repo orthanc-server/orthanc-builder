@@ -95,19 +95,19 @@ RUN	DEBIAN_FRONTEND=noninteractive apt-get install -y libtiff-tools
 
 RUN mkdir /apps
 
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/2.0/OrthancWSIDicomToTiff --output-document /apps/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.osimis.io/lsb/whole-slide-imaging/releases/2.0/OrthancWSIDicomizer --output-document /apps/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomToTiff --output-document /apps/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomizer --output-document /apps/OrthancWSIDicomizer --quiet
 
 RUN chmod +x /apps/*
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WSI/Run.py --server=orthanc-under-tests --force --dicomizer=/apps/OrthancWSIDicomizer --to-tiff=/apps/OrthancWSIDicomToTiff -- -v
 
 ##############################################################
-FROM python2-7-base-image as orthanc-tests-webdav
+FROM python3-base-image as orthanc-tests-webdav
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WebDav/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM python2-7-base-image as orthanc-tests-cget
+FROM python3-base-image as orthanc-tests-cget
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/CGet/Run.py --server=orthanc-under-tests --force -- -v

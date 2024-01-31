@@ -3,8 +3,8 @@
 # Orthanc - A Lightweight, RESTful DICOM Store
 # Copyright (C) 2012-2016 Sebastien Jodogne, Medical Physics
 # Department, University Hospital of Liege, Belgium
-# Copyright (C) 2017-2023 Osimis S.A., Belgium
-# Copyright (C) 2021-2023 Sebastien Jodogne, ICTEAM UCLouvain, Belgium
+# Copyright (C) 2017-2024 Osimis S.A., Belgium
+# Copyright (C) 2021-2024 Sebastien Jodogne, ICTEAM UCLouvain, Belgium
 #
 # This program is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -151,28 +151,60 @@ def Download(url, target):
         g.write(r.content)
 
 def GetDownloadBasename(download):
-    if len(download) <= 2:
-        return os.path.basename(download[0]).split('?')[0]
-    else:
+    assert(len(download) in [2, 3])
+    assert(download[0].endswith('.dll') or download[0].endswith('.exe'))
+
+    if len(download) == 3:
+        assert(not download[2].startswith('Comment:'))
+        assert(download[2].endswith('.dll') or download[2].endswith('.exe'))
         return download[2]
+    else:
+        assert(not '?' in download[0])
+        return os.path.basename(download[0])
+
 
 def GetArtifactBasename(artifact):
-    # 2 of artifact can be a comment or a rename
-    if len(artifact) >=3 and ".dll" in artifact[2] or ".exe" in artifact[2]:
-        # rename the artifact
+    assert(len(artifact) in [2, 3])
+    assert(artifact[0].endswith('.dll') or artifact[0].endswith('.exe'))
+
+    if len(artifact) == 3:
+        assert(not artifact[2].startswith('Comment:'))
+        assert(artifact[2].endswith('.dll') or artifact[2].endswith('.exe'))
         return artifact[2]
     else:
         return os.path.basename(artifact[0])
 
 
-CATEGORIES = {
-    'none': None,
-    'plugins' : 'Official plugins',
-    'osimis' : 'Plugins by Osimis',
-    'python_plugins' : 'Python plugins (requires Python installed on your system)',
-    'tools' : 'Command-line tools',
-    'tools/wsi' : 'WSI Command-line tools'
-    }
+CATEGORIES = [
+    {
+        'name' : 'none',
+        'description' : None,
+    },
+    {
+        'name' : 'viewers',
+        'description' : 'Visualization plugins',
+    },
+    {
+        'name' : 'plugins',
+        'description' : 'General plugins',
+    },
+    {
+        'name' : 'databases',
+        'description' : 'Database plugins',
+    },
+    {
+        'name' : 'python_plugins',
+        'description' : 'Python plugins (requires Python installed on your system)',
+    },
+    {
+        'name' : 'tools',
+        'description' : 'Command-line tools',
+    },
+    {
+        'name' : 'tools/wsi',
+        'description' : 'Whole-slide imaging',
+    },
+]
 
 COMPONENTS_BY_CATEGORIES = {}
 COMPONENTS = []
@@ -190,6 +222,8 @@ for repo in MATRIX['configs']:
                 continue
 
             # downloads
+
+            print('Downloading: %s' % component['Description'])
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
@@ -225,9 +259,6 @@ for repo in MATRIX['configs']:
             else:
                 category = 'none'
 
-            if not category in COMPONENTS_BY_CATEGORIES:
-                COMPONENTS_BY_CATEGORIES[category] = []
-
             flags = []
             if component['Mandatory']:
                 options = 'Types: standard compact custom'
@@ -245,8 +276,14 @@ for repo in MATRIX['configs']:
                 options += "Flags: " + " ".join(flags)
 
 
-            COMPONENTS_BY_CATEGORIES[category].append('Name: "%s"; Description: "%s"; %s' % (
-                                                      name, component['Description'], options))
+            if not category in COMPONENTS_BY_CATEGORIES:
+                COMPONENTS_BY_CATEGORIES[category] = []
+
+            COMPONENTS_BY_CATEGORIES[category].append({
+                'name' : name,
+                'description' : component['Description'],
+                'options' : options,
+            })
 
             if ARTIFACTS_KEY in component:
                 for artifact in component[ARTIFACTS_KEY]:
@@ -268,16 +305,20 @@ for repo in MATRIX['configs']:
                     
                     FILES.append(s)
 
-for category in sorted(CATEGORIES.keys()):
-    if category in COMPONENTS_BY_CATEGORIES:
-        if category != 'none':
-            if category == 'python_plugins':
-                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: ' % (category, CATEGORIES[category]))
-            else:
-                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: standard' % (category, CATEGORIES[category]))
 
-        for c in COMPONENTS_BY_CATEGORIES[category]:
-            COMPONENTS.append(c)
+for category in CATEGORIES:
+    if category['name'] in COMPONENTS_BY_CATEGORIES:
+        if category['name'] != 'none':
+            if category['name'] == 'python_plugins':
+                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: ' % (category['name'], category['description']))
+            else:
+                COMPONENTS.append('Name: "%s"; Description: "%s"; Types: standard' % (category['name'], category['description']))
+
+        for c in sorted(COMPONENTS_BY_CATEGORIES[category['name']], key = lambda x: x['description']):
+            print(c)
+            COMPONENTS.append('Name: "%s"; Description: "%s"; %s' % (c['name'], c['description'], c['options']))
+    else:
+        raise Exception('Empty category: %s' % category['description'])
 
 
 ##

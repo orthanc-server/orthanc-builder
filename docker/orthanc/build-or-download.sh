@@ -4,7 +4,7 @@ set -ex
 # This script is only meant to be run inside Docker during the build process.
 # It builds all Orthanc components individually and possibly try to download
 # the component before if it has already been built.
-# It possibly also uploads the components to orthanc.osimis.io
+# It possibly also uploads the components to public-files.orthanc.team/tmp-builds
 
 # example
 # for a CI build
@@ -59,9 +59,9 @@ popd () {
 download() { # $1 file
 
     mkdir -p $buildRootPath
-    already_built=$(($(curl --silent -I https://orthanc.osimis.io/docker-builds/$baseImage/$commitId-$1 | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/docker-builds/$baseImage/$commitId-$1 | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_built == 1 ]]; then
-        wget "https://orthanc.osimis.io/docker-builds/$baseImage/$commitId-$1" --output-document $buildRootPath/$1
+        wget "https://public-files.orthanc.team/tmp-builds/docker-builds/$baseImage/$commitId-$1" --output-document $buildRootPath/$1
         echo 0
     else
         echo 1
@@ -72,7 +72,7 @@ upload() { # $1 file
     if [[ $enableUploads == 1 ]]; then
         echo "uploading $1";
 
-        aws s3 --region eu-west-1 cp $buildRootPath/$1 s3://orthanc.osimis.io/docker-builds/$baseImage/$commitId-$1 --cache-control=max-age=1
+        aws s3 --region eu-west-1 cp $buildRootPath/$1 s3://public-files.orthanc.team/tmp-builds/docker-builds/$baseImage/$commitId-$1 --cache-control=max-age=1
     else
         echo "skipping uploading of $1";
     fi
@@ -434,25 +434,11 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # if [[ $version == "unstable" ]]; then
-
-        #     pushd $sourcesRootPath
-        #     hg clone https://orthanc.uclouvain.be/hg/orthanc-dicomweb/ -r $commitId
-        #     # TODO: remove: temporary code while waiting for SDK 1.12.2 to be released
-        #     hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r 4ab905749aed
-
-        #     pushd $buildRootPath
-        #     cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=$sourcesRootPath/orthanc/OrthancFramework/Sources $sourcesRootPath/orthanc-dicomweb
-        #     make -j 4
-        #     $buildRootPath/UnitTests
-
-        # else
         hg clone https://orthanc.uclouvain.be/hg/orthanc-dicomweb/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
         cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
-        # fi
 
         upload libOrthancDicomWeb.so
     fi
