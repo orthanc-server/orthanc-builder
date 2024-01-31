@@ -1,6 +1,6 @@
 ARG BASE_IMAGE_TAG=current
 
-FROM osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
+FROM orthancteam/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -27,11 +27,11 @@ RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
 RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
 
 
-FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
+FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
 # never add secrets in this image !!!!
 
 
-FROM osimis/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
+FROM orthancteam/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -43,7 +43,7 @@ ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
 
-FROM osimis/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
+FROM orthancteam/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID

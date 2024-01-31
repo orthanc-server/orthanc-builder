@@ -8,6 +8,8 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+          - now publishing the tagged images to orthancteam/orthanc
+            and the pre-release images to orthancteam/orthanc-pre-release
           - upgraded Orthanc to 1.12.3
 24.1.2 :  - WIN-INSTALLER: by default, do not install any python plugin (bug introduced in 24.1.0)
           - upgraded Osimis Web Viewer to 1.4.3 (security fix)

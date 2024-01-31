@@ -1,7 +1,7 @@
 ########################## Orthanc builder base
 # image to compile Orthanc and its plugins dynamically
 ARG BASE_IMAGE_TAG=current
-FROM osimis/orthanc-runner-base:${BASE_IMAGE_TAG}
+FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG}
 
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get --assume-yes update

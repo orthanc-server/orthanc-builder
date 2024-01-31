@@ -2,7 +2,7 @@
 
 This repo contains build instructions for the following components:
 
-- the `osimis/orthanc` Docker image
+- the `orthancteam/orthanc` Docker image
 - the Windows installer
 - the MacOS package (zip with Orthanc executable and plugins)
 
@@ -13,14 +13,14 @@ Windows Installer and MacOS package are collecting build artifacts from the Orth
 
 ## stable releases
 
-- [Docker image (linux/amd64)](https://hub.docker.com/r/osimis/orthanc)
+- [Docker image (linux/amd64)](https://hub.docker.com/r/orthancteam/orthanc)
 - [Windows 64 bits installer](https://orthanc.uclouvain.be/downloads/windows-64/installers/index.html)
 - [Windows 32 bits installer](https://orthanc.uclouvain.be/downloads/windows-32/installers/index.html)
 - [MacOS package (Universal)](https://orthanc.uclouvain.be/downloads/macos/packages/universal/index.html)
 
 ## unstable releases (nightly builds)
 
-- [Docker image (linux/amd64)](https://hub.docker.com/r/osimis/orthanc) (`osimis/orthanc:master-unstable` image)
+- [Docker image (linux/amd64)](https://hub.docker.com/r/orthancteam/orthanc-unstable) (`orthancteam/orthanc-unstable:master` image)
 <!-- - [Windows 64 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win64-master.exe) these are actually 'stable'!-->
 <!-- - [Windows 32 bits installer](https://orthanc.osimis.io/win-installer/OrthancInstaller-Win32-master.exe) these are actually 'stable'!-->
 - [MacOS package (Universal)](https://public-files.orthanc.team/MacOS-packages/Orthanc-MacOS-master-unstable.zip)
@@ -28,7 +28,7 @@ Windows Installer and MacOS package are collecting build artifacts from the Orth
 
 **Notes**: 
 
-- to build stable Docker images locally, use `./local-build.sh skipCommitChecks=1`.  This produces `osimis/orthanc:current` images.
+- to build stable Docker images locally, use `./local-build.sh skipCommitChecks=1`.  This produces `orthancteam/orthanc:current` images.
 - The MacOS package does not contain the WSI plugin that can currently be built only for Intel processors.
 
 ## building ARM 64 docker images
@@ -45,7 +45,7 @@ cd orthanc-builder
 ./local-build.sh version=stable platform=linux/arm64 image=normal
 ```
 
-This produces an image `osimis/orthanc:current`.
+This produces an image `orthancteam/orthanc:current`.
 
 
 # Continuous Builds
@@ -54,8 +54,8 @@ This produces an image `osimis/orthanc:current`.
 - Windows stable installers are rebuilt at every commit, they are available at:
   - [https://public-files.orthanc.team/tmp-builds/win-installer/OrthancInstaller-Win64-master.exe](https://public-files.orthanc.team/tmp-builds/win-installer/OrthancInstaller-Win64-master.exe)
 - Docker stable and unstable images are rebuilt every night and on every commit of this repo, they are available as:
-  - `osimis/orthanc:master-stable`
-  - `osimis/orthanc:master-unstable`
+  - `orthancteam/orthanc:master`
+  - `orthancteam/orthanc-unstable:master`
 - Integration tests are run for every Docker build
 
 # Troubleshooting (for dev)

@@ -16,7 +16,7 @@ You should use the full image only if you need to use one of these:
 
 Full documentation is available [here](https://book.orthanc-server.com/users/docker-osimis.html).
 
-Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
+Sample setups using this image are available [here](https://github.com/orthanc-server/orthanc-setup-samples/).
 
 Release notes are available [here](https://github.com/orthanc-server/orthanc-builder/blob/master/release-notes-docker-images.txt)
 

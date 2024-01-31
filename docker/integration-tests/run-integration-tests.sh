@@ -59,7 +59,7 @@ pip3 install -r requirements.txt
 
 ######## housekeeper
 
-previous_image=osimis/orthanc:22.4.0
+previous_image=orthancteam/orthanc:22.4.0
 
 docker pull $previous_image
 
@@ -70,7 +70,7 @@ python3 -u main.py --pattern=Housekeeper.* \
 
 ######## delayed-deletion
 
-previous_image=osimis/orthanc:$tagToTest
+previous_image=orthancteam/orthanc:$tagToTest
 
 python3 -u main.py --pattern=DelayedDeletion.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \

@@ -1,5 +1,5 @@
 ARG IMAGE_TAG=latest
-FROM osimis/orthanc:$IMAGE_TAG
+FROM orthancteam/orthanc:$IMAGE_TAG
 
 # install gdcm and dcmtk that are used in a Lua scripts
 RUN apt-get --assume-yes update
