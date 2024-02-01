@@ -352,8 +352,9 @@ RUN apt-get --assume-yes install curl gnupg2
 
 RUN mkdir /downloads
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc > /etc/apt/trusted.gpg.d/microsoft.asc
+RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
 RUN curl https://packages.microsoft.com/config/debian/12/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
 
 RUN apt-get update && \
     ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev && \
