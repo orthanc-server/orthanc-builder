@@ -56,6 +56,7 @@ RUN pip install httplib2
 RUN pip install pillow
 RUN pip install pydicom
 RUN pip install pynetdicom
+RUN pip install 'easywebdav @ git+https://github.com/Marpache9131/easywebdav@511967ec374061161f2b3b67fb7b164fcc78143c'
 
 RUN mkdir /tests
 WORKDIR /tests
