@@ -1,6 +1,6 @@
 ######################################
 ARG IMAGE_TAG=latest
-FROM osimis/orthanc:$IMAGE_TAG
+FROM orthancteam/orthanc:$IMAGE_TAG
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk mercurial

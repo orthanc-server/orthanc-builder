@@ -127,18 +127,18 @@ jobs:
     #     limit-access-to-actor: true
 
     - name: Push normal image with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
     - name: Push full image with branch/tag
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}-full
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
 
     - name: Push normal image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=latest
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }} pushTag=latest isTag=${{ inputs.is_tag }}
 
     - name: Push full image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
 
     - name: Update DockerHub repo description
       uses: peter-evans/dockerhub-description@v3
@@ -146,7 +146,7 @@ jobs:
       with:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_token }}
-        repository: osimis/orthanc
+        repository: orthancteam/orthanc
         readme-filepath: README-dockerhub.md
 
 

@@ -25,8 +25,8 @@ if [[ $type == "local" ]]; then
     # when building locally, use Docker builder (easier to reuse local images)
     build="build"
 else
-    from_cache_arg="--cache-from=osimis/orthanc-builder-base:win-installer"
-    to_cache_arg="--cache-to=osimis/orthanc-builder-base:win-installer"
+    from_cache_arg="--cache-from=orthancteam/orthanc-builder-base:win-installer"
+    to_cache_arg="--cache-to=orthancteam/orthanc-builder-base:win-installer"
 
     # when building in CI, use buildx
     build="buildx build"

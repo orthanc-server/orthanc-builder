@@ -5,9 +5,10 @@ Note: the Orthanc version included in this image is exactly the same as the Orth
 this image contains a few plugins that are not included in the `jodogne/orthanc-plugins` image.  Furthermore,
 this image provides an easy configuration through environment variables which is not the case of the `jodogne/orthanc` image.
 
-Starting from the `22.6.1`` release, we are providing 2 types of images:
+Starting from the `22.6.1` release, we are providing 2 types of images:
   - the default image with the usual tag: e.g `22.6.1`
   - the full image with a e.g `22.6.1-full` tag
+
 The default image is suitable for 99.9% of users.
 You should use the full image only if you need to use one of these:
   - the Azure Blob storage plugin
@@ -16,14 +17,14 @@ You should use the full image only if you need to use one of these:
 
 Full documentation is available [here](https://book.orthanc-server.com/users/docker-osimis.html).
 
-Sample setups using this image are available [here](https://bitbucket.org/osimis/orthanc-setup-samples/).
+Sample setups using this image are available [here](https://github.com/orthanc-server/orthanc-setup-samples/).
 
 Release notes are available [here](https://github.com/orthanc-server/orthanc-builder/blob/master/release-notes-docker-images.txt)
 
 
 # packages content
 
-#### 24.1.2 Default image
+#### 24.2.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -34,7 +35,7 @@ Connectivity check plugin             1.12.3
 Housekeeper plugin                    1.12.3
 Delayed Deletion plugin               1.12.3
 Multitenant DICOM plugin              1.12.3
-Stone Web viewer plugin               2.5+5970030a413c
+Stone Web viewer plugin               2.5+c23eef785569
 Osimis Web viewer plugin              1.4.3
 Python plugin                         4.1
 Orthanc Web viewer plugin             2.8
@@ -55,7 +56,7 @@ Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
 ```
 
-#### 23.12.1-full image 
+#### 24.2.0-full image 
 ```
 additional component                  version
 ---------------------------------------------

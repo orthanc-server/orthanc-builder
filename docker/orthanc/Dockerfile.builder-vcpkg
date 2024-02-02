@@ -1,7 +1,7 @@
 ########################## Orthanc builder vcpkg
 # image to compile Orthanc and its plugins dynamically
 ARG BASE_IMAGE_TAG=current
-FROM osimis/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-build-vcpkg
+FROM orthancteam/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-build-vcpkg
 
 # prerequisites (for VCPKG builds)
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -38,14 +38,14 @@ RUN ./vcpkg install cryptopp
 
 ########################## Orthanc builder vcpkg-google
 
-FROM osimis/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-google
+FROM orthancteam/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-google
 
 WORKDIR /vcpkg
 RUN  ./vcpkg install google-cloud-cpp[storage]
 
 ########################## Orthanc builder vcpkg-azure
 
-FROM osimis/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-azure
+FROM orthancteam/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} as orthanc-build-vcpkg-azure
 
 WORKDIR /vcpkg
 RUN  ./vcpkg install azure-core-cpp azure-storage-blobs-cpp
