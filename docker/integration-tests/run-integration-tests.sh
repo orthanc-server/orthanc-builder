@@ -67,7 +67,7 @@ python3 -u main.py --pattern=Concurrency.* \
 ######## PG upgrades
 
 python3 -u main.py --pattern=PostgresUpgrades.* \
-                   --orthanc_under_tests_docker_image=osimis/orthanc:$tagToTest
+                   --orthanc_under_tests_docker_image=orthancteam/orthanc:$tagToTest
 
 ######## housekeeper
 
