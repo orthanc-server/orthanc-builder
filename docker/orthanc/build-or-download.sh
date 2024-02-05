@@ -159,20 +159,12 @@ elif [[ $target == "orthanc-pg" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        if [[ $version == "stable" ]]; then
 
-            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
-            pushd $buildRootPath
-            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
-            make -j 4
-        else
-            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
-            pushd $buildRootPath
-            # TODO: remove -DORTHANC_SDK_VERSION=pg-transactions
-            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources  $sourcesRootPath/PostgreSQL
-            make -j 4
 
-        fi
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
+        make -j 4
 
         upload libOrthancPostgreSQLIndex.so
         upload libOrthancPostgreSQLStorage.so
@@ -185,19 +177,10 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        if [[ $version == "stable" ]]; then
-            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
-            pushd $buildRootPath
-            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/MySQL
-            make -j 4
-        else
-            hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r pg-transactions /orthanc
-
-            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
-            pushd $buildRootPath
-            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources $sourcesRootPath/MySQL
-            make -j 4
-        fi
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/MySQL
+        make -j 4
 
         upload libOrthancMySQLIndex.so
         upload libOrthancMySQLStorage.so
@@ -210,19 +193,11 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        if [[ $version == "stable" ]]; then
-            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
-            pushd $buildRootPath
-            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Odbc
-            make -j 4
-        else
-            hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r pg-transactions /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Odbc
+        make -j 4
 
-            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
-            pushd $buildRootPath
-            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_SDK_VERSION=framework -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources $sourcesRootPath/Odbc
-            make -j 4
-        fi
         upload libOrthancOdbcIndex.so
         upload libOrthancOdbcStorage.so
     fi
