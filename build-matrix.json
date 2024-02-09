@@ -190,8 +190,8 @@
                     ["windows-64/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Index.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
-                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Storage.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
                 ],
                 "Resources": [
                     ["postgresql.json", "Configuration"]
@@ -224,8 +224,8 @@
                     ["windows-64/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "OrthancMySQLStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Index.dll", "Plugins", "OrthancMySQLIndex.dll"],
-                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Storage.dll", "Plugins", "OrthancMySQLStorage.dll"]
+                    ["windows-32/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dll", "Plugins", "OrthancMySQLIndex.dll"],
+                    ["windows-32/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "OrthancMySQLStorage.dll"]
                 ],
                 "Resources": [
                     ["mysql.json", "Configuration"]
@@ -257,8 +257,8 @@
                     ["windows-64/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dll", "Plugins", "OrthancOdbcStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Index.dll", "Plugins", "OrthancOdbcIndex.dll"],
-                    ["windows-32/orthanc-odbc/OrthancOdbc-${VERSION}-Storage.dll", "Plugins", "OrthancOdbcStorage.dll"]
+                    ["windows-32/orthanc-odbc/OrthancOdbcIndex-${VERSION}.dll", "Plugins", "OrthancOdbcIndex.dll"],
+                    ["windows-32/orthanc-odbc/OrthancOdbcStorage-${VERSION}.dll", "Plugins", "OrthancOdbcStorage.dll"]
                 ],
                 "Resources": [
                     ["odbc.json", "Configuration"]
