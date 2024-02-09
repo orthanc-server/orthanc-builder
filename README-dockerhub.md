@@ -15,7 +15,7 @@ You should use the full image only if you need to use one of these:
   - the Google Cloud storage plugin
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 
-Full documentation is available [here](https://book.orthanc-server.com/users/docker-osimis.html).
+Full documentation is available [here](https://book.orthanc-server.com/users/docker-orthancteam.html).
 
 Sample setups using this image are available [here](https://github.com/orthanc-server/orthanc-setup-samples/).
 
