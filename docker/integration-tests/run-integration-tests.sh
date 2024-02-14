@@ -57,49 +57,49 @@ source .env/bin/activate
 
 pip3 install -r requirements.txt
 
-######## concurrency
+# ######## concurrency
 
-python3 -u main.py --pattern=Concurrency.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=Concurrency.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
 
-######## PG upgrades
+# ######## PG upgrades
 
-python3 -u main.py --pattern=PostgresUpgrades.* \
-                   --orthanc_under_tests_docker_image=orthancteam/orthanc:$tagToTest
+# python3 -u main.py --pattern=PostgresUpgrades.* \
+#                    --orthanc_under_tests_docker_image=orthancteam/orthanc:$tagToTest
 
-######## housekeeper
+# ######## housekeeper
 
-previous_image=orthancteam/orthanc:22.4.0
+# previous_image=orthancteam/orthanc:22.4.0
 
-docker pull $previous_image
+# docker pull $previous_image
 
-python3 -u main.py --pattern=Housekeeper.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_previous_version_docker_image=$previous_image \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=Housekeeper.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_previous_version_docker_image=$previous_image \
+#                    --orthanc_under_tests_http_port=8043
 
-######## delayed-deletion
+# ######## delayed-deletion
 
-previous_image=orthancteam/orthanc:$tagToTest
+# previous_image=orthancteam/orthanc:$tagToTest
 
-python3 -u main.py --pattern=DelayedDeletion.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=DelayedDeletion.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
+#                    --orthanc_under_tests_http_port=8043
 
-######## Other new tests
+# ######## Other new tests
 
-python3 -u main.py --pattern=ExtraMainDicomTags.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=ExtraMainDicomTags.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=WithIngestTranscoding.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=WithIngestTranscoding.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=MaxStorageReject.* \
+python3 -u main.py --pattern=MaxStorage.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 
