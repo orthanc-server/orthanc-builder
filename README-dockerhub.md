@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.2.1 Default image
+#### 24.2.2 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -40,7 +40,7 @@ Osimis Web viewer plugin              1.4.3
 Python plugin                         4.1
 Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.16
-PostgreSQL plugins                    6.0
+PostgreSQL plugins                    6.1
 MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
 Authorization plugin                  0.6.2
@@ -56,7 +56,7 @@ Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
 ```
 
-#### 24.2.1-full image 
+#### 24.2.2-full image 
 ```
 additional component                  version
 ---------------------------------------------
