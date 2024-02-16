@@ -8,6 +8,8 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+24.2.3 :  - upgraded Orthanc Explorer 2 plugin to 1.2.2
+          - upgraded advanced authorization plugin to 0.7.0
 24.2.2 :  - upgraded PostgreSQL plugins to 6.1
 24.2.1 :  - upgraded PostgreSQL plugins to 6.0
 24.2.0 :  - now publishing the tagged images to orthancteam/orthanc
