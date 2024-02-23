@@ -114,6 +114,19 @@ jobs:
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
+    - name: Docker Scout
+      id: docker-scout
+      uses: docker/scout-action@v1
+      with:
+        command: quickview, compare, cves, recommendations, sbom
+        image: orthancteam/orthanc:current
+        to: orthancteam/orthanc:latest
+        ignore-unchanged: true
+        only-severities: critical,high
+
+    - name: Build full image with local-build.sh
+      run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
+
     - name: Build full image with local-build.sh
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
 
