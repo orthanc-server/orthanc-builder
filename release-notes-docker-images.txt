@@ -8,15 +8,15 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-24.2.0 :  - now publishing the tagged images to orthancteam/orthanc
-            and the pre-release images to orthancteam/orthanc-pre-release
-          - from now on, the images are not published anymore on osimis/orthanc
-          - upgraded Orthanc to 1.12.3
-          - upgraded base image to debian:bookworm-20240110-slim which implies:
+          - upgraded base image to debian:bookworm-20240211-slim which implies:
             - python has been upgraded to 3.11.
             - when using 'pip install ...', you may need to add the `--break-system-package` argument
               since the system python is now considered as an 'external environment'
           - upgraded StoneWebViewer to 2.5+c23eef785569 (Docker images only)
+24.2.0 :  - now publishing the tagged images to orthancteam/orthanc
+            and the pre-release images to orthancteam/orthanc-pre-release
+          - from now on, the images are not published anymore on osimis/orthanc
+          - upgraded Orthanc to 1.12.3
 24.1.2 :  - WIN-INSTALLER: by default, do not install any python plugin (bug introduced in 24.1.0)
           - upgraded Osimis Web Viewer to 1.4.3 (security fix)
             reminder: the Osimis Web Viewer is deprecated, it's time to move to another viewer
