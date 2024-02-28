@@ -60,7 +60,13 @@ jobs:
         #   }
 
     steps:
-    
+
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+
     - name: Maximize build space
       uses: easimon/maximize-build-space@v10
       with:
