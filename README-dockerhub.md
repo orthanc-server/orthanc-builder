@@ -54,6 +54,14 @@ AWS S3 plugin                         2.3.1
 Orthanc Explorer 2                    1.2.1
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
+
+
+System component                      version
+---------------------------------------------
+Base Debian image                     12 (bookworm)
+Python                                3.11
+Lua                                   5.4
+
 ```
 
 #### 24.2.0-full image 
