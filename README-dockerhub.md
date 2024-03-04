@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.2.3 Default image
+#### 24.3.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -56,7 +56,7 @@ Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
 ```
 
-#### 24.2.3-full image 
+#### 24.3.0-full image 
 ```
 additional component                  version
 ---------------------------------------------
