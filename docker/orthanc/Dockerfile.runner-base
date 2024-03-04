@@ -6,6 +6,10 @@
 ARG BASE_DEBIAN_IMAGE=unknown
 FROM debian:$BASE_DEBIAN_IMAGE
 
+# we had some issues with one of the mirror -> force it to the Belgian mirror
+RUN rm /etc/apt/sources.list.d/debian.sources
+RUN echo "deb http://ftp.be.debian.org/debian/ bookworm main" | tee /etc/apt/sources.list.d/belgium.mirror.list
+
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
   apt-get --assume-yes install python3 && \
