@@ -12,12 +12,12 @@ Each time you want to release a new package (which means you'll upgrade the vers
 - search for `CHANGE_VERSION` in the whole repo and look for the package version numbers -> upgrade with YY.M[.r]
 - update the WindowsInstaller/Resources/README.txt with the new version numbers
 - update the docker/README-dockerhub.txt with the new version numbers (keep the previous version package list in the readme)
-- update the release-notes-docker-images.txt
+- update the release-notes-docker-images.md
 - at this stage, you may commit and tag as explained before and let GitHub build the Docker images OR you may build manually with the commands below.
 - notify S. Jodogne that a new Windows Installer is available so he can update the download link on the Orthanc page (note, since 22.3.0, the latest
   windows installer is always copied under ...latest.exe and there's no need to update the Osimis website anymore)
 
-All version numbers shall be changed in build-matrix.json (and in release-notes-docker-images.txt + README-dockerhub.md)
+All version numbers shall be changed in build-matrix.json (and in release-notes-docker-images.md + README-dockerhub.md)
 
 List of CHANGE_VERSION_ variables:
 - CHANGE_VERSION_ORTHANC
