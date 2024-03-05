@@ -1,26 +1,31 @@
-> **_NOTE:_** Starting from the 22.6.1 release, we are providing 2 types of images:
-  - the default image with the usual tag: e.g 22.6.1
-  - the full image with a e.g 22.6.1-full tag
-The default image is suitable for 99.9% of users.
-You should use the full image only if you need to use one of these:
-  - the Azure Blob storage plugin
-  - the Google Cloud storage plugin
-  - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
-Only the default tags are listed here.  You just need to append `-full` for the full image.
+> [!TIP]
+> Starting from the `22.6.1` release, we are providing 2 types of images:
+>  - the default image with the usual tag: e.g `orthancteam/orthanc:22.6.1`
+>  - the full image with a e.g `orthancteam/orthanc:22.6.1-full` tag
+>
+> The default image is suitable for 99.9% of users.
+>
+> You should use the full image only if you need to use one of these:
+>  - the Azure Blob storage plugin
+>  - the Google Cloud storage plugin
+>  - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
+>
+> Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
 24.3.1
 ------
 
-- upgraded the test-aliveness.py probe.  It is now calling `/changes` instead of `/system` 
-  because /system is not testing the DB connection while /changes does.
+- upgraded the [healthcheck probe](https://orthanc.uclouvain.be/book/users/docker-orthancteam.html#healthcheck-probe).  It is now calling `/changes` instead of `/system` 
+  because `/system` is not testing the DB connection while `/changes` does.
 - upgraded base image to `bullseye-20240211-slim`
 
 
 24.2.3
 ------
 
-- **_BUG:_** these Docker images actually contained the mainline versions and not the official releases !!!!
+> [!CAUTION]
+> **_BUG:_** these Docker images actually contained the mainline versions and not the official releases !!!!
 - upgraded Orthanc Explorer 2 plugin to [1.2.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.7.0](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/tip/NEWS)
 
