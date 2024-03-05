@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # this scripts performs a readiness/aliveness check of orthanc by simply calling
-# the /system route from inside the container.
+# the /changes route from inside the container.
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 # when using mTLS at Orthanc level, it is impossible to use the built-in K8 HttpGet probes hence this script.
 #
