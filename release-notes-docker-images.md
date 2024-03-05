@@ -1,4 +1,4 @@
-Starting from the 22.6.1 release, we are providing 2 types of images:
+> **_NOTE:_** Starting from the 22.6.1 release, we are providing 2 types of images:
   - the default image with the usual tag: e.g 22.6.1
   - the full image with a e.g 22.6.1-full tag
 The default image is suitable for 99.9% of users.
@@ -8,13 +8,32 @@ You should use the full image only if you need to use one of these:
   - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-24.3.1 :  - upgraded the test-aliveness.py probe.  It is now calling /changes instead of /system
-            because /system is not testing the DB connection while /changes does.
-          - upgraded base image to bullseye-20240211-slim
-24.2.3 :  - BUG: these Docker images actually contained the mainline versions and not the official releases !!!!
-          - upgraded Orthanc Explorer 2 plugin to 1.2.2
-          - upgraded advanced authorization plugin to 0.7.0
-24.2.2 :  - upgraded PostgreSQL plugins to 6.1
+
+24.3.1
+------
+
+- upgraded the test-aliveness.py probe.  It is now calling `/changes` instead of `/system` 
+  because /system is not testing the DB connection while /changes does.
+- upgraded base image to `bullseye-20240211-slim`
+
+
+24.2.3
+------
+
+- **_BUG:_** these Docker images actually contained the mainline versions and not the official releases !!!!
+- upgraded Orthanc Explorer 2 plugin to [1.2.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.7.0](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/tip/NEWS)
+
+
+24.2.2
+------
+- upgraded PostgreSQL plugins to [6.1](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/PostgreSQL/NEWS)
+
+
+Previous versions (old txt release notes)
+-----------------
+
+```
 24.2.1 :  - upgraded PostgreSQL plugins to 6.0
 24.2.0 :  - now publishing the tagged images to orthancteam/orthanc
             and the pre-release images to orthancteam/orthanc-pre-release
@@ -490,3 +509,4 @@ Only the default tags are listed here.  You just need to append `-full` for the 
 18.1.2  : - added WVP_KEY_IMAGE_CAPTURE_ENABLED
 18.1.1  : - upgraded WVP_ALPHA to 13ce4ba (to fix the windowingPresets in Lify)
 17.12.2 : - include ca-certificates in image and use them by default for Orthanc HttpClient
+```
