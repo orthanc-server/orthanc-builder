@@ -96,7 +96,9 @@ try:
     if certfile:
         ssl_context.load_cert_chain(certfile=certfile, keyfile=keyfile, password=keypwd)
 
-    req = urllib.request.Request(f'{http_scheme}://localhost:{http_port}/system')
+    # In previous version, we were actually calling /system but it is actually not accessing the DB because 
+    # the DB version is cached -> call /changes instead
+    req = urllib.request.Request(f'{http_scheme}://localhost:{http_port}/changes?last')
 
     if user and pwd:
         base_64_credentials = base64.b64encode(bytes(f"{user}:{pwd}", 'utf-8'))
