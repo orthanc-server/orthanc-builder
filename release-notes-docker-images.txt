@@ -13,6 +13,8 @@ Only the default tags are listed here.  You just need to append `-full` for the 
             - when using 'pip install ...', you may need to add the `--break-system-package` argument
               since the system python is now considered as an 'external environment'
           - upgraded StoneWebViewer to 2.5+c23eef785569 (Docker images only)
+24.3.1 :  - upgraded the test-aliveness.py probe.  It is now calling /changes instead of /system
+            because /system is not testing the DB connection while /changes does.
 24.3.0 :  - upgraded base image to bullseye-20240211-slim
 24.2.3 :  - BUG: these Docker images actually contained the mainline versions and not the official releases !!!!
           - upgraded Orthanc Explorer 2 plugin to 1.2.2
