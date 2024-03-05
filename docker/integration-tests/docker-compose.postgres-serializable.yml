@@ -11,6 +11,9 @@ services:
       ORTHANC__POSTGRESQL__PASSWORD: "postgres"
       ORTHANC__POSTGRESQL__ENABLE_INDEX: "true"
       ORTHANC__POSTGRESQL__ENABLE_STORAGE: "true"
+
+      ORTHANC__POSTGRESQL__TRANSACTION_MODE: "Serializable"
+    
       # VERBOSE_ENABLED: "true"
 
   orthanc-tests:

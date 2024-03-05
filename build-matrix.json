@@ -175,7 +175,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-5.1",
+            "stable": "OrthancPostgreSQL-6.1",
             "unstable": "default",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,
@@ -190,8 +190,8 @@
                     ["windows-64/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Index.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
-                    ["windows-32/orthanc-postgresql/OrthancPostgreSQL-${VERSION}-Storage.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQLIndex-${VERSION}.dll", "Plugins", "OrthancPostgreSQLIndex.dll"],
+                    ["windows-32/orthanc-postgresql/OrthancPostgreSQLStorage-${VERSION}.dll", "Plugins", "OrthancPostgreSQLStorage.dll"]
                 ],
                 "Resources": [
                     ["postgresql.json", "Configuration"]
@@ -457,7 +457,7 @@
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
             "buildForWin": true,
-            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.7/x64/",
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.8/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
                 "Description": "Python plugin for Python 3.11 (AGPL license)",
@@ -484,7 +484,7 @@
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
             "buildForWin": true,
-            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.12 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.12.1/x64/",
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.12 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.12.2/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
                 "Description": "Python plugin for Python 3.12 (AGPL license)",
@@ -710,7 +710,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.6.2",
+            "stable": "0.7.0",
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
@@ -781,9 +781,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "1.2.1",
+            "stable": "1.2.2",
             "unstable": "master",
-            "unstableMacOS": "1.2.1", 
+            "unstableMacOS": "1.2.2", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",

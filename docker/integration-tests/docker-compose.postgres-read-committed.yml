@@ -1,0 +1,27 @@
+version: "2"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    depends_on:
+      - pg
+    environment:
+      ORTHANC__POSTGRESQL__HOST: "pg"
+      ORTHANC__POSTGRESQL__DATABASE: "postgres"
+      ORTHANC__POSTGRESQL__USERNAME: "postgres"
+      ORTHANC__POSTGRESQL__PASSWORD: "postgres"
+      ORTHANC__POSTGRESQL__ENABLE_INDEX: "true"
+      ORTHANC__POSTGRESQL__ENABLE_STORAGE: "true"
+
+      ORTHANC__POSTGRESQL__TRANSACTION_MODE: "ReadCommitted"
+    
+      # VERBOSE_ENABLED: "true"
+
+  orthanc-tests:
+    image: orthanc-tests
+    depends_on:
+      - orthanc-under-tests
+
+  pg:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: "postgres"

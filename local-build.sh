@@ -154,12 +154,12 @@ if [[ $step == "push" ]]; then
 
     # tag previously built images and push them
 
-    # push to orthancteam/orthanc only if it is a tag to keep the DockerHub tags clean !
-    if [[ $isTag == "true" ]]; then
+    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
+    if [[ $is_tag == "true" ]] && [[ $stable_unstable == "stable" ]]; then
         docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc:$pushTag
         docker push orthancteam/orthanc:$pushTag
     else
-        # otherwise we push to orthancteam/orthanc-unstable
+        # otherwise we push to orthancteam/orthanc-pre-release
 
         if [[ $version == "unstable" ]]; then
             final_tag=$pushTag-unstable
@@ -167,7 +167,7 @@ if [[ $step == "push" ]]; then
             final_tag=$pushTag
         fi
 
-        # tag previously build images and push them
+        # tag previously built images and push them
         docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
         docker push orthancteam/orthanc-pre-release:$final_tag
     fi

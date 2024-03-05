@@ -60,33 +60,41 @@ jobs:
         #   }
 
     steps:
-    
-    - name: Maximize build space
-      uses: easimon/maximize-build-space@v7
-      with:
-        # reserve space for docker
-        root-reserve-mb: 38000
-        swap-size-mb: 1024
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-        remove-docker-images: 'true'
+
+
+    # - name: Maximize build space
+    #   uses: easimon/maximize-build-space@v10
+    #   with:
+    #     # reserve space for docker
+    #     root-reserve-mb: 38000
+    #     swap-size-mb: 1024
+    #     remove-dotnet: 'true'
+    #     remove-android: 'true'
+    #     remove-haskell: 'true'
+    #     remove-codeql: 'true'
+    #     remove-docker-images: 'true'
 
     - name: Maximize build space (2)
       # to list folder sizes:
       # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
       run: |
-        rm -rf /opt/microsoft && rm -rf /opt/google && rm -rf /opt/az \
+        df -h
+        rm -rf /opt/microsoft && rm -rf /opt/google && rm -rf /opt/az
         rm -rf /usr/share/swift && rm -rf /usr/share/miniconda && rm -rf /usr/share/az_* && rm -rf /usr/share/gradle-* && rm -rf /usr/share/sbt
         sudo rm -rf /etc/skel
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache/CodeQL
+        sudo docker image prune --all --force
+        df -h
 
 
     - uses: actions/checkout@v3
 
-    - name: Set up QEMU
-      if: ${{ matrix.config.platform == 'linux/arm64' }}
-      uses: docker/setup-qemu-action@v1
+    # - name: Set up QEMU
+    #   if: ${{ matrix.config.platform == 'linux/arm64' }}
+    #   uses: docker/setup-qemu-action@v1
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2

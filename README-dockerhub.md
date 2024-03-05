@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.2.0 Default image
+#### 24.3.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -40,10 +40,10 @@ Osimis Web viewer plugin              1.4.3
 Python plugin                         4.1
 Orthanc Web viewer plugin             2.8
 DICOMweb plugin                       1.16
-PostgreSQL plugins                    5.1
+PostgreSQL plugins                    6.1
 MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
-Authorization plugin                  0.6.2
+Authorization plugin                  0.7.0
 Transfers accelerator plugin          1.4
 GDCM plugin                           1.6
 ODBC plugin                           1.1
@@ -51,7 +51,7 @@ TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.3.1
-Orthanc Explorer 2                    1.2.1
+Orthanc Explorer 2                    1.2.2
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
 
@@ -64,7 +64,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.2.0-full image 
+#### 24.3.0-full image 
 ```
 additional component                  version
 ---------------------------------------------

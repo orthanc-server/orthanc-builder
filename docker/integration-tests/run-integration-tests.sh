@@ -59,6 +59,18 @@ source .env/bin/activate
 
 pip3 install -r requirements.txt
 
+######## concurrency
+
+python3 -u main.py --pattern=Concurrency.* \
+                   --orthanc_under_tests_docker_image=orthanc-under-tests \
+                   --orthanc_under_tests_http_port=8043
+
+
+######## PG upgrades
+
+python3 -u main.py --pattern=PostgresUpgrades.* \
+                   --orthanc_under_tests_docker_image=orthancteam/orthanc:$tagToTest
+
 ######## housekeeper
 
 previous_image=orthancteam/orthanc:22.4.0
@@ -89,7 +101,7 @@ python3 -u main.py --pattern=WithIngestTranscoding.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=MaxStorageReject.* \
+python3 -u main.py --pattern=MaxStorage.* \
                    --orthanc_under_tests_docker_image=orthanc-under-tests \
                    --orthanc_under_tests_http_port=8043
 
@@ -127,8 +139,11 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker-compose down -v
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker-compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres.yml                    docker-compose down -v
-    COMPOSE_FILE=docker-compose.postgres.yml                    docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker-compose down -v
+    COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+
+    COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker-compose down -v
+    COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose down -v
     COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
@@ -176,7 +191,6 @@ if [[ $image == "normal" ]]; then
 # - CheckZipStream.py
 
 else  # full images (MSSQL only !)
-
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
     COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker-compose down -v
