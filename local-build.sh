@@ -155,7 +155,7 @@ if [[ $step == "push" ]]; then
     # tag previously built images and push them
 
     # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
-    if [[ $is_tag == "true" ]] && [[ $version == "stable" ]]; then
+    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
         docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc:$pushTag
         docker push orthancteam/orthanc:$pushTag
     else
