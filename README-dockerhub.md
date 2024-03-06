@@ -46,7 +46,7 @@ WSI Web viewer plugin                 2.0
 Authorization plugin                  0.7.0
 Transfers accelerator plugin          1.4
 GDCM plugin                           1.6
-ODBC plugin                           1.1
+ODBC plugin                           1.2
 TCIA plugin                           1.1
 Orthanc Indexer plugin                1.0
 Orthanc neuroimaging plugin           1.0
