@@ -47,16 +47,16 @@ COPY wait-for-it.sh /scripts
 
 
 ##############################################################
-FROM python:3.10 as python3-base-image
+FROM python:3.11 as python3-base-image
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
 
-RUN pip install httplib2
-RUN pip install pillow
-RUN pip install pydicom
-RUN pip install pynetdicom
-RUN pip install 'easywebdav @ git+https://github.com/Marpache9131/easywebdav@511967ec374061161f2b3b67fb7b164fcc78143c'
+RUN pip install httplib2 --break-system-package
+RUN pip install pillow --break-system-package
+RUN pip install pydicom --break-system-package
+RUN pip install pynetdicom --break-system-package
+RUN pip install 'easywebdav @ git+https://github.com/Marpache9131/easywebdav@511967ec374061161f2b3b67fb7b164fcc78143c' --break-system-package
 
 RUN mkdir /tests
 WORKDIR /tests

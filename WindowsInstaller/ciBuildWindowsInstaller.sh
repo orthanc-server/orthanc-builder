@@ -32,6 +32,7 @@ else
     build="buildx build"
 fi
 
+add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 

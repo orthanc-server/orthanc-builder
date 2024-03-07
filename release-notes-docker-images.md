@@ -12,6 +12,16 @@
 >
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+upcoming release
+----------------
+
+> [!WARNING]
+> - upgraded base image to `debian:bookworm-20240211-slim` which implies:
+>   - python has been upgraded to 3.11.
+>   - when using `pip install ...`, you may need to add the `--break-system-package` argument
+>     since the system python is now considered as an `external environment`
+- upgraded StoneWebViewer to 2.5+c23eef785569 (Docker images only)
+
 
 24.3.2
 ------
