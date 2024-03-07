@@ -13,10 +13,10 @@
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
 
 
-upcoming version
-----------------
+24.3.2
+------
 
-- upgraded ODBC plugins to [1.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/Odbc/NEWS)
+- upgraded ODBC plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/Odbc/NEWS)
 
 
 24.3.1
