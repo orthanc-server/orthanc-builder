@@ -52,7 +52,6 @@
             "stableMacOS": "Orthanc-1.12.3",
             "artifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "unstableArtifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
-            "extraCMakeFlags": "-DCMAKE_C_FLAGS=\"-mtune=generic -march=x86-64\" -DCMAKE_CXX_FLAGS=\"-mtune=generic -march=x86-64\"",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu",
             "unitTests": "./UnitTests",
             "buildForMacOS": true,
@@ -247,7 +246,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
             "buildForMacOS": true,
-            "extraCMakeFlags": "-DCMAKE_C_FLAGS=\"-mtune=generic -march=x86-64\" -DCMAKE_CXX_FLAGS=\"-mtune=generic -march=x86-64\"",
+            "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.12.0",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "ODBC backend (AGPL license)",
@@ -575,7 +574,6 @@
             "stableMacOS": "4b8fd4b10742",
             "artifactsMacOS": "libOrthancGdcm.dylib",
             "customBuildMacOS" : "cmake -B $workspace/build-arm64 $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
-            "extraCMakeFlags": "-DCMAKE_C_FLAGS=\"-mtune=generic -march=x86-64\" -DCMAKE_CXX_FLAGS=\"-mtune=generic -march=x86-64\"",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "buildForMacOS": true,
             "windows": [{
@@ -787,7 +785,6 @@
             "unstable": "master",
             "unstableMacOS": "1.2.2", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
-            "extraCMakeFlags": "-DCMAKE_C_FLAGS=\"-mtune=generic -march=x86-64\" -DCMAKE_CXX_FLAGS=\"-mtune=generic -march=x86-64\"",
             "buildForMacOS": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/",
