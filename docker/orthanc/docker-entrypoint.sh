@@ -6,6 +6,16 @@ if [[ $# -ne 1 ]]; then
 	exit 2
 fi
 
+echo "Displaying system parameters"
+echo "----------------------------"
+
+echo "/proc/sys/kernel/osrelease" $(cat /proc/sys/kernel/osrelease)
+echo "/proc/sys/kernel/pid_max" $(cat /proc/sys/kernel/pid_max)
+echo "/proc/sys/kernel/threads-max" $(cat /proc/sys/kernel/threads-max)
+echo "/proc/cpuinfo" $(cat /proc/cpuinfo | head -20)
+echo "/proc/meminfo" $(cat /proc/meminfo)
+echo "----------------------------"
+
 
 # DCMTK calls gethostid() when generating DICOM UIDs (used, e.g, in modifications/anonymizations).
 # When /etc/hostid is missing, the system tries to generate it from the IP of the system.
