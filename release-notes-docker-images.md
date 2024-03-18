@@ -12,6 +12,11 @@
 >
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+
+
+- upgraded base image to `debian:bookworm-20240311-slim`
+
+
 24.3.3
 ------
 
