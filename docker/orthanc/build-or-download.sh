@@ -351,6 +351,7 @@ elif [[ $target == "orthanc-s3" ]]; then
 
         cd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
+        ln -s /third-party-downloads $sourcesRootPath/orthanc-object-storage/Aws/ThirdPartyDownloads
 
         pushd $buildRootPath
 
