@@ -56,6 +56,17 @@ jobs:
       run: |
         bash -c "ls -al /c/hostedtoolcache/windows/Python/"
 
+
+    # By default Visual Studio chooses the earliest installed toolset version
+    # for the main build and vcpkg chooses the latest. Force it to use the
+    # latest (14.39 currently).
+    - name: Setup MSVC toolset (VS 2022)
+    uses: TheMrMilchmann/setup-msvc-dev@v3
+    if: matrix.os == 'windows-2022'
+    with:
+      arch: x64
+      toolset: 14.39
+
     - name: Build if required
       id: build-binaries
       run: |
