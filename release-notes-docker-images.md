@@ -15,6 +15,9 @@
 
 
 - upgraded base image to `debian:bookworm-20240311-slim`
+- upgraded Orthanc Explorer 2 plugin to [1.3.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.7.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/tip/NEWS)
+- upgraded PostgreSQL plugins to [6.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/PostgreSQL/NEWS)
 
 
 24.3.3
@@ -52,6 +55,7 @@
 
 24.2.2
 ------
+
 - upgraded PostgreSQL plugins to [6.1](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/PostgreSQL/NEWS)
 
 
