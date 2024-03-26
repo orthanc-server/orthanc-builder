@@ -49,7 +49,7 @@ GDCM plugin                           1.6
 ODBC plugin                           1.2
 TCIA plugin                           1.1
 Orthanc Indexer plugin                mainline
-Orthanc neuroimaging plugin           1.0
+Orthanc neuroimaging plugin           mainline
 AWS S3 plugin                         2.3.1
 Orthanc Explorer 2                    1.3.0
 Kitware's VolView plugin              1.1
