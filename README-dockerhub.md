@@ -38,7 +38,7 @@ Multitenant DICOM plugin              1.12.3
 Stone Web viewer plugin               2.5+c23eef785569
 Osimis Web viewer plugin              1.4.3
 Python plugin                         4.1
-Orthanc Web viewer plugin             2.8
+Orthanc Web viewer plugin             mainline
 DICOMweb plugin                       1.16
 PostgreSQL plugins                    6.2
 MySQL plugins                         5.1
@@ -48,7 +48,7 @@ Transfers accelerator plugin          1.5
 GDCM plugin                           1.6
 ODBC plugin                           1.2
 TCIA plugin                           1.1
-Orthanc Indexer plugin                1.0
+Orthanc Indexer plugin                mainline
 Orthanc neuroimaging plugin           1.0
 AWS S3 plugin                         2.3.1
 Orthanc Explorer 2                    1.3.0
