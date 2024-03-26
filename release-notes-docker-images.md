@@ -17,12 +17,13 @@ Upcoming release
 
 Due to the orthanc.osimis.io server being shut down, we had to release many
 old plugins that were still referencing this server in their build process.  
-They actually do not contain any functional changes compared with the previous release.
+Most of them actually do not contain any functional changes compared with the previous release.
 
+- upgraded neuroimaging plugin 1.1 (only a minor [functional change](https://orthanc.uclouvain.be/hg/orthanc-neuro/file/tip/NEWS))
 - upgraded Orthanc Web viewer plugin 2.9 (no functional changes)
 - upgraded transfers accelerator plugin 1.5 (no functional changes)
 - upgraded server indexer plugin 1.1 (no functional changes)
-- upgraded neuroimaging plugin 1.1 (no functional changes)
+- upgraded TCIA plugin to 1.2 (no functional changes)
 
 
 24.3.4
