@@ -310,10 +310,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-indexer/OrthancIndexer-Win64-${VERSION}.dll", "Plugins", "OrthancIndexer.dll"]
+                    ["windows-64/orthanc-indexer/OrthancIndexer-${VERSION}.dll", "Plugins", "OrthancIndexer.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-indexer/OrthancIndexer-Win32-${VERSION}.dll", "Plugins", "OrthancIndexer.dll"]
+                    ["windows-32/orthanc-indexer/OrthancIndexer-${VERSION}.dll", "Plugins", "OrthancIndexer.dll"]
                 ],
                 "Resources": [
                     ["indexer.json", "Configuration"]
@@ -338,10 +338,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-tcia/OrthancTcia-Win64-${VERSION}.dll", "Plugins", "OrthancTcia.dll"]
+                    ["windows-64/orthanc-tcia/OrthancTcia-${VERSION}.dll", "Plugins", "OrthancTcia.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-tcia/OrthancTcia-Win32-${VERSION}.dll", "Plugins", "OrthancTcia.dll"]
+                    ["windows-32/orthanc-tcia/OrthancTcia-${VERSION}.dll", "Plugins", "OrthancTcia.dll"]
                 ],
                 "Resources": [
                     ["tcia.json", "Configuration"]
@@ -852,10 +852,10 @@
                 "Mandatory": false,
                 "Category": "plugins",
                 "Artifacts64": [
-                    ["windows-64/orthanc-neuro/OrthancNeuro-Win64-${VERSION}.dll", "Plugins", "OrthancNeuro.dll"]
+                    ["windows-64/orthanc-neuro/OrthancNeuro-${VERSION}.dll", "Plugins", "OrthancNeuro.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-neuro/OrthancNeuro-Win32-${VERSION}.dll", "Plugins", "OrthancNeuro.dll"]
+                    ["windows-32/orthanc-neuro/OrthancNeuro-${VERSION}.dll", "Plugins", "OrthancNeuro.dll"]
                 ],
                 "Resources": [
                 ]
