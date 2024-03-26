@@ -17,6 +17,7 @@ Upcoming release
 
 
 - upgraded transfers accelerator plugin 1.5 (no functional changes)
+- upgraded Orthanc Web viewer plugin 2.9 (no functional changes)
 
 
 24.3.4
