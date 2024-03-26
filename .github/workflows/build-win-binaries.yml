@@ -66,6 +66,9 @@ jobs:
         arch: x64
         toolset: 14.39
 
+    - name: Install Ninja (VS 2022)
+      uses: seanmiddleditch/gha-setup-ninja@v4
+
     - name: Build if required
       id: build-binaries
       run: |
