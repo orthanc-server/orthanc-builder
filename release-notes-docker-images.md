@@ -19,7 +19,7 @@ Due to the orthanc.osimis.io server being shut down, we had to release many
 old plugins that were still referencing this server in their build process.  
 They actually do not contain any functional changes compared with the previous release.
 
-- updated Orthanc Web viewer to 2.8 (no functional changes)
+- upgraded Orthanc Web viewer plugin 2.9 (no functional changes)
 - upgraded transfers accelerator plugin 1.5 (no functional changes)
 
 
