@@ -41,15 +41,15 @@ RUN tar xvf ${LSB_SDK}
 WORKDIR /root/lsb-sdk
 RUN yes | ./install.sh 
 
-# install emsciptem on AMD64
-RUN uname -m | grep -q aarch64 && export ARM64=true || export ARM64=false
+# install emsciptem only on AMD64
+
 WORKDIR /opt
 ENV EMSCRIPTEM_VERSION=3.1.49
 RUN git clone https://github.com/emscripten-core/emsdk.git
-RUN if [ "$ARM64" = "false" ]; then /opt/emsdk/emsdk install ${EMSCRIPTEM_VERSION} ;fi
-RUN if [ "$ARM64" = "false" ]; then /opt/emsdk/emsdk activate ${EMSCRIPTEM_VERSION}; fi
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /opt/emsdk/emsdk install ${EMSCRIPTEM_VERSION} ;fi
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /opt/emsdk/emsdk activate ${EMSCRIPTEM_VERSION}; fi
 
-RUN if [ "$ARM64" = "false" ]; then mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials; fi
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials; fi
 RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
 
 
@@ -192,13 +192,12 @@ FROM wasm-builder-base as build-wasm-stone-viewer
 COPY --from=orthanc-builder-base /scripts/build-or-download.sh /scripts/
 
 RUN ls -al /
-RUN env
+# RUN env
 RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
-RUN if [ "$ARM64" = "false" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
-RUN if [ "$ARM64" = "true" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
-
-
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
+RUN ls -al /target
 
 
 FROM orthanc-builder-base as build-stone-viewer
