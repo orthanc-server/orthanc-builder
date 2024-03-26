@@ -11,8 +11,12 @@ ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
+# rebuild jodogne/wasm-builder:3.1.49 here such that it also works for ARM64.
+# However, since 3.1.49 is not available for ARM64, we skip the WASM build steps
+# but, at least, we have a "common" build process !
 
-FROM jodogne/wasm-builder:3.1.49 as wasm-builder-base
+FROM ubuntu:18.04 as wasm-builder-base
+
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -23,7 +27,29 @@ ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
-RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
+RUN apt-get -y clean && apt-get -y update
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget nano unzip cmake git ninja-build python-clang-4.0 libclang-4.0-dev python-pystache python3-pip alien lsb-core g++-4.8 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade mercurial
+
+# install lsb
+WORKDIR /root/
+ENV LSB_SDK=lsb-sdk-5.0.0-3.x86_64.tar.gz 
+RUN wget https://orthanc.uclouvain.be/downloads/third-party-downloads/linux-standard-base/${LSB_SDK}
+RUN tar xvf ${LSB_SDK}
+
+WORKDIR /root/lsb-sdk
+RUN yes | ./install.sh 
+
+# install emsciptem on AMD64
+RUN uname -m | grep -q aarch64 && export ARM64=true || export ARM64=false
+WORKDIR /opt
+ENV EMSCRIPTEM_VERSION=3.1.49
+RUN git clone https://github.com/emscripten-core/emsdk.git
+RUN if [ "$ARM64" = "false" ]; then /opt/emsdk/emsdk install ${EMSCRIPTEM_VERSION} ;fi
+RUN if [ "$ARM64" = "false" ]; then /opt/emsdk/emsdk activate ${EMSCRIPTEM_VERSION}; fi
+
+RUN if [ "$ARM64" = "false" ]; then mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials; fi
 RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
 
 
@@ -169,7 +195,8 @@ RUN ls -al /
 RUN env
 RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN if [ "$ARM64" = "false" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+RUN if [ "$ARM64" = "true" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
 
 
 
