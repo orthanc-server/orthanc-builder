@@ -300,7 +300,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-indexer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_INDEXER",
-            "stable_comment": "OrthancIndexer-1.0",
+            "stable_comment": "OrthancIndexer-1.1",
             "stable": "default",
             "unstable": "default",
             "artifactsMacOS": "libOrthancIndexer.dylib",
