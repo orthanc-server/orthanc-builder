@@ -277,6 +277,16 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         upload libOrthancExplorer2.so
     fi
 
+elif [[ $target == "download-orthanc-volview" ]]; then
+
+    dl=$(( $dl + $(download libOrthancVolView.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        echo "Failed to download volview web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
+
+    fi
+
 elif [[ $target == "orthanc-volview" ]]; then
 
     dl=$(( $dl + $(download libOrthancVolView.so) ))
@@ -307,6 +317,16 @@ elif [[ $target == "orthanc-volview" ]]; then
         make -j 4
 
         upload libOrthancVolView.so
+    fi
+
+elif [[ $target == "download-orthanc-ohif" ]]; then
+
+    dl=$(( $dl + $(download libOrthancOHIF.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        echo "Failed to download OHIF web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
+
     fi
 
 elif [[ $target == "orthanc-ohif" ]]; then
