@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.3.4 Default image
+#### 24.3.5 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -44,7 +44,7 @@ PostgreSQL plugins                    6.2
 MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
 Authorization plugin                  0.7.1
-Transfers accelerator plugin          1.4
+Transfers accelerator plugin          1.5
 GDCM plugin                           1.6
 ODBC plugin                           1.2
 TCIA plugin                           1.1
@@ -64,7 +64,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.3.4-full image 
+#### 24.3.5-full image 
 ```
 additional component                  version
 ---------------------------------------------

@@ -12,6 +12,12 @@
 >
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
 
+Upcoming release
+------
+
+
+- upgraded transfers accelerator plugin 1.5 (no functional changes)
+
 
 24.3.4
 ------
