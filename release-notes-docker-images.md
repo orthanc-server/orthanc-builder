@@ -22,6 +22,7 @@ They actually do not contain any functional changes compared with the previous r
 - upgraded Orthanc Web viewer plugin 2.9 (no functional changes)
 - upgraded transfers accelerator plugin 1.5 (no functional changes)
 - upgraded server indexer plugin 1.1 (no functional changes)
+- upgraded neuroimaging plugin 1.1 (no functional changes)
 
 
 24.3.4
