@@ -16,11 +16,10 @@ source bash-helpers.sh
 version=stable
 skipCommitChecks=0
 platform=linux/amd64
-arch=$(echo $platform | cut -d '/' -f 2)
 type=local
 step=build
-currentTag=current-$arch
-pushTag=unknown-$arch
+currentTag=current
+pushTag=unknown
 image=normal
 isTag=false
 useBuildx=false
@@ -41,13 +40,21 @@ do
    export "$key"="$value"
 done
 
+arch=$(echo $platform | cut -d '/' -f 2)
+if [[ $step == "publish-manifest" ]]; then
+    echo "not modifying currentTag and pushTag"
+else
+    currentTag=$currentTag-$arch
+    pushTag=$pushTag-$arch
+fi
+
 echo "version          = $version"
 echo "platform         = $platform"
 echo "type             = $type"
 echo "skipCommitChecks = $skipCommitChecks"
 echo "step             = $step"
 echo "currentTag       = $currentTag"
-echo "pushTag          = $pushTag-$arch"
+echo "pushTag          = $pushTag"
 echo "image            = $image"
 
 # get version number from build-matrix.json (stable or unstable)
@@ -179,7 +186,7 @@ if [[ $step == "push" ]]; then
     fi
 
     # tag previously built images and push them
-    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc:$final_tag
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
     docker push orthancteam/orthanc-pre-release:$final_tag
 
     exit 0
