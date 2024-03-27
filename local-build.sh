@@ -93,7 +93,7 @@ buildTargets="$buildTargets $finalImageTarget"
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
 # buildTargets=build-plugin-neuro
 
-if [[ $useBuildx ]]; then
+if [[ $useBuildx == "true" ]]; then
     from_cache_arg_runner_base="--cache-from=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
     to_cache_arg_runner_base="--cache-to=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
 
