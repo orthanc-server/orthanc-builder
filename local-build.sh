@@ -23,7 +23,13 @@ currentTag=current-$arch
 pushTag=unknown-$arch
 image=normal
 isTag=false
+useBuildx=false
 
+if [[ $type == "ci" ]]; then
+    if [[ $platform == "linux/amd64" ]]; then
+        useBuildx=true
+    fi
+fi
 
 for argument in "$@"
 do
@@ -87,35 +93,7 @@ buildTargets="$buildTargets $finalImageTarget"
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
 # buildTargets=build-plugin-neuro
 
-
-if [[ $type == "local" ]]; then
-    from_cache_arg_runner_base=
-    to_cache_arg_runner_base=
-
-    from_cache_arg_builder_base=
-    to_cache_arg_builder_base=
-
-    from_cache_arg_builder_vcpkg=
-    to_cache_arg_builder_vcpkg=
-
-    from_cache_arg_builder_vcpkg_azure=
-    to_cache_arg_builder_vcpkg_azure=
-
-    from_cache_arg_builder_vcpkg_google=
-    to_cache_arg_builder_vcpkg_google=
-
-    from_cache_arg=
-    to_cache_arg=
-
-    # when building locally, use Docker builder (easier to reuse local images)
-    build="build"
-    push_load_arg_final_image=
-    push_load_arg_builder_image=
-
-
-    prefer_downloads=1
-    enable_upload=0
-else
+if [[ $useBuildx ]]; then
     from_cache_arg_runner_base="--cache-from=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
     to_cache_arg_runner_base="--cache-to=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
 
@@ -143,6 +121,40 @@ else
         push_load_arg_builder_image=
     fi
     
+else
+
+    from_cache_arg_runner_base=
+    to_cache_arg_runner_base=
+
+    from_cache_arg_builder_base=
+    to_cache_arg_builder_base=
+
+    from_cache_arg_builder_vcpkg=
+    to_cache_arg_builder_vcpkg=
+
+    from_cache_arg_builder_vcpkg_azure=
+    to_cache_arg_builder_vcpkg_azure=
+
+    from_cache_arg_builder_vcpkg_google=
+    to_cache_arg_builder_vcpkg_google=
+
+    from_cache_arg=
+    to_cache_arg=
+
+    # when building locally, use Docker builder (easier to reuse local images)
+    build="build"
+    push_load_arg_final_image=
+    push_load_arg_builder_image=
+
+fi
+
+
+if [[ $type == "local" ]]; then
+
+    prefer_downloads=1
+    enable_upload=0
+else
+
     # when building in CI, don't use intermediate targets (it would push plenty of images)
     buildTargets=$finalImageTarget
 
