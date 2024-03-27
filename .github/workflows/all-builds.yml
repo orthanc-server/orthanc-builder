@@ -143,7 +143,7 @@ jobs:
 
   build-docker:
     needs: [pre-build]
-    uses: ./.github/workflows/build-docker.yml
+    uses: ./.github/workflows/build-all-dockers.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}

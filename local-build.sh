@@ -214,6 +214,7 @@ if [[ $step == "publish-manifest" ]]; then
     fi
 
     # this step merges the AMD64 and ARM64 images into a single manifest
+    docker manifest rm $final_image:$final_tag || true
     docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 orthancteam/orthanc-pre-release:$final_tag-arm64
     docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 --os linux --arch amd64
     docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
