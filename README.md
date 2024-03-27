@@ -62,7 +62,13 @@ This produces an image `orthancteam/orthanc:current`.
 
 - if a MacOS build fails, you may connect to the build slave thanks to `tmate`.  Access is limited to approved actors with their SSH Github key.
 
-# Contributions
 
-You must sign a [CLA](https://en.wikipedia.org/wiki/Contributor_License_Agreement) before we are able to accept your contributions/pull-requests.  
+# Creating multi-platform image
+
+image=orthancteam/orthanc-pre-release
+tag=24.3.5
+docker manifest create $image:$tag $image:$tag-amd64 $image:$tag-arm64
+docker manifest annotate $image:$tag $image:$tag-amd64 --os linux --arch amd64
+docker manifest annotate $image:$tag $image:$tag-arm64 --os linux --arch arm64
+docker manifest push orthancteam/orthanc-pre-release:$tag
 

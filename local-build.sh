@@ -16,10 +16,11 @@ source bash-helpers.sh
 version=stable
 skipCommitChecks=0
 platform=linux/amd64
+arch=$(echo $platform | cut -d '/' -f 2)
 type=local
 step=build
-currentTag=current
-pushTag=unknown
+currentTag=current-$arch
+pushTag=unknown-$arch
 image=normal
 isTag=false
 
@@ -40,7 +41,7 @@ echo "type             = $type"
 echo "skipCommitChecks = $skipCommitChecks"
 echo "step             = $step"
 echo "currentTag       = $currentTag"
-echo "pushTag          = $pushTag"
+echo "pushTag          = $pushTag-$arch"
 echo "image            = $image"
 
 # get version number from build-matrix.json (stable or unstable)

@@ -12,7 +12,7 @@
 >
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
 
-Upcoming release
+24.3.5
 ------
 
 Due to the orthanc.osimis.io server being shut down, we had to release many
