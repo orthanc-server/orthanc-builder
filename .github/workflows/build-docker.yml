@@ -128,6 +128,8 @@ jobs:
       run: sudo apt-get install -y dcmtk
 
     - name: Run normal image integration tests
+      # TODO: enable on ARM64 too
+      if: matrix.config.runnerType == 'github-hosted'
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
@@ -135,6 +137,8 @@ jobs:
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
 
     - name: Run full image integration tests
+      # TODO: enable on ARM64 too
+      if: matrix.config.runnerType == 'github-hosted'
       run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
@@ -168,7 +172,7 @@ jobs:
 
 
     - name: Setup tmate session
-      if: ${{ failure() }}
+      if: ${{ failure() }} && matrix.config.runnerType == 'github-hosted'
       uses: mxschmitt/action-tmate@v3
       with:
         limit-access-to-actor: true
