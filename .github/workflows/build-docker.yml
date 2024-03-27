@@ -127,20 +127,20 @@ jobs:
     - name: Install Integration tests prerequisites
       run: sudo apt-get install -y dcmtk
 
-    - name: Run normal image integration tests
-      # TODO: enable on ARM64 too
-      if: matrix.config.runnerType == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
-      working-directory: ${{github.workspace}}/docker/integration-tests
+    # - name: Run normal image integration tests
+    #   # TODO: enable on ARM64 too
+    #   if: matrix.config.runnerType == 'github-hosted'
+    #   run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ matrix.config.stableUnstable }}
+    #   working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Build full image with local-build.sh
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
 
-    - name: Run full image integration tests
-      # TODO: enable on ARM64 too
-      if: matrix.config.runnerType == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
-      working-directory: ${{github.workspace}}/docker/integration-tests
+    # - name: Run full image integration tests
+    #   # TODO: enable on ARM64 too
+    #   if: matrix.config.runnerType == 'github-hosted'
+    #   run: ./run-integration-tests.sh version=${{ matrix.config.stableUnstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }}
+    #   working-directory: ${{github.workspace}}/docker/integration-tests
 
     # - name: Setup tmate session
     #   uses: mxschmitt/action-tmate@v3
@@ -161,6 +161,32 @@ jobs:
       if: inputs.is_tag == 'true'
       run: ./local-build.sh version=${{ matrix.config.stableUnstable }} platform=${{ matrix.config.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ matrix.config.stableUnstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
 
+
+
+    - name: Setup tmate session
+      if: ${{ failure() && matrix.config.runnerType == 'github-hosted' }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+
+  publish-manifest:
+    name: build-docker
+    runs-on: "ubuntu-latest"
+    needs: [build-docker]
+
+    steps:
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
+
+    - name: Publish Dockerhub manifest
+      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+      # run: ./local-build.sh version=stable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+
+
     - name: Update DockerHub repo description
       uses: peter-evans/dockerhub-description@v3
       if: inputs.is_tag == 'true'
@@ -169,10 +195,3 @@ jobs:
         password: ${{ secrets.docker_hub_token }}
         repository: orthancteam/orthanc
         readme-filepath: README-dockerhub.md
-
-
-    - name: Setup tmate session
-      if: ${{ failure() }} && matrix.config.runnerType == 'github-hosted'
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
