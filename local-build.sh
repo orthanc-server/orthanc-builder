@@ -219,6 +219,7 @@ if [[ $step == "publish-manifest" ]]; then
     docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
     docker manifest push $final_image:$final_tag
 
+    exit 0
 fi
 
 # runner_base_tag=$final_image_temporary_tag
