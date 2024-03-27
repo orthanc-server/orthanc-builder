@@ -24,10 +24,6 @@ on:
 jobs:
   build-docker-stable:
     name: build-docker-stable
-    runs-on: ${{ matrix.config.runner }}
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
@@ -36,6 +32,11 @@ jobs:
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
       is_tag: ${{ inputs.is_tag }}
+    secrets:
+      docker_hub_username: ${{ secrets.docker_hub_username }}
+      docker_hub_token: ${{ secrets.docker_hub_token }}
+      aws_access_key_id: ${{ secrets.aws_access_key_id }}
+      aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
     strategy:
       fail-fast: false

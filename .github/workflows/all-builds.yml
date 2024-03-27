@@ -141,30 +141,10 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
 
-  # build-docker:
-  #   needs: [pre-build]
-  #   uses: ./.github/workflows/build-all-dockers.yml
-  #   with:
-  #     is_tag: ${{ needs.pre-build.outputs.is_tag }}
-  #     current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-  #   secrets:
-  #     docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #     docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-  #     aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
-  #     aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
-
-  build-docker-stable:
+  build-docker:
     needs: [pre-build]
-    runs-on: ${{ matrix.config.runner }}
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-    uses: ./.github/workflows/build-docker.yml
+    uses: ./.github/workflows/build-all-dockers.yml
     with:
-      runner: ${{ matrix.config.runner }}
-      runner_type: ${{ matrix.config.runnerType }}
-      platform: ${{ matrix.config.platform }}
-      stable_unstable: ${{ matrix.config.stableUnstable }}
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
       current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
     secrets:
@@ -173,24 +153,44 @@ jobs:
       aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "linux/amd64",
-            platform: "linux/amd64",
-            cache: "cache-amd64-stable",
-            stableUnstable: "stable",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted"
-          }
-        - {
-            name: "linux/arm64",
-            platform: "linux/arm64",
-            cache: "cache-arm64-stable",
-            stableUnstable: "stable",
-            runner: "debian-arm64",
-            runnerType: "self-hosted"
-          }
+  # build-docker-stable:
+  #   needs: [pre-build]
+  #   runs-on: ${{ matrix.config.runner }}
+  #   env:
+  #     AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+  #     AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+  #   uses: ./.github/workflows/build-docker.yml
+  #   with:
+  #     runner: ${{ matrix.config.runner }}
+  #     runner_type: ${{ matrix.config.runnerType }}
+  #     platform: ${{ matrix.config.platform }}
+  #     stable_unstable: ${{ matrix.config.stableUnstable }}
+  #     is_tag: ${{ needs.pre-build.outputs.is_tag }}
+  #     current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+  #   secrets:
+  #     docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #     docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
+  #     aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
+
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       config:
+  #       - {
+  #           name: "linux/amd64",
+  #           platform: "linux/amd64",
+  #           cache: "cache-amd64-stable",
+  #           stableUnstable: "stable",
+  #           runner: "ubuntu-latest",
+  #           runnerType: "github-hosted"
+  #         }
+  #       - {
+  #           name: "linux/arm64",
+  #           platform: "linux/arm64",
+  #           cache: "cache-arm64-stable",
+  #           stableUnstable: "stable",
+  #           runner: "debian-arm64",
+  #           runnerType: "self-hosted"
+  #         }
 
