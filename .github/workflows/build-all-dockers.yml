@@ -23,7 +23,6 @@ on:
 
 jobs:
   build-docker-stable:
-    name: build-docker-stable
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
@@ -66,6 +65,8 @@ jobs:
     needs: [build-docker-stable]
 
     steps:
+
+    - uses: actions/checkout@v3
 
     - name: Login to DockerHub
       uses: docker/login-action@v2

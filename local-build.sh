@@ -24,12 +24,6 @@ image=normal
 isTag=false
 useBuildx=false
 
-if [[ $type == "ci" ]]; then
-    if [[ $platform == "linux/amd64" ]]; then
-        useBuildx=true
-    fi
-fi
-
 for argument in "$@"
 do
    key=$(echo $argument | cut -f1 -d=)
@@ -40,13 +34,13 @@ do
    export "$key"="$value"
 done
 
+if [[ $type == "ci" ]]; then
+    if [[ $platform == "linux/amd64" ]]; then
+        useBuildx=true
+    fi
+fi
+
 arch=$(echo $platform | cut -d '/' -f 2)
-# if [[ $step == "publish-manifest" ]]; then
-#     echo "not modifying currentTag and pushTag"
-# else
-#     currentTag=$currentTag-$arch
-#     pushTag=$pushTag-$arch
-# fi
 
 echo "version          = $version"
 echo "platform         = $platform"

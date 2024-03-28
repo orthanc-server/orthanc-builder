@@ -40,7 +40,7 @@ on:
 
 jobs:
   build-docker:
-    name: build-docker
+    name: build-docker-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
 
     steps:
