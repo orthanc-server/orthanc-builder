@@ -11,9 +11,13 @@
 >  - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 >
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
+>
+> Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 24.3.5
 ------
+
+First release supporting the linux/arm64 platform !
 
 Due to the orthanc.osimis.io server being shut down, we had to release many
 old plugins that were still referencing this server in their build process.  
