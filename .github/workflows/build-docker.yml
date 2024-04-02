@@ -42,6 +42,9 @@ jobs:
   build-docker:
     name: build-docker-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
 
     steps:
 
