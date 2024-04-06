@@ -177,6 +177,13 @@ FROM orthanc-builder-base as build-plugin-neuro
 ARG ORTHANC_NEURO_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-neuro commitId=$ORTHANC_NEURO_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Orthanc STL
+
+FROM orthanc-builder-base as build-plugin-stl
+
+ARG ORTHANC_STL_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stl commitId=$ORTHANC_STL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Orthanc TCIA
 
 FROM orthanc-builder-base as build-plugin-tcia
@@ -317,6 +324,7 @@ COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/pl
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-ohif /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-stl /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/

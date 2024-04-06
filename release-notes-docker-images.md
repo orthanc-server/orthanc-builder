@@ -14,6 +14,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
+Pending changes
+---------------
+
+- added STL plugin 1.0
+
+
 24.3.5
 ------
 

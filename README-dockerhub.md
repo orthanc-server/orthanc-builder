@@ -54,6 +54,7 @@ AWS S3 plugin                         2.3.1
 Orthanc Explorer 2                    1.3.0
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
+STL plugin                            1.0
 
 
 System component                      version

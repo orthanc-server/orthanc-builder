@@ -233,5 +233,13 @@
   "Ohif": {
     "enablingEnvVar" : "OHIF_PLUGIN_ENABLED",
     "libs" : ["libOrthancOHIF.so"]
-  }  
+  },
+
+  "STL": {
+    "enablingEnvVar" : "STL_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "libs" : ["libOrthancSTL.so"]
+  }
 }

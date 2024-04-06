@@ -231,6 +231,20 @@ elif [[ $target == "orthanc-neuro" ]]; then
         upload libOrthancNeuro.so
     fi
 
+elif [[ $target == "orthanc-stl" ]]; then
+
+    dl=$(( $dl + $(download libOrthancSTL.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-stl/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancSTL.so
+    fi
+
 elif [[ $target == "orthanc-tcia" ]]; then
 
     dl=$(( $dl + $(download libOrthancTcia.so) ))

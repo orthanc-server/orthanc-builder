@@ -921,6 +921,32 @@
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-ohif/OrthancOHIF-${VERSION}.dylib"
             ]
+        },
+        {
+            "name": "Orthanc-stl", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-stl/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_STL",
+            "stable": "OrthancSTL-1.0",
+            "unstable": "default",
+            "artifactsMacOS": "libOrthancSTL.dylib",
+            "buildForMacOS": false,
+            "windows": [{
+                "Description": "STL plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-stl/OrthancSTL-${VERSION}.dll", "Plugins", "OrthancSTL.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-stl/OrthancSTL-${VERSION}.dll", "Plugins", "OrthancSTL.dll"]
+                ],
+                "Resources": [
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-stl/OrthancSTL-${VERSION}.dylib"
+            ]
         }
     ]
     
