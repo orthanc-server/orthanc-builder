@@ -237,6 +237,13 @@ elif [[ $target == "orthanc-stl" ]]; then
 
     if [[ $dl != 0 ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc-stl/ -r $commitId $sourcesRootPath
+
+        mkdir /sources/JavaScriptLibraries
+        cd /sources/JavaScriptLibraries
+        # CHANGE_VERSION_STL
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-stl/1.0/dist.zip
+        unzip dist.zip
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_VTK=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
         make -j 4
