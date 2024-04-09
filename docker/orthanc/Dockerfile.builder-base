@@ -33,6 +33,9 @@ RUN apt-get --assume-yes install default-libmysqlclient-dev
 
 RUN apt-get --assume-yes install cmake
 RUN apt-get --assume-yes install awscli
+# for orthanc-stl plugin:
+RUN apt-get --assume-yes install libgl1-mesa-dev libxt-dev
+
 # # install a recent cmake version (required later by recent vcpkg versions that we don't use now !)
 # WORKDIR /tmp
 # RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1.tar.gz
