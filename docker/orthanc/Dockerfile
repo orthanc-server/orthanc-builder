@@ -361,12 +361,7 @@ COPY test-aliveness.py /probes/
 
 
 # cleanup unnecessary packages that can trigger errors during security scan
-RUN apt purge --assume-yes build-essential
-RUN apt purge --assume-yes perl
-RUN apt purge --assume-yes bzip2
-RUN apt purge --assume-yes gnupg
-RUN apt purge --assume-yes xdg-user-dirs
-RUN apt --assume-yes autoremove
+RUN apt purge --assume-yes build-essential perl bzip2 gnupg xdg-user-dirs && apt --assume-yes autoremove
 
 
 # always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
