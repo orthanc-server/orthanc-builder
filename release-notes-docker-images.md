@@ -18,6 +18,8 @@
 Pending changes
 ---------------
 
+- orthanc + DB plugins + tests are now on `large-queries` branch
+
 - added STL plugin 1.0
 
 
