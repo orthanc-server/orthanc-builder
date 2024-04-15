@@ -19,6 +19,7 @@ Pending changes
 ---------------
 
 - added STL plugin 1.0
+- upgraded base image to `debian:bookworm-20240408-slim`
 
 
 24.3.5
