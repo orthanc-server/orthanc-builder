@@ -1,5 +1,11 @@
+> [!NOTE]  
+> These release notes apply to both the [orthancteam/orthanc](https://orthanc.uclouvain.be/book/users/docker-orthancteam.html) 
+> Docker images and the [Windows installer](https://orthanc.uclouvain.be/downloads/windows-64/installers/index.html) 
+> that share the same numbering scheme.
+
+
 > [!TIP]
-> Starting from the `22.6.1` release, we are providing 2 types of images:
+> Starting from the `22.6.1` release, we are providing 2 types of Docker images:
 >  - the default image with the usual tag: e.g `orthancteam/orthanc:22.6.1`
 >  - the full image with a e.g `orthancteam/orthanc:22.6.1-full` tag
 >
@@ -15,8 +21,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes
----------------
+24.4.0
+------
 
 - added STL plugin 1.0
 - upgraded base image to `debian:bookworm-20240408-slim`
