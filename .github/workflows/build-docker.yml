@@ -104,6 +104,7 @@ jobs:
     #   uses: mxschmitt/action-tmate@v3
     #   with:
     #     limit-access-to-actor: true
+    #   timeout-minutes: 30
 
     - name: Build normal image with local-build.sh
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
@@ -130,6 +131,7 @@ jobs:
     #   uses: mxschmitt/action-tmate@v3
     #   with:
     #     limit-access-to-actor: true
+    #   timeout-minutes: 30
 
     - name: Push normal image with branch/tag
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
@@ -150,3 +152,4 @@ jobs:
       uses: mxschmitt/action-tmate@v3
       with:
         limit-access-to-actor: true
+        timeout-minutes: 20
