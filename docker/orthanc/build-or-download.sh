@@ -303,8 +303,8 @@ elif [[ $target == "download-orthanc-volview" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        echo "Failed to download volview web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
-
+        echo "Failed to download volview web build.  You are likely running a build on ARM64 and needs the AMD64 build to have pushed the web build on a web server"
+        exit 1
     fi
 
 elif [[ $target == "orthanc-volview" ]]; then
@@ -339,14 +339,36 @@ elif [[ $target == "orthanc-volview" ]]; then
         upload libOrthancVolView.so
     fi
 
-elif [[ $target == "download-orthanc-ohif" ]]; then
+elif [[ $target == "download-orthanc-ohif-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancOHIF.so) ))
+    dl=$(( $dl + $(download OHIF-dist.zip) ))
 
     if [[ $dl != 0 ]]; then
 
-        echo "Failed to download OHIF web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
+        echo "Failed to download OHIF web build.  You are likely running a build on ARM64 and needs the AMD64 build to have pushed the WEB build on a web server"
         exit 1
+    fi
+
+elif [[ $target == "download-ohif-from-dist" ]]; then
+
+    dl=$(( $dl + $(download libOrthancOHIF.zo) ))
+
+    if [[ $dl != 0 ]]; then
+        # build only the C++ code, not the dist.zip that has been downloaded before
+
+        pushd $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
+
+        # unzip the file at the right place for the next step
+        unzip $buildRootPath/OHIF-dist.zip
+        mkdir -p $sourcesRootPath/OHIF
+        cp $buildRootPath/OHIF $sourcesRootPath/OHIF
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancOHIF.so
     fi
 
 elif [[ $target == "orthanc-ohif" ]]; then
@@ -373,7 +395,9 @@ elif [[ $target == "orthanc-ohif" ]]; then
         /source/Resources/CreateOHIFDist/build.sh Viewers-${extraArg1}
         mkdir -p $sourcesRootPath/OHIF
         cp -r /target $sourcesRootPath/OHIF/dist
-        
+        zip -r $buildRootPath/OHIF-dist.zip $sourcesRootPath/OHIF/dist
+        upload OHIF-dist.zip
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
