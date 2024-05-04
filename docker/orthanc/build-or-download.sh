@@ -346,7 +346,7 @@ elif [[ $target == "download-orthanc-ohif" ]]; then
     if [[ $dl != 0 ]]; then
 
         echo "Failed to download OHIF web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
-
+        exit 1
     fi
 
 elif [[ $target == "orthanc-ohif" ]]; then
