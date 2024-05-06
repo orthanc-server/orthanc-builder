@@ -359,10 +359,9 @@ elif [[ $target == "download-ohif-from-dist" ]]; then
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
 
-        # unzip the file at the right place for the next step
+        # unzip the file at the right place for the next step (it will unzip it in $sourcesRootPath/OHIF/dist/...)
+        pushd /
         unzip $buildRootPath/OHIF-dist.zip
-        mkdir -p $sourcesRootPath/OHIF
-        cp $buildRootPath/OHIF $sourcesRootPath/OHIF
 
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
