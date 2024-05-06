@@ -297,14 +297,35 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         upload libOrthancExplorer2.so
     fi
 
-elif [[ $target == "download-orthanc-volview" ]]; then
+elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancVolView.so) ))
+    dl=$(( $dl + $(download VolView-dist.zip) ))
 
     if [[ $dl != 0 ]]; then
 
-        echo "Failed to download volview web build.  You are likely running a build on ARM64 and needs the AMD64 build to have pushed the web build on a web server"
+        echo "Failed to download VolView web build.  You are likely running a build on ARM64 and needs the AMD64 build to have pushed the WEB build on a web server"
         exit 1
+    fi
+
+elif [[ $target == "orthanc-volview-from-dist" ]]; then
+
+    dl=$(( $dl + $(download libOrthancVolView.zo) ))
+
+    if [[ $dl != 0 ]]; then
+        # build only the C++ code, not the dist.zip that has been downloaded before
+
+        pushd $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
+
+        # unzip the file at the right place for the next step (it will unzip it in $sourcesRootPath/VolView/dist/...)
+        pushd /
+        unzip $buildRootPath/VolView-dist.zip
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancVolView.so
     fi
 
 elif [[ $target == "orthanc-volview" ]]; then
@@ -331,7 +352,10 @@ elif [[ $target == "orthanc-volview" ]]; then
         /source/Resources/CreateVolViewDist/build.sh ${extraArg1}
         mkdir -p $sourcesRootPath/VolView
         cp -r /target $sourcesRootPath/VolView/dist
-        
+
+        zip -r $buildRootPath/VolView-dist.zip $sourcesRootPath/VolView/dist
+        upload VolView-dist.zip
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
@@ -349,7 +373,7 @@ elif [[ $target == "download-orthanc-ohif-dist" ]]; then
         exit 1
     fi
 
-elif [[ $target == "download-ohif-from-dist" ]]; then
+elif [[ $target == "orthanc-ohif-from-dist" ]]; then
 
     dl=$(( $dl + $(download libOrthancOHIF.zo) ))
 
