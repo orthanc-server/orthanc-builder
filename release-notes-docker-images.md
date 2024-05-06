@@ -24,7 +24,8 @@
 Pending changes
 ---------------
 
-- Added non standard env var `ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS`
+- upgraded GDCM plugin to 1.7
+- added non standard env var `ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS`
 
 24.4.0
 ------

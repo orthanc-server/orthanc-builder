@@ -45,7 +45,7 @@ MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
 Authorization plugin                  0.7.1
 Transfers accelerator plugin          1.5
-GDCM plugin                           1.6
+GDCM plugin                           1.7
 ODBC plugin                           1.2
 TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
