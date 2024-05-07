@@ -21,11 +21,13 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes
----------------
+24.5.0
+------
 
 - upgraded GDCM plugin to 1.7
 - added non standard env var `ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS`
+- ARM64 image: fixed OHIF and VolView plugins that were acutally missing.
+
 
 24.4.0
 ------
