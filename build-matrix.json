@@ -383,10 +383,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.8-${VERSION}.dll", "Plugins", "OrthancPython3.8.dll"]
                 ]
             }]
         },
@@ -410,10 +410,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.9-${VERSION}.dll", "Plugins", "OrthancPython3.9.dll"]
                 ]
             }]
         },
@@ -437,10 +437,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.10-${VERSION}.dll", "Plugins", "OrthancPython3.10.dll"]
                 ]
             }]
         },
@@ -464,10 +464,10 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Win64-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll"]
                 ],
                 "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Win32-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll"]
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.11-${VERSION}.dll", "Plugins", "OrthancPython3.11.dll"]
                 ]
             }]
         },
