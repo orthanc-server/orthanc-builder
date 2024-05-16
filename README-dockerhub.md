@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.4.0 Default image
+#### 24.5.1 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -37,13 +37,13 @@ Delayed Deletion plugin               1.12.3
 Multitenant DICOM plugin              1.12.3
 Stone Web viewer plugin               2.5+c23eef785569
 Osimis Web viewer plugin              1.4.3
-Python plugin                         4.1
+Python plugin                         4.2
 Orthanc Web viewer plugin             2.9
 DICOMweb plugin                       1.16
 PostgreSQL plugins                    6.2
 MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
-Authorization plugin                  0.7.1
+Authorization plugin                  0.7.2
 Transfers accelerator plugin          1.5
 GDCM plugin                           1.7
 ODBC plugin                           1.2

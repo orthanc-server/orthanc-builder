@@ -356,8 +356,8 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.1",
-            "unstable": "41cd08e0e878",
+            "stable": "OrthancPython-4.2",
+            "unstable": "default                               Name of the unstable branch: used by Docker/Win/MacOS if not overriden",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
             "windows": [{
@@ -368,7 +368,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.1",
+            "stable": "OrthancPython-4.2",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -395,7 +395,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.1",
+            "stable": "OrthancPython-4.2",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -422,7 +422,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.1",
+            "stable": "OrthancPython-4.2",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -449,7 +449,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.1",
+            "stable": "OrthancPython-4.2",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -476,7 +476,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-4.1",
+            "stable": "OrthancPython-4.2",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -491,7 +491,7 @@
                 "Exclusive": true,
                 "Category": "python_plugins",
                 "Downloads64": [
-                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-python-3-12/OrthancPython-4.1/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll"]
+                    ["https://public-files.orthanc.team/tmp-builds/nightly-win-builds/stable/Orthanc-python-3-12/OrthancPython-4.2/OrthancPython.dll", "Plugins", "OrthancPython3.12.dll"]
                 ]
             }]
         },
@@ -707,7 +707,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.7.1",
+            "stable": "0.7.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
