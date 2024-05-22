@@ -930,7 +930,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-stl/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_STL  !!!!!! also change version number in build-or-download.sh !!!!!!!!!!!!",
-            "stable": "OrthancSTL-1.0",
+            "stable": "OrthancSTL-1.1",
             "unstable": "default",
             "artifactsMacOS": "libOrthancSTL.dylib",
             "buildForMacOS": false,
