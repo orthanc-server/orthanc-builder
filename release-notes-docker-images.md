@@ -24,7 +24,7 @@ Pending changes
 ---------------
 
 - upgraded base image to `debian:bookworm-20240513-slim`
-
+- upgraded STL plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
 
 24.5.1
 ------
