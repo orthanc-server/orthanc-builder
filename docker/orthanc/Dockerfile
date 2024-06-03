@@ -1,4 +1,5 @@
 ARG BASE_IMAGE_TAG=current
+ARG STONE_INTERMEDIATE_TARGET=build-stone-viewer-amd64
 
 FROM orthancteam/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
 ARG ARG_AWS_ACCESS_KEY_ID
@@ -11,11 +12,8 @@ ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
-# rebuild jodogne/wasm-builder:3.1.49 here such that it also works for ARM64.
-# However, since 3.1.49 is not available for ARM64, we skip the WASM build steps
-# but, at least, we have a "common" build process !
 
-FROM ubuntu:18.04 as wasm-builder-base
+FROM jodogne/wasm-builder:3.1.49 as wasm-builder-base-amd64
 
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
@@ -27,29 +25,8 @@ ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
-RUN apt-get -y clean && apt-get -y update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget nano unzip cmake git ninja-build python-clang-4.0 libclang-4.0-dev python-pystache python3-pip alien lsb-core g++-4.8 && apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN pip3 install --upgrade pip
-RUN pip3 install --upgrade mercurial
 
-# install lsb
-WORKDIR /root/
-ENV LSB_SDK=lsb-sdk-5.0.0-3.x86_64.tar.gz 
-RUN wget https://orthanc.uclouvain.be/downloads/third-party-downloads/linux-standard-base/${LSB_SDK}
-RUN tar xvf ${LSB_SDK}
-
-WORKDIR /root/lsb-sdk
-RUN yes | ./install.sh 
-
-# install emsciptem only on AMD64
-
-WORKDIR /opt
-ENV EMSCRIPTEM_VERSION=3.1.49
-RUN git clone https://github.com/emscripten-core/emsdk.git
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then /opt/emsdk/emsdk install ${EMSCRIPTEM_VERSION} ;fi
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then /opt/emsdk/emsdk activate ${EMSCRIPTEM_VERSION}; fi
-
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials; fi
+RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
 RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
 
 
@@ -193,8 +170,7 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-tci
 
 ########################## Stone Web Viewer
 
-FROM wasm-builder-base as build-wasm-stone-viewer
-
+FROM wasm-builder-base-amd64 as build-wasm-stone-viewer-amd64
 
 COPY --from=orthanc-builder-base /scripts/build-or-download.sh /scripts/
 
@@ -202,23 +178,44 @@ RUN ls -al /
 # RUN env
 RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
-# when building for arm64, simply download the WASM build that has been published by CI when building the linux/amd64 platform
-RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 RUN ls -al /target
 
 
-FROM orthanc-builder-base as build-stone-viewer
+FROM orthanc-builder-base as build-stone-viewer-amd64
 
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 
 RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
-COPY --from=build-wasm-stone-viewer /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
+COPY --from=build-wasm-stone-viewer-amd64 /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
 RUN ls -al /downloads/wasm-binaries/StoneWebViewer
 
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+FROM orthanc-builder-base as download-wasm-stone-viewer-arm64
 
+RUN ls -al /
+# RUN env
+RUN ls -al /scripts
+ARG ORTHANC_STONE_VIEWER_COMMIT_ID
+# when building for arm64, simply download the WASM build that has been published by CI when building the linux/amd64 platform
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0
+RUN ls -al /target
+
+
+
+FROM orthanc-builder-base as build-stone-viewer-arm64
+
+ARG ORTHANC_STONE_VIEWER_COMMIT_ID
+
+RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
+COPY --from=download-wasm-stone-viewer-arm64 /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
+RUN ls -al /downloads/wasm-binaries/StoneWebViewer
+
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# we need a final unique target name for the later copy --from=build-stone-viewer (copy can not use a variable)
+FROM ${STONE_INTERMEDIATE_TARGET} as build-stone-viewer
 
 ########################## Orthanc azure storage plugins
 

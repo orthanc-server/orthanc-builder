@@ -40,10 +40,18 @@ if [[ $type == "ci" ]]; then
     fi
 fi
 
+if [[ $platform == "linux/amd64" ]]; then
+    shortPlatform="amd64"
+else
+    shortPlatform="arm64"
+fi
+
+
 arch=$(echo $platform | cut -d '/' -f 2)
 
 echo "version          = $version"
 echo "platform         = $platform"
+echo "shortPlatform    = $shortPlatform"
 echo "type             = $type"
 echo "skipCommitChecks = $skipCommitChecks"
 echo "step             = $step"
@@ -82,7 +90,7 @@ BASE_DEBIAN_IMAGE=bookworm-20240513-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
+buildTargets="build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
 
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
@@ -322,6 +330,7 @@ for target in $buildTargets; do
         --build-arg PREFER_DOWNLOADS=$prefer_downloads \
         --build-arg ENABLE_UPLOAD=$enable_upload \
         --build-arg PLATFORM=$platform \
+        --build-arg STONE_INTERMEDIATE_TARGET=build-stone-viewer-$shortPlatform \
         --build-arg STABLE_OR_UNSTABLE=$version \
         $from_cache_arg \
         $to_cache_arg \
