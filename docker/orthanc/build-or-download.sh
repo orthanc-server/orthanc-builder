@@ -557,7 +557,7 @@ elif [[ $target == "download-orthanc-stone-wasm" ]]; then
     if [[ $dl != 0 ]]; then
 
         echo "Failed to download WASM build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the WASM on a web server"
-
+        exit 1
     else
 
         # since this is a multi-stage build, we must uncompress the tar.gz where the next step expects it (in /target)
