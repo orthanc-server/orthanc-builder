@@ -22,6 +22,7 @@
 
 
 - upgraded Orthanc to 1.12.4
+- upgraded DICOMweb plugin to 1.17
 
 24.6.0
 ------

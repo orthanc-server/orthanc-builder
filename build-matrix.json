@@ -538,7 +538,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
-            "stable": "OrthancDicomWeb-1.16",
+            "stable": "OrthancDicomWeb-1.17",
             "unstable": "default",
             "artifactsMacOS": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",

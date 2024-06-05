@@ -39,7 +39,7 @@ Stone Web viewer plugin               2.5+c23eef785569
 Osimis Web viewer plugin              1.4.3
 Python plugin                         4.2
 Orthanc Web viewer plugin             2.9
-DICOMweb plugin                       1.16
+DICOMweb plugin                       1.17
 PostgreSQL plugins                    6.2
 MySQL plugins                         5.1
 WSI Web viewer plugin                 2.0
