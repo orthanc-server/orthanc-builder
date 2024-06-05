@@ -20,11 +20,14 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
+
+24.6.0
+------
 
 - upgraded base image to `debian:bookworm-20240513-slim`
+- upgraded Orthanc Explorer 2 plugin to [1.4.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded STL plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
+
 
 24.5.1
 ------
