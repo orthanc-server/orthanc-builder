@@ -71,6 +71,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-crt-cpp
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-sdk-cpp-1.11.178.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_83_0_bcpdigest-1.12.2.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_84_0_bcpdigest-1.12.3.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_85_0_bcpdigest-1.12.4.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.5.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.6.8.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/gdcm-3.0.22.tar.gz
