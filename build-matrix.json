@@ -222,8 +222,8 @@
                     ["windows-64/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "OrthancMySQLStorage.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Index.dll", "Plugins", "OrthancMySQLIndex.dll"],
-                    ["windows-32/orthanc-mysql/OrthancMySQL-${VERSION}-Storage.dll", "Plugins", "OrthancMySQLStorage.dll"]
+                    ["windows-32/orthanc-mysql/OrthancMySQLIndex-${VERSION}.dll", "Plugins", "OrthancMySQLIndex.dll"],
+                    ["windows-32/orthanc-mysql/OrthancMySQLStorage-${VERSION}.dll", "Plugins", "OrthancMySQLStorage.dll"]
                 ],
                 "Resources": [
                     ["mysql.json", "Configuration"]
