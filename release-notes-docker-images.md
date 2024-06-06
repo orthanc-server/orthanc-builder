@@ -21,23 +21,23 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-- upgraded Orthanc to 1.12.4
-- upgraded DICOMweb plugin to 1.17
-
-24.6.0
+24.6.1
 ------
 
-- upgraded base image to `debian:bookworm-20240513-slim`
+- upgraded Orthanc to 1.12.4
+- upgraded DICOMweb plugin to 1.17
 - upgraded Orthanc Explorer 2 plugin to [1.4.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded MySQL plugin to [5.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/MySQL/NEWS)
 - upgraded STL plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
+- upgraded base image to `debian:bookworm-20240513-slim`
 
 
 24.5.1
 ------
 
 - upgraded Orthanc Explorer 2 plugin to [1.4.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
-- upgraded python plugin to [4.2](https://orthanc.uclouvain.be/hg/orthanc-python/file/tip/NEWS)
-- upgraded advanced authorization plugin to [0.7.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/tip/NEWS)
+- upgraded python plugin to [4.2](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+- upgraded advanced authorization plugin to [0.7.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 
 
 24.5.0
@@ -64,7 +64,7 @@ Due to the orthanc.osimis.io server being shut down, we had to release many
 old plugins that were still referencing this server in their build process.  
 Most of them actually do not contain any functional changes compared with the previous release.
 
-- upgraded neuroimaging plugin 1.1 (only a minor [functional change](https://orthanc.uclouvain.be/hg/orthanc-neuro/file/tip/NEWS))
+- upgraded neuroimaging plugin 1.1 (only a minor [functional change](https://orthanc.uclouvain.be/hg/orthanc-neuro/file/default/NEWS))
 - upgraded Orthanc Web viewer plugin 2.9 (no functional changes)
 - upgraded transfers accelerator plugin 1.5 (no functional changes)
 - upgraded server indexer plugin 1.1 (no functional changes)
@@ -75,8 +75,8 @@ Most of them actually do not contain any functional changes compared with the pr
 ------
 
 - upgraded Orthanc Explorer 2 plugin to [1.3.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
-- upgraded advanced authorization plugin to [0.7.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/tip/NEWS)
-- upgraded PostgreSQL plugins to [6.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/PostgreSQL/NEWS)
+- upgraded advanced authorization plugin to [0.7.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- upgraded PostgreSQL plugins to [6.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - upgraded base image to `debian:bookworm-20240311-slim`
 
 
@@ -93,7 +93,7 @@ Most of them actually do not contain any functional changes compared with the pr
 24.3.2
 ------
 
-- upgraded ODBC plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/Odbc/NEWS)
+- upgraded ODBC plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/Odbc/NEWS)
 
 
 24.3.1

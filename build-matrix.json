@@ -207,7 +207,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/MySQL",
             "comment": "# CHANGE_VERSION_MYSQL",
-            "stable": "OrthancMySQL-5.1",
+            "stable": "OrthancMySQL-5.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
             "buildForMacOS": true,
