@@ -21,6 +21,10 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+
+- upgraded base image to `debian:bookworm-20240612-slim`
+
+
 24.6.1
 ------
 
