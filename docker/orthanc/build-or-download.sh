@@ -241,7 +241,7 @@ elif [[ $target == "orthanc-stl" ]]; then
         mkdir /sources/JavaScriptLibraries
         cd /sources/JavaScriptLibraries
         # CHANGE_VERSION_STL
-        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-stl/1.1/dist.zip
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-stl/1.2/dist.zip
         unzip dist.zip
 
         pushd $buildRootPath
