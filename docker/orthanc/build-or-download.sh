@@ -231,6 +231,27 @@ elif [[ $target == "orthanc-neuro" ]]; then
         upload libOrthancNeuro.so
     fi
 
+elif [[ $target == "orthanc-java" ]]; then
+
+    dl=$(( $dl + $(download libOrthancJava.so) + $(download OrthancJavaSDK.jar)))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-java/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath/Plugin
+        make -j 4
+
+        mkdir /buildJavaSDK
+        pushd /buildJavaSDK
+        cmake $sourcesRootPath/JavaSDK
+        make
+        mv /buildJavaSDK/OrthancJavaSDK.jar $buildRootPath/
+        
+        upload libOrthancJava.so
+        upload OrthancJavaSDK.jar
+    fi
+
 elif [[ $target == "orthanc-stl" ]]; then
 
     dl=$(( $dl + $(download libOrthancSTL.so) ))

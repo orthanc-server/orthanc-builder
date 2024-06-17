@@ -21,7 +21,11 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-
+- added [Java plugin 1.0](https://orthanc.uclouvain.be/book/plugins/java.html) to the `-full` image only
+  - new env var "JAVA_PLUGIN_ENABLED" to enable the Java plugin
+  - The Java SDK is installed on the `-full` image
+  - The `OrthancJavaSDK.jar` is stored in `/java`
+  - [link to Sample setup]()
 - upgraded base image to `debian:bookworm-20240612-slim`
 - upgraded STL plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
 

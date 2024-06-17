@@ -51,6 +51,10 @@ if [[ ! -z $BEFORE_ORTHANC_STARTUP_SCRIPT ]]; then
 	$BEFORE_ORTHANC_STARTUP_SCRIPT
 fi
 
+if [[ $JAVA_PLUGIN_ENABLED == true ]]; then
+	export LD_PRELOAD=/usr/lib/jvm/default-java/lib/server/libjvm.so
+fi
+
 argv=(Orthanc $verbosity $logoption $jobs "$@")
 echo "Startup command: exec \"${argv[*]}\"" >&2
 exec "${argv[@]}"

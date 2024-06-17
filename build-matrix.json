@@ -950,6 +950,28 @@
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-stl/OrthancSTL-${VERSION}.dylib"
             ]
+        },
+        {
+            "name": "Orthanc-java", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-java/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_JAVA",
+            "stable": "OrthancJava-1.0",
+            "unstable": "default",
+            "buildForMacOS": false,
+            "windows": [{
+                "Description": "Java plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-java/OrthancJava-${VERSION}.dll", "Plugins", "OrthancJava.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-java/OrthancJava-${VERSION}.dll", "Plugins", "OrthancJava.dll"]
+                ],
+                "Resources": [
+                ]
+            }]
         }
     ]
     

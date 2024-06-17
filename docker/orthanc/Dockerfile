@@ -168,6 +168,13 @@ FROM orthanc-builder-base as build-plugin-tcia
 ARG ORTHANC_TCIA_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-tcia commitId=$ORTHANC_TCIA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Orthanc Java
+
+FROM orthanc-builder-base as build-plugin-java
+
+ARG ORTHANC_JAVA_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-java commitId=$ORTHANC_JAVA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Stone Web Viewer
 
 FROM wasm-builder-base-amd64 as build-wasm-stone-viewer-amd64
@@ -381,10 +388,16 @@ RUN groupadd --system orthanc --gid=999; \
 ################################# the "full" image that will run Orthanc dynamicaly linked (final version with vcpkg builds and Microsoft unixodbc)
 FROM orthanc-no-vcpkg as orthanc-with-vcpkg
 
-RUN apt-get update
-RUN apt-get --assume-yes install curl gnupg2
+# When installing JAVA; the --no-install-recommends prevent installation of systemd which would create a groupid 999 conflicting with the orthanc one
 
-RUN mkdir /downloads
+RUN export DEBIAN_FRONTEND=noninteractive && \
+  apt-get --assume-yes update && \
+  apt-get --assume-yes install curl gnupg2 && \
+  apt-get --assume-yes install default-jdk  --no-install-recommends && \
+  apt-get --assume-yes clean && \
+  rm --recursive --force /var/lib/apt/lists/*
+
+RUN mkdir /java
 
 RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
 RUN curl https://packages.microsoft.com/config/debian/12/prod.list > /etc/apt/sources.list.d/mssql-release.list
@@ -397,6 +410,8 @@ RUN apt-get update && \
 
 COPY --from=build-google-object-storage /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-azure-object-storage /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java /build/OrthancJavaSDK.jar /java
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*
