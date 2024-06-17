@@ -129,6 +129,18 @@ if [[ $image == "normal" ]]; then
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision --build-arg IMAGE_TAG=$tagToTest -f orthanc-transcoding-tests/Dockerfile -t orthanc-transcoding-tests orthanc-transcoding-tests
+    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client -t orthanc-tests-tls-no-check-client orthanc-tests
+    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client-generate-config -t orthanc-tests-tls-no-check-client-generate-config orthanc-tests
+    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
+    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
+
+    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose down -v
+    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose run orthanc-tests-tls-no-check-client-generate-config
+    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose run orthanc-tests-tls-no-check-client --abort-on-container-exit
+
+    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose down -v
+    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose run orthanc-tests-tls-check-client-generate-config
+    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose run orthanc-tests-tls-check-client --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose down -v
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
@@ -187,8 +199,8 @@ if [[ $image == "normal" ]]; then
 
 # TODO: add tests:
 # - CheckHttpServerSecurity.py
-# - CheckDicomTls.py
 # - CheckZipStream.py
+# smoke test for a java plugin
 
 else  # full images (MSSQL only !)
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
