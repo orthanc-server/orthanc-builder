@@ -50,15 +50,7 @@ COPY wait-for-it.sh /scripts
 FROM python:3.11 as python3-base-image
 
 RUN apt-get update
-# RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
-# build and install latest version of DCMTK to have TLS support
-RUN	DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes build-essential cmake git
-WORKDIR /
-RUN git clone https://github.com/DCMTK/dcmtk && cd /dcmtk && git checkout DCMTK-3.6.8
-RUN mkdir /build-dcmtk
-WORKDIR /build-dcmtk
-RUN cmake /dcmtk
-RUN make -j 8
+RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
 
 RUN pip install httplib2 --break-system-package
 RUN pip install pillow --break-system-package
@@ -66,9 +58,8 @@ RUN pip install pydicom --break-system-package
 RUN pip install pynetdicom --break-system-package
 RUN pip install 'easywebdav @ git+https://github.com/Marpache9131/easywebdav@511967ec374061161f2b3b67fb7b164fcc78143c' --break-system-package
 
-# replace echoscu from pynetdicom by the one from DCMTK
-WORKDIR /build-dcmtk
-RUN make DESTDIR=/ install
+# remove echoscu... from pynetdicom to make sure we use the ones from DCMTK
+RUN rm /usr/local/bin/findscu /usr/local/bin/storescu /usr/local/bin/echoscu /usr/local/bin/movescu /usr/local/bin/getscu
 
 RUN mkdir /tests
 WORKDIR /tests
