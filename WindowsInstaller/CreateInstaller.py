@@ -198,6 +198,10 @@ CATEGORIES = [
         'description' : 'Python plugins (requires Python installed on your system)',
     },
     {
+        'name' : 'java_plugins',
+        'description' : 'Java plugin (requires Java installed on your system)',
+    },
+    {
         'name' : 'tools',
         'description' : 'Command-line tools',
     },

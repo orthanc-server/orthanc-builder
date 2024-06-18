@@ -32,7 +32,7 @@
   - [link to a sample Java setup](https://github.com/orthanc-server/orthanc-setup-samples/tree/master/docker/java)
 - upgraded STL plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
 - upgraded base image to `debian:bookworm-20240612-slim`
-
+- WIN-INSTALLER: added Java plugin; not installed by default.
 
 24.6.1
 ------

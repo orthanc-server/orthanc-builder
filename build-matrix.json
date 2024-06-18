@@ -962,7 +962,8 @@
             "windows": [{
                 "Description": "Java plugin",
                 "Mandatory": false,
-                "Category": "plugins",
+                "Checked": false,
+                "Category": "java_plugins",
                 "Artifacts64": [
                     ["windows-64/orthanc-java/OrthancJava-${VERSION}.dll", "Plugins", "OrthancJava.dll"]
                 ],
