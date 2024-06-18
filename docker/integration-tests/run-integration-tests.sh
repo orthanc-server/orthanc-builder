@@ -135,12 +135,14 @@ if [[ $image == "normal" ]]; then
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
 
     COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose down -v
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose run orthanc-tests-tls-no-check-client-generate-config
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose run orthanc-tests-tls-no-check-client --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose run --rm orthanc-tests-tls-no-check-client-generate-config
+    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker-compose down -v
 
     COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose down -v
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose run orthanc-tests-tls-check-client-generate-config
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose run orthanc-tests-tls-check-client --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose run --rm orthanc-tests-tls-check-client-generate-config
+    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker-compose down -v
 
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose down -v
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker-compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
