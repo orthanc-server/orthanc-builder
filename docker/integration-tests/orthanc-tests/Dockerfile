@@ -10,7 +10,7 @@ ARG ORTHANC_TESTS_REVISION=default
 RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $ORTHANC_TESTS_REVISION
 
 ##############################################################
-FROM jodogne/orthanc-tests as orthanc-tests
+FROM jodogne/orthanc-tests AS orthanc-tests
 RUN mkdir /tests
 WORKDIR /tests
 
@@ -24,7 +24,7 @@ COPY wait-for-it.sh /scripts
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Tests/Run.py --server=orthanc-under-tests --force --docker -- -v
 
 ##############################################################
-FROM python:2.7 as python2-7-base-image
+FROM python:2.7 AS python2-7-base-image
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
@@ -47,7 +47,7 @@ COPY wait-for-it.sh /scripts
 
 
 ##############################################################
-FROM python:3.11 as python3-base-image
+FROM python:3.11 AS python3-base-image
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
@@ -72,27 +72,27 @@ RUN mkdir /scripts
 COPY wait-for-it.sh /scripts
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-dicomweb
+FROM python3-base-image AS orthanc-tests-dicomweb
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/DicomWeb/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM orthanc-tests as orthanc-tests-worklists
+FROM orthanc-tests AS orthanc-tests-worklists
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/Worklists/Run.py --server=orthanc-under-tests -- -v
 
 ##############################################################
-FROM orthanc-tests as orthanc-tests-recycling
+FROM orthanc-tests AS orthanc-tests-recycling
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/Recycling/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM orthanc-tests as orthanc-tests-transfers
+FROM orthanc-tests AS orthanc-tests-transfers
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/Transfers/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-wsi
+FROM python3-base-image AS orthanc-tests-wsi
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get install -y libtiff-tools
@@ -107,31 +107,31 @@ RUN chmod +x /apps/*
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WSI/Run.py --server=orthanc-under-tests --force --dicomizer=/apps/OrthancWSIDicomizer --to-tiff=/apps/OrthancWSIDicomToTiff -- -v
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-webdav
+FROM python3-base-image AS orthanc-tests-webdav
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/WebDav/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-cget
+FROM python3-base-image AS orthanc-tests-cget
 
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Plugins/CGet/Run.py --server=orthanc-under-tests --force -- -v
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-tls-no-check-client-generate-config
+FROM python3-base-image AS orthanc-tests-tls-no-check-client-generate-config
 WORKDIR /tls
 ENTRYPOINT python /tests/orthanc-tests/Tests/CheckDicomTls.py --config-no-check-client
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-tls-no-check-client
+FROM python3-base-image AS orthanc-tests-tls-no-check-client
 WORKDIR /tls
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Tests/CheckDicomTls.py --server=orthanc-under-tests --force -- -v OrthancNoCheckClient
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-tls-check-client-generate-config
+FROM python3-base-image AS orthanc-tests-tls-check-client-generate-config
 WORKDIR /tls
 ENTRYPOINT python /tests/orthanc-tests/Tests/CheckDicomTls.py --config-check-client
 
 ##############################################################
-FROM python3-base-image as orthanc-tests-tls-check-client
+FROM python3-base-image AS orthanc-tests-tls-check-client
 WORKDIR /tls
 ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tests/orthanc-tests/Tests/CheckDicomTls.py --server=orthanc-under-tests --force -- -v OrthancCheckClient
