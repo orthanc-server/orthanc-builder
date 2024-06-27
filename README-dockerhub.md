@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.6.1 Default image
+#### 24.6.3 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -50,7 +50,7 @@ ODBC plugin                           1.2
 TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
-AWS S3 plugin                         2.3.1
+AWS S3 plugin                         2.4.0
 Orthanc Explorer 2                    1.4.1
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.2
@@ -65,10 +65,11 @@ Lua                                   5.4
 
 ```
 
-#### 24.4.0-full image 
+#### 24.6.3-full image 
 ```
 additional component                  version
 ---------------------------------------------
 Azure Blob Storage plugin             2.3.1
 Google Cloud Storage plugin           2.3.1
+Java plugin                           1.0
 ````
