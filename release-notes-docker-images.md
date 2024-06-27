@@ -23,6 +23,7 @@
 
 
 - upgraded AWS S3 object-storage plugin to [2.4.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- WIN-INSTALLER: added AWS S3 plugin
 
 24.6.2
 ------

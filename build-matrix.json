@@ -775,6 +775,18 @@
             "unstable": "default",
             "buildForMacOS": false,
             "windows": [{
+                "Description": "Orthanc AWS S3 storage plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "databases",
+                "Artifacts64": [
+                    ["windows-64/orthanc-aws-s3/${VERSION}/OrthancAwsS3Storage.dll", "Plugins", "OrthancAwsS3Storage.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-aws-s3/${VERSION}/OrthancAwsS3Storage.dll", "Plugins", "OrthancAwsS3Storage.dll"]
+                ],
+                "Resources": [
+                    ["aws-s3.json", "Configuration"]
+                ]
             }]
         },
         {
