@@ -22,8 +22,12 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+24.6.3
+------
+
 - upgraded AWS S3 object-storage plugin to [2.4.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - WIN-INSTALLER: added AWS S3 plugin
+
 
 24.6.2
 ------
@@ -36,6 +40,7 @@
 - upgraded STL plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
 - upgraded base image to `debian:bookworm-20240612-slim`
 - WIN-INSTALLER: added Java plugin; not installed by default.
+
 
 24.6.1
 ------
