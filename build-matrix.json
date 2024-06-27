@@ -771,7 +771,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AWS_OBJECT_STORAGE",
-            "stable": "2.3.1",
+            "stable": "2.4.0",
             "unstable": "default",
             "buildForMacOS": false,
             "windows": [{

@@ -22,6 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- upgraded AWS S3 object-storage plugin to [2.4.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+
 24.6.2
 ------
 
