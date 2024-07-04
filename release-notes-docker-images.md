@@ -21,6 +21,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
+24.7.2
+------
+
+- upgraded python plugin to [4.3](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+
+
 24.7.1
 ------
 
