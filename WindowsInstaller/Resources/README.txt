@@ -44,6 +44,8 @@ Kitware's VolView plugin              ${ORTHANC_VOLVIEW}
 OHIF plugin                           ${ORTHANC_OHIF}
 Python plugin                         ${ORTHANC_PYTHON}
 STL plugin                            ${ORTHANC_STL}
+AWS S3 plugin                         ${ORTHANC_AWS_STORAGE}
+
 
 Folders
 -------

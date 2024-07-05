@@ -1,0 +1,34 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    volumes:
+      - tls:/tls
+    environment:
+      VERBOSE_STARTUP: "true"
+      VERBOSE_ENABLED: "true"
+      ORTHANC__DICOM_TLS_ENABLED: "true"
+      ORTHANC__DICOM_TLS_CERTIFICATE: "/tls/dicom-tls-a.crt"
+      ORTHANC__DICOM_TLS_PRIVATE_KEY: "/tls/dicom-tls-a.key"
+      # although this is not used, in 1.12.4, this is still required for outgoing connections
+      ORTHANC__DICOM_TLS_TRUSTED_CERTIFICATES: "/tls/dicom-tls-trusted.crt"
+      ORTHANC__DICOM_TLS_REMOTE_CERTIFICATE_REQUIRED: "false"
+      ORTHANC__EXECUTE_LUA_ENABLED: "true"
+      ORTHANC__AUTHENTICATION_ENABLED: "false"
+
+  orthanc-tests-tls-no-check-client:
+    volumes:
+      - tls:/tls
+    image: orthanc-tests-tls-no-check-client
+    depends_on:
+      - orthanc-under-tests
+
+  orthanc-tests-tls-no-check-client-generate-config:
+    volumes:
+      - tls:/tls
+    image: orthanc-tests-tls-no-check-client-generate-config
+    depends_on:
+      - orthanc-under-tests
+
+volumes:
+  tls:

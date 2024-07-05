@@ -1,0 +1,4 @@
+*.yml
+run-integration-tests.sh
+orthanc-tests-repo-normal/*
+orthanc-tests-repo-full/*

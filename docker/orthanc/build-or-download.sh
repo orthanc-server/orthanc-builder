@@ -231,6 +231,27 @@ elif [[ $target == "orthanc-neuro" ]]; then
         upload libOrthancNeuro.so
     fi
 
+elif [[ $target == "orthanc-java" ]]; then
+
+    dl=$(( $dl + $(download libOrthancJava.so) + $(download OrthancJavaSDK.jar)))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-java/ -r $commitId $sourcesRootPath
+        pushd $buildRootPath
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath/Plugin
+        make -j 4
+
+        mkdir /buildJavaSDK
+        pushd /buildJavaSDK
+        cmake $sourcesRootPath/JavaSDK
+        make
+        mv /buildJavaSDK/OrthancJavaSDK.jar $buildRootPath/
+        
+        upload libOrthancJava.so
+        upload OrthancJavaSDK.jar
+    fi
+
 elif [[ $target == "orthanc-stl" ]]; then
 
     dl=$(( $dl + $(download libOrthancSTL.so) ))
@@ -241,7 +262,7 @@ elif [[ $target == "orthanc-stl" ]]; then
         mkdir /sources/JavaScriptLibraries
         cd /sources/JavaScriptLibraries
         # CHANGE_VERSION_STL
-        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-stl/1.0/dist.zip
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-stl/1.2/dist.zip
         unzip dist.zip
 
         pushd $buildRootPath
@@ -297,14 +318,35 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         upload libOrthancExplorer2.so
     fi
 
-elif [[ $target == "download-orthanc-volview" ]]; then
+elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancVolView.so) ))
+    dl=$(( $dl + $(download VolView-dist.zip) ))
 
     if [[ $dl != 0 ]]; then
 
-        echo "Failed to download volview web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
+        echo "Failed to download VolView web build.  You are likely running a build on ARM64 and needs the AMD64 build to have pushed the WEB build on a web server"
+        exit 1
+    fi
 
+elif [[ $target == "orthanc-volview-from-dist" ]]; then
+
+    dl=$(( $dl + $(download libOrthancVolView.zo) ))
+
+    if [[ $dl != 0 ]]; then
+        # build only the C++ code, not the dist.zip that has been downloaded before
+
+        pushd $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
+
+        # unzip the file at the right place for the next step (it will unzip it in $sourcesRootPath/VolView/dist/...)
+        pushd /
+        unzip $buildRootPath/VolView-dist.zip
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancVolView.so
     fi
 
 elif [[ $target == "orthanc-volview" ]]; then
@@ -320,7 +362,7 @@ elif [[ $target == "orthanc-volview" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
 
         # CreateVolViewDist/build.sh needs to work with /target and /source
-        wget https://orthanc.uclouvain.be/third-party-downloads/VolView-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${extraArg1}.tar.gz
+        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${extraArg1}.tar.gz
         cp $sourcesRootPath/VolView/VolView-*.patch $sourcesRootPath
 
         # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
@@ -331,7 +373,10 @@ elif [[ $target == "orthanc-volview" ]]; then
         /source/Resources/CreateVolViewDist/build.sh ${extraArg1}
         mkdir -p $sourcesRootPath/VolView
         cp -r /target $sourcesRootPath/VolView/dist
-        
+
+        zip -r $buildRootPath/VolView-dist.zip $sourcesRootPath/VolView/dist
+        upload VolView-dist.zip
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
@@ -339,14 +384,35 @@ elif [[ $target == "orthanc-volview" ]]; then
         upload libOrthancVolView.so
     fi
 
-elif [[ $target == "download-orthanc-ohif" ]]; then
+elif [[ $target == "download-orthanc-ohif-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancOHIF.so) ))
+    dl=$(( $dl + $(download OHIF-dist.zip) ))
 
     if [[ $dl != 0 ]]; then
 
-        echo "Failed to download OHIF web build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the build on a web server"
+        echo "Failed to download OHIF web build.  You are likely running a build on ARM64 and needs the AMD64 build to have pushed the WEB build on a web server"
+        exit 1
+    fi
 
+elif [[ $target == "orthanc-ohif-from-dist" ]]; then
+
+    dl=$(( $dl + $(download libOrthancOHIF.zo) ))
+
+    if [[ $dl != 0 ]]; then
+        # build only the C++ code, not the dist.zip that has been downloaded before
+
+        pushd $sourcesRootPath
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
+
+        # unzip the file at the right place for the next step (it will unzip it in $sourcesRootPath/OHIF/dist/...)
+        pushd /
+        unzip $buildRootPath/OHIF-dist.zip
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j 4
+
+        upload libOrthancOHIF.so
     fi
 
 elif [[ $target == "orthanc-ohif" ]]; then
@@ -363,7 +429,7 @@ elif [[ $target == "orthanc-ohif" ]]; then
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
 
-        wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
+        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
 
         # CreateOHIFDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target
@@ -373,7 +439,9 @@ elif [[ $target == "orthanc-ohif" ]]; then
         /source/Resources/CreateOHIFDist/build.sh Viewers-${extraArg1}
         mkdir -p $sourcesRootPath/OHIF
         cp -r /target $sourcesRootPath/OHIF/dist
-        
+        zip -r $buildRootPath/OHIF-dist.zip $sourcesRootPath/OHIF/dist
+        upload OHIF-dist.zip
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
@@ -395,7 +463,7 @@ elif [[ $target == "orthanc-s3" ]]; then
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_VCPKG_PACKAGES=OFF $sourcesRootPath/orthanc-object-storage/Aws/
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_VCPKG_PACKAGES=OFF $sourcesRootPath/orthanc-object-storage/Aws/
         make -j 4
 
         upload libOrthancAwsS3Storage.so
@@ -414,7 +482,7 @@ elif [[ $target == "orthanc-google-storage" ]]; then
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Google/
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Google/
         make -j 4
 
         upload libOrthancGoogleCloudStorage.so
@@ -434,7 +502,7 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
         make -j 4
 
         upload libOrthancAzureBlobStorage.so
@@ -510,7 +578,7 @@ elif [[ $target == "download-orthanc-stone-wasm" ]]; then
     if [[ $dl != 0 ]]; then
 
         echo "Failed to download WASM build.  You are likely running abuild on ARM64 and needs the AMD64 build to have pushed the WASM on a web server"
-
+        exit 1
     else
 
         # since this is a multi-stage build, we must uncompress the tar.gz where the next step expects it (in /target)
