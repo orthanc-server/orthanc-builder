@@ -21,6 +21,12 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes
+---------------
+
+- WIN-INSTALLER: commented out the "Host" value of the default dicomweb.json that was incorrect.
+
+
 24.7.3
 ------
 
