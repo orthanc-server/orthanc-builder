@@ -1,1 +1,5 @@
 generatePluginDoc.py
+Dockerfile
+Dockerfile.runner-base
+Dockerfile.builder-base
+Dockerfile.builder-vcpkg

@@ -1,6 +1,7 @@
 ARG BASE_IMAGE_TAG=current
+ARG STONE_INTERMEDIATE_TARGET=build-stone-viewer-amd64
 
-FROM orthancteam/orthanc-builder-base:${BASE_IMAGE_TAG} as orthanc-builder-base
+FROM orthancteam/orthanc-builder-base:${BASE_IMAGE_TAG} AS orthanc-builder-base
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -12,7 +13,8 @@ ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
 
-FROM jodogne/wasm-builder:3.1.49 as wasm-builder-base
+FROM jodogne/wasm-builder:3.1.49 AS wasm-builder-base-amd64
+
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -22,16 +24,17 @@ ARG ENABLE_UPLOAD=0
 ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
+
 
 RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
 RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
 
 
-FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG} as orthanc-runner-base
+FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG} AS orthanc-runner-base
 # never add secrets in this image !!!!
 
 
-FROM orthancteam/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} as build-plugin-object-storage-google
+FROM orthancteam/orthanc-builder-base:vcpkg-google-${BASE_IMAGE_TAG} AS build-plugin-object-storage-google
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -43,7 +46,7 @@ ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
 
-FROM orthancteam/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} as build-plugin-object-storage-azure
+FROM orthancteam/orthanc-builder-base:vcpkg-azure-${BASE_IMAGE_TAG} AS build-plugin-object-storage-azure
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$ARG_AWS_ACCESS_KEY_ID
@@ -56,28 +59,28 @@ ARG STABLE_OR_UNSTABLE=stable
 
 ########################## Orthanc
 
-FROM orthanc-builder-base as build-orthanc
+FROM orthanc-builder-base AS build-orthanc
 
 ARG ORTHANC_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc commitId=$ORTHANC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc GDCM
 
-FROM orthanc-builder-base as build-gdcm
+FROM orthanc-builder-base AS build-gdcm
 
 ARG ORTHANC_GDCM_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-gdcm commitId=$ORTHANC_GDCM_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc PG
 
-FROM orthanc-builder-base as build-plugin-pg
+FROM orthanc-builder-base AS build-plugin-pg
 
 ARG ORTHANC_PG_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc MySQL
 
-FROM orthanc-builder-base as build-plugin-mysql
+FROM orthanc-builder-base AS build-plugin-mysql
 
 ARG ORTHANC_MYSQL_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
@@ -91,14 +94,14 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-tra
 
 ########################## Orthanc Dicomweb
 
-FROM orthanc-builder-base as build-plugin-dicomweb
+FROM orthanc-builder-base AS build-plugin-dicomweb
 
 ARG ORTHANC_DW_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-dicomweb commitId=$ORTHANC_DW_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc WSI
 
-FROM orthanc-builder-base as build-plugin-wsi
+FROM orthanc-builder-base AS build-plugin-wsi
 
 ARG ORTHANC_WSI_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-wsi commitId=$ORTHANC_WSI_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
@@ -111,105 +114,140 @@ RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/
 
 ########################## Orthanc Webviewer
 
-FROM orthanc-builder-base as build-plugin-owv
+FROM orthanc-builder-base AS build-plugin-owv
 
 ARG ORTHANC_OWV_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-webviewer commitId=$ORTHANC_OWV_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc authorization
 
-FROM orthanc-builder-base as build-plugin-auth
+FROM orthanc-builder-base AS build-plugin-auth
 
 ARG ORTHANC_AUTH_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-authorization commitId=$ORTHANC_AUTH_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Python
 
-FROM orthanc-builder-base as build-plugin-python
+FROM orthanc-builder-base AS build-plugin-python
 
 ARG ORTHANC_PYTHON_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc ODBC
 
-FROM orthanc-builder-base as build-plugin-odbc
+FROM orthanc-builder-base AS build-plugin-odbc
 
 ARG ORTHANC_ODBC_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # ########################## Orthanc Indexer
 
-FROM orthanc-builder-base as build-plugin-indexer
+FROM orthanc-builder-base AS build-plugin-indexer
 
 ARG ORTHANC_INDEXER_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-indexer commitId=$ORTHANC_INDEXER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Neuro
 
-FROM orthanc-builder-base as build-plugin-neuro
+FROM orthanc-builder-base AS build-plugin-neuro
 
 ARG ORTHANC_NEURO_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-neuro commitId=$ORTHANC_NEURO_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Orthanc STL
+
+FROM orthanc-builder-base AS build-plugin-stl
+
+ARG ORTHANC_STL_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stl commitId=$ORTHANC_STL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Orthanc TCIA
 
-FROM orthanc-builder-base as build-plugin-tcia
+FROM orthanc-builder-base AS build-plugin-tcia
 
 ARG ORTHANC_TCIA_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-tcia commitId=$ORTHANC_TCIA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Orthanc Java
+
+FROM orthanc-builder-base AS build-plugin-java
+
+ARG ORTHANC_JAVA_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-java commitId=$ORTHANC_JAVA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Stone Web Viewer
 
-FROM wasm-builder-base as build-wasm-stone-viewer
-
+FROM wasm-builder-base-amd64 AS build-wasm-stone-viewer-amd64
 
 COPY --from=orthanc-builder-base /scripts/build-or-download.sh /scripts/
 
 RUN ls -al /
-RUN env
+# RUN env
 RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN ls -al /target
 
 
-
-
-FROM orthanc-builder-base as build-stone-viewer
+FROM orthanc-builder-base AS build-stone-viewer-amd64
 
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 
 RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
-COPY --from=build-wasm-stone-viewer /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
+COPY --from=build-wasm-stone-viewer-amd64 /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
 RUN ls -al /downloads/wasm-binaries/StoneWebViewer
 
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+FROM orthanc-builder-base AS download-wasm-stone-viewer-arm64
 
+RUN ls -al /
+# RUN env
+RUN ls -al /scripts
+ARG ORTHANC_STONE_VIEWER_COMMIT_ID
+# when building for arm64, simply download the WASM build that has been published by CI when building the linux/amd64 platform
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0
+RUN ls -al /target
+
+
+
+FROM orthanc-builder-base AS build-stone-viewer-arm64
+
+ARG ORTHANC_STONE_VIEWER_COMMIT_ID
+
+RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
+COPY --from=download-wasm-stone-viewer-arm64 /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
+RUN ls -al /downloads/wasm-binaries/StoneWebViewer
+
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+# we need a final unique target name for the later copy --from=build-stone-viewer (copy can not use a variable)
+FROM ${STONE_INTERMEDIATE_TARGET} AS build-stone-viewer
 
 ########################## Orthanc azure storage plugins
 
-FROM build-plugin-object-storage-azure as build-azure-object-storage
+FROM build-plugin-object-storage-azure AS build-azure-object-storage
 
 ARG ORTHANC_AZURE_STORAGE_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-azure-storage commitId=$ORTHANC_AZURE_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Google storage plugins
 
-FROM build-plugin-object-storage-google as build-google-object-storage
+FROM build-plugin-object-storage-google AS build-google-object-storage
 
 ARG ORTHANC_GOOGLE_STORAGE_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-google-storage commitId=$ORTHANC_GOOGLE_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc s3 object storage plugins
 
-FROM orthanc-builder-base as build-s3-object-storage
+FROM orthanc-builder-base AS build-s3-object-storage
 
 ARG ORTHANC_AWS_STORAGE_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-s3 commitId=$ORTHANC_AWS_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Explorer 2
 
-FROM orthanc-builder-base as build-oe2
+FROM orthanc-builder-base AS build-oe2
 
 ARG ORTHANC_OE2_COMMIT_ID
 ARG ORTHANC_OE2_VERSION
@@ -217,25 +255,32 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-exp
 
 ########################## Kitware's VolView for Orthanc
 
-FROM orthanc-builder-base as build-plugin-volview
+FROM orthanc-builder-base AS build-plugin-volview
 
 ARG ORTHANC_VOLVIEW_COMMIT_ID
 # CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
 ARG VOLVIEW_VERSION=4.1.1
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID extraArg1=$VOLVIEW_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID extraArg1=$VOLVIEW_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+# when building for arm64, simply download the WEB build that has been published by CI when building the linux/amd64 platform
+RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-volview-dist commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
+RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview-from-dist commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=linux/arm64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+
 
 ########################## OHIF for Orthanc
 
-FROM orthanc-builder-base as build-plugin-ohif
+FROM orthanc-builder-base AS build-plugin-ohif
 
 ARG ORTHANC_OHIF_COMMIT_ID
 # CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
-ARG OHIF_VERSION=3.7.0
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+ARG OHIF_VERSION=3.8.3
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+# when building for arm64, simply download the WEB build that has been published by CI when building the linux/amd64 platform
+RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-ohif-dist commitId=$ORTHANC_OHIF_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
+RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif-from-dist commitId=$ORTHANC_OHIF_COMMIT_ID baseImage=linux/arm64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
 
 ########################## Orthanc downloads (since wget is not in the runner image)
 
-FROM orthanc-builder-base as build-downloader
+FROM orthanc-builder-base AS build-downloader
 
 RUN mkdir /downloads
 # CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
@@ -246,7 +291,7 @@ RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-v
 
 
 ################################# the image that will run Orthanc dynamicaly linked (intermediate version without vcpkg builds)
-FROM orthanc-runner-base as orthanc-no-vcpkg
+FROM orthanc-runner-base AS orthanc-no-vcpkg
 
 RUN mkdir -p /etc/orthanc
 RUN mkdir -p /usr/share/orthanc/plugins-available && \
@@ -285,6 +330,7 @@ COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/pl
 COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-ohif /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-stl /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
@@ -321,12 +367,7 @@ COPY test-aliveness.py /probes/
 
 
 # cleanup unnecessary packages that can trigger errors during security scan
-RUN apt purge --assume-yes build-essential
-RUN apt purge --assume-yes perl
-RUN apt purge --assume-yes bzip2
-RUN apt purge --assume-yes gnupg
-RUN apt purge --assume-yes xdg-user-dirs
-RUN apt --assume-yes autoremove
+RUN apt purge --assume-yes build-essential perl bzip2 gnupg xdg-user-dirs && apt --assume-yes autoremove
 
 
 # always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
@@ -345,12 +386,18 @@ RUN groupadd --system orthanc --gid=999; \
 
 
 ################################# the "full" image that will run Orthanc dynamicaly linked (final version with vcpkg builds and Microsoft unixodbc)
-FROM orthanc-no-vcpkg as orthanc-with-vcpkg
+FROM orthanc-no-vcpkg AS orthanc-with-vcpkg
 
-RUN apt-get update
-RUN apt-get --assume-yes install curl gnupg2
+# When installing JAVA; the --no-install-recommends prevent installation of systemd which would create a groupid 999 conflicting with the orthanc one
 
-RUN mkdir /downloads
+RUN export DEBIAN_FRONTEND=noninteractive && \
+  apt-get --assume-yes update && \
+  apt-get --assume-yes install curl gnupg2 && \
+  apt-get --assume-yes install default-jdk  --no-install-recommends && \
+  apt-get --assume-yes clean && \
+  rm --recursive --force /var/lib/apt/lists/*
+
+RUN mkdir /java
 
 RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
 RUN curl https://packages.microsoft.com/config/debian/12/prod.list > /etc/apt/sources.list.d/mssql-release.list
@@ -363,6 +410,8 @@ RUN apt-get update && \
 
 COPY --from=build-google-object-storage /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-azure-object-storage /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java /build/OrthancJavaSDK.jar /java
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*

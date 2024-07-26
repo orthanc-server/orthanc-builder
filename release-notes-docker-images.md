@@ -1,5 +1,11 @@
+> [!NOTE]  
+> These release notes apply to both the [orthancteam/orthanc](https://orthanc.uclouvain.be/book/users/docker-orthancteam.html) 
+> Docker images and the [Windows installer](https://orthanc.uclouvain.be/downloads/windows-64/installers/index.html) 
+> that share the same numbering scheme.
+
+
 > [!TIP]
-> Starting from the `22.6.1` release, we are providing 2 types of images:
+> Starting from the `22.6.1` release, we are providing 2 types of Docker images:
 >  - the default image with the usual tag: e.g `orthancteam/orthanc:22.6.1`
 >  - the full image with a e.g `orthancteam/orthanc:22.6.1-full` tag
 >
@@ -9,8 +15,122 @@
 >  - the Azure Blob storage plugin
 >  - the Google Cloud storage plugin
 >  - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
+>  - the Java plugin (from version 24.6.2)
 >
 > Only the default tags are listed here.  You just need to append `-full` for the full image.
+>
+> Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
+
+Pending changes
+---------------
+
+- WIN-INSTALLER: commented out the "Host" value of the default dicomweb.json that was incorrect.
+
+
+24.7.3
+------
+
+- upgraded OHIF plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS)
+
+
+24.7.2
+------
+
+- upgraded python plugin to [4.3](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+
+
+24.7.1
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.5.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.8.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+
+
+24.7.0
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.5.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.8.0](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+
+
+24.6.3
+------
+
+- upgraded AWS S3 object-storage plugin to [2.4.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- WIN-INSTALLER: added AWS S3 plugin
+
+
+24.6.2
+------
+
+- added [Java plugin 1.0](https://orthanc.uclouvain.be/book/plugins/java.html) to the `-full` image only
+  - new env var "JAVA_PLUGIN_ENABLED" to enable the Java plugin
+  - The Java SDK is installed on the `-full` image
+  - The `OrthancJavaSDK.jar` is stored in `/java`
+  - [link to a sample Java setup](https://github.com/orthanc-server/orthanc-setup-samples/tree/master/docker/java)
+- upgraded STL plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
+- upgraded base image to `debian:bookworm-20240612-slim`
+- WIN-INSTALLER: added Java plugin; not installed by default.
+
+
+24.6.1
+------
+
+- upgraded Orthanc to 1.12.4
+- upgraded DICOMweb plugin to 1.17
+- upgraded Orthanc Explorer 2 plugin to [1.4.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded MySQL plugin to [5.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/MySQL/NEWS)
+- upgraded STL plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
+- upgraded base image to `debian:bookworm-20240513-slim`
+
+
+24.5.1
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.4.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded python plugin to [4.2](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+- upgraded advanced authorization plugin to [0.7.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+
+
+24.5.0
+------
+
+- upgraded GDCM plugin to 1.7
+- added non standard env var `ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS`
+- ARM64 image: fixed OHIF and VolView plugins that were acutally missing.
+
+
+24.4.0
+------
+
+- added STL plugin 1.0
+- upgraded base image to `debian:bookworm-20240408-slim`
+
+
+24.3.5
+------
+
+First release supporting the linux/arm64 platform !
+
+Due to the orthanc.osimis.io server being shut down, we had to release many
+old plugins that were still referencing this server in their build process.  
+Most of them actually do not contain any functional changes compared with the previous release.
+
+- upgraded neuroimaging plugin 1.1 (only a minor [functional change](https://orthanc.uclouvain.be/hg/orthanc-neuro/file/default/NEWS))
+- upgraded Orthanc Web viewer plugin 2.9 (no functional changes)
+- upgraded transfers accelerator plugin 1.5 (no functional changes)
+- upgraded server indexer plugin 1.1 (no functional changes)
+- upgraded TCIA plugin to 1.2 (no functional changes)
+
+
+24.3.4
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.3.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.7.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- upgraded PostgreSQL plugins to [6.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded base image to `debian:bookworm-20240311-slim`
+
 
 24.3.3
 ------
@@ -25,7 +145,7 @@
 24.3.2
 ------
 
-- upgraded ODBC plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/Odbc/NEWS)
+- upgraded ODBC plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/Odbc/NEWS)
 
 
 24.3.1
@@ -47,6 +167,7 @@
 
 24.2.2
 ------
+
 - upgraded PostgreSQL plugins to [6.1](https://orthanc.uclouvain.be/hg/orthanc-databases/file/tip/PostgreSQL/NEWS)
 
 

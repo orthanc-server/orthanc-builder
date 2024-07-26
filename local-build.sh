@@ -22,7 +22,7 @@ currentTag=current
 pushTag=unknown
 image=normal
 isTag=false
-
+useBuildx=false
 
 for argument in "$@"
 do
@@ -34,8 +34,24 @@ do
    export "$key"="$value"
 done
 
+if [[ $type == "ci" ]]; then
+    if [[ $platform == "linux/amd64" ]]; then
+        useBuildx=true
+    fi
+fi
+
+if [[ $platform == "linux/amd64" ]]; then
+    shortPlatform="amd64"
+else
+    shortPlatform="arm64"
+fi
+
+
+arch=$(echo $platform | cut -d '/' -f 2)
+
 echo "version          = $version"
 echo "platform         = $platform"
+echo "shortPlatform    = $shortPlatform"
 echo "type             = $type"
 echo "skipCommitChecks = $skipCommitChecks"
 echo "step             = $step"
@@ -68,12 +84,14 @@ ORTHANC_OE2_COMMIT_ID=$(getCommitId "Orthanc-explorer-2" $version docker $skipCo
 ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version)
 ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipCommitChecks)
 ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks)
+ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks)
+ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks)
 
-BASE_DEBIAN_IMAGE=bookworm-20240211-slim
+BASE_DEBIAN_IMAGE=bookworm-20240612-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version-mtune1
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-stone-viewer build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif"
+buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
 
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
@@ -84,37 +102,9 @@ fi
 buildTargets="$buildTargets $finalImageTarget"
 
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
-# buildTargets=build-plugin-neuro
+# buildTargets=build-plugin-java
 
-
-if [[ $type == "local" ]]; then
-    from_cache_arg_runner_base=
-    to_cache_arg_runner_base=
-
-    from_cache_arg_builder_base=
-    to_cache_arg_builder_base=
-
-    from_cache_arg_builder_vcpkg=
-    to_cache_arg_builder_vcpkg=
-
-    from_cache_arg_builder_vcpkg_azure=
-    to_cache_arg_builder_vcpkg_azure=
-
-    from_cache_arg_builder_vcpkg_google=
-    to_cache_arg_builder_vcpkg_google=
-
-    from_cache_arg=
-    to_cache_arg=
-
-    # when building locally, use Docker builder (easier to reuse local images)
-    build="build"
-    push_load_arg_final_image=
-    push_load_arg_builder_image=
-
-
-    prefer_downloads=1
-    enable_upload=0
-else
+if [[ $useBuildx == "true" ]]; then
     from_cache_arg_runner_base="--cache-from=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
     to_cache_arg_runner_base="--cache-to=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
 
@@ -142,6 +132,40 @@ else
         push_load_arg_builder_image=
     fi
     
+else
+
+    from_cache_arg_runner_base=
+    to_cache_arg_runner_base=
+
+    from_cache_arg_builder_base=
+    to_cache_arg_builder_base=
+
+    from_cache_arg_builder_vcpkg=
+    to_cache_arg_builder_vcpkg=
+
+    from_cache_arg_builder_vcpkg_azure=
+    to_cache_arg_builder_vcpkg_azure=
+
+    from_cache_arg_builder_vcpkg_google=
+    to_cache_arg_builder_vcpkg_google=
+
+    from_cache_arg=
+    to_cache_arg=
+
+    # when building locally, use Docker builder (easier to reuse local images)
+    build="build"
+    push_load_arg_final_image=
+    push_load_arg_builder_image=
+
+fi
+
+
+if [[ $type == "local" ]]; then
+
+    prefer_downloads=1
+    enable_upload=0
+else
+
     # when building in CI, don't use intermediate targets (it would push plenty of images)
     buildTargets=$finalImageTarget
 
@@ -152,25 +176,22 @@ fi
 
 if [[ $step == "push" ]]; then
 
-    # tag previously built images and push them
-
-    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
+    # push to orthancteam/orthanc-pre-release only.  The manifest will be pushed to orthancteam/orthanc
     if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
-        docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc:$pushTag
-        docker push orthancteam/orthanc:$pushTag
+        final_tag=$pushTag-$arch
     else
         # otherwise we push to orthancteam/orthanc-pre-release
 
         if [[ $version == "unstable" ]]; then
-            final_tag=$pushTag-unstable
+            final_tag=$pushTag-unstable-$arch
         else
-            final_tag=$pushTag
+            final_tag=$pushTag-$arch
         fi
-
-        # tag previously built images and push them
-        docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
-        docker push orthancteam/orthanc-pre-release:$final_tag
     fi
+
+    # tag previously built images and push them
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
+    docker push orthancteam/orthanc-pre-release:$final_tag
 
     exit 0
 else
@@ -179,6 +200,32 @@ else
 
 fi
 
+if [[ $step == "publish-manifest" ]]; then
+
+    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
+    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
+        final_tag=$pushTag
+        final_image=orthancteam/orthanc
+    else
+        # otherwise we push to orthancteam/orthanc-pre-release
+
+        if [[ $version == "unstable" ]]; then
+            final_tag=$pushTag-unstable
+        else
+            final_tag=$pushTag
+        fi
+        final_image=orthancteam/orthanc-pre-release
+    fi
+
+    # this step merges the AMD64 and ARM64 images into a single manifest
+    docker manifest rm $final_image:$final_tag || true
+    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 orthancteam/orthanc-pre-release:$final_tag-arm64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 --os linux --arch amd64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
+    docker manifest push $final_image:$final_tag
+
+    exit 0
+fi
 
 # runner_base_tag=$final_image_temporary_tag
 # builder_base_tag=$final_image_temporary_tag
@@ -277,12 +324,15 @@ for target in $buildTargets; do
         --build-arg ORTHANC_OE2_VERSION=$ORTHANC_OE2_VERSION \
         --build-arg ORTHANC_VOLVIEW_COMMIT_ID=$ORTHANC_VOLVIEW_COMMIT_ID \
         --build-arg ORTHANC_OHIF_COMMIT_ID=$ORTHANC_OHIF_COMMIT_ID \
+        --build-arg ORTHANC_STL_COMMIT_ID=$ORTHANC_STL_COMMIT_ID \
+        --build-arg ORTHANC_JAVA_COMMIT_ID=$ORTHANC_JAVA_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         --build-arg ARG_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
         --build-arg ARG_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
         --build-arg PREFER_DOWNLOADS=$prefer_downloads \
         --build-arg ENABLE_UPLOAD=$enable_upload \
         --build-arg PLATFORM=$platform \
+        --build-arg STONE_INTERMEDIATE_TARGET=build-stone-viewer-$shortPlatform \
         --build-arg STABLE_OR_UNSTABLE=$version \
         $from_cache_arg \
         $to_cache_arg \

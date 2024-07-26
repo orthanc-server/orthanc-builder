@@ -233,5 +233,24 @@
   "Ohif": {
     "enablingEnvVar" : "OHIF_PLUGIN_ENABLED",
     "libs" : ["libOrthancOHIF.so"]
-  }  
+  },
+
+  "STL": {
+    "enablingEnvVar" : "STL_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "libs" : ["libOrthancSTL.so"]
+  },
+
+  "Java": {
+    "enablingEnvVar" : "JAVA_PLUGIN_ENABLED",
+    "nonStandardDefaults" : {
+      "Enable" : true,
+      "Classpath": "MUST BE DEFINED BY YOU",
+      "InitializationClass": "MUST BE DEFINED BY YOU"
+  },
+    "libs" : ["libOrthancJava.so"]
+  }
+
 }
