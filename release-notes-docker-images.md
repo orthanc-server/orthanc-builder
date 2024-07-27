@@ -25,6 +25,7 @@ Pending changes
 ---------------
 
 - WIN-INSTALLER: commented out the "Host" value of the default dicomweb.json that was incorrect.
+- upgraded base image to `debian:bookworm-20240722-slim`
 
 
 24.7.3
