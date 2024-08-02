@@ -794,9 +794,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "1.5.1",
+            "stable": "1.6.0",
             "unstable": "master",
-            "unstableMacOS": "1.5.1", 
+            "unstableMacOS": "1.6.0", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
@@ -837,6 +837,7 @@
                 "Description": "Osimis Web viewer (AGPL license)",
                 "Name": "osimis_web_viewer",
                 "Mandatory": false,
+                "Checked": false,
                 "Category": "viewers",
                 "Artifacts64": [
                     ["windows-64/osimis-web-viewer/OsimisWebViewer-${VERSION}.dll", "Plugins", "OsimisWebViewer.dll"]
