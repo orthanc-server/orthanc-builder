@@ -569,7 +569,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-gdcm/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GDCM",
-            "stable": "OrthancGdcm-1.7",
+            "stable": "OrthancGdcm-1.8",
             "unstable": "default",
             "stableMacOS": "4b8fd4b10742",
             "artifactsMacOS": "libOrthancGdcm.dylib",
