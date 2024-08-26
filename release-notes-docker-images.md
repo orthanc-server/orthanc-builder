@@ -32,7 +32,7 @@ Pending changes
 ------
 
 - upgraded Orthanc Explorer 2 plugin to [1.6.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
-- upgraded GDCM plugin to [1.8]((https://orthanc.uclouvain.be/hg/orthanc-gdcm/file/default/NEWS))
+- upgraded GDCM plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-gdcm/file/default/NEWS)
 - WIN-INSTALLER: The Osimis viewer is not installed anymore by default (but it can still be selected during
   the installation process).
 - WIN-INSTALLER: commented out the "Host" value of the default dicomweb.json that was incorrect.
