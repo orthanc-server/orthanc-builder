@@ -25,7 +25,7 @@ Pending changes
 ---------------
 
 - DOCKER: upgraded base image to `debian:bookworm-20240812-slim`
-
+- DOCKER: upgraded StoneWebViewer to 2.5+c23eef785569
 
 
 24.8.1
