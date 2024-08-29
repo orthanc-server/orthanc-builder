@@ -22,6 +22,6 @@ services:
       - orthanc-under-tests
 
   pg:
-    image: postgres:14
+    image: postgres:16
     environment:
       POSTGRES_PASSWORD: "postgres"

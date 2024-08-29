@@ -21,11 +21,31 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
 Pending changes
 ---------------
 
 - switched Orthanc to `find-refactoring-clean` branch
 - switched DB plugins to `find-refactoring` branch
+
+
+24.8.2
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.6.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- DOCKER: upgraded base image to `debian:bookworm-20240812-slim`
+- DOCKER: upgraded StoneWebViewer to 2.5+c23eef785569
+
+
+24.8.1
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.6.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded GDCM plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-gdcm/file/default/NEWS)
+- WIN-INSTALLER: The Osimis viewer is not installed anymore by default (but it can still be selected during
+  the installation process).
+- WIN-INSTALLER: commented out the "Host" value of the default dicomweb.json that was incorrect.
+- DOCKER: upgraded base image to `debian:bookworm-20240722-slim`
 
 
 24.7.3
@@ -65,24 +85,24 @@ Pending changes
 ------
 
 - added [Java plugin 1.0](https://orthanc.uclouvain.be/book/plugins/java.html) to the `-full` image only
-  - new env var "JAVA_PLUGIN_ENABLED" to enable the Java plugin
-  - The Java SDK is installed on the `-full` image
-  - The `OrthancJavaSDK.jar` is stored in `/java`
-  - [link to a sample Java setup](https://github.com/orthanc-server/orthanc-setup-samples/tree/master/docker/java)
+  - DOCKER: new env var "JAVA_PLUGIN_ENABLED" to enable the Java plugin
+  - DOCKER: The Java SDK is installed on the `-full` image
+  - DOCKER: The `OrthancJavaSDK.jar` is stored in `/java`
+  - DOCKER: [link to a sample Java setup](https://github.com/orthanc-server/orthanc-setup-samples/tree/master/docker/java)
 - upgraded STL plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
-- upgraded base image to `debian:bookworm-20240612-slim`
+- DOCKER: upgraded base image to `debian:bookworm-20240612-slim`
 - WIN-INSTALLER: added Java plugin; not installed by default.
 
 
 24.6.1
 ------
 
-- upgraded Orthanc to 1.12.4
-- upgraded DICOMweb plugin to 1.17
+- upgraded Orthanc to [1.12.4](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded DICOMweb plugin to [1.17](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 - upgraded Orthanc Explorer 2 plugin to [1.4.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded MySQL plugin to [5.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/MySQL/NEWS)
 - upgraded STL plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
-- upgraded base image to `debian:bookworm-20240513-slim`
+- DOCKER: upgraded base image to `debian:bookworm-20240513-slim`
 
 
 24.5.1
@@ -97,15 +117,15 @@ Pending changes
 ------
 
 - upgraded GDCM plugin to 1.7
-- added non standard env var `ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS`
-- ARM64 image: fixed OHIF and VolView plugins that were acutally missing.
+- DOCKER: added non standard env var `ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS`
+- DOCKER ARM64 image: fixed OHIF and VolView plugins that were acutally missing.
 
 
 24.4.0
 ------
 
 - added STL plugin 1.0
-- upgraded base image to `debian:bookworm-20240408-slim`
+- DOCKER: upgraded base image to `debian:bookworm-20240408-slim`
 
 
 24.3.5
@@ -130,14 +150,14 @@ Most of them actually do not contain any functional changes compared with the pr
 - upgraded Orthanc Explorer 2 plugin to [1.3.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.7.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - upgraded PostgreSQL plugins to [6.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
-- upgraded base image to `debian:bookworm-20240311-slim`
+- DOCKER: upgraded base image to `debian:bookworm-20240311-slim`
 
 
 24.3.3
 ------
 
 > [!WARNING]
-> - upgraded base image to `debian:bookworm-20240211-slim` which implies:
+> - DOCKER: upgraded base image to `debian:bookworm-20240211-slim` which implies:
 >   - python has been upgraded to 3.11.
 >   - when using `pip install ...`, you may need to add the `--break-system-package` argument
 >     since the system python is now considered as an `external environment`
@@ -152,9 +172,9 @@ Most of them actually do not contain any functional changes compared with the pr
 24.3.1
 ------
 
-- upgraded the [healthcheck probe](https://orthanc.uclouvain.be/book/users/docker-orthancteam.html#healthcheck-probe).  It is now calling `/changes` instead of `/system` 
+- DOCKER: upgraded the [healthcheck probe](https://orthanc.uclouvain.be/book/users/docker-orthancteam.html#healthcheck-probe).  It is now calling `/changes` instead of `/system` 
   because `/system` is not testing the DB connection while `/changes` does.
-- upgraded base image to `bullseye-20240211-slim`
+- DOCKER: upgraded base image to `bullseye-20240211-slim`
 
 
 24.2.3
