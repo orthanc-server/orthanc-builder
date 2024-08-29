@@ -21,9 +21,10 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
+24.8.2
+------
 
+- upgraded Orthanc Explorer 2 plugin to [1.6.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: upgraded base image to `debian:bookworm-20240812-slim`
 - DOCKER: upgraded StoneWebViewer to 2.5+c23eef785569
 
