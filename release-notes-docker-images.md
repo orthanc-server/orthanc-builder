@@ -25,7 +25,7 @@
 Pending changes
 ---------------
 
-- switched Orthanc to `find-refactoring-clean` branch
+- switched Orthanc to `find-refactoring` branch
 - switched DB plugins to `find-refactoring` branch
 
 
