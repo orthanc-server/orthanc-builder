@@ -159,6 +159,12 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose down -v
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
+    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml             docker compose down -v
+    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml             docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+
+    # TODO: add mysql-dicomweb tests
+    # TODO: add sqlserver-dicomweb tests
+
     COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
     COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
