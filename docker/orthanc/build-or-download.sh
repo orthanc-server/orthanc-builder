@@ -160,7 +160,7 @@ elif [[ $target == "orthanc-pg" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring-clean /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
@@ -179,7 +179,7 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring-clean /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
@@ -198,7 +198,7 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring-clean /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
         pushd $buildRootPath
