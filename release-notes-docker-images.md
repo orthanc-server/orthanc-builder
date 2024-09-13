@@ -27,6 +27,10 @@ Pending changes
 
 - switched Orthanc to `find-refactoring` branch
 - switched DB plugins to `find-refactoring` branch
+- TODO: 
+  - re-enable MySQL and ODBC build 
+  - stable image build & publish
+  - re-enable many disabled tests
 
 
 24.8.2

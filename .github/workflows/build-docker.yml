@@ -118,14 +118,14 @@ jobs:
       run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
-    - name: Build full image with local-build.sh
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+    # - name: Build full image with local-build.sh
+    #   run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
 
-    - name: Run full image integration tests
-      # TODO: enable on ARM64 too
-      if: inputs.runner_type == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
-      working-directory: ${{github.workspace}}/docker/integration-tests
+    # - name: Run full image integration tests
+    #   # TODO: enable on ARM64 too
+    #   if: inputs.runner_type == 'github-hosted'
+    #   run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+    #   working-directory: ${{github.workspace}}/docker/integration-tests
 
     # - name: Setup tmate session
     #   uses: mxschmitt/action-tmate@v3
@@ -136,16 +136,16 @@ jobs:
     - name: Push normal image with branch/tag
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
-    - name: Push full image with branch/tag
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+    # - name: Push full image with branch/tag
+    #   run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
 
     - name: Push normal image with latest tag
       if: inputs.is_tag == 'true'
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=latest isTag=${{ inputs.is_tag }}
 
-    - name: Push full image with latest tag
-      if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
+    # - name: Push full image with latest tag
+    #   if: inputs.is_tag == 'true'
+    #   run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
 
     - name: Setup tmate session
       if: ${{ failure() && inputs.runner_type == 'github-hosted' }}

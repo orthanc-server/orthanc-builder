@@ -91,7 +91,8 @@ BASE_DEBIAN_IMAGE=bookworm-20240812-slim
 BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
+# buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
+buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
 
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
