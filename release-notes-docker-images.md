@@ -27,6 +27,7 @@ Pending changes
 
 - switched Orthanc to `find-refactoring` branch
 - switched DB plugins to `find-refactoring` branch
+- switched DICOMWeb plugin to `find-refactoring` branch
 - TODO: 
   - re-enable MySQL and ODBC build 
   - stable image build & publish

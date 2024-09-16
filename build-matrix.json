@@ -539,7 +539,7 @@
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
             "stable": "OrthancDicomWeb-1.17",
-            "unstable": "default",
+            "unstable": "find-refactoring",
             "artifactsMacOS": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
