@@ -44,7 +44,10 @@ jobs:
     runs-on: ${{ inputs.runner }}
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
-      group: ${{ inputs.runner }}
+      group: ${{ 
+        # Only limit concurrency on arm64 build, otherwise, use a random group name
+        contains(inputs.runner, 'arm64') && 'arm64-group' || github.run_id 
+        }}
       cancel-in-progress: false
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
