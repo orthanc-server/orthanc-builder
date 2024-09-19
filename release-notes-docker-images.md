@@ -34,6 +34,15 @@ Pending changes
   - re-enable many disabled tests
 
 
+- DOCKER: upgraded base image to `debian:bookworm-20240904-slim`
+
+
+24.8.3
+------
+
+- upgraded Stone Web viewer plugin to [2.6](https://orthanc.uclouvain.be/hg/orthanc-stone/file/tip/Applications/StoneWebViewer/NEWS)
+
+
 24.8.2
 ------
 
