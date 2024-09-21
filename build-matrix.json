@@ -821,7 +821,7 @@
         },
         {
             "name": "osimis-viewer", 
-            "repo": "https://bitbucket.org/osimis/osimis-webviewer-plugin/",
+            "repo": "https://github.com/orthanc-team/osimis-webviewer-deprecated/",
             "repoType": "git",
             "sourcesSubPath": "/backend",
             "comment": "# CHANGE_VERSION_WVB",
