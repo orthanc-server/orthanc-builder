@@ -828,7 +828,7 @@
             "stable": "dev",
             "unstable": "dev",
             "BuildbotVersion": "1.4.3",
-            "buildForMacOS": true,
+            "buildForMacOS": flse,
             "customBuildMacOS" : "cmake -B $workspace/build-arm64 -DVIEWER_VERSION_FULL=1.4.3 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-arm64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 -DVIEWER_VERSION_FULL=1.4.3 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-amd64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOsimisWebViewer.dylib $workspace/build-amd64/libOsimisWebViewer.dylib $workspace/build-arm64/libOsimisWebViewer.dylib",
             "unitTests": "./UnitTests",
             "artifactsMacOS": "libOsimisWebViewer.dylib",
