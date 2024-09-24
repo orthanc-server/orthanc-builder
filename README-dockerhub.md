@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.9.0 Default image
+#### 24.9.1 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -65,7 +65,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.9.0-full image
+#### 24.9.1-full image
 ```
 additional component                  version
 ---------------------------------------------
