@@ -25,8 +25,8 @@
 Pending changes
 ---------------
 
-- switched Orthanc to `find-refactoring` branch
-- switched DB plugins to `find-refactoring` branch
+- switched Orthanc to `attach-custom-data` branch
+- switched DB plugins to `attach-custom-data` branch
 - switched DICOMWeb plugin to `find-refactoring` branch
 - TODO: 
   - re-enable MySQL and ODBC build 
