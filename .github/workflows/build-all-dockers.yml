@@ -23,6 +23,8 @@ on:
 
 jobs:
   build-docker-stable:
+    # no need to build the stable image on branches
+    if: ${{ github.ref != 'refs/heads/master' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
