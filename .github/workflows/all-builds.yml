@@ -62,6 +62,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   win-stable-build:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, build-stone-wasm-stable]
     uses: ./.github/workflows/build-win-binaries.yml
     with:
@@ -73,6 +74,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   win-unstable-build:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, build-stone-wasm-unstable]
     uses: ./.github/workflows/build-win-binaries.yml
     with:
@@ -84,6 +86,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-stable-build:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, build-stone-wasm-stable, build-volview-dist-stable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
@@ -95,6 +98,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-unstable-build:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
