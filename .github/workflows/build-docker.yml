@@ -148,9 +148,9 @@ jobs:
     #   if: inputs.is_tag == 'true'
     #   run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
 
-    - name: Setup tmate session
-      if: ${{ failure() && inputs.runner_type == 'github-hosted' }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-        timeout-minutes: 20
+    # - name: Setup tmate session
+    #   if: ${{ failure() && inputs.runner_type == 'github-hosted' }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   with:
+    #     limit-access-to-actor: true
+    #     timeout-minutes: 20
