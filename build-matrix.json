@@ -2,7 +2,7 @@
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
         "stable": "default",
-        "unstable": "default"
+        "unstable": "attach-custom-data"
     },
     "configs": [
         {
