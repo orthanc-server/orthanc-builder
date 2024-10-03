@@ -361,11 +361,10 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         pushd $sourcesRootPath
 
         git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
-
-        patch_version_name_on_unstable "return ORTHANC_OE2_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
-
         cd $sourcesRootPath/orthanc-explorer-2 && \
 	    git checkout $commitId
+
+        patch_version_name_on_unstable "return ORTHANC_OE2_VERSION" $sourcesRootPath/orthanc-explorer-2/Plugin/Plugin.cpp
 
         pushd $sourcesRootPath/orthanc-explorer-2/WebApplication
 
