@@ -85,12 +85,12 @@ patch_version_name_on_unstable() {
     file=$2
     replace=${3:-"return \"mainline-$commitId\""}
 
-    echo replacing "$needle" by "$replace" in "$file"
-
     if [[ $version == unstable ]]; then
-        sed -i "s/$needle/$replace/" $file
-    fi
 
+        echo replacing "$needle" by "$replace" in "$file"
+        sed -i "s/$needle/$replace/" $file
+
+    fi
 }
 
 if [[ $target == "orthanc" ]]; then
@@ -527,7 +527,7 @@ elif [[ $target == "orthanc-s3" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
         ln -s /third-party-downloads $sourcesRootPath/orthanc-object-storage/Aws/ThirdPartyDownloads
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Common/StoragePlugin.cpp
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
         pushd $buildRootPath
 
@@ -548,7 +548,7 @@ elif [[ $target == "orthanc-google-storage" ]]; then
         cd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Common/StoragePlugin.cpp
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
         pushd $buildRootPath
 
@@ -570,7 +570,7 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
         cd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Common/StoragePlugin.cpp
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
         pushd $buildRootPath
 
