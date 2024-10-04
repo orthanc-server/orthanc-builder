@@ -111,6 +111,7 @@ jobs:
 
 
   macos-stable-package:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, macos-stable-build]
     uses: ./.github/workflows/build-macos-package.yml
     with:
@@ -122,6 +123,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-unstable-package:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, macos-unstable-build]
     uses: ./.github/workflows/build-macos-package.yml
     with:
@@ -134,6 +136,7 @@ jobs:
 
 
   build-windows-installer:
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, win-stable-build] #, TODO: build win binaries as well build-win-binaries-unstable]
     uses: ./.github/workflows/build-windows-installer.yml
     with:

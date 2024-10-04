@@ -22,39 +22,41 @@ on:
 
 
 jobs:
-  # build-docker-stable:
-  #   uses: ./.github/workflows/build-docker.yml
-  #   with:
-  #     runner: ${{ matrix.config.runner }}
-  #     runner_type: ${{ matrix.config.runnerType }}
-  #     platform: ${{ matrix.config.platform }}
-  #     stable_unstable: ${{ matrix.config.stableUnstable }}
-  #     current_branch_tag: ${{ inputs.current_branch_tag }}
-  #     is_tag: ${{ inputs.is_tag }}
-  #   secrets:
-  #     docker_hub_username: ${{ secrets.docker_hub_username }}
-  #     docker_hub_token: ${{ secrets.docker_hub_token }}
-  #     aws_access_key_id: ${{ secrets.aws_access_key_id }}
-  #     aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
+  build-docker-stable:
+    # no need to build the stable image on branches
+    if: ${{ github.ref == 'refs/heads/master' }}  
+    uses: ./.github/workflows/build-docker.yml
+    with:
+      runner: ${{ matrix.config.runner }}
+      runner_type: ${{ matrix.config.runnerType }}
+      platform: ${{ matrix.config.platform }}
+      stable_unstable: ${{ matrix.config.stableUnstable }}
+      current_branch_tag: ${{ inputs.current_branch_tag }}
+      is_tag: ${{ inputs.is_tag }}
+    secrets:
+      docker_hub_username: ${{ secrets.docker_hub_username }}
+      docker_hub_token: ${{ secrets.docker_hub_token }}
+      aws_access_key_id: ${{ secrets.aws_access_key_id }}
+      aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       config:
-  #       - {
-  #           name: "linux/amd64",
-  #           platform: "linux/amd64",
-  #           stableUnstable: "stable",
-  #           runner: "ubuntu-latest",
-  #           runnerType: "github-hosted"
-  #         }
-  #       - {
-  #           name: "linux/arm64",
-  #           platform: "linux/arm64",
-  #           stableUnstable: "stable",
-  #           runner: "debian-arm64",
-  #           runnerType: "self-hosted"
-  #         }
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "linux/amd64",
+            platform: "linux/amd64",
+            stableUnstable: "stable",
+            runner: "ubuntu-latest",
+            runnerType: "github-hosted"
+          }
+        - {
+            name: "linux/arm64",
+            platform: "linux/arm64",
+            stableUnstable: "stable",
+            runner: "debian-arm64",
+            runnerType: "self-hosted"
+          }
 
   build-docker-unstable:
     uses: ./.github/workflows/build-docker.yml

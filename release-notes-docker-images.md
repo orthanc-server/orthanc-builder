@@ -21,7 +21,6 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-
 Pending changes
 ---------------
 
@@ -34,6 +33,15 @@ Pending changes
   - re-enable many disabled tests
 
 
+- DOCKER: upgraded base image to `debian:bookworm-20240926-slim`
+- DOCKER: in `unstable` images, the version names now contain the commitId.
+
+
+
+24.9.1
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.6.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: upgraded base image to `debian:bookworm-20240904-slim`
 
 

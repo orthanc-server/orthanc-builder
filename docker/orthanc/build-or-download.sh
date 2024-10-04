@@ -78,6 +78,21 @@ upload() { # $1 file
     fi
 }
 
+patch_version_name_on_unstable() { 
+    # $1 needle (ex: "return mainline")
+    # $2 file
+    needle=$1
+    file=$2
+    replace=${3:-"return \"mainline-$commitId\""}
+
+    if [[ $version == unstable ]]; then
+
+        echo replacing "$needle" by "$replace" in "$file"
+        sed -i "s/$needle/$replace/" $file
+
+    fi
+}
+
 if [[ $target == "orthanc" ]]; then
 
     dl=$(( $dl + $(download Orthanc) ))
@@ -91,6 +106,15 @@ if [[ $target == "orthanc" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "result\[VERSION\] = ORTHANC_VERSION" $sourcesRootPath/OrthancServer/Sources/OrthancRestApi/OrthancRestSystem.cpp "result\[VERSION\] = \"mainline-$commitId\""
+        patch_version_name_on_unstable "return MODALITY_WORKLISTS_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/ModalityWorklists/Plugin.cpp
+        patch_version_name_on_unstable "return SERVE_FOLDERS_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/ServeFolders/Plugin.cpp
+        patch_version_name_on_unstable "return HOUSEKEEPER_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/Housekeeper/Plugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/ConnectivityChecks/Plugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/DelayedDeletion/Plugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/MultitenantDicom/Plugin.cpp
+
         pushd $buildRootPath
 
         # note: building with static DCMTK while waiting for Debian bullseye to update to latest DCMTK issues (we need DCMTK 3.6.7: https://www.hipaajournal.com/warning-issued-about-3-high-severity-vulnerabilities-in-offis-dicom-software/)
@@ -113,16 +137,19 @@ elif [[ $target == "orthanc-authorization" ]]; then
 
     dl=$(( $dl + $(download libOrthancAuthorization.so) ))
 
-    if [[ $dl != 0 ]]; then
+    # if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-authorization/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
         upload libOrthancAuthorization.so
-    fi
+    # fi
 
 elif [[ $target == "orthanc-python" ]]; then
 
@@ -131,6 +158,9 @@ elif [[ $target == "orthanc-python" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-python/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.11 $sourcesRootPath
         make -j 4
@@ -145,6 +175,9 @@ elif [[ $target == "orthanc-gdcm" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-gdcm/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
         
@@ -161,8 +194,11 @@ elif [[ $target == "orthanc-pg" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
-
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/IndexPlugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/StoragePlugin.cpp
+
         pushd $buildRootPath
 #        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/PostgreSQL
@@ -182,6 +218,10 @@ elif [[ $target == "orthanc-mysql" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
+
         pushd $buildRootPath
 #        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/MySQL
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
@@ -201,6 +241,10 @@ elif [[ $target == "orthanc-odbc" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
+
         pushd $buildRootPath
 #        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/Odbc
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/Odbc
@@ -217,6 +261,9 @@ elif [[ $target == "orthanc-indexer" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
         make -j 4
@@ -231,6 +278,9 @@ elif [[ $target == "orthanc-neuro" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
         make -j 4
@@ -245,6 +295,9 @@ elif [[ $target == "orthanc-java" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-java/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath/Plugin
         make -j 4
@@ -264,7 +317,10 @@ elif [[ $target == "orthanc-stl" ]]; then
     dl=$(( $dl + $(download libOrthancSTL.so) ))
 
     if [[ $dl != 0 ]]; then
+
         hg clone https://orthanc.uclouvain.be/hg/orthanc-stl/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_STL_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
         mkdir /sources/JavaScriptLibraries
         cd /sources/JavaScriptLibraries
@@ -286,6 +342,9 @@ elif [[ $target == "orthanc-tcia" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
         make -j 4
@@ -312,6 +371,8 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         git clone https://github.com/orthanc-server/orthanc-explorer-2.git && \
         cd $sourcesRootPath/orthanc-explorer-2 && \
 	    git checkout $commitId
+
+        patch_version_name_on_unstable "return ORTHANC_OE2_VERSION" $sourcesRootPath/orthanc-explorer-2/Plugin/Plugin.cpp
 
         pushd $sourcesRootPath/orthanc-explorer-2/WebApplication
 
@@ -344,6 +405,8 @@ elif [[ $target == "orthanc-volview-from-dist" ]]; then
 
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_VOLVIEW_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
         # unzip the file at the right place for the next step (it will unzip it in $sourcesRootPath/VolView/dist/...)
         pushd /
@@ -411,6 +474,8 @@ elif [[ $target == "orthanc-ohif-from-dist" ]]; then
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
 
+        patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
         # unzip the file at the right place for the next step (it will unzip it in $sourcesRootPath/OHIF/dist/...)
         pushd /
         unzip $buildRootPath/OHIF-dist.zip
@@ -435,6 +500,8 @@ elif [[ $target == "orthanc-ohif" ]]; then
 
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
         wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
 
@@ -468,6 +535,8 @@ elif [[ $target == "orthanc-s3" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
         ln -s /third-party-downloads $sourcesRootPath/orthanc-object-storage/Aws/ThirdPartyDownloads
 
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
+
         pushd $buildRootPath
 
         cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_VCPKG_PACKAGES=OFF $sourcesRootPath/orthanc-object-storage/Aws/
@@ -486,6 +555,8 @@ elif [[ $target == "orthanc-google-storage" ]]; then
 
         cd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
+
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
         pushd $buildRootPath
 
@@ -507,6 +578,8 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
         cd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
 
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
+
         pushd $buildRootPath
 
         cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
@@ -522,6 +595,9 @@ elif [[ $target == "orthanc-webviewer" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-webviewer/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
@@ -537,6 +613,9 @@ elif [[ $target == "orthanc-transfers" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-transfers/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
@@ -553,6 +632,9 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-dicomweb/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_DICOM_WEB_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
@@ -568,6 +650,9 @@ elif [[ $target == "orthanc-wsi" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-wsi/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_WSI_VERSION" $sourcesRootPath/ViewerPlugin/Plugin.cpp
+
         pushd $buildRootPath
         cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF $sourcesRootPath/ViewerPlugin
         make -j 4
@@ -629,6 +714,20 @@ elif [[ $target == "orthanc-stone-so" ]]; then
     if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-stone/ -r $commitId $sourcesRootPath
+
+        # StoneViewer is quite often on a non stable branch -> if its version is "mainline", always append the commit id
+        if grep -q "set(STONE_WEB_VIEWER_VERSION \"mainline\")" "$sourcesRootPath/Applications/StoneWebViewer/Version.cmake"; then
+
+            patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
+
+            needle="return PLUGIN_VERSION"
+            file=$sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
+            replace="return \"mainline-$commitId\""
+
+            echo replacing "$needle" by "$replace" in "$file"
+            sed -i "s/$needle/$replace/" $file
+        fi
+
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer $sourcesRootPath/Applications/StoneWebViewer/Plugin/
         make -j 4
