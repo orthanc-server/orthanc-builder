@@ -707,7 +707,18 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-stone/ -r $commitId $sourcesRootPath
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
+        # StoneViewer is quite often on a non stable branch -> if its version is "mainline", always append the commit id
+        if grep -q "set(STONE_WEB_VIEWER_VERSION \"mainline\")" "$sourcesRootPath/Applications/StoneWebViewer/Version.cmake"; then
+
+            patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
+
+            needle="return PLUGIN_VERSION"
+            file=$sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
+            replace="return \"mainline-$commitId\""
+
+            echo replacing "$needle" by "$replace" in "$file"
+            sed -i "s/$needle/$replace/" $file
+        fi
 
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer $sourcesRootPath/Applications/StoneWebViewer/Plugin/
