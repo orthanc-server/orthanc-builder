@@ -111,7 +111,7 @@ jobs:
 
 
   macos-stable-package:
-    if: ${{ github.ref == 'refs/heads/master' }} 
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, macos-stable-build]
     uses: ./.github/workflows/build-macos-package.yml
     with:
