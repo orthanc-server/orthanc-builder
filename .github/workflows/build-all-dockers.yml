@@ -24,7 +24,7 @@ on:
 jobs:
   build-docker-stable:
     # no need to build the stable image on branches
-    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag }}  
+    if: ${{ github.ref == 'refs/heads/master' || inputs.is_tag }}  
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
@@ -59,7 +59,7 @@ jobs:
           }
 
   build-docker-unstable:
-    if: ${{ !needs.pre-build.outputs.is_tag }}  # no need to build unstable image on a tag
+    if: ${{ !inputs.is_tag }}  # no need to build unstable image on a tag
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
