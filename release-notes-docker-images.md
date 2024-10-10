@@ -22,10 +22,10 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-24.10.0
+24.10.1
 -------
 
-- upgraded Orthanc Explorer 2 plugin to [1.6.3](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.6.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: upgraded base image to `debian:bookworm-20240926-slim`
 - DOCKER: in `unstable` images, the plugin version names now contain the commitId.
 
