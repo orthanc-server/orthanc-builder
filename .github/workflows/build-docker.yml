@@ -66,11 +66,11 @@ jobs:
     #     remove-codeql: 'true'
     #     remove-docker-images: 'true'
 
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-      timeout-minutes: 30
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@v3
+    #   with:
+    #     limit-access-to-actor: true
+    #   timeout-minutes: 30
 
 
     - name: Maximize build space (2)
@@ -84,8 +84,17 @@ jobs:
         sudo rm -rf /etc/skel
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /usr/local/julia*
+        sudo rm -rf /usr/local/share/powershell
+        sudo rm -rf /usr/local/share/chromium
+        sudo rm -rf /usr/local/share/vcpkg
+        sudo rm -rf /usr/local/aws-sam-cli
+        sudo rm -rf /usr/local/n
+        sudo rm -rf /home/linuxbrew
         sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/pipx
         sudo rm -rf /opt/hostedtoolcache/CodeQL
+        sudo rm -rf /opt/hostedtoolcache/Python
         sudo docker image prune --all --force
         df -h
 
