@@ -66,6 +66,13 @@ jobs:
     #     remove-codeql: 'true'
     #     remove-docker-images: 'true'
 
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+      timeout-minutes: 30
+
+
     - name: Maximize build space (2)
       # to list folder sizes:
       # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
