@@ -148,5 +148,5 @@ jobs:
     - name: Publish Dockerhub manifest normal image
       run: ./local-build.sh version=unstable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-unstable pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
-    # - name: Publish Dockerhub manifest full image
-    #   run: ./local-build.sh version=unstable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-unstable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+    - name: Publish Dockerhub manifest full image
+      run: ./local-build.sh version=unstable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-unstable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
