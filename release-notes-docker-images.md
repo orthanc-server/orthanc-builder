@@ -22,6 +22,12 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+24.10.2
+-------
+
+- upgraded WSI plugin to [2.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-2.1/NEWS)
+
+
 24.10.1
 -------
 

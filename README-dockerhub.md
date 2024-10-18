@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.10.1 Default image
+#### 24.10.2 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -42,7 +42,7 @@ Orthanc Web viewer plugin             2.9
 DICOMweb plugin                       1.17
 PostgreSQL plugins                    6.2
 MySQL plugins                         5.2
-WSI Web viewer plugin                 2.0
+WSI Web viewer plugin                 2.1
 Authorization plugin                  0.8.1
 Transfers accelerator plugin          1.5
 GDCM plugin                           1.8
@@ -65,7 +65,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.10.1-full image
+#### 24.10.2-full image
 ```
 additional component                  version
 ---------------------------------------------
