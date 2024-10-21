@@ -165,8 +165,8 @@ if [[ $image == "normal" ]]; then
     # TODO: add mysql-dicomweb tests
     # TODO: add sqlserver-dicomweb tests
 
-    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
-    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
+    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose down -v
     # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
