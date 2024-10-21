@@ -171,8 +171,8 @@ if [[ $image == "normal" ]]; then
     # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose down -v
     # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    # COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
-    # COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
+    COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     # COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
     # COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit

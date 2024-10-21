@@ -28,7 +28,7 @@ Pending changes
 - switched DB plugins to `find-refactoring` branch
 - switched DICOMWeb plugin to `find-refactoring` branch
 - TODO: 
-  - re-enable MySQL and ODBC build 
+  - re-enable ODBC build 
   - stable image build & publish
   - re-enable many disabled tests
 
