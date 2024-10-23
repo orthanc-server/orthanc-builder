@@ -21,6 +21,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes
+---------------
+
+- DOCKER: upgraded base image to `debian:bookworm-20241016-slim`
+- DOCKER: upgraded StoneWebViewer to 2.5+c5f94c10cd61
+
+
 
 24.10.2
 -------
