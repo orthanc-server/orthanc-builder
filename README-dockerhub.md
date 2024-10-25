@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.10.2 Default image
+#### 24.10.3 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -35,7 +35,7 @@ Connectivity check plugin             1.12.4
 Housekeeper plugin                    1.12.4
 Delayed Deletion plugin               1.12.4
 Multitenant DICOM plugin              1.12.4
-Stone Web viewer plugin               2.6
+Stone Web viewer plugin               2.6+c5f94c10cd61
 Osimis Web viewer plugin              1.4.3
 Python plugin                         4.3
 Orthanc Web viewer plugin             2.9
@@ -65,7 +65,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.10.2-full image
+#### 24.10.3-full image
 ```
 additional component                  version
 ---------------------------------------------
