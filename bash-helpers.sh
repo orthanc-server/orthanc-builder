@@ -214,7 +214,7 @@ getGitCommitId() { # $1 = repo, $2 = branch/tag/revision
     echo $commit_id
 }
 
-getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1)
+getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1), $5 = throttle (0/1)
 
     if [[ $3 == "macos" ]]; then
         revision=$(getBranchTagToBuildMacOS $1 $2)
@@ -227,6 +227,11 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
     if [[ $4 == "1" ]]; then
         echo $revision
         return
+    fi
+
+    if [[ $5 == "1" ]]; then
+        # throttle on CI because we get a lot of bad gateway errors on UCLouvain server
+        sleep 1
     fi
 
     # get the last commit id for this revision
