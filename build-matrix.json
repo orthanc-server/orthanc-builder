@@ -506,7 +506,7 @@
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
             "stable": "c5f94c10cd61",
             "stableWin": "StoneWebViewer-2.6",
-            "BuildbotVersion": "StoneWebViewer-2.6",
+            "BuildbotVersion": "2.6",
             "stableMacOS": "StoneWebViewer-2.6",
             "unstable": "default",
             "artifactsMacOS": "libStoneWebViewer.dylib",
