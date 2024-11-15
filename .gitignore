@@ -2,3 +2,5 @@
 WindowsInstaller/Configuration/ThirdPartyDownloads/
 *~
 UCLouvain/__pycache__/
+github-mirrors/mirrors/
+github-mirrors/.env/
