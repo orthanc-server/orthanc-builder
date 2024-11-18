@@ -14,8 +14,25 @@ else
 fi
 
 syncAllBranchesFromRepo orthanc
-syncAllBranchesFromRepo orthanc-gdcm
-syncAllBranchesFromRepo orthanc-dicomweb
+syncAllBranchesFromRepo orthanc-authorization
+syncAllBranchesFromRepo orthanc-book
 syncAllBranchesFromRepo orthanc-databases
+syncAllBranchesFromRepo orthanc-dicomweb
+syncAllBranchesFromRepo orthanc-gcp
+syncAllBranchesFromRepo orthanc-gdcm
+syncAllBranchesFromRepo orthanc-indexer
+syncAllBranchesFromRepo orthanc-imagej
+syncAllBranchesFromRepo orthanc-java
+syncAllBranchesFromRepo orthanc-neuro
+syncAllBranchesFromRepo orthanc-object-storage
+syncAllBranchesFromRepo orthanc-ohif
+syncAllBranchesFromRepo orthanc-python
+syncAllBranchesFromRepo orthanc-stone
+syncAllBranchesFromRepo orthanc-stl
+syncAllBranchesFromRepo orthanc-tcia
+syncAllBranchesFromRepo orthanc-tests
+syncAllBranchesFromRepo orthanc-transfers
+syncAllBranchesFromRepo orthanc-volview
+syncAllBranchesFromRepo orthanc-webviewer
+syncAllBranchesFromRepo orthanc-wsi
 
-# todo: add more repos !!!!
