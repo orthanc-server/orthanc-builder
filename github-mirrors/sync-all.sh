@@ -5,6 +5,9 @@ set -ex
 # usage:
 # ./sync-all.sh
 
+# This script is running every day at 22 on the Github ARM 64 build slave 
+# under user orthanc-mirrors' cron job.
+
 source mirror-helpers.sh
 
 if [ -d ".env" ]; then
