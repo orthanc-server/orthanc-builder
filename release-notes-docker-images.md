@@ -21,6 +21,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
+24.11.0
+-------
+
+- upgraded OHIF plugin to [1.4](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/OrthancOHIF-1.4/NEWS)
+
+
 24.10.3
 -------
 

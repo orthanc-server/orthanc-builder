@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.10.3 Default image
+#### 24.11.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -53,7 +53,7 @@ Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.4.0
 Orthanc Explorer 2                    1.6.4
 Kitware's VolView plugin              1.1
-OHIF plugin                           1.3
+OHIF plugin                           1.4
 STL plugin                            1.2
 
 
@@ -65,7 +65,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.10.3-full image
+#### 24.11.0-full image
 ```
 additional component                  version
 ---------------------------------------------
