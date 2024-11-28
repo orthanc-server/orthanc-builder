@@ -28,6 +28,9 @@ WORKDIR /vcpkg
 # RUN ls -al /vcpkg
 RUN ./bootstrap-vcpkg.sh
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
+
+# build only the release triplet and not debug+release
+ENV VCPKG_BUILD_TYPE=release
 RUN mkdir ~/.vcpkg/
 
 RUN ./vcpkg integrate install
