@@ -31,7 +31,7 @@ Pending changes
   - re-enable many disabled tests
 
 
-- DOCKER: upgraded base image to `debian:bookworm-20240926-slim`
+- DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
 - DOCKER: in `unstable` images, the version names now contain the commitId.
 
 
