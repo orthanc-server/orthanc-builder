@@ -10,15 +10,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# update CMake (required by latest vcpkg version)
-WORKDIR /cmake
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.24.2/cmake-3.24.2.tar.gz --quiet
-RUN tar -zxvf cmake-3.24.2.tar.gz
-WORKDIR /cmake/cmake-3.24.2
-RUN ./bootstrap
-RUN make -j 6
-RUN make install
-
 WORKDIR /
 RUN git clone https://github.com/Microsoft/vcpkg.git && \
   cd vcpkg/ && \
@@ -29,11 +20,12 @@ WORKDIR /vcpkg
 RUN ./bootstrap-vcpkg.sh
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
 
-# build only the release triplet and not debug+release
-ENV VCPKG_BUILD_TYPE=release
 RUN mkdir ~/.vcpkg/
 
 RUN ./vcpkg integrate install
+
+# patch the triplet to produce only release builds
+RUN [[ $(uname -m) == "x86_64" ]] && echo "set(VCPKG_BUILD_TYPE release)" >> /vcpkg/triplets/x64-linux.cmake || echo "set(VCPKG_BUILD_TYPE release)" >> /vcpkg/triplets/arm64-linux.cmake
 
 # object storage prerequisites
 RUN ./vcpkg install cryptopp
