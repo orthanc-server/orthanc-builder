@@ -25,7 +25,7 @@ RUN mkdir ~/.vcpkg/
 RUN ./vcpkg integrate install
 
 # patch the triplet to produce only release builds
-RUN bash -c '[[ $(uname -m) == "x86_64" ]] && echo "set(VCPKG_BUILD_TYPE release)" >> /vcpkg/triplets/x64-linux.cmake || echo "set(VCPKG_BUILD_TYPE release)" >> /vcpkg/triplets/arm64-linux.cmake'
+RUN bash -c '[[ $(uname -m) == "x86_64" ]] && echo "set(VCPKG_BUILD_TYPE release)" >> /vcpkg/triplets/x64-linux.cmake || echo "set(VCPKG_BUILD_TYPE release)" >>  /vcpkg/triplets/community/arm64-linux.cmake'
 
 # object storage prerequisites
 RUN ./vcpkg install cryptopp
