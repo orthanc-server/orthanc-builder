@@ -27,6 +27,12 @@ Pending changes
 - Note: WSI tests have been disabled !
 
 
+24.11.0
+-------
+
+- upgraded OHIF plugin to [1.4](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/OrthancOHIF-1.4/NEWS)
+
+
 24.10.3
 -------
 
