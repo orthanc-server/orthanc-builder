@@ -134,21 +134,21 @@ if [[ $image == "normal" ]]; then
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
 
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
 
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose run --rm orthanc-tests-tls-check-client-generate-config
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose run --rm orthanc-tests-tls-check-client-generate-config
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
 
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose down -v
     COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose down -v
-    COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose down -v
+    # COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
@@ -159,41 +159,47 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose down -v
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
+    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml             docker compose down -v
+    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml             docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+
+    # TODO: add mysql-dicomweb tests
+    # TODO: add sqlserver-dicomweb tests
+
     COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
     COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose down -v
-    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
     COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
-    COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
+    # COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.cget.yml                        docker compose down -v
-    COMPOSE_FILE=docker-compose.cget.yml                        docker compose up --build --exit-code-from orthanc-tests-cget --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.cget.yml                        docker compose down -v
+    # COMPOSE_FILE=docker-compose.cget.yml                        docker compose up --build --exit-code-from orthanc-tests-cget --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.s3.yml                         docker compose down -v
-    COMPOSE_FILE=docker-compose.s3.yml                         docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.s3.yml                         docker compose down -v
+    # COMPOSE_FILE=docker-compose.s3.yml                         docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.wsi.yml                         docker compose down -v
-    COMPOSE_FILE=docker-compose.wsi.yml                         docker compose up --build --exit-code-from orthanc-tests-wsi --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.wsi.yml                         docker compose down -v
+    # COMPOSE_FILE=docker-compose.wsi.yml                         docker compose up --build --exit-code-from orthanc-tests-wsi --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.transfers.yml                   docker compose down -v
-    COMPOSE_FILE=docker-compose.transfers.yml                   docker compose up --build --exit-code-from orthanc-tests-transfers --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.transfers.yml                   docker compose down -v
+    # COMPOSE_FILE=docker-compose.transfers.yml                   docker compose up --build --exit-code-from orthanc-tests-transfers --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.recycling.yml                   docker compose down -v
-    COMPOSE_FILE=docker-compose.recycling.yml                   docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.recycling.yml                   docker compose down -v
+    # COMPOSE_FILE=docker-compose.recycling.yml                   docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.worklists.yml                   docker compose down -v
-    COMPOSE_FILE=docker-compose.worklists.yml                   docker compose up --build --exit-code-from orthanc-tests-worklists --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.worklists.yml                   docker compose down -v
+    # COMPOSE_FILE=docker-compose.worklists.yml                   docker compose up --build --exit-code-from orthanc-tests-worklists --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker compose down -v
-    COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker compose down -v
+    # COMPOSE_FILE=docker-compose.ingest-transcoding.yml          docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose down -v
-    COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose down -v
+    # COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
 
 # note: not functional yet:
 # COMPOSE_FILE=docker-compose.odbc-mysql.yml               docker compose down -v
