@@ -98,7 +98,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-unstable-build:
-    # if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
