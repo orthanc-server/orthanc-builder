@@ -24,7 +24,6 @@
 Pending changes
 ---------------
 
-- Note: WSI tests have been disabled !
 
 
 24.11.0

@@ -177,8 +177,8 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.s3.yml                         docker compose down -v
     COMPOSE_FILE=docker-compose.s3.yml                         docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    # COMPOSE_FILE=docker-compose.wsi.yml                         docker compose down -v
-    # COMPOSE_FILE=docker-compose.wsi.yml                         docker compose up --build --exit-code-from orthanc-tests-wsi --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.wsi.yml                         docker compose down -v
+    COMPOSE_FILE=docker-compose.wsi.yml                         docker compose up --build --exit-code-from orthanc-tests-wsi --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.transfers.yml                   docker compose down -v
     COMPOSE_FILE=docker-compose.transfers.yml                   docker compose up --build --exit-code-from orthanc-tests-transfers --abort-on-container-exit
