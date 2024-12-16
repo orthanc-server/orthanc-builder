@@ -25,7 +25,7 @@ Pending changes
 ---------------
 
 - TODO: 
-  - re-enable many disabled tests
+  - use official SDK to build PG, MySQL, ODBC
 
 - DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
 - DOCKER: in `unstable` images, the version names now contain the commitId.

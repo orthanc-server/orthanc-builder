@@ -78,7 +78,7 @@ FROM orthanc-builder-base AS build-plugin-pg
 ARG ORTHANC_PG_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-# ########################## Orthanc MySQL
+########################## Orthanc MySQL
 
 FROM orthanc-builder-base AS build-plugin-mysql
 
@@ -133,7 +133,7 @@ FROM orthanc-builder-base AS build-plugin-python
 ARG ORTHANC_PYTHON_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-# ########################## Orthanc ODBC
+########################## Orthanc ODBC
 
 FROM orthanc-builder-base AS build-plugin-odbc
 

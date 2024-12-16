@@ -193,7 +193,7 @@ elif [[ $target == "orthanc-pg" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r default /orthanc
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/IndexPlugin.cpp
@@ -215,7 +215,7 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r default /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
@@ -238,7 +238,7 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r find-refactoring /orthanc
+        hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r default /orthanc
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
