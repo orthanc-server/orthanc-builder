@@ -25,6 +25,8 @@ Pending changes
 ---------------
 
 - upgraded Orthanc to [1.12.5](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded PostgreSQL plugins to [7.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded DICOMweb plugin to [1.18](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 - upgraded AWS S3 object-storage plugin to [2.5.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
 - DOCKER: in `unstable` images, the plugin version names now contain the commitId.
