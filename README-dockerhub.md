@@ -24,17 +24,17 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 24.11.0 Default image
+#### 24.12.0 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.12.4
-Modality worklists plugin             1.12.4
-Serve folders plugin                  1.12.4
-Connectivity check plugin             1.12.4
-Housekeeper plugin                    1.12.4
-Delayed Deletion plugin               1.12.4
-Multitenant DICOM plugin              1.12.4
+Orthanc server                        1.12.5
+Modality worklists plugin             1.12.5
+Serve folders plugin                  1.12.5
+Connectivity check plugin             1.12.5
+Housekeeper plugin                    1.12.5
+Delayed Deletion plugin               1.12.5
+Multitenant DICOM plugin              1.12.5
 Stone Web viewer plugin               2.6+c5f94c10cd61
 Osimis Web viewer plugin              1.4.3
 Python plugin                         4.3
