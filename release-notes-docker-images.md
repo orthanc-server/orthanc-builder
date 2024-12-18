@@ -24,13 +24,12 @@
 Pending changes
 ---------------
 
-- TODO: 
-  - use official SDK to build PG, MySQL, ODBC
-
 - upgraded Orthanc to [1.12.5](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded AWS S3 object-storage plugin to [2.5.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
-- DOCKER: in `unstable` images, the version names now contain the commitId.
+- DOCKER: in `unstable` images, the plugin version names now contain the commitId.
 - DOCKER: fix wrong version of OHIF viewer (now 3.9.1)
+
 
 24.11.0
 -------

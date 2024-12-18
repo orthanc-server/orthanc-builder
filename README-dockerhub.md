@@ -50,7 +50,7 @@ ODBC plugin                           1.2
 TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
-AWS S3 plugin                         2.4.0
+AWS S3 plugin                         2.5.0
 Orthanc Explorer 2                    1.6.4
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.4
@@ -65,7 +65,7 @@ Lua                                   5.4
 
 ```
 
-#### 24.11.0-full image
+#### 24.12.0-full image
 ```
 additional component                  version
 ---------------------------------------------
