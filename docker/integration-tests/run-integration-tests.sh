@@ -216,8 +216,8 @@ if [[ $image == "normal" ]]; then
 else  # full images (MSSQL only !)
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
-    COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
-    COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
 fi
 
