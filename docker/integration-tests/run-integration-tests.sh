@@ -4,7 +4,7 @@ set -o xtrace
 # example usage
 # sudo rm -rf orthanc-tests-repo-full/
 # sudo rm -rf orthanc-tests-repo-normal/
-# ./run-integration-tests.sh tagToTest=22.4.0 version=unstable
+# ./run-integration-tests.sh tagToTest=current version=unstable
 # ./run-integration-tests.sh tagToTest=22.7.0-full version=stable image=full
 
 source ../../bash-helpers.sh
@@ -153,14 +153,17 @@ if [[ $image == "normal" ]]; then
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
     COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
+    COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose down -v
+    COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
+
     COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker compose down -v
     COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose down -v
     COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml             docker compose down -v
-    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml             docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml           docker compose down -v
+    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml           docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
     # TODO: add mysql-dicomweb tests
     # TODO: add sqlserver-dicomweb tests
