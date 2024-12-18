@@ -29,7 +29,7 @@ Pending changes
 
 - DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
 - DOCKER: in `unstable` images, the version names now contain the commitId.
-
+- DOCKER: fix wrong version of OHIF viewer (now 3.9.1)
 
 24.11.0
 -------

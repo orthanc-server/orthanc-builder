@@ -272,7 +272,7 @@ FROM orthanc-builder-base AS build-plugin-ohif
 
 ARG ORTHANC_OHIF_COMMIT_ID
 # CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
-ARG OHIF_VERSION=3.8.3
+ARG OHIF_VERSION=3.9.1
 RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
 # when building for arm64, simply download the WEB build that has been published by CI when building the linux/amd64 platform
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-ohif-dist commitId=$ORTHANC_OHIF_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
