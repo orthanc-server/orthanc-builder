@@ -28,6 +28,7 @@ Pending changes
 - upgraded PostgreSQL plugins to [7.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - upgraded DICOMweb plugin to [1.18](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 - upgraded AWS S3 object-storage plugin to [2.5.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- upgraded ODBC plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/Odbc/NEWS)
 - DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
 - DOCKER: in `unstable` images, the plugin version names now contain the commitId.
 - DOCKER: fix wrong version of OHIF viewer (now 3.9.1)

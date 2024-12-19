@@ -240,7 +240,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/Odbc",
             "comment": "# CHANGE_VERSION_ODBC",
-            "stable": "OrthancOdbc-1.2",
+            "stable": "OrthancOdbc-1.3",
             "unstable": "default",
             "artifactsMacOS": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
             "buildForMacOS": true,
