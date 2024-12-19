@@ -51,13 +51,13 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.6.4
+Orthanc Explorer 2                    1.7.0
 Kitware's VolView plugin              1.1
 OHIF plugin                           1.4
 STL plugin                            1.2
 
 
-System component                      version
+System components                     version
 ---------------------------------------------
 Base image Debian version             12 (bookworm)
 Python                                3.11

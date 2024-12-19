@@ -21,11 +21,12 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
+24.12.0
+-------
 
 - upgraded Orthanc to [1.12.5](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - upgraded PostgreSQL plugins to [7.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.7.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded DICOMweb plugin to [1.18](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 - upgraded AWS S3 object-storage plugin to [2.5.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - upgraded ODBC plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/Odbc/NEWS)
