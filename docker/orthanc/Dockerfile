@@ -408,10 +408,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-google-object-storage /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-azure-object-storage /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-java /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-java /build/OrthancJavaSDK.jar /java
+COPY --from=build-google-object-storage --chown=orthanc:orthanc /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-azure-object-storage --chown=orthanc:orthanc /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java --chown=orthanc:orthanc /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java --chown=orthanc:orthanc /build/OrthancJavaSDK.jar /java
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*
