@@ -27,6 +27,7 @@ Pending changes (not released)
 
 - upgraded WSI plugin to [3.0](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.0/NEWS)
 - DOCKER: plugins added during the `-full` build process are now owned by `orthanc` user too.
+- DOCKER: upgraded base image to `debian:bookworm-20250113-slim`
 
 
 24.12.0
