@@ -500,15 +500,16 @@ elif [[ $target == "orthanc-ohif" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+        ohif_version=$(cat $sourcesRootPath/Resources/CreateOHIFDist.sh | grep -oP 'PACKAGE=Viewers-\K\d+\.\d+\.\d+')
 
-        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
+        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${ohif_version}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${ohif_version}.tar.gz
 
         # CreateOHIFDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target
         mkdir /source
         cp -r $sourcesRootPath/* /source
         chmod +x /source/Resources/CreateOHIFDist/build.sh
-        /source/Resources/CreateOHIFDist/build.sh Viewers-${extraArg1}
+        /source/Resources/CreateOHIFDist/build.sh Viewers-${ohif_version}
         mkdir -p $sourcesRootPath/OHIF
         cp -r /target $sourcesRootPath/OHIF/dist
         zip -r $buildRootPath/OHIF-dist.zip $sourcesRootPath/OHIF/dist
