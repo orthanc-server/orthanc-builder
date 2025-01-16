@@ -429,8 +429,10 @@ elif [[ $target == "orthanc-volview" ]]; then
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
 
+        volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep -oP 'VERSION=\K\d+\.\d+\.\d+')
+
         # CreateVolViewDist/build.sh needs to work with /target and /source
-        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${extraArg1}.tar.gz
+        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
         cp $sourcesRootPath/VolView/VolView-*.patch $sourcesRootPath
 
         # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
@@ -438,7 +440,7 @@ elif [[ $target == "orthanc-volview" ]]; then
         mkdir /source
         cp -r $sourcesRootPath/* /source
         chmod +x /source/Resources/CreateVolViewDist/build.sh
-        /source/Resources/CreateVolViewDist/build.sh ${extraArg1}
+        /source/Resources/CreateVolViewDist/build.sh ${volview_version}
         mkdir -p $sourcesRootPath/VolView
         cp -r /target $sourcesRootPath/VolView/dist
 

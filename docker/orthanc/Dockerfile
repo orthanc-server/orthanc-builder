@@ -258,9 +258,7 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-exp
 FROM orthanc-builder-base AS build-plugin-volview
 
 ARG ORTHANC_VOLVIEW_COMMIT_ID
-# CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
-ARG VOLVIEW_VERSION=4.1.1
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID extraArg1=$VOLVIEW_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
 # when building for arm64, simply download the WEB build that has been published by CI when building the linux/amd64 platform
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-volview-dist commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview-from-dist commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=linux/arm64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
