@@ -25,6 +25,10 @@
 Pending changes (not released)
 ------------------------------
 
+
+25.1.0
+------
+
 - upgraded OHIF plugin to [1.5](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/OrthancOHIF-1.5/NEWS)
 - upgraded Kitware VolView plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-volview/file/OrthancVolView-1.2/NEWS)
 - upgraded WSI plugin to [3.0](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.0/NEWS)
