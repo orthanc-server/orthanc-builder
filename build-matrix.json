@@ -899,10 +899,10 @@
                 "Mandatory": false,
                 "Category": "viewers",
                 "Artifacts64": [
-                    ["windows-64/orthanc-volview/OrthancVolView-Win64-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows64.dll"]
+                    ["windows-64/orthanc-volview/OrthancVolView-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows64.dll"]
                 ],
                 "Artifacts32": [
-                    ["windows-32/orthanc-volview/OrthancVolView-Win32-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows32.dll"]
+                    ["windows-32/orthanc-volview/OrthancVolView-${VERSION}.dll", "Plugins", "libOrthancVolView-Windows32.dll"]
                 ],
                 "Resources": [
                 ]
