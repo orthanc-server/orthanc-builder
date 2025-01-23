@@ -37,7 +37,7 @@ Delayed Deletion plugin               1.12.6
 Multitenant DICOM plugin              1.12.6
 Stone Web viewer plugin               2.6+c5f94c10cd61
 Osimis Web viewer plugin              1.4.3
-Python plugin                         4.3
+Python plugin                         5.0
 Orthanc Web viewer plugin             2.9
 DICOMweb plugin                       1.18
 PostgreSQL plugins                    7.0
@@ -51,7 +51,7 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.7.0
+Orthanc Explorer 2                    1.7.1
 Kitware's VolView plugin              1.2
 OHIF plugin                           1.5
 STL plugin                            1.2

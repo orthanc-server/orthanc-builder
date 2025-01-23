@@ -26,6 +26,8 @@ Pending changes (not released)
 ------------------------------
 
 - upgraded Orthanc to [1.12.6](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.7.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded python plugin to [5.0](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
 
 
 25.1.0
