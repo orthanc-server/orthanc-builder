@@ -35,7 +35,7 @@ Connectivity check plugin             1.12.6
 Housekeeper plugin                    1.12.6
 Delayed Deletion plugin               1.12.6
 Multitenant DICOM plugin              1.12.6
-Stone Web viewer plugin               2.6+c5f94c10cd61
+Stone Web viewer plugin               2.6+115628b0651d
 Osimis Web viewer plugin              1.4.3
 Python plugin                         5.0
 Orthanc Web viewer plugin             2.9
@@ -43,7 +43,7 @@ DICOMweb plugin                       1.18
 PostgreSQL plugins                    7.0
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.0
-Authorization plugin                  0.8.1
+Authorization plugin                  0.8.2
 Transfers accelerator plugin          1.5
 GDCM plugin                           1.8
 ODBC plugin                           1.3
