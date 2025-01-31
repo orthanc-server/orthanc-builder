@@ -175,6 +175,13 @@ FROM orthanc-builder-base AS build-plugin-java
 ARG ORTHANC_JAVA_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-java commitId=$ORTHANC_JAVA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Advanced Storage
+
+FROM orthanc-builder-base AS build-plugin-advanced-storage
+
+ARG ORTHANC_STL_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Stone Web Viewer
 
 FROM wasm-builder-base-amd64 AS build-wasm-stone-viewer-amd64
@@ -302,7 +309,6 @@ COPY --from=build-orthanc /build/libHousekeeper.so /usr/share/orthanc/plugins-av
 COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc /build/libDelayedDeletion.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc /build/libMultitenantDicom.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
 # RUN ldd /usr/bin/Orthanc
 
 COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/
@@ -328,6 +334,7 @@ COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-a
 COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-ohif /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-stl /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-advanced-storage /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/

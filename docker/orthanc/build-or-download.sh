@@ -386,6 +386,25 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         upload libOrthancExplorer2.so
     fi
 
+elif [[ $target == "orthanc-advanced-storage" ]]; then
+
+    dl=$(( $dl + $(download libAdvancedStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        git clone https://github.com/orthanc-server/orthanc-advanced-storage.git && \
+        cd $sourcesRootPath/orthanc-advanced-storage && \
+	    git checkout $commitId
+
+        patch_version_name_on_unstable "return ADVANCED_STORAGE_VERSION" $sourcesRootPath/orthanc-advanced-storage/Plugin/Plugin.cpp
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$extraArg1 $sourcesRootPath/orthanc-advanced-storage/
+        make -j 4
+
+        upload libAdvancedStorage.so
+    fi
+
 elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
     dl=$(( $dl + $(download VolView-dist.zip) ))
