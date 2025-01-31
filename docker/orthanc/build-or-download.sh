@@ -200,7 +200,7 @@ elif [[ $target == "orthanc-pg" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/StoragePlugin.cpp
 
         pushd $buildRootPath
-#        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
+        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/PostgreSQL
         make -j 4
 
@@ -223,7 +223,7 @@ elif [[ $target == "orthanc-mysql" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
 
         pushd $buildRootPath
-#        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/MySQL
+        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/MySQL
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
         make -j 4
 
@@ -246,7 +246,7 @@ elif [[ $target == "orthanc-odbc" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
 
         pushd $buildRootPath
-#        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/Odbc
+        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/Odbc
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/Odbc
         make -j 4
 
@@ -431,8 +431,10 @@ elif [[ $target == "orthanc-volview" ]]; then
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
 
+        volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep -oP 'VERSION=\K\d+\.\d+\.\d+')
+
         # CreateVolViewDist/build.sh needs to work with /target and /source
-        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${extraArg1}.tar.gz
+        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
         cp $sourcesRootPath/VolView/VolView-*.patch $sourcesRootPath
 
         # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
@@ -440,7 +442,7 @@ elif [[ $target == "orthanc-volview" ]]; then
         mkdir /source
         cp -r $sourcesRootPath/* /source
         chmod +x /source/Resources/CreateVolViewDist/build.sh
-        /source/Resources/CreateVolViewDist/build.sh ${extraArg1}
+        /source/Resources/CreateVolViewDist/build.sh ${volview_version}
         mkdir -p $sourcesRootPath/VolView
         cp -r /target $sourcesRootPath/VolView/dist
 
@@ -502,15 +504,16 @@ elif [[ $target == "orthanc-ohif" ]]; then
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+        ohif_version=$(cat $sourcesRootPath/Resources/CreateOHIFDist.sh | grep -oP 'PACKAGE=Viewers-\K\d+\.\d+\.\d+')
 
-        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${extraArg1}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${extraArg1}.tar.gz
+        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${ohif_version}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${ohif_version}.tar.gz
 
         # CreateOHIFDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target
         mkdir /source
         cp -r $sourcesRootPath/* /source
         chmod +x /source/Resources/CreateOHIFDist/build.sh
-        /source/Resources/CreateOHIFDist/build.sh Viewers-${extraArg1}
+        /source/Resources/CreateOHIFDist/build.sh Viewers-${ohif_version}
         mkdir -p $sourcesRootPath/OHIF
         cp -r /target $sourcesRootPath/OHIF/dist
         zip -r $buildRootPath/OHIF-dist.zip $sourcesRootPath/OHIF/dist

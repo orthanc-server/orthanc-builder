@@ -21,21 +21,73 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
+Pending changes (not released)
+------------------------------
 
 - switched Orthanc to `attach-custom-data` branch
 - switched DB plugins to `attach-custom-data` branch
-- switched DICOMWeb plugin to `find-refactoring` branch
-- TODO: 
-  - re-enable MySQL and ODBC build 
-  - stable image build & publish
-  - re-enable many disabled tests
 
 
+25.1.1
+------
+
+- upgraded Orthanc to [1.12.6](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.7.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded PostgreSQL plugins to [7.1](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded python plugin to [5.0](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+- upgraded advanced authorization plugin to [0.8.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER: upgraded StoneWebViewer to 2.6+115628b0651d
+
+
+25.1.0
+------
+
+- upgraded OHIF plugin to [1.5](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/OrthancOHIF-1.5/NEWS)
+- upgraded Kitware VolView plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-volview/file/OrthancVolView-1.2/NEWS)
+- upgraded WSI plugin to [3.0](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.0/NEWS)
+- DOCKER: plugins added during the `-full` build process are now owned by `orthanc` user too.
+- DOCKER: upgraded base image to `debian:bookworm-20250113-slim`
+
+
+24.12.0
+-------
+
+- upgraded Orthanc to [1.12.5](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded PostgreSQL plugins to [7.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.7.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded DICOMweb plugin to [1.18](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+- upgraded AWS S3 object-storage plugin to [2.5.0](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- upgraded ODBC plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/Odbc/NEWS)
+- DOCKER: upgraded base image to `debian:bookworm-20241202-slim`
+- DOCKER: in `unstable` images, the plugin version names now contain the commitId.
+- DOCKER: fix wrong version of OHIF viewer (now 3.9.1)
+
+
+24.11.0
+-------
+
+- upgraded OHIF plugin to [1.4](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/OrthancOHIF-1.4/NEWS)
+
+
+24.10.3
+-------
+
+- DOCKER: upgraded base image to `debian:bookworm-20241016-slim`
+- DOCKER: upgraded StoneWebViewer to 2.6+c5f94c10cd61
+
+
+24.10.2
+-------
+
+- upgraded WSI plugin to [2.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-2.1/NEWS)
+
+
+24.10.1
+-------
+
+- upgraded Orthanc Explorer 2 plugin to [1.6.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: upgraded base image to `debian:bookworm-20240926-slim`
-- DOCKER: in `unstable` images, the version names now contain the commitId.
-
+- DOCKER: in `unstable` images, the plugin version names now contain the commitId.
 
 
 24.9.1

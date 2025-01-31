@@ -24,7 +24,7 @@ on:
 jobs:
   build-docker-stable:
     # no need to build the stable image on branches
-    if: ${{ github.ref == 'refs/heads/master' }}  
+    if: ${{ github.ref == 'refs/heads/master' || inputs.is_tag }}  
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
@@ -92,43 +92,43 @@ jobs:
             runnerType: "self-hosted"
           }
 
-  # publish-manifest-stable:
-  #   runs-on: "ubuntu-latest"
-  #   needs: [build-docker-stable]
+  publish-manifest-stable:
+    runs-on: "ubuntu-latest"
+    needs: [build-docker-stable]
 
-  #   steps:
+    steps:
 
-  #   - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-  #   - name: Login to DockerHub
-  #     uses: docker/login-action@v2
-  #     with:
-  #       username: ${{ secrets.docker_hub_username }}
-  #       password: ${{ secrets.docker_hub_token }}
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
 
-  #   - name: Publish Dockerhub manifest normal image
-  #     run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-stable pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
+    - name: Publish Dockerhub manifest normal image
+      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-stable pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
-  #   - name: Publish Dockerhub manifest full image
-  #     run: ./local-build.sh version=stable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+    - name: Publish Dockerhub manifest full image
+      run: ./local-build.sh version=stable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
 
-  #   - name: Publish Dockerhub manifest with latest tag for normal image
-  #     if: inputs.is_tag == 'true'
-  #     run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-stable pushTag=latest isTag=${{ inputs.is_tag }}
+    - name: Publish Dockerhub manifest with latest tag for normal image
+      if: inputs.is_tag == 'true'
+      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-stable pushTag=latest isTag=${{ inputs.is_tag }}
 
-  #   - name: Publish Dockerhub manifest with latest tag for full image
-  #     if: inputs.is_tag == 'true'
-  #     run: ./local-build.sh version=stable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=latest-full isTag=${{ inputs.is_tag }}
+    - name: Publish Dockerhub manifest with latest tag for full image
+      if: inputs.is_tag == 'true'
+      run: ./local-build.sh version=stable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=latest-full isTag=${{ inputs.is_tag }}
 
 
-  #   - name: Update DockerHub repo description
-  #     uses: peter-evans/dockerhub-description@v3
-  #     if: inputs.is_tag == 'true'
-  #     with:
-  #       username: ${{ secrets.docker_hub_username }}
-  #       password: ${{ secrets.docker_hub_token }}
-  #       repository: orthancteam/orthanc
-  #       readme-filepath: README-dockerhub.md
+    - name: Update DockerHub repo description
+      uses: peter-evans/dockerhub-description@v3
+      if: inputs.is_tag == 'true'
+      with:
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
+        repository: orthancteam/orthanc
+        readme-filepath: README-dockerhub.md
 
 
   publish-manifest-unstable:
@@ -148,5 +148,5 @@ jobs:
     - name: Publish Dockerhub manifest normal image
       run: ./local-build.sh version=unstable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-unstable pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
-    # - name: Publish Dockerhub manifest full image
-    #   run: ./local-build.sh version=unstable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-unstable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+    - name: Publish Dockerhub manifest full image
+      run: ./local-build.sh version=unstable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-unstable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}

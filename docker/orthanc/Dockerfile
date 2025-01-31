@@ -78,12 +78,12 @@ FROM orthanc-builder-base AS build-plugin-pg
 ARG ORTHANC_PG_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pg commitId=$ORTHANC_PG_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-# ########################## Orthanc MySQL
+########################## Orthanc MySQL
 
-# FROM orthanc-builder-base AS build-plugin-mysql
+FROM orthanc-builder-base AS build-plugin-mysql
 
-# ARG ORTHANC_MYSQL_COMMIT_ID
-# RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+ARG ORTHANC_MYSQL_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-mysql commitId=$ORTHANC_MYSQL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Orthanc Transfers
 
@@ -109,8 +109,8 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-wsi
 RUN mkdir /downloads
 
 # TODO: we should probably build these tools here as well
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/2.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.0/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.0/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
 
 ########################## Orthanc Webviewer
 
@@ -133,12 +133,12 @@ FROM orthanc-builder-base AS build-plugin-python
 ARG ORTHANC_PYTHON_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-python commitId=$ORTHANC_PYTHON_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
-# ########################## Orthanc ODBC
+########################## Orthanc ODBC
 
-# FROM orthanc-builder-base AS build-plugin-odbc
+FROM orthanc-builder-base AS build-plugin-odbc
 
-# ARG ORTHANC_ODBC_COMMIT_ID
-# RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+ARG ORTHANC_ODBC_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-odbc commitId=$ORTHANC_ODBC_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 # ########################## Orthanc Indexer
 
@@ -258,9 +258,7 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-exp
 FROM orthanc-builder-base AS build-plugin-volview
 
 ARG ORTHANC_VOLVIEW_COMMIT_ID
-# CHANGE_VERSION_VOLVIEW check version in https://orthanc.uclouvain.be/hg/orthanc-volview/file/tip/Resources/CreateVolViewDist.sh
-ARG VOLVIEW_VERSION=4.1.1
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID extraArg1=$VOLVIEW_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
 # when building for arm64, simply download the WEB build that has been published by CI when building the linux/amd64 platform
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-volview-dist commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-volview-from-dist commitId=$ORTHANC_VOLVIEW_COMMIT_ID baseImage=linux/arm64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
@@ -271,9 +269,7 @@ RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh versi
 FROM orthanc-builder-base AS build-plugin-ohif
 
 ARG ORTHANC_OHIF_COMMIT_ID
-# CHANGE_VERSION_OHIF check version in https://orthanc.uclouvain.be/hg/orthanc-ohif/file/tip/Resources/CreateOHIFDist.sh
-ARG OHIF_VERSION=3.8.3
-RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID extraArg1=$OHIF_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif commitId=$ORTHANC_OHIF_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
 # when building for arm64, simply download the WEB build that has been published by CI when building the linux/amd64 platform
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-ohif-dist commitId=$ORTHANC_OHIF_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0; fi
 RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-ohif-from-dist commitId=$ORTHANC_OHIF_COMMIT_ID baseImage=linux/arm64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD; fi
@@ -311,8 +307,8 @@ COPY --from=build-orthanc /build/libAdvancedStorage.so /usr/share/orthanc/plugin
 
 COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-available/
-# COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-available/
-# COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
@@ -322,8 +318,8 @@ COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/ortha
 COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-available/
 COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-available/
-# COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
-# COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
@@ -409,10 +405,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-google-object-storage /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-azure-object-storage /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-java /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-java /build/OrthancJavaSDK.jar /java
+COPY --from=build-google-object-storage --chown=orthanc:orthanc /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-azure-object-storage --chown=orthanc:orthanc /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java --chown=orthanc:orthanc /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java --chown=orthanc:orthanc /build/OrthancJavaSDK.jar /java
 
 RUN chmod +x /usr/share/orthanc/plugins-available/*
 RUN chmod +x /usr/local/bin/*

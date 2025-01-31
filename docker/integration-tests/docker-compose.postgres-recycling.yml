@@ -1,0 +1,25 @@
+version: "3"
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    depends_on:
+      - pg
+    environment:
+      ORTHANC__MAXIMUM_PATIENT_COUNT: "4"
+
+      ORTHANC__POSTGRESQL__HOST: "pg"
+      ORTHANC__POSTGRESQL__DATABASE: "postgres"
+      ORTHANC__POSTGRESQL__USERNAME: "postgres"
+      ORTHANC__POSTGRESQL__PASSWORD: "postgres"
+      ORTHANC__POSTGRESQL__ENABLE_INDEX: "true"
+      ORTHANC__POSTGRESQL__ENABLE_STORAGE: "true"
+
+  orthanc-tests-recycling:
+    image: orthanc-tests-recycling
+    depends_on:
+      - orthanc-under-tests
+
+  pg:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: "postgres"
