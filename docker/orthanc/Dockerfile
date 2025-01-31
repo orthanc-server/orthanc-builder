@@ -180,7 +180,7 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-jav
 FROM orthanc-builder-base AS build-plugin-advanced-storage
 
 ARG ORTHANC_STL_COMMIT_ID
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Stone Web Viewer
 
