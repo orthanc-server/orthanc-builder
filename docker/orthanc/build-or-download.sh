@@ -392,6 +392,8 @@ elif [[ $target == "orthanc-advanced-storage" ]]; then
 
     if [[ $dl != 0 ]]; then
 
+        pushd $sourcesRootPath
+        
         git clone https://github.com/orthanc-server/orthanc-advanced-storage.git && \
         cd $sourcesRootPath/orthanc-advanced-storage && \
 	    git checkout $commitId
