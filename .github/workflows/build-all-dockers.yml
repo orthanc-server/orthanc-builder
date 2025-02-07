@@ -24,7 +24,7 @@ on:
 jobs:
   build-docker-stable:
     # no need to build the stable image on branches
-    if: ${{ github.ref == 'refs/heads/master' || inputs.is_tag }}  
+    if: ${{ github.ref == 'refs/heads/master' || inputs.is_tag == 'true' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
