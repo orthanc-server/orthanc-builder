@@ -68,7 +68,7 @@ if [[ $step == "push-test-image" ]]; then
     docker push orthancteam/orthanc-pre-release:$currentTag-for-tests
 
     exit 0
-endif
+end
 
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
