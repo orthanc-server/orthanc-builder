@@ -126,6 +126,9 @@ jobs:
     - name: Build normal image with local-build.sh
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
 
+    - name: Push test pre-release image with branch/tag
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
+
     - name: Install Integration tests prerequisites
       run: sudo apt-get install -y dcmtk
 

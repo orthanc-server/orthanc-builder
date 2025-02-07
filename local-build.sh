@@ -61,6 +61,15 @@ echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
 echo "image            = $image"
 
+if [[ $step == "push-test-image" ]]; then
+
+    # tag previously built images and push
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-for-tests
+    docker push orthancteam/orthanc-pre-release:$currentTag-for-tests
+
+    exit 0
+endif
+
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
 
