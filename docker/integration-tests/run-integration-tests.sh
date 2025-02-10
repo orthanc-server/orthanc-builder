@@ -128,8 +128,12 @@ if [[ $image == "normal" ]]; then
 
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
-    if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
+    if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ] || [ "$testsGroup" = "tests-group-db" ]; then
         docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
+        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-recycling -t orthanc-tests-recycling orthanc-tests
+    fi
+
+    if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
         docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests
         docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-transfers -t orthanc-tests-transfers orthanc-tests
         docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
@@ -183,11 +187,12 @@ if [[ $image == "normal" ]]; then
 
         COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose down -v
         COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
+
+        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose down -v
+        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
     fi
 
     if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]; then
-
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-recycling -t orthanc-tests-recycling orthanc-tests
 
         COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose down -v
         COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
@@ -212,10 +217,6 @@ if [[ $image == "normal" ]]; then
 
         COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
         COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
-
-        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose down -v
-        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
-
     fi
 
 # note: not functional yet:
