@@ -41,7 +41,7 @@ on:
 jobs:
 
   build-docker-normal-image:
-    name: build-docker-${{ inputs.platform }} ${{ inputs.stable_unstable}}
+    name: build-docker-normal-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
@@ -181,6 +181,7 @@ jobs:
 
 
   build-docker-full-image:
+    name: build-docker-full-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
     needs: [build-docker-normal-image]
     env:
