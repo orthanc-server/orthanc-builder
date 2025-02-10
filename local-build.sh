@@ -70,6 +70,12 @@ if [[ $step == "push-before-test-image" ]]; then
     exit 0
 fi
 
+if [[ $step == "pull-before-test-image" ]]; then
+
+    docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+    exit 0
+fi
+
 if [[ $step == "pull-tag-push" ]]; then
 
     docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform

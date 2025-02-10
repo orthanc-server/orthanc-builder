@@ -42,10 +42,10 @@ jobs:
     - name: Install Integration tests prerequisites
       run: sudo apt-get install -y dcmtk
 
-    - name: Pull image
-      run: docker pull orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-before-tests-${{ inputs.platform }}
-
     - uses: actions/checkout@v3
+
+    - name: Pull image for integ tests
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=pull-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
 
     - name: Run normal image integration tests
       # TODO: enable on ARM64 too
