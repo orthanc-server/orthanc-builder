@@ -64,11 +64,74 @@ echo "image            = $image"
 if [[ $step == "push-before-test-image" ]]; then
 
     # tag previously built images and push
-    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform
-    docker push orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+    docker push orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
 
     exit 0
 fi
+
+if [[ $step == "pull-tag-push" ]]; then
+
+    docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+    docker tag orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform orthancteam/orthanc-pre-release:$currentTag-$shortPlatform
+    docker push orthancteam/orthanc-pre-release:$currentTag-$shortPlatform
+
+    exit 0
+fi
+
+if [[ $step == "push" ]]; then
+
+    # push to orthancteam/orthanc-pre-release only.  The manifest will be pushed to orthancteam/orthanc
+    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
+        final_tag=$pushTag-$arch
+    else
+        # otherwise we push to orthancteam/orthanc-pre-release
+
+        if [[ $version == "unstable" ]]; then
+            final_tag=$pushTag-unstable-$arch
+        else
+            final_tag=$pushTag-$arch
+        fi
+    fi
+
+    # tag previously built images and push them
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
+    docker push orthancteam/orthanc-pre-release:$final_tag
+
+    exit 0
+else
+
+    final_tag=$currentTag
+
+fi
+
+if [[ $step == "publish-manifest" ]]; then
+
+    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
+    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
+        final_tag=$pushTag
+        final_image=orthancteam/orthanc
+    else
+        # otherwise we push to orthancteam/orthanc-pre-release
+
+        if [[ $version == "unstable" ]]; then
+            final_tag=$pushTag-unstable
+        else
+            final_tag=$pushTag
+        fi
+        final_image=orthancteam/orthanc-pre-release
+    fi
+
+    # this step merges the AMD64 and ARM64 images into a single manifest
+    docker manifest rm $final_image:$final_tag || true
+    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 orthancteam/orthanc-pre-release:$final_tag-arm64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 --os linux --arch amd64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
+    docker manifest push $final_image:$final_tag
+
+    exit 0
+fi
+
 
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
@@ -185,68 +248,6 @@ else
     enable_upload=1
 fi
 
-
-if [[ $step == "push" ]]; then
-
-    # push to orthancteam/orthanc-pre-release only.  The manifest will be pushed to orthancteam/orthanc
-    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
-        final_tag=$pushTag-$arch
-    else
-        # otherwise we push to orthancteam/orthanc-pre-release
-
-        if [[ $version == "unstable" ]]; then
-            final_tag=$pushTag-unstable-$arch
-        else
-            final_tag=$pushTag-$arch
-        fi
-    fi
-
-    # tag previously built images and push them
-    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
-    docker push orthancteam/orthanc-pre-release:$final_tag
-
-    exit 0
-else
-
-    final_tag=$currentTag
-
-fi
-
-if [[ $step == "pull-tag-push" ]]; then
-
-    docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform
-    docker tag orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform orthancteam/orthanc-pre-release:$currentTag-$platform
-    docker push orthancteam/orthanc-pre-release:$currentTag-$platform
-
-    exit 0
-fi
-
-if [[ $step == "publish-manifest" ]]; then
-
-    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
-    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
-        final_tag=$pushTag
-        final_image=orthancteam/orthanc
-    else
-        # otherwise we push to orthancteam/orthanc-pre-release
-
-        if [[ $version == "unstable" ]]; then
-            final_tag=$pushTag-unstable
-        else
-            final_tag=$pushTag
-        fi
-        final_image=orthancteam/orthanc-pre-release
-    fi
-
-    # this step merges the AMD64 and ARM64 images into a single manifest
-    docker manifest rm $final_image:$final_tag || true
-    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 orthancteam/orthanc-pre-release:$final_tag-arm64
-    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 --os linux --arch amd64
-    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
-    docker manifest push $final_image:$final_tag
-
-    exit 0
-fi
 
 # runner_base_tag=$final_image_temporary_tag
 # builder_base_tag=$final_image_temporary_tag
