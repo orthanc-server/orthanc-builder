@@ -64,8 +64,8 @@ echo "image            = $image"
 if [[ $step == "push-test-image" ]]; then
 
     # tag previously built images and push
-    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-for-tests
-    docker push orthancteam/orthanc-pre-release:$currentTag-for-tests
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-before-tests
+    docker push orthancteam/orthanc-pre-release:$currentTag-before-tests
 
     exit 0
 fi

@@ -205,6 +205,9 @@ jobs:
     - name: Build full image with local-build.sh
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
 
+    - name: Push test pre-release image with branch/tag
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push-test-image currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+
     - name: Run full image integration tests
       # TODO: enable on ARM64 too
       if: inputs.runner_type == 'github-hosted'
@@ -220,7 +223,22 @@ jobs:
   publish-images:
     runs-on: ${{ inputs.runner }}
     needs: [build-docker-normal-image, run-docker-integ-tests, build-docker-full-image]
+
     steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      if: inputs.runner_type == 'github-hosted'
+      uses: docker/setup-buildx-action@v2
+      with:
+        config: .github/buildkitd.toml
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
+
     - name: Push normal image with branch/tag
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
