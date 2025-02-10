@@ -36,6 +36,7 @@ on:
 
 jobs:
   run-integ-tests:
+    name: run-integ-tests-${{ inputs.tests_group }}-${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
     steps:
     - name: Install Integration tests prerequisites
