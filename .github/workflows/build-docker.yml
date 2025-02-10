@@ -133,6 +133,7 @@ jobs:
 
   run-docker-integ-tests:
 
+    if: inputs.runner_type == 'github-hosted'
     needs: [build-docker-normal-image]
     uses: ./.github/workflows/run-docker-integ-tests.yml
     with:
