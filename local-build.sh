@@ -61,11 +61,11 @@ echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
 echo "image            = $image"
 
-if [[ $step == "push-test-image" ]]; then
+if [[ $step == "push-before-test-image" ]]; then
 
     # tag previously built images and push
-    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-before-tests
-    docker push orthancteam/orthanc-pre-release:$currentTag-before-tests
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform
+    docker push orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform
 
     exit 0
 fi
@@ -210,6 +210,15 @@ else
 
     final_tag=$currentTag
 
+fi
+
+if [[ $step == "pull-tag-push" ]]; then
+
+    docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform
+    docker tag orthancteam/orthanc-pre-release:$currentTag-before-tests-$platform orthancteam/orthanc-pre-release:$currentTag-$platform
+    docker push orthancteam/orthanc-pre-release:$currentTag-$platform
+
+    exit 0
 fi
 
 if [[ $step == "publish-manifest" ]]; then
