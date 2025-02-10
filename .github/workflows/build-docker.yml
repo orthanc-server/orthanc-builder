@@ -187,7 +187,10 @@ jobs:
   build-docker-full-image:
     runs-on: ${{ inputs.runner }}
     needs: [build-docker-normal-image]
+
     steps:
+    - uses: actions/checkout@v3
+
     - name: Build full image with local-build.sh
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
 

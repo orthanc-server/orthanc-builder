@@ -44,6 +44,8 @@ jobs:
     - name: Pull image
       run: docker pull orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-for-tests
 
+    - uses: actions/checkout@v3
+
     - name: Run normal image integration tests
       # TODO: enable on ARM64 too
       if: inputs.runner_type == 'github-hosted'
