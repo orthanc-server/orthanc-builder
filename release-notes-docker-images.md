@@ -21,6 +21,11 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes (not released yet)
+----------------------------------
+
+- DOCKER upgraded Kitware VolView plugin to [1.2+963d42f5bbe7](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
+
 
 25.1.1
 ------
