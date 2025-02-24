@@ -433,7 +433,6 @@ elif [[ $target == "orthanc-volview" ]]; then
 
         # CreateVolViewDist/build.sh needs to work with /target and /source
         wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
-        cp $sourcesRootPath/VolView/VolView-*.patch $sourcesRootPath
 
         # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target
