@@ -887,7 +887,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-volview/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_VOLVIEW",
-            "stable": "963d42f5bbe7",
+            "stable": "e2fd60bf5a09",
             "stableWin": "OrthancVolView-1.2",
             "stableMacOS": "OrthancVolView-1.2",
             "unstable": "default",

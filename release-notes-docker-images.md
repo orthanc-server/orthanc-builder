@@ -24,7 +24,7 @@
 Pending changes (not released yet)
 ----------------------------------
 
-- DOCKER upgraded Kitware VolView plugin to [1.2+963d42f5bbe7](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
+- DOCKER upgraded Kitware VolView plugin to [1.2+e2fd60bf5a09](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
 
 
 25.1.1
