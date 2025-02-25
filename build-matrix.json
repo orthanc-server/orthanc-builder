@@ -13,6 +13,9 @@
             "comment": "# CHANGE_VERSION_XXX",
             "stable": "XXX-1.1                                 Name of the stable branch/tag: used by Docker/Win/MacOS if not overriden",
             "unstable": "default                               Name of the unstable branch: used by Docker/Win/MacOS if not overriden",
+            "BuildbotVersion": "1.2                            OPTIONAL the version included in the Win sintaller ",
+            "stableWin": "4b8fd4b10742                         OPTIONAL specific unstable branch/tag for Windows",
+            "unstableWin": "4b8fd4b10742                       OPTIONAL specific stable branch/tag for Windows",
             "stableMacOS": "4b8fd4b10742                       OPTIONAL specific stable branch/tag for MacOS",
             "unstableMacOS": "4b8fd4b10742                     OPTIONAL specific unstable branch/tag for MacOS",
             "stableDocker": "4b8fd4b10742                      OPTIONAL specific stable branch/tag for Docker",
@@ -499,33 +502,6 @@
             }]
         },
         {
-            "name": "Orthanc-python-3-13", 
-            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
-            "repoType": "hg",
-            "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
-            "unstable": "default",
-            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
-            "buildForMacOS": false,
-            "buildForWin": true,
-            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.13 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.13.2/x64/",
-            "artifactsWin": "OrthancPython.dll",
-            "windows": [{
-                "Description": "Python plugin for Python 3.13 (AGPL license)",
-                "Name": "python_3_13",
-                "Mandatory": false,
-                "Checked": false,
-                "Exclusive": true,
-                "Category": "python_plugins",
-                "Downloads64": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.13-${VERSION}.dll", "Plugins", "OrthancPython3.13.dll"]
-                ],
-                "Downloads32": [
-                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.13-${VERSION}.dll", "Plugins", "OrthancPython3.13.dll"]
-                ]
-            }]
-        },
-        {
             "name": "Orthanc-stone", 
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-stone/",
             "repoType": "hg",
@@ -916,6 +892,7 @@
             "comment": "# CHANGE_VERSION_VOLVIEW",
             "stable": "e2fd60bf5a09",
             "stableWin": "OrthancVolView-1.2",
+            "BuildbotVersion": "1.2", 
             "stableMacOS": "OrthancVolView-1.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancVolView.dylib",

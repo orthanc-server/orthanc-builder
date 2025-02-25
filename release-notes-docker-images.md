@@ -25,7 +25,7 @@ Pending changes (not released yet)
 ----------------------------------
 
 - DOCKER upgraded Kitware VolView plugin to [1.2+e2fd60bf5a09](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
-- WIN INSTALLER: added support for Python 3.13.
+
 
 
 25.1.1
