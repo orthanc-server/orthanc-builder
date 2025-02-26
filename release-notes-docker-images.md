@@ -24,6 +24,7 @@
 Pending changes (not released yet)
 ----------------------------------
 
+- DOCKER: upgraded base image to `debian:bookworm-20250224-slim`
 - DOCKER upgraded Kitware VolView plugin to [1.2+e2fd60bf5a09](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
 
 
