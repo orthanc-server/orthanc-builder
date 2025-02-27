@@ -22,8 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes (not released yet)
-----------------------------------
+25.2.0
+------
 
 - upgraded PostgreSQL plugins to [7.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - upgraded Orthanc Explorer 2 plugin to [1.8.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
