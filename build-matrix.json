@@ -178,7 +178,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-7.1",
+            "stable": "OrthancPostgreSQL-7.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,

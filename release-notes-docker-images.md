@@ -21,12 +21,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
 Pending changes (not released yet)
 ----------------------------------
 
-- DOCKER: upgraded base image to `debian:bookworm-20250224-slim`
+- upgraded PostgreSQL plugins to [7.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - DOCKER upgraded Kitware VolView plugin to [1.2+e2fd60bf5a09](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
-
+- DOCKER: upgraded base image to `debian:bookworm-20250224-slim`
 
 
 25.1.1
