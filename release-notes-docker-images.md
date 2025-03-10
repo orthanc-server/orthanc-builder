@@ -28,6 +28,16 @@ Pending changes (not released)
 - switched DB plugins to `attach-custom-data` branch
 
 
+25.2.0
+------
+
+- upgraded PostgreSQL plugins to [7.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.8.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.9.0](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER upgraded Kitware VolView plugin to [1.2+e2fd60bf5a09](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
+- DOCKER: upgraded base image to `debian:bookworm-20250224-slim`
+
+
 25.1.1
 ------
 
