@@ -21,6 +21,11 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes in the mainline
+-------------------------------
+
+- Docker: switched Orthanc to `pixel-anon` branch.
+
 
 25.2.0
 ------
