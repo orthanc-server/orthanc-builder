@@ -5,6 +5,7 @@ set -o xtrace
 # sudo rm -rf orthanc-tests-repo-full/
 # sudo rm -rf orthanc-tests-repo-normal/
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable
+# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:attach-custom-data-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:22.7.0-full version=stable image=full
 
