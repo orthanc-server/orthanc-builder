@@ -431,7 +431,8 @@ elif [[ $target == "orthanc-volview" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_VOLVIEW_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
-        volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep -oP 'VERSION=\K\d+\.\d+\.\d+')
+        # extract the version number (remove all lines with comments and the line with VERSION=$1)
+        volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep 'VERSION=' | grep -v '#' | grep -v '\$' | cut -d'=' -f2)
 
         # CreateVolViewDist/build.sh needs to work with /target and /source
         wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
