@@ -429,6 +429,8 @@ elif [[ $target == "orthanc-volview" ]]; then
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
 
+        patch_version_name_on_unstable "return ORTHANC_VOLVIEW_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
         volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep -oP 'VERSION=\K\d+\.\d+\.\d+')
 
         # CreateVolViewDist/build.sh needs to work with /target and /source
