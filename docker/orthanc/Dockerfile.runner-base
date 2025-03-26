@@ -12,31 +12,31 @@ FROM debian:$BASE_DEBIAN_IMAGE
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
-  apt-get --assume-yes install python3 && \
-  apt-get --assume-yes install python3-pip && \
-  apt-get --assume-yes install ca-certificates && \
-  apt-get --assume-yes install tzdata && \
-  apt-get --assume-yes install locales && \
-  apt-get --assume-yes install libcurl4 && \
-  apt-get --assume-yes install libdcmtk17 && \
-  apt-get --assume-yes install libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
-  apt-get --assume-yes install libjpeg62-turbo && \
-  apt-get --assume-yes install libjsoncpp25 && \
-  apt-get --assume-yes install liblua5.4 && \
-  apt-get --assume-yes install libpng16-16 && \
-  apt-get --assume-yes install libpugixml1v5 && \
-  apt-get --assume-yes install libsqlite3-0 && \
-  apt-get --assume-yes install libssl3 && \
-  apt-get --assume-yes install libuuid1 && \
-  apt-get --assume-yes install lsb-base && \
-  apt-get --assume-yes install zlib1g && \
-  apt-get --assume-yes install libpq5 && \
-  apt-get --assume-yes install libmariadb3 && \
-  apt-get --assume-yes install unixodbc && \
-  apt-get --assume-yes install libopenslide0 && \
-  apt-get --assume-yes install libcrypto++ && \
-  apt-get --assume-yes install libcpprest && \
-  apt-get --assume-yes install libprotobuf32 && \
+  apt-get --assume-yes install --no-install-recommends python3 && \
+  apt-get --assume-yes install --no-install-recommends python3-pip && \
+  apt-get --assume-yes install --no-install-recommends ca-certificates && \
+  apt-get --assume-yes install --no-install-recommends tzdata && \
+  apt-get --assume-yes install --no-install-recommends locales && \
+  apt-get --assume-yes install --no-install-recommends libcurl4 && \
+  apt-get --assume-yes install --no-install-recommends libdcmtk17 && \
+  apt-get --assume-yes install --no-install-recommends libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
+  apt-get --assume-yes install --no-install-recommends libjpeg62-turbo && \
+  apt-get --assume-yes install --no-install-recommends libjsoncpp25 && \
+  apt-get --assume-yes install --no-install-recommends liblua5.4 && \
+  apt-get --assume-yes install --no-install-recommends libpng16-16 && \
+  apt-get --assume-yes install --no-install-recommends libpugixml1v5 && \
+  apt-get --assume-yes install --no-install-recommends libsqlite3-0 && \
+  apt-get --assume-yes install --no-install-recommends libssl3 && \
+  apt-get --assume-yes install --no-install-recommends libuuid1 && \
+  apt-get --assume-yes install --no-install-recommends lsb-base && \
+  apt-get --assume-yes install --no-install-recommends zlib1g && \
+  apt-get --assume-yes install --no-install-recommends libpq5 && \
+  apt-get --assume-yes install --no-install-recommends libmariadb3 && \
+  apt-get --assume-yes install --no-install-recommends unixodbc && \
+  apt-get --assume-yes install --no-install-recommends libopenslide0 && \
+  apt-get --assume-yes install --no-install-recommends libcrypto++ && \
+  apt-get --assume-yes install --no-install-recommends libcpprest && \
+  apt-get --assume-yes install --no-install-recommends libprotobuf32 && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
 
