@@ -22,7 +22,10 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+
 - upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
+- DOCKER: upgraded StoneWebViewer to 2.6+e90ddb89c3ae
+- DOCKER upgraded Kitware VolView plugin to [1.2+ 4c850b84e90f](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
 
 
 25.2.0
