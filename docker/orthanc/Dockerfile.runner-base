@@ -18,7 +18,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends tzdata && \
   apt-get --assume-yes install --no-install-recommends locales && \
   apt-get --assume-yes install --no-install-recommends libcurl4 && \
-  apt-get --assume-yes install --no-install-recommends libdcmtk17 && \
   apt-get --assume-yes install --no-install-recommends libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
   apt-get --assume-yes install --no-install-recommends libjpeg62-turbo && \
   apt-get --assume-yes install --no-install-recommends libjsoncpp25 && \
@@ -29,7 +28,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends libssl3 && \
   apt-get --assume-yes install --no-install-recommends libuuid1 && \
   apt-get --assume-yes install --no-install-recommends lsb-base && \
-  apt-get --assume-yes install --no-install-recommends zlib1g && \
   apt-get --assume-yes install --no-install-recommends libpq5 && \
   apt-get --assume-yes install --no-install-recommends libmariadb3 && \
   apt-get --assume-yes install --no-install-recommends unixodbc && \
@@ -37,8 +35,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends libcrypto++ && \
   apt-get --assume-yes install --no-install-recommends libcpprest && \
   apt-get --assume-yes install --no-install-recommends libprotobuf32 && \
+  apt-get --assume-yes install --no-install-recommends pkg-config && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
+
+# disabled packages because of CVEs -> we use the static libraries instead
+# apt-get --assume-yes install --no-install-recommends libdcmtk17 && \
+# apt-get --assume-yes install --no-install-recommends zlib1g && \
 
 # Make sure the en_US locale has been generated (required for
 # case-insensitive comparison of strings with accents)
