@@ -255,6 +255,7 @@ docker $build \
     $to_cache_arg_builder_base \
     $push_load_arg_builder_image \
     --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
+    --build-arg PLATFORM=$platform \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
 if [[ $image == "full" ]]; then
