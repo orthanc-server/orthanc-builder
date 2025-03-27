@@ -5,40 +5,40 @@ FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG}
 
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get --assume-yes update
-RUN apt-get --assume-yes install wget
-RUN apt-get --assume-yes install build-essential
-RUN apt-get --assume-yes install unzip
-RUN apt-get --assume-yes install uuid-dev
-RUN apt-get --assume-yes install apt-utils
-RUN apt-get --assume-yes install libcurl4-openssl-dev
-RUN apt-get --assume-yes install curl
-RUN apt-get --assume-yes install apt-transport-https
-RUN apt-get --assume-yes install liblua5.4-dev
-RUN apt-get --assume-yes install libgtest-dev
-RUN apt-get --assume-yes install libpng-dev
-RUN apt-get --assume-yes install libsqlite3-dev
-RUN apt-get --assume-yes install libjpeg-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
+RUN apt-get --assume-yes --no-install-recommends install wget
+RUN apt-get --assume-yes --no-install-recommends install build-essential
+RUN apt-get --assume-yes --no-install-recommends install unzip zip
+# RUN apt-get --assume-yes --no-install-recommends install uuid-dev
+RUN apt-get --assume-yes --no-install-recommends install apt-utils
+# RUN apt-get --assume-yes --no-install-recommends install libcurl4-openssl-dev
+RUN apt-get --assume-yes --no-install-recommends install curl
+RUN apt-get --assume-yes --no-install-recommends install apt-transport-https
+# RUN apt-get --assume-yes --no-install-recommends install liblua5.4-dev
+# RUN apt-get --assume-yes --no-install-recommends install libgtest-dev
+# RUN apt-get --assume-yes --no-install-recommends install libpng-dev
+# RUN apt-get --assume-yes --no-install-recommends install libsqlite3-dev
+# RUN apt-get --assume-yes --no-install-recommends install libjpeg-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
 # disabled packages because of CVEs -> we use the static libraries instead
 # zlib1g-dev libdcmtk-dev
-RUN apt-get --assume-yes install git
-RUN apt-get --assume-yes install mercurial
-RUN apt-get --assume-yes install zip
-RUN apt-get --assume-yes install libpq-dev postgresql-server-dev-all
-RUN apt-get --assume-yes install python3-dev
-RUN apt-get --assume-yes install unixodbc-dev
-RUN apt-get --assume-yes install libgmock-dev
-RUN apt-get --assume-yes install protobuf-compiler
+RUN apt-get --assume-yes --no-install-recommends install git
+RUN apt-get --assume-yes --no-install-recommends install mercurial
+# RUN apt-get --assume-yes --no-install-recommends install libpq-dev postgresql-server-dev-all
+# RUN apt-get --assume-yes --no-install-recommends install python3-dev
+# RUN apt-get --assume-yes --no-install-recommends install unixodbc-dev
+# RUN apt-get --assume-yes --no-install-recommends install libgmock-dev
+RUN apt-get --assume-yes --no-install-recommends install protobuf-compiler
+# RUN apt-get --assume-yes --no-install-recommends install libprotobuf-dev
 # on recent Debian, the libmysql-dev package is not available anymore
 # and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
-RUN apt-get --assume-yes install default-libmysqlclient-dev
+# RUN apt-get --assume-yes --no-install-recommends install default-libmysqlclient-dev
 # RUN apt-get --assume-yes install libmariadb-dev
 
-RUN apt-get --assume-yes install cmake
-RUN apt-get --assume-yes install awscli
+RUN apt-get --assume-yes --no-install-recommends install cmake
+RUN apt-get --assume-yes --no-install-recommends install awscli
 # for orthanc-stl plugin:
-RUN apt-get --assume-yes install libgl1-mesa-dev libxt-dev
+# RUN apt-get --assume-yes --no-install-recommends install libgl1-mesa-dev libxt-dev
 
-RUN apt-get --assume-yes install default-jdk
+RUN apt-get --assume-yes --no-install-recommends install default-jdk
 
 # # install a recent cmake version (required later by recent vcpkg versions that we don't use now !)
 # WORKDIR /tmp
