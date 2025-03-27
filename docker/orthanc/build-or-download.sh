@@ -327,7 +327,7 @@ elif [[ $target == "orthanc-stl" ]]; then
         unzip dist.zip
 
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_VTK=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DUSE_SYSTEM_VTK=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancSTL.so
