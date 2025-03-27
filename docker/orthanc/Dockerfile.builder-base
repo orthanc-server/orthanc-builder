@@ -39,6 +39,8 @@ RUN apt-get --assume-yes --no-install-recommends install awscli
 # RUN apt-get --assume-yes --no-install-recommends install libgl1-mesa-dev libxt-dev
 
 RUN apt-get --assume-yes --no-install-recommends install default-jdk
+RUN apt-get --assume-yes install --no-install-recommends pkg-config
+
 
 # # install a recent cmake version (required later by recent vcpkg versions that we don't use now !)
 # WORKDIR /tmp
