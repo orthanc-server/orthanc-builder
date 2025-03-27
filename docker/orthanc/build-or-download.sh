@@ -424,6 +424,9 @@ elif [[ $target == "orthanc-volview" ]]; then
     if [[ $dl != 0 ]]; then
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
         source /root/.bashrc
+        export NVM_DIR="/root/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
         nvm install v19.7.0
 
         pushd $sourcesRootPath
@@ -497,6 +500,9 @@ elif [[ $target == "orthanc-ohif" ]]; then
 
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
         source /root/.bashrc
+        export NVM_DIR="/root/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
         nvm install v20.3.0
         npm install --global yarn
 
