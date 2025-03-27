@@ -59,8 +59,8 @@ STL plugin                            1.2
 
 System components                     version
 ---------------------------------------------
-Base image Debian version             12 (bookworm)
-Python                                3.11
+Base image Ubuntu version             24.04 (noble)
+Python                                3.12
 Lua                                   5.4
 
 ```

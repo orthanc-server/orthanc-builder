@@ -3,8 +3,8 @@
 # base image to build and execute orthanc.  
 # This image should contain only the packages that are common to both !
 # The purpose of this intermediate image is to benefit from Docker cache.
-ARG BASE_DEBIAN_IMAGE=unknown
-FROM debian:$BASE_DEBIAN_IMAGE
+ARG BASE_UBUNTU_IMAGE=unknown
+FROM ubuntu:$BASE_UBUNTU_IMAGE
 
 # we had some issues with one of the mirror -> force it to the Belgian mirror
 # RUN rm /etc/apt/sources.list.d/debian.sources
@@ -18,8 +18,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends tzdata && \
   apt-get --assume-yes install --no-install-recommends locales && \
   apt-get --assume-yes install --no-install-recommends libcurl4 && \
-  apt-get --assume-yes install --no-install-recommends libboost-log1.74.0 libboost-filesystem1.74.0 libboost-locale1.74.0 libboost-regex1.74.0 libboost-system1.74.0 libboost-thread1.74.0 libboost-iostreams1.74.0 && \
-  apt-get --assume-yes install --no-install-recommends libjpeg62-turbo && \
+  apt-get --assume-yes install --no-install-recommends libboost-log1.83.0 libboost-filesystem1.83.0 libboost-locale1.83.0 libboost-regex1.83.0 libboost-system1.83.0 libboost-thread1.83.0 libboost-iostreams1.83.0 && \
+  apt-get --assume-yes install --no-install-recommends libjpeg62 && \
   apt-get --assume-yes install --no-install-recommends libjsoncpp25 && \
   apt-get --assume-yes install --no-install-recommends liblua5.4 && \
   apt-get --assume-yes install --no-install-recommends libpng16-16 && \
@@ -36,12 +36,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends libcpprest && \
   apt-get --assume-yes install --no-install-recommends libprotobuf32 && \
   apt-get --assume-yes install --no-install-recommends pkg-config && \
+  apt-get --assume-yes install --no-install-recommends zlib1g && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
 
 # disabled packages because of CVEs -> we use the static libraries instead
 # apt-get --assume-yes install --no-install-recommends libdcmtk17 && \
-# apt-get --assume-yes install --no-install-recommends zlib1g && \
 
 # Make sure the en_US locale has been generated (required for
 # case-insensitive comparison of strings with accents)
