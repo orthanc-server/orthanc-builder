@@ -23,7 +23,7 @@ RUN apt-get --assume-yes --no-install-recommends install apt-transport-https
 RUN apt-get --assume-yes --no-install-recommends install git
 RUN apt-get --assume-yes --no-install-recommends install mercurial
 # RUN apt-get --assume-yes --no-install-recommends install libpq-dev postgresql-server-dev-all
-# RUN apt-get --assume-yes --no-install-recommends install python3-dev
+RUN apt-get --assume-yes --no-install-recommends install python3-dev
 # RUN apt-get --assume-yes --no-install-recommends install unixodbc-dev
 # RUN apt-get --assume-yes --no-install-recommends install libgmock-dev
 RUN apt-get --assume-yes --no-install-recommends install protobuf-compiler
