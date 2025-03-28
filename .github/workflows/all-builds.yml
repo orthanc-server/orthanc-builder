@@ -18,6 +18,7 @@ jobs:
     uses: ./.github/workflows/pre-build.yml
 
   build-stone-wasm-stable:
+    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}  
     needs: [pre-build]
     uses: ./.github/workflows/build-stone-wasm.yml
     with:
@@ -29,6 +30,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   build-stone-wasm-unstable:
+    if: ${{ needs.pre-build.outputs.is_tag == 'false' }}  
     needs: [pre-build]
     uses: ./.github/workflows/build-stone-wasm.yml
     with:
@@ -40,6 +42,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   build-volview-dist-stable:
+    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}  
     needs: [pre-build]
     uses: ./.github/workflows/build-volview-dist.yml
     with:
@@ -51,6 +54,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   build-volview-dist-unstable:
+    if: ${{ needs.pre-build.outputs.is_tag == 'false' }}  
     needs: [pre-build]
     uses: ./.github/workflows/build-volview-dist.yml
     with:
@@ -62,7 +66,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   win-stable-build:
-    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag }}
+    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}
     needs: [pre-build, build-stone-wasm-stable]
     uses: ./.github/workflows/build-win-binaries.yml
     with:
@@ -74,7 +78,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   win-unstable-build:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ needs.pre-build.outputs.is_tag == 'false' }} 
     needs: [pre-build, build-stone-wasm-unstable]
     uses: ./.github/workflows/build-win-binaries.yml
     with:
@@ -86,7 +90,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-stable-build:
-    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag }}
+    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}
     needs: [pre-build, build-stone-wasm-stable, build-volview-dist-stable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
@@ -98,7 +102,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-unstable-build:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ needs.pre-build.outputs.is_tag == 'false' }} 
     needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
@@ -111,7 +115,7 @@ jobs:
 
 
   macos-stable-package:
-    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag }}
+    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}
     needs: [pre-build, macos-stable-build]
     uses: ./.github/workflows/build-macos-package.yml
     with:
@@ -123,7 +127,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   macos-unstable-package:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ needs.pre-build.outputs.is_tag == 'false' }} 
     needs: [pre-build, macos-unstable-build]
     uses: ./.github/workflows/build-macos-package.yml
     with:
@@ -136,7 +140,7 @@ jobs:
 
 
   build-windows-installer:
-    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag }}
+    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}
     needs: [pre-build, win-stable-build] #, TODO: build win binaries as well build-win-binaries-unstable]
     uses: ./.github/workflows/build-windows-installer.yml
     with:

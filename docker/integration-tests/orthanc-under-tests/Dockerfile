@@ -1,5 +1,5 @@
-ARG IMAGE_TAG=latest
-FROM orthancteam/orthanc:$IMAGE_TAG
+ARG IMAGE_UNDER_TEST=orthancteam/orthanc:latest
+FROM $IMAGE_UNDER_TEST
 
 # install gdcm and dcmtk that are used in a Lua scripts
 RUN apt-get --assume-yes update

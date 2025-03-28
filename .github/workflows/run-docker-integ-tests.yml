@@ -1,0 +1,54 @@
+on:
+  workflow_call:
+    inputs:
+      is_tag:
+        description: 'Is a Git Tag'
+        type: string
+        required: true
+      current_branch_tag:
+        description: 'Git branch or Tag'
+        type: string
+        required: true
+      runner:
+        description: 'Runner'
+        type: string
+        required: true
+      runner_type:
+        description: 'Runner type'
+        type: string
+        required: true
+      platform:
+        description: 'platform'
+        type: string
+        required: true
+      stable_unstable:
+        description: 'stable_unstable type'
+        type: string
+        required: true
+      tests_group:
+        description: 'tests group pg, others, full'
+        type: string
+        required: true
+      image_type:
+        description: 'image type: full, normal'
+        type: string
+        required: true
+
+jobs:
+  run-integ-tests:
+    name: run-integ-tests-${{ inputs.tests_group }}-${{ inputs.stable_unstable}}
+    runs-on: ${{ inputs.runner }}
+    steps:
+    - name: Install Integration tests prerequisites
+      run: sudo apt-get install -y dcmtk
+
+    - uses: actions/checkout@v3
+
+    - name: Pull image for integ tests
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=pull-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
+
+    - name: Run normal image integration tests
+      # TODO: enable on ARM64 too
+      if: inputs.runner_type == 'github-hosted'
+      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=${{ inputs.image_type }} imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=${{ inputs.tests_group }}
+      working-directory: ${{github.workspace}}/docker/integration-tests

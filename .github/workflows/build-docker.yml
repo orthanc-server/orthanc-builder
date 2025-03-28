@@ -39,8 +39,9 @@ on:
 
 
 jobs:
-  build-docker:
-    name: build-docker-${{ inputs.platform }} ${{ inputs.stable_unstable}}
+
+  build-docker-normal-image:
+    name: build-docker-normal-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
@@ -73,30 +74,30 @@ jobs:
     #   timeout-minutes: 30
 
 
-    - name: Maximize build space (2)
-      # to list folder sizes:
-      # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
-      if: inputs.runner_type == 'github-hosted'
-      run: |
-        df -h
-        rm -rf /opt/microsoft && rm -rf /opt/google && rm -rf /opt/az
-        rm -rf /usr/share/swift && rm -rf /usr/share/miniconda && rm -rf /usr/share/az_* && rm -rf /usr/share/gradle-* && rm -rf /usr/share/sbt
-        sudo rm -rf /etc/skel
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /usr/local/lib/android
-        sudo rm -rf /usr/local/julia*
-        sudo rm -rf /usr/local/share/powershell
-        sudo rm -rf /usr/local/share/chromium
-        sudo rm -rf /usr/local/share/vcpkg
-        sudo rm -rf /usr/local/aws-sam-cli
-        sudo rm -rf /usr/local/n
-        sudo rm -rf /home/linuxbrew
-        sudo rm -rf /opt/ghc
-        sudo rm -rf /opt/pipx
-        sudo rm -rf /opt/hostedtoolcache/CodeQL
-        sudo rm -rf /opt/hostedtoolcache/Python
-        sudo docker image prune --all --force
-        df -h
+    # - name: Maximize build space (2)
+    #   # to list folder sizes:
+    #   # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
+    #   if: inputs.runner_type == 'github-hosted'
+    #   run: |
+    #     df -h
+    #     rm -rf /opt/microsoft && rm -rf /opt/google && rm -rf /opt/az
+    #     rm -rf /usr/share/swift && rm -rf /usr/share/miniconda && rm -rf /usr/share/az_* && rm -rf /usr/share/gradle-* && rm -rf /usr/share/sbt
+    #     sudo rm -rf /etc/skel
+    #     sudo rm -rf /usr/share/dotnet
+    #     sudo rm -rf /usr/local/lib/android
+    #     sudo rm -rf /usr/local/julia*
+    #     sudo rm -rf /usr/local/share/powershell
+    #     sudo rm -rf /usr/local/share/chromium
+    #     sudo rm -rf /usr/local/share/vcpkg
+    #     sudo rm -rf /usr/local/aws-sam-cli
+    #     sudo rm -rf /usr/local/n
+    #     sudo rm -rf /home/linuxbrew
+    #     sudo rm -rf /opt/ghc
+    #     sudo rm -rf /opt/pipx
+    #     sudo rm -rf /opt/hostedtoolcache/CodeQL
+    #     sudo rm -rf /opt/hostedtoolcache/Python
+    #     sudo docker image prune --all --force
+    #     df -h
 
 
     - uses: actions/checkout@v3
@@ -126,22 +127,92 @@ jobs:
     - name: Build normal image with local-build.sh
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
 
-    - name: Install Integration tests prerequisites
-      run: sudo apt-get install -y dcmtk
+    - name: Push test pre-release image with branch/tag
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
-    - name: Run normal image integration tests
-      # TODO: enable on ARM64 too
+
+  run-docker-integ-tests:
+
+    if: inputs.runner_type == 'github-hosted'
+    needs: [build-docker-normal-image]
+    uses: ./.github/workflows/run-docker-integ-tests.yml
+    with:
+      runner: ${{ matrix.config.runner }}
+      runner_type: ${{ matrix.config.runnerType }}
+      platform: ${{ matrix.config.platform }}
+      stable_unstable: ${{ matrix.config.stableUnstable }}
+      current_branch_tag: ${{ inputs.current_branch_tag }}
+      is_tag: ${{ inputs.is_tag }}
+      tests_group: ${{ matrix.config.testsGroup}}
+      image_type: ${{ matrix.config.imageType}}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "linux/amd64-pg",
+            platform: "linux/amd64",
+            stableUnstable: "${{ inputs.stable_unstable }}",
+            runner: "ubuntu-latest",
+            runnerType: "github-hosted",
+            testsGroup: "tests-group-db",
+            imageType: "normal"
+          }
+        - {
+            name: "linux/amd64-others",
+            platform: "linux/amd64",
+            stableUnstable: "${{ inputs.stable_unstable }}",
+            runner: "ubuntu-latest",
+            runnerType: "github-hosted",
+            testsGroup: "tests-group-others",
+            imageType: "normal"
+          }
+
+
+    # - name: Install Integration tests prerequisites
+    #   run: sudo apt-get install -y dcmtk
+
+    # - name: Run normal image integration tests
+    #   # TODO: enable on ARM64 too
+    #   if: inputs.runner_type == 'github-hosted'
+    #   run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
+    #   working-directory: ${{github.workspace}}/docker/integration-tests
+
+
+  build-docker-full-image:
+    name: build-docker-full-${{ inputs.platform }} ${{ inputs.stable_unstable}}
+    runs-on: ${{ inputs.runner }}
+    needs: [build-docker-normal-image]
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
       if: inputs.runner_type == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
-      working-directory: ${{github.workspace}}/docker/integration-tests
+      uses: docker/setup-buildx-action@v2
+      with:
+        config: .github/buildkitd.toml
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
 
     - name: Build full image with local-build.sh
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
 
+    - name: Push test pre-release image with branch/tag
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+
     - name: Run full image integration tests
       # TODO: enable on ARM64 too
       if: inputs.runner_type == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=full tagToTest=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=full imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} testsGroup=tests-group-full
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     # - name: Setup tmate session
@@ -150,23 +221,42 @@ jobs:
     #     limit-access-to-actor: true
     #     timeout-minutes: 30
 
+  publish-images:
+    runs-on: ${{ inputs.runner }}
+    needs: [build-docker-normal-image, run-docker-integ-tests, build-docker-full-image]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      if: inputs.runner_type == 'github-hosted'
+      uses: docker/setup-buildx-action@v2
+      with:
+        config: .github/buildkitd.toml
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_token }}
+
     - name: Push normal image with branch/tag
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=pull-tag-push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
     - name: Push full image with branch/tag
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=pull-tag-push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
 
     - name: Push normal image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=latest isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=pull-tag-push currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=latest isTag=${{ inputs.is_tag }}
 
     - name: Push full image with latest tag
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=pull-tag-push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
 
-    - name: Setup tmate session
-      if: ${{ failure() && inputs.runner_type == 'github-hosted' }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-        timeout-minutes: 20
+    # - name: Setup tmate session
+    #   if: ${{ failure() && inputs.runner_type == 'github-hosted' }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   with:
+    #     limit-access-to-actor: true
+    #     timeout-minutes: 20
