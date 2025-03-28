@@ -266,7 +266,7 @@ add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 docker $build \
     $add_host_cmd \
     --progress=plain --platform=$platform -t orthancteam/orthanc-runner-base:$BASE_BUILDER_IMAGE_TAG \
-    --build-arg BASE_UBUNTU_IMAGE =$BASE_UBUNTU_IMAGE  \
+    --build-arg BASE_UBUNTU_IMAGE=$BASE_UBUNTU_IMAGE  \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
     $push_load_arg_builder_image \
