@@ -20,8 +20,6 @@ RUN apt-get --assume-yes install libgtest-dev
 RUN apt-get --assume-yes install libpng-dev
 RUN apt-get --assume-yes install libsqlite3-dev
 RUN apt-get --assume-yes install libjpeg-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
-# disabled packages because of CVEs -> we use the static libraries instead
-# zlib1g-dev libdcmtk-dev
 RUN apt-get --assume-yes install git
 RUN apt-get --assume-yes install mercurial
 RUN apt-get --assume-yes install zip
@@ -34,6 +32,8 @@ RUN apt-get --assume-yes install protobuf-compiler
 # and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
 # RUN apt-get --assume-yes install default-libmysqlclient-dev
 RUN apt-get --assume-yes install libmariadb-dev
+RUN apt-get --assume-yes install zlib1g-dev
+
 
 RUN apt-get --assume-yes install cmake
 # RUN apt-get --assume-yes install awscli
