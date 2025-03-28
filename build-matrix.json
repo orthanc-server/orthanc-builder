@@ -765,7 +765,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-object-storage/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_GOOGLE_OBJECT_STORAGE",
-            "stable": "2.3.1",
+            "stable": "2.5.1",
             "unstable": "default",
             "buildForMacOS": false,
             "windows": [{

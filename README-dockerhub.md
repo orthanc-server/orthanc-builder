@@ -70,6 +70,6 @@ Lua                                   5.4
 additional component                  version
 ---------------------------------------------
 Azure Blob Storage plugin             2.3.1
-Google Cloud Storage plugin           2.3.1
+Google Cloud Storage plugin           2.5.1
 Java plugin                           1.0
 ````
