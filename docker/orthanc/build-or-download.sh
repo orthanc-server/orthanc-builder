@@ -137,7 +137,7 @@ elif [[ $target == "orthanc-authorization" ]]; then
 
     dl=$(( $dl + $(download libOrthancAuthorization.so) ))
 
-    # if [[ $dl != 0 ]]; then
+    if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-authorization/ -r $commitId $sourcesRootPath
 
@@ -149,7 +149,7 @@ elif [[ $target == "orthanc-authorization" ]]; then
         $buildRootPath/UnitTests
 
         upload libOrthancAuthorization.so
-    # fi
+    fi
 
 elif [[ $target == "orthanc-python" ]]; then
 
@@ -397,7 +397,7 @@ elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
 elif [[ $target == "orthanc-volview-from-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancVolView.zo) ))
+    dl=$(( $dl + $(download libOrthancVolView.so) ))
 
     if [[ $dl != 0 ]]; then
         # build only the C++ code, not the dist.zip that has been downloaded before
@@ -472,7 +472,7 @@ elif [[ $target == "download-orthanc-ohif-dist" ]]; then
 
 elif [[ $target == "orthanc-ohif-from-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancOHIF.zo) ))
+    dl=$(( $dl + $(download libOrthancOHIF.so) ))
 
     if [[ $dl != 0 ]]; then
         # build only the C++ code, not the dist.zip that has been downloaded before
