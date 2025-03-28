@@ -33,6 +33,7 @@
   As a consequence, `python3-pip` might not be able to compile C code when installing some python packages.
 - Docker: upgraded Google cloud object-storage plugin to [2.5.1](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 
+
 25.2.0
 ------
 

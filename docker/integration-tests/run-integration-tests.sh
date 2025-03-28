@@ -181,8 +181,8 @@ if [[ $image == "normal" ]]; then
 
     # TODO: re-enable
     # dlopen(/usr/share/orthanc/plugins/libOrthancMySQLIndex.so) failed: Error libmysqlclient.so.21: cannot open shared object file: No such file or directory
-    # COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
-    # COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
+    COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
     COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
