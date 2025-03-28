@@ -29,7 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends libuuid1 && \
   apt-get --assume-yes install --no-install-recommends lsb-base && \
   apt-get --assume-yes install --no-install-recommends libpq5 && \
-  apt-get --assume-yes install --no-install-recommends libmariadb3 && \
+  apt-get --assume-yes install --no-install-recommends libmysqlclient21 && \
   apt-get --assume-yes install --no-install-recommends unixodbc && \
   apt-get --assume-yes install --no-install-recommends libopenslide0 && \
   apt-get --assume-yes install --no-install-recommends libcrypto++ && \
