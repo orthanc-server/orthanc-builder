@@ -133,7 +133,6 @@ jobs:
 
   run-docker-integ-tests:
 
-    if: inputs.runner_type == 'github-hosted'
     needs: [build-docker-normal-image]
     uses: ./.github/workflows/run-docker-integ-tests.yml
     with:
@@ -222,6 +221,7 @@ jobs:
     #     timeout-minutes: 30
 
   publish-images:
+    name: publish-images-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.runner }}
     needs: [build-docker-normal-image, run-docker-integ-tests, build-docker-full-image]
 
