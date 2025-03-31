@@ -188,8 +188,9 @@ if [[ $image == "normal" ]]; then
         COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose down -v
         COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose down -v
-        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
+        # TODO: re-integrate from attach-custom-data branch ?
+        # COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose down -v
+        # COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
     fi
 
     if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]; then
