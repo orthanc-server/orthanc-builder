@@ -25,6 +25,7 @@
 - TODO: re-enable mysql tests
 
 - upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.8.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: ugraded base image to `ubuntu:noble-20250127` which means that:
   - python has been upgraded to 3.12
 - DOCKER: upgraded StoneWebViewer to 2.6+e90ddb89c3ae
