@@ -22,8 +22,6 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-- TODO: re-enable mysql tests
-
 - upgraded Orthanc Explorer 2 plugin to [1.8.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
 - upgraded advanced authorization plugin to [0.9.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
