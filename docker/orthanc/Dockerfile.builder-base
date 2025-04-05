@@ -17,9 +17,7 @@ RUN apt-get --assume-yes install liblua5.4-dev
 RUN apt-get --assume-yes install libgtest-dev
 RUN apt-get --assume-yes install libpng-dev
 RUN apt-get --assume-yes install libsqlite3-dev
-RUN apt-get --assume-yes install libjpeg-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
-# disabled packages because of CVEs -> we use the static libraries instead
-# zlib1g-dev libdcmtk-dev
+RUN apt-get --assume-yes install libjpeg-dev zlib1g-dev libdcmtk-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
 RUN apt-get --assume-yes install git
 RUN apt-get --assume-yes install mercurial
 RUN apt-get --assume-yes install zip

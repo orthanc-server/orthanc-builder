@@ -27,9 +27,6 @@
 - DOCKER: upgraded StoneWebViewer to 2.6+e90ddb89c3ae
 - DOCKER: upgraded Kitware VolView plugin to [1.2+ 4c850b84e90f](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
 - DOCKER: upgraded base image to `debian:bookworm-20250317-slim`
-- DOCKER: reduced the number of installed Debian packages by using `--no-install-recommends` during installation.
-  As a consequence, `python3-pip` might not be able to compile C code when installing some python packages.
-- DOCKER: now linking statically with zlib to avoid a CVE
 
 
 25.2.0
