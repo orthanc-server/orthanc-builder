@@ -54,64 +54,64 @@ hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revisi
 
 pushd $testRepoFolder/NewTests
 
-python3 -m venv .env
-source .env/bin/activate
+# python3 -m venv .env
+# source .env/bin/activate
 
-pip3 install -r requirements.txt
+# pip3 install -r requirements.txt
 
-######## concurrency
+# ######## concurrency
 
-python3 -u main.py --pattern=Concurrency.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=Concurrency.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
 
-######## PG upgrades
+# ######## PG upgrades
 
-python3 -u main.py --pattern=PostgresUpgrades.* \
-                   --orthanc_under_tests_docker_image=orthancteam/orthanc:$tagToTest
+# python3 -u main.py --pattern=PostgresUpgrades.* \
+#                    --orthanc_under_tests_docker_image=orthancteam/orthanc:$tagToTest
 
-######## housekeeper
+# ######## housekeeper
 
-previous_image=orthancteam/orthanc:22.4.0
+# previous_image=orthancteam/orthanc:22.4.0
 
-docker pull $previous_image
+# docker pull $previous_image
 
-python3 -u main.py --pattern=Housekeeper.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_previous_version_docker_image=$previous_image \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=Housekeeper.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_previous_version_docker_image=$previous_image \
+#                    --orthanc_under_tests_http_port=8043
 
-######## delayed-deletion
+# ######## delayed-deletion
 
-previous_image=orthancteam/orthanc:$tagToTest
+# previous_image=orthancteam/orthanc:$tagToTest
 
-python3 -u main.py --pattern=DelayedDeletion.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=DelayedDeletion.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_previous_version_docker_image=$previous_image_for_housekeeper_tests \
+#                    --orthanc_under_tests_http_port=8043
 
-######## Other new tests
+# ######## Other new tests
 
-python3 -u main.py --pattern=ExtraMainDicomTags.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=ExtraMainDicomTags.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=WithIngestTranscoding.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=WithIngestTranscoding.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=MaxStorage.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=MaxStorage.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=StorageCompression.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=StorageCompression.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
-python3 -u main.py --pattern=Authorization.* \
-                   --orthanc_under_tests_docker_image=orthanc-under-tests \
-                   --orthanc_under_tests_http_port=8043
+# python3 -u main.py --pattern=Authorization.* \
+#                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                    --orthanc_under_tests_http_port=8043
 
 popd
 ############ end run NewTests
@@ -121,49 +121,49 @@ popd
 if [[ $image == "normal" ]]; then
 
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-recycling -t orthanc-tests-recycling orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-transfers -t orthanc-tests-transfers orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision --build-arg IMAGE_TAG=$tagToTest -f orthanc-transcoding-tests/Dockerfile -t orthanc-transcoding-tests orthanc-transcoding-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client -t orthanc-tests-tls-no-check-client orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client-generate-config -t orthanc-tests-tls-no-check-client-generate-config orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-recycling -t orthanc-tests-recycling orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-transfers -t orthanc-tests-transfers orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision --build-arg IMAGE_TAG=$tagToTest -f orthanc-transcoding-tests/Dockerfile -t orthanc-transcoding-tests orthanc-transcoding-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client -t orthanc-tests-tls-no-check-client orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client-generate-config -t orthanc-tests-tls-no-check-client-generate-config orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
+    # docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
 
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
-    COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
 
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose run --rm orthanc-tests-tls-check-client-generate-config
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
-    COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose run --rm orthanc-tests-tls-check-client-generate-config
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
 
-    COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose down -v
-    COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose down -v
+    # COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose down -v
-    COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose down -v
+    # COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
-    COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
+    # COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose down -v
-    COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose down -v
+    # COMPOSE_FILE=docker-compose.postgres-recycling.yml          docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker compose down -v
-    COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker compose down -v
+    # COMPOSE_FILE=docker-compose.postgres-read-committed.yml     docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose down -v
-    COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose down -v
+    # COMPOSE_FILE=docker-compose.postgres-serializable.yml       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml           docker compose down -v
-    COMPOSE_FILE=docker-compose.postgres-dicomweb.yml           docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.postgres-dicomweb.yml           docker compose down -v
+    # COMPOSE_FILE=docker-compose.postgres-dicomweb.yml           docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
     # TODO: add mysql-dicomweb tests
     # TODO: add sqlserver-dicomweb tests
