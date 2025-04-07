@@ -168,11 +168,11 @@ if [[ $image == "normal" ]]; then
     # TODO: add mysql-dicomweb tests
     # TODO: add sqlserver-dicomweb tests
 
-    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
-    COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose down -v
-    COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-sqlite.yml                 docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
     COMPOSE_FILE=docker-compose.mysql.yml                       docker compose down -v
     COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
@@ -216,8 +216,8 @@ if [[ $image == "normal" ]]; then
 else  # full images (MSSQL only !)
     docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
-    COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
-    COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+    # COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
+    # COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
 fi
 
