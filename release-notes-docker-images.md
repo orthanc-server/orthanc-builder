@@ -23,12 +23,13 @@
 
 
 
-- upgraded Orthanc Explorer 2 plugin to [1.8.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.8.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
 - upgraded advanced authorization plugin to [0.9.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - DOCKER: upgraded StoneWebViewer to 2.6+e90ddb89c3ae
 - DOCKER: upgraded Kitware VolView plugin to [1.2+ 4c850b84e90f](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
-- DOCKER: upgraded base image to `debian:bookworm-20250317-slim`
+- DOCKER: upgraded base image to `debian:bookworm-20250317-slim`.  Note: this is the last release using Debian Bookworm as the
+  base image.  Following releases will use Ubuntu based images to benefit from more frequent updates.
 
 
 25.2.0
