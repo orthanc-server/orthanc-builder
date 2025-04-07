@@ -22,16 +22,27 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-- upgraded Orthanc Explorer 2 plugin to [1.8.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
-- upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
-- upgraded advanced authorization plugin to [0.9.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+Pending changes
+---------------
+
 - DOCKER: ugraded base image to `ubuntu:noble-20250127` which means that:
   - python has been upgraded to 3.12
-- DOCKER: upgraded StoneWebViewer to 2.6+e90ddb89c3ae
-- DOCKER: upgraded Kitware VolView plugin to [1.2+4c850b84e90f](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
 - DOCKER: reduced the number of installed Debian packages by using `--no-install-recommends` during installation.
   As a consequence, `python3-pip` might not be able to compile C code when installing some python packages.
 - Docker: upgraded Google cloud object-storage plugin to [2.5.1](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+
+
+25.4.0
+------
+
+- upgraded Orthanc to [1.12.7](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.8.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
+- upgraded advanced authorization plugin to [0.9.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER: upgraded StoneWebViewer to 2.6+e90ddb89c3ae
+- DOCKER: upgraded Kitware VolView plugin to [1.2+ 4c850b84e90f](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
+- DOCKER: upgraded base image to `debian:bookworm-20250317-slim`.  Note: this is the last release using Debian Bookworm as the
+  base image.  Following releases will use Ubuntu based images to benefit from more frequent updates.
 
 
 25.2.0
