@@ -23,6 +23,9 @@
 
 
 
+25.4.0
+------
+
 - upgraded Orthanc to [1.12.7](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - upgraded Orthanc Explorer 2 plugin to [1.8.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded WSI plugin to [3.1](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.1/NEWS)
