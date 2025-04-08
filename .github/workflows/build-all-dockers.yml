@@ -59,6 +59,7 @@ jobs:
           }
 
   build-docker-unstable:
+    if: ${{ inputs.is_tag != 'true' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
       runner: ${{ matrix.config.runner }}
