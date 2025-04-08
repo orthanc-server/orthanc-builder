@@ -108,14 +108,14 @@ jobs:
         password: ${{ secrets.docker_hub_token }}
 
     - name: Publish Dockerhub manifest normal image
-      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-stable pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-normal-stable pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
     - name: Publish Dockerhub manifest full image
       run: ./local-build.sh version=stable image=full type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-full-stable pushTag=${{ inputs.current_branch_tag }}-full isTag=${{ inputs.is_tag }}
 
     - name: Publish Dockerhub manifest with latest tag for normal image
       if: inputs.is_tag == 'true'
-      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-stable pushTag=latest isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh version=stable image=normal type=ci step=publish-manifest currentTag=${{ inputs.current_branch_tag }}-normal-stable pushTag=latest isTag=${{ inputs.is_tag }}
 
     - name: Publish Dockerhub manifest with latest tag for full image
       if: inputs.is_tag == 'true'
