@@ -47,7 +47,8 @@ COPY wait-for-it.sh /scripts
 
 
 ##############################################################
-FROM python:3.11 AS python3-base-image
+# at some point, the easywebdav installation broke after an update of python:3.11 -> we use a snapshot
+FROM orthancteam/python-snapshots:3.11-for-integ-tests AS python3-base-image
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
