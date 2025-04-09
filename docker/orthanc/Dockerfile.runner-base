@@ -13,6 +13,7 @@ FROM ubuntu:$BASE_UBUNTU_IMAGE
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes update && \
   apt-get --assume-yes install --no-install-recommends python3 && \
+  apt-get --assume-yes install --no-install-recommends python3-dev && \
   apt-get --assume-yes install --no-install-recommends python3-pip && \
   apt-get --assume-yes install --no-install-recommends ca-certificates && \
   apt-get --assume-yes install --no-install-recommends tzdata && \
