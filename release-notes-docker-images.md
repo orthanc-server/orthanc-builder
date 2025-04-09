@@ -22,13 +22,19 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-- upgraded WSI plugin to [3.2](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/OrthancWSI-3.2/NEWS)
+25.4.2
+------
+
+- upgraded WSI plugin to [3.2](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/default/NEWS)
+- DOCKER: fix missing python .so files
+
 
 25.4.1
 ------
 
 - DOCKER: ugraded base image to `ubuntu:noble-20250127` which means that:
   - python has been upgraded to 3.12
+  - <span style="color: #B44">**NOTE: python plugins are not working in this version**</span> -> you should update to 25.4.2
 - DOCKER: reduced the number of installed Debian packages by using `--no-install-recommends` during installation.
   As a consequence, `python3-pip` might not be able to compile C code when installing some python packages.
 - Docker: upgraded Google cloud object-storage plugin to [2.5.1](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
