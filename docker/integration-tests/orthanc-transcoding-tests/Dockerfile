@@ -1,6 +1,6 @@
 ######################################
-ARG IMAGE_TAG=latest
-FROM orthancteam/orthanc:$IMAGE_TAG
+ARG IMAGE_UNDER_TEST=orthancteam/orthanc:latest
+FROM $IMAGE_UNDER_TEST
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk mercurial

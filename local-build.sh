@@ -61,6 +61,84 @@ echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
 echo "image            = $image"
 
+if [[ $step == "push-before-test-image" ]]; then
+
+    # tag previously built images and push
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+    docker push orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+
+    exit 0
+fi
+
+if [[ $step == "pull-before-test-image" ]]; then
+
+    docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+    exit 0
+fi
+
+if [[ $step == "pull-tag-push" ]]; then
+
+    docker pull orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform
+    docker tag orthancteam/orthanc-pre-release:$currentTag-before-tests-$shortPlatform orthancteam/orthanc-pre-release:$currentTag-$shortPlatform
+    docker push orthancteam/orthanc-pre-release:$currentTag-$shortPlatform
+
+    exit 0
+fi
+
+if [[ $step == "push" ]]; then
+
+    # push to orthancteam/orthanc-pre-release only.  The manifest will be pushed to orthancteam/orthanc
+    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
+        final_tag=$pushTag-$arch
+    else
+        # otherwise we push to orthancteam/orthanc-pre-release
+
+        if [[ $version == "unstable" ]]; then
+            final_tag=$pushTag-unstable-$arch
+        else
+            final_tag=$pushTag-$arch
+        fi
+    fi
+
+    # tag previously built images and push them
+    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
+    docker push orthancteam/orthanc-pre-release:$final_tag
+
+    exit 0
+else
+
+    final_tag=$currentTag
+
+fi
+
+if [[ $step == "publish-manifest" ]]; then
+
+    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
+    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
+        final_tag=$pushTag
+        final_image=orthancteam/orthanc
+    else
+        # otherwise we push to orthancteam/orthanc-pre-release
+
+        if [[ $version == "unstable" ]]; then
+            final_tag=$pushTag-unstable
+        else
+            final_tag=$pushTag
+        fi
+        final_image=orthancteam/orthanc-pre-release
+    fi
+
+    # this step merges the AMD64 and ARM64 images into a single manifest
+    docker manifest rm $final_image:$final_tag || true
+    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$currentTag-amd64 orthancteam/orthanc-pre-release:$currentTag-arm64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$currentTag-amd64 --os linux --arch amd64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$currentTag-arm64 --os linux --arch arm64
+    docker manifest push $final_image:$final_tag
+
+    exit 0
+fi
+
+
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
 
@@ -89,8 +167,8 @@ ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitC
 ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks $throttle)
 ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle)
 
-BASE_DEBIAN_IMAGE=bookworm-20250224-slim
-BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
+BASE_UBUNTU_IMAGE=noble-20250127
+BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
 buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
@@ -176,59 +254,6 @@ else
 fi
 
 
-if [[ $step == "push" ]]; then
-
-    # push to orthancteam/orthanc-pre-release only.  The manifest will be pushed to orthancteam/orthanc
-    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
-        final_tag=$pushTag-$arch
-    else
-        # otherwise we push to orthancteam/orthanc-pre-release
-
-        if [[ $version == "unstable" ]]; then
-            final_tag=$pushTag-unstable-$arch
-        else
-            final_tag=$pushTag-$arch
-        fi
-    fi
-
-    # tag previously built images and push them
-    docker tag orthancteam/orthanc:$currentTag orthancteam/orthanc-pre-release:$final_tag
-    docker push orthancteam/orthanc-pre-release:$final_tag
-
-    exit 0
-else
-
-    final_tag=$currentTag
-
-fi
-
-if [[ $step == "publish-manifest" ]]; then
-
-    # push to orthancteam/orthanc only if it is a tag and if it is the stable version !!!! to keep the DockerHub tags clean !
-    if [[ $isTag == "true" ]] && [[ $version == "stable" ]]; then
-        final_tag=$pushTag
-        final_image=orthancteam/orthanc
-    else
-        # otherwise we push to orthancteam/orthanc-pre-release
-
-        if [[ $version == "unstable" ]]; then
-            final_tag=$pushTag-unstable
-        else
-            final_tag=$pushTag
-        fi
-        final_image=orthancteam/orthanc-pre-release
-    fi
-
-    # this step merges the AMD64 and ARM64 images into a single manifest
-    docker manifest rm $final_image:$final_tag || true
-    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 orthancteam/orthanc-pre-release:$final_tag-arm64
-    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 --os linux --arch amd64
-    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
-    docker manifest push $final_image:$final_tag
-
-    exit 0
-fi
-
 # runner_base_tag=$final_image_temporary_tag
 # builder_base_tag=$final_image_temporary_tag
 # builder_vcpkg_tag="vcpkg-$final_image_temporary_tag"
@@ -241,7 +266,7 @@ add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 docker $build \
     $add_host_cmd \
     --progress=plain --platform=$platform -t orthancteam/orthanc-runner-base:$BASE_BUILDER_IMAGE_TAG \
-    --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_UBUNTU_IMAGE=$BASE_UBUNTU_IMAGE  \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
     $push_load_arg_builder_image \
@@ -255,6 +280,7 @@ docker $build \
     $to_cache_arg_builder_base \
     $push_load_arg_builder_image \
     --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
+    --build-arg PLATFORM=$platform \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
 if [[ $image == "full" ]]; then

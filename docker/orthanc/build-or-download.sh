@@ -117,9 +117,9 @@ if [[ $target == "orthanc" ]]; then
 
         pushd $buildRootPath
 
-        # note: building with static DCMTK while waiting for Debian bullseye to update to latest DCMTK issues (we need DCMTK 3.6.7: https://www.hipaajournal.com/warning-issued-about-3-high-severity-vulnerabilities-in-offis-dicom-software/)
+        # note: building with static DCMTK because base images are often one version late
         # also force latest OpenSSL (and therefore, we need to force static libcurl)
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF $sourcesRootPath/OrthancServer
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF $sourcesRootPath/OrthancServer        
         make -j 4
         $buildRootPath/UnitTests
 
@@ -137,7 +137,7 @@ elif [[ $target == "orthanc-authorization" ]]; then
 
     dl=$(( $dl + $(download libOrthancAuthorization.so) ))
 
-    # if [[ $dl != 0 ]]; then
+    if [[ $dl != 0 ]]; then
 
         hg clone https://orthanc.uclouvain.be/hg/orthanc-authorization/ -r $commitId $sourcesRootPath
 
@@ -149,7 +149,7 @@ elif [[ $target == "orthanc-authorization" ]]; then
         $buildRootPath/UnitTests
 
         upload libOrthancAuthorization.so
-    # fi
+    fi
 
 elif [[ $target == "orthanc-python" ]]; then
 
@@ -162,7 +162,7 @@ elif [[ $target == "orthanc-python" ]]; then
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.11 $sourcesRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.12 $sourcesRootPath
         make -j 4
 
         upload libOrthancPython.so
@@ -327,7 +327,8 @@ elif [[ $target == "orthanc-stl" ]]; then
         unzip dist.zip
 
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_VTK=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF $sourcesRootPath
+        # we build STL in static because it uses DCMTK and the DCMTK dynamic libraries are not installed (see in Orthanc section)
+        cmake -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
         make -j 4
 
         upload libOrthancSTL.so
@@ -396,7 +397,7 @@ elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
 elif [[ $target == "orthanc-volview-from-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancVolView.zo) ))
+    dl=$(( $dl + $(download libOrthancVolView.so) ))
 
     if [[ $dl != 0 ]]; then
         # build only the C++ code, not the dist.zip that has been downloaded before
@@ -424,12 +425,18 @@ elif [[ $target == "orthanc-volview" ]]; then
     if [[ $dl != 0 ]]; then
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
         source /root/.bashrc
+        export NVM_DIR="/root/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
         nvm install v19.7.0
 
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
 
-        volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep -oP 'VERSION=\K\d+\.\d+\.\d+')
+        patch_version_name_on_unstable "return ORTHANC_VOLVIEW_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
+        # extract the version number (remove all lines with comments and the line with VERSION=$1)
+        volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep 'VERSION=' | grep -v '#' | grep -v '\$' | cut -d'=' -f2)
 
         # CreateVolViewDist/build.sh needs to work with /target and /source
         wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
@@ -465,7 +472,7 @@ elif [[ $target == "download-orthanc-ohif-dist" ]]; then
 
 elif [[ $target == "orthanc-ohif-from-dist" ]]; then
 
-    dl=$(( $dl + $(download libOrthancOHIF.zo) ))
+    dl=$(( $dl + $(download libOrthancOHIF.so) ))
 
     if [[ $dl != 0 ]]; then
         # build only the C++ code, not the dist.zip that has been downloaded before
@@ -494,6 +501,9 @@ elif [[ $target == "orthanc-ohif" ]]; then
 
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
         source /root/.bashrc
+        export NVM_DIR="/root/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
         nvm install v20.3.0
         npm install --global yarn
 

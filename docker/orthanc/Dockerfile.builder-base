@@ -3,6 +3,8 @@
 ARG BASE_IMAGE_TAG=current
 FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG}
 
+ARG PLATFORM=linux/amd64
+
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get --assume-yes update
 RUN apt-get --assume-yes install wget
@@ -17,7 +19,7 @@ RUN apt-get --assume-yes install liblua5.4-dev
 RUN apt-get --assume-yes install libgtest-dev
 RUN apt-get --assume-yes install libpng-dev
 RUN apt-get --assume-yes install libsqlite3-dev
-RUN apt-get --assume-yes install libjpeg-dev zlib1g-dev libdcmtk-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
+RUN apt-get --assume-yes install libjpeg-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
 RUN apt-get --assume-yes install git
 RUN apt-get --assume-yes install mercurial
 RUN apt-get --assume-yes install zip
@@ -26,13 +28,18 @@ RUN apt-get --assume-yes install python3-dev
 RUN apt-get --assume-yes install unixodbc-dev
 RUN apt-get --assume-yes install libgmock-dev
 RUN apt-get --assume-yes install protobuf-compiler
-# on recent Debian, the libmysql-dev package is not available anymore
-# and the MariaDbConfiguration.cmake does not handle it correctly -> use the downloaded mariadb_client
 RUN apt-get --assume-yes install default-libmysqlclient-dev
-# RUN apt-get --assume-yes install libmariadb-dev
+RUN apt-get --assume-yes install zlib1g-dev
+
 
 RUN apt-get --assume-yes install cmake
-RUN apt-get --assume-yes install awscli
+# RUN apt-get --assume-yes install awscli
+RUN if [ "$PLATFORM" = "linux/amd64" ]; then curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"; fi
+RUN if [ "$PLATFORM" = "linux/arm64" ]; then curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "/tmp/awscliv2.zip"; fi
+WORKDIR /tmp
+RUN unzip awscliv2.zip
+RUN ./aws/install
+
 # for orthanc-stl plugin:
 RUN apt-get --assume-yes install libgl1-mesa-dev libxt-dev
 

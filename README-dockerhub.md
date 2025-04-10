@@ -24,26 +24,26 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 25.2.0 Default image
+#### 25.4.2 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.12.6
-Modality worklists plugin             1.12.6
-Serve folders plugin                  1.12.6
-Connectivity check plugin             1.12.6
-Housekeeper plugin                    1.12.6
-Delayed Deletion plugin               1.12.6
-Multitenant DICOM plugin              1.12.6
-Stone Web viewer plugin               2.6+115628b0651d
+Orthanc server                        1.12.7
+Modality worklists plugin             1.12.7
+Serve folders plugin                  1.12.7
+Connectivity check plugin             1.12.7
+Housekeeper plugin                    1.12.7
+Delayed Deletion plugin               1.12.7
+Multitenant DICOM plugin              1.12.7
+Stone Web viewer plugin               2.6+e90ddb89c3ae
 Osimis Web viewer plugin              1.4.3
 Python plugin                         5.0
 Orthanc Web viewer plugin             2.9
 DICOMweb plugin                       1.18
 PostgreSQL plugins                    7.2
 MySQL plugins                         5.2
-WSI Web viewer plugin                 3.0
-Authorization plugin                  0.9.0
+WSI Web viewer plugin                 3.2
+Authorization plugin                  0.9.1
 Transfers accelerator plugin          1.5
 GDCM plugin                           1.8
 ODBC plugin                           1.3
@@ -51,25 +51,25 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.8.0
-Kitware's VolView plugin              1.2+e2fd60bf5a09
+Orthanc Explorer 2                    1.8.2
+Kitware's VolView plugin              1.2+4c850b84e90f
 OHIF plugin                           1.5
 STL plugin                            1.2
 
 
 System components                     version
 ---------------------------------------------
-Base image Debian version             12 (bookworm)
-Python                                3.11
+Base image Ubuntu version             24.04 (noble)
+Python                                3.12
 Lua                                   5.4
 
 ```
 
-#### 25.2.0-full image
+#### 25.4.2-full image
 ```
 additional component                  version
 ---------------------------------------------
 Azure Blob Storage plugin             2.3.1
-Google Cloud Storage plugin           2.3.1
+Google Cloud Storage plugin           2.5.1
 Java plugin                           1.0
 ````
