@@ -130,9 +130,9 @@ if [[ $step == "publish-manifest" ]]; then
 
     # this step merges the AMD64 and ARM64 images into a single manifest
     docker manifest rm $final_image:$final_tag || true
-    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 orthancteam/orthanc-pre-release:$final_tag-arm64
-    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-amd64 --os linux --arch amd64
-    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$final_tag-arm64 --os linux --arch arm64
+    docker manifest create $final_image:$final_tag orthancteam/orthanc-pre-release:$currentTag-amd64 orthancteam/orthanc-pre-release:$currentTag-arm64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$currentTag-amd64 --os linux --arch amd64
+    docker manifest annotate $final_image:$final_tag orthancteam/orthanc-pre-release:$currentTag-arm64 --os linux --arch arm64
     docker manifest push $final_image:$final_tag
 
     exit 0
@@ -168,8 +168,8 @@ ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChe
 ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle)
 ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle)
 
-BASE_DEBIAN_IMAGE=bookworm-20250224-slim
-BASE_BUILDER_IMAGE_TAG=$BASE_DEBIAN_IMAGE-$version
+BASE_UBUNTU_IMAGE=noble-20250404
+BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
 buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl build-plugin-advanced-storage"
@@ -267,7 +267,7 @@ add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 docker $build \
     $add_host_cmd \
     --progress=plain --platform=$platform -t orthancteam/orthanc-runner-base:$BASE_BUILDER_IMAGE_TAG \
-    --build-arg BASE_DEBIAN_IMAGE=$BASE_DEBIAN_IMAGE \
+    --build-arg BASE_UBUNTU_IMAGE=$BASE_UBUNTU_IMAGE  \
     $from_cache_arg_runner_base \
     $to_cache_arg_runner_base \
     $push_load_arg_builder_image \
@@ -281,6 +281,7 @@ docker $build \
     $to_cache_arg_builder_base \
     $push_load_arg_builder_image \
     --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
+    --build-arg PLATFORM=$platform \
     -f docker/orthanc/Dockerfile.builder-base docker/orthanc
 
 if [[ $image == "full" ]]; then
