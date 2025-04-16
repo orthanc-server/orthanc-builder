@@ -505,7 +505,11 @@ elif [[ $target == "orthanc-ohif" ]]; then
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
         nvm install v20.3.0
-        npm install --global yarn
+        if [[ $version == unstable ]]; then
+            npm install --global bun
+        else
+            npm install --global yarn
+        fi
 
         pushd $sourcesRootPath
         hg clone https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
