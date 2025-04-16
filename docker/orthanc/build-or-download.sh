@@ -504,10 +504,12 @@ elif [[ $target == "orthanc-ohif" ]]; then
         export NVM_DIR="/root/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-        nvm install v20.3.0
         if [[ $version == unstable ]]; then
+            nvm install v20.18.1
             npm install --global bun
+            npm install --global yarn
         else
+            nvm install v20.3.0
             npm install --global yarn
         fi
 
