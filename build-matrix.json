@@ -689,7 +689,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-webviewer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
-            "stable": "OrthancWebViewer-2.9",
+            "stable": "OrthancWebViewer-2.10",
             "unstable": "default",
             "artifactsMacOS": "libOrthancWebViewer.dylib",
             "buildForMacOS": true,

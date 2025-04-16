@@ -38,7 +38,7 @@ Multitenant DICOM plugin              1.12.7
 Stone Web viewer plugin               2.6+e90ddb89c3ae
 Osimis Web viewer plugin              1.4.3
 Python plugin                         5.0
-Orthanc Web viewer plugin             2.9
+Orthanc Web viewer plugin             2.10
 DICOMweb plugin                       1.18
 PostgreSQL plugins                    7.2
 MySQL plugins                         5.2
