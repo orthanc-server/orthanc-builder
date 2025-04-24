@@ -26,7 +26,7 @@ Pending changes (not released)
 ------------------------------
 
 - upgraded Orthanc Web viewer plugin to [2.10](https://orthanc.uclouvain.be/hg/orthanc-webviewer/file/OrthancWebViewer-2.10/NEWS)
-- DOCKER: ugraded base image to `ubuntu:noble-20250404` which means that:
+- DOCKER: ugraded base image to `ubuntu:noble-20250404`
 
 
 25.4.2
