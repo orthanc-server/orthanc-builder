@@ -151,19 +151,19 @@ jobs:
         config:
         - {
             name: "linux/amd64-pg",
-            platform: "${{ matrix.config.platform }}",
+            platform: "${{ inputs.platform }}",
             stableUnstable: "${{ inputs.stable_unstable }}",
-            runner: "${{ matrix.config.runner }}",
-            runnerType: "${{ matrix.config.runnerType }}",
+            runner: "${{ inputs.runner }}",
+            runnerType: "${{ inputs.runner_type }}",
             testsGroup: "tests-group-db",
             imageType: "normal"
           }
         - {
             name: "linux/amd64-others",
-            platform: "${{ matrix.config.platform }}",
+            platform: "${{ inputs.platform }}",
             stableUnstable: "${{ inputs.stable_unstable }}",
-            runner: "${{ matrix.config.runner }}",
-            runnerType: "${{ matrix.config.runnerType }}",
+            runner: "${{ inputs.runner }}",
+            runnerType: "${{ inputs.runner_type }}",
             testsGroup: "tests-group-others",
             imageType: "normal"
           }
