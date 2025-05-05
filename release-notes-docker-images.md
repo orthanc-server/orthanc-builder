@@ -22,12 +22,13 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes (not released)
-------------------------------
+25.5.0
+------
 
 - upgraded OHIF plugin to [1.6](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring
   OHIF v3.10.1.
 - upgraded DICOMweb plugin to [1.19](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.8.3](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.9.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - upgraded Orthanc Web viewer plugin to [2.10](https://orthanc.uclouvain.be/hg/orthanc-webviewer/file/default/NEWS)
 - DOCKER: ugraded base image to `ubuntu:noble-20250404`
