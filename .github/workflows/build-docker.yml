@@ -152,19 +152,19 @@ jobs:
         config:
         - {
             name: "linux/amd64-pg",
-            platform: "linux/amd64",
+            platform: "${{ inputs.platform }}",
             stableUnstable: "${{ inputs.stable_unstable }}",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted",
+            runner: "${{ inputs.runner }}",
+            runnerType: "${{ inputs.runner_type }}",
             testsGroup: "tests-group-db",
             imageType: "normal"
           }
         - {
             name: "linux/amd64-others",
-            platform: "linux/amd64",
+            platform: "${{ inputs.platform }}",
             stableUnstable: "${{ inputs.stable_unstable }}",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted",
+            runner: "${{ inputs.runner }}",
+            runnerType: "${{ inputs.runner_type }}",
             testsGroup: "tests-group-others",
             imageType: "normal"
           }
