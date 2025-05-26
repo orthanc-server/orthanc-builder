@@ -28,6 +28,12 @@ Pending changes (not released)
 - switched DB plugins to `attach-custom-data` branch
 
 
+25.5.1
+------
+
+- upgraded DICOMweb plugin to [1.20](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+
+
 25.5.0
 ------
 
