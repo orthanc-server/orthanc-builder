@@ -14,7 +14,7 @@ source ../../bash-helpers.sh
 imageUnderTest=orthancteam/orthanc:latest
 version=unknown
 image=normal
-testsGroup=all
+testsGroup=tests-group-all
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 
@@ -118,6 +118,16 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
     python3 -u main.py --pattern=Authorization.* \
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
                     --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=AdvancedStorage.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=AdvancedStorage.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043 \
+                    --db=sqlite
+
 fi
 
 popd

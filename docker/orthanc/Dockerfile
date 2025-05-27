@@ -343,7 +343,7 @@ COPY --from=build-s3-object-storage /build/libOrthancAwsS3Storage.so /usr/share/
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
 # OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
-RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]]; then \
+RUN if [[ ! -z "$PLATFORM" ]] && [[ "$PLATFORM" != "linux/amd64" ]]; then \
 	rm /usr/share/orthanc/plugins-available/libOsimisWebViewer.so && \
 	rm /usr/share/orthanc/plugins-available/libOsimisWebViewerAlpha.so; \
 	fi
