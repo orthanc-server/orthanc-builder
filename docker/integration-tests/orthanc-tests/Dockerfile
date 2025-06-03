@@ -55,8 +55,9 @@ RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
 
 RUN pip install httplib2 --break-system-package
 RUN pip install pillow --break-system-package
-RUN pip install pydicom --break-system-package
-RUN pip install pynetdicom --break-system-package
+RUN pip install pydicom==3.0.1 --break-system-package
+# TODO: upgrade to pynetdicom>=3.0.1
+RUN pip install pynetdicom==2.1.1 --break-system-package
 RUN pip install 'easywebdav @ git+https://github.com/Marpache9131/easywebdav@511967ec374061161f2b3b67fb7b164fcc78143c' --break-system-package
 
 # remove echoscu... from pynetdicom to make sure we use the ones from DCMTK
