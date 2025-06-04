@@ -2,7 +2,7 @@
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
         "stable": "11068aac2270",
-        "unstable": "default"
+        "unstable": "sql-opti"
     },
     "configs": [
         {
