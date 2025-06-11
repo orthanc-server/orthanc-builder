@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 25.5.1 Default image
+#### 25.6.0 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -43,7 +43,7 @@ DICOMweb plugin                       1.20
 PostgreSQL plugins                    7.2
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.2
-Authorization plugin                  0.9.2
+Authorization plugin                  0.9.3
 Transfers accelerator plugin          1.5
 GDCM plugin                           1.8
 ODBC plugin                           1.3
