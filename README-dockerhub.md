@@ -65,7 +65,7 @@ Lua                                   5.4
 
 ```
 
-#### 25.5.1-full image
+#### 25.6.0-full image
 ```
 additional component                  version
 ---------------------------------------------
