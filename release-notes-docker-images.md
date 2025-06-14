@@ -26,6 +26,10 @@
 ------
 
 - upgraded Orthanc to [1.12.8](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+
+25.6.0
+------
+
 - upgraded Orthanc Explorer 2 plugin to [1.8.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.9.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - DOCKER: ugraded base image to `ubuntu:noble-20250529`
