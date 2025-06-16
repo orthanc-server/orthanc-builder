@@ -1,7 +1,7 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "78c81c902938",
+        "stable": "default",
         "unstable": "default"
     },
     "configs": [
@@ -823,6 +823,35 @@
             }],
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-advanced-storage", 
+            "repo": "https://github.com/orthanc-server/orthanc-advanced-storage/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_ORTHANC_ADVANCED_STORAGE",
+            "stable": "master",
+            "unstable": "master",
+            "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libAdvancedStorage-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-advanced-storage/releases/download/",
+            "windows": [{
+                "Description": "Orthanc Advanced Storage plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "databases",
+                "Artifacts64": [
+                    ["windows-64/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dll", "Plugins", "AdvancedStorage.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dll", "Plugins", "AdvancedStorage.dll"]
+                ],
+                "Resources": [
+                    ["advanced-storage.json", "Configuration"]
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dylib"
             ]
         },
         {
