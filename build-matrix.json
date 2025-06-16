@@ -831,6 +831,7 @@
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_ADVANCED_STORAGE",
             "stable": "0.0.1",
+            "unstableMacOS": "0.0.1", 
             "unstable": "master",
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
