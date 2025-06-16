@@ -21,7 +21,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-<<<<<<< HEAD
+
+Pending changes (not released yet)
+----------------------------------
+
+- upgraded PostgreSQL plugins to [7.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- added new Advanced Storage plugin [0.0.1](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+
 
 25.6.2
 ------
@@ -34,13 +40,6 @@
 - upgraded Orthanc Explorer 2 plugin to [1.8.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.9.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - DOCKER: ugraded base image to `ubuntu:noble-20250529`
-=======
-Pending changes (not released)
-------------------------------
-
-- switched Orthanc to `attach-custom-data` branch
-- switched DB plugins to `attach-custom-data` branch
->>>>>>> attach-custom-data
 
 
 25.5.1
