@@ -229,7 +229,7 @@
     "enablingEnvVar" : "ORTHANC_EXPLORER_2_ENABLED",
     "nonStandardDefaults" : {
       "Enable" : true,
-      "IsDefaultOrthancUI": false
+      "IsDefaultOrthancUI": true
     },
     "libs" : ["libOrthancExplorer2.so"]
   },
