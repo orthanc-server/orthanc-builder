@@ -51,10 +51,11 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.8.4
+Orthanc Explorer 2                    1.8.5
 Kitware's VolView plugin              1.2+4c850b84e90f
 OHIF plugin                           1.6
 STL plugin                            1.2
+Advanced Storage plugin               0.1.0
 
 
 System components                     version

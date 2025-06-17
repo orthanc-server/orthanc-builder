@@ -25,8 +25,9 @@
 Pending changes (not released yet)
 ----------------------------------
 
-- upgraded PostgreSQL plugins to [7.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
-- added new Advanced Storage plugin [0.0.1](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- upgraded PostgreSQL plugins to [8.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- added new [Advanced Storage](https://orthanc.uclouvain.be/book/plugins/advanced-storage.html) plugin [0.1.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.8.5](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: OE2 is now the default Orthanc UI.
 
 
