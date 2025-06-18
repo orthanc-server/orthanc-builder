@@ -166,12 +166,13 @@ ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipC
 ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks $throttle)
 ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks $throttle)
 ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle)
+ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle)
 
 BASE_UBUNTU_IMAGE=noble-20250529
 BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
-buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl"
+buildTargets="build-plugin-java build-plugin-auth build-orthanc build-gdcm build-plugin-pg build-plugin-mysql build-plugin-transfers build-plugin-dicomweb build-plugin-wsi build-plugin-owv build-plugin-python build-plugin-odbc build-plugin-indexer build-plugin-neuro build-plugin-tcia build-s3-object-storage build-oe2 build-plugin-volview build-plugin-ohif build-plugin-stl build-plugin-advanced-storage"
 
 # by default, we try to build only the normal image (oposed to the full image with vcpkg and MSSQL drivers)
 finalImageTarget=orthanc-no-vcpkg
@@ -354,6 +355,7 @@ for target in $buildTargets; do
         --build-arg ORTHANC_OHIF_COMMIT_ID=$ORTHANC_OHIF_COMMIT_ID \
         --build-arg ORTHANC_STL_COMMIT_ID=$ORTHANC_STL_COMMIT_ID \
         --build-arg ORTHANC_JAVA_COMMIT_ID=$ORTHANC_JAVA_COMMIT_ID \
+        --build-arg ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         --build-arg ARG_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
         --build-arg ARG_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \

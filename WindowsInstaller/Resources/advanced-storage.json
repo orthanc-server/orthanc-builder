@@ -1,0 +1,8 @@
+{
+    "AdvancedStorage" : {
+        "Enable": false
+
+        // more configurations options available ... check 
+        // https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/Plugin/Configuration.json
+    }
+}

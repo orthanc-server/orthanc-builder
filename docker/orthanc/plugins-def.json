@@ -146,6 +146,15 @@
     "libs" : ["libMultitenantDicom.so"]
   },
 
+  "AdvancedStorage" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "ADVANCED_STORAGE_PLUGIN_ENABLED",
+    "libs" : ["libAdvancedStorage.so"]
+  },
+
+
   "Wsi": {
     "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WSI_ENABLED",
@@ -220,7 +229,7 @@
     "enablingEnvVar" : "ORTHANC_EXPLORER_2_ENABLED",
     "nonStandardDefaults" : {
       "Enable" : true,
-      "IsDefaultOrthancUI": false
+      "IsDefaultOrthancUI": true
     },
     "libs" : ["libOrthancExplorer2.so"]
   },

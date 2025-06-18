@@ -24,23 +24,23 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 25.6.0 Default image
+#### 25.6.4 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.12.7
-Modality worklists plugin             1.12.7
-Serve folders plugin                  1.12.7
-Connectivity check plugin             1.12.7
-Housekeeper plugin                    1.12.7
-Delayed Deletion plugin               1.12.7
-Multitenant DICOM plugin              1.12.7
+Orthanc server                        1.12.8
+Modality worklists plugin             1.12.8
+Serve folders plugin                  1.12.8
+Connectivity check plugin             1.12.8
+Housekeeper plugin                    1.12.8
+Delayed Deletion plugin               1.12.8
+Multitenant DICOM plugin              1.12.8
 Stone Web viewer plugin               2.6+e90ddb89c3ae
 Osimis Web viewer plugin              1.4.3
 Python plugin                         5.0
 Orthanc Web viewer plugin             2.10
 DICOMweb plugin                       1.20
-PostgreSQL plugins                    7.2
+PostgreSQL plugins                    8.0
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.2
 Authorization plugin                  0.9.3
@@ -51,10 +51,11 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.8.4
+Orthanc Explorer 2                    1.8.5
 Kitware's VolView plugin              1.2+4c850b84e90f
 OHIF plugin                           1.6
 STL plugin                            1.2
+Advanced Storage plugin               0.1.1
 
 
 System components                     version
@@ -65,7 +66,7 @@ Lua                                   5.4
 
 ```
 
-#### 25.6.0-full image
+#### 25.6.3-full image
 ```
 additional component                  version
 ---------------------------------------------
