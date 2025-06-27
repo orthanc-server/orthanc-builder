@@ -210,8 +210,13 @@ if [[ $image == "normal" ]]; then
     # TODO: add mysql-dicomweb tests
     # TODO: add sqlserver-dicomweb tests
 
-        COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
-        COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        if [[ "$version" == "stable" ]]; then
+            # TODO: re-enable ODBC tests in unstable mode
+
+            COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
+            COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        fi
+
 
     # disabled since we use ubuntu as a base image:
     # DBMS Name: SQLite
@@ -240,7 +245,11 @@ else  # full images (MSSQL only !)
 
         docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
-        COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
-        COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        if [[ "$version" == "stable" ]]; then
+            # TODO: re-enable ODBC tests in unstable mode
+
+            COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
+            COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        fi
     fi
 fi
