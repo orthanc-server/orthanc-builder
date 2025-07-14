@@ -21,6 +21,10 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
+
+- DOCKER: switched Auth plugin to `inbox` branch
+- DOCKER: switched OE2 to `inbox` branch
 - DOCKER: switched PG to `sql-opti` branch
 - DOCKER: switched Orthanc to `sql-opti` branch
 
