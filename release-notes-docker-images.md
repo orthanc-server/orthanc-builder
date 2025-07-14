@@ -21,9 +21,42 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-
 - DOCKER: switched PG to `sql-opti` branch
 - DOCKER: switched Orthanc to `sql-opti` branch
+
+25.7.0
+------
+
+- upgraded advanced authorization plugin to [0.9.4](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250619`
+
+
+25.6.4
+------
+
+- upgraded Advanced Storage plugin [0.1.1](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+
+
+25.6.3
+------
+
+- upgraded PostgreSQL plugins to [8.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- added new [Advanced Storage](https://orthanc.uclouvain.be/book/plugins/advanced-storage.html) plugin [0.1.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.8.5](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- DOCKER: OE2 is now the default Orthanc UI.
+
+
+25.6.2
+------
+
+- upgraded Orthanc to [1.12.8](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+
+25.6.0
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.8.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.9.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250529`
 
 
 25.5.1

@@ -1,7 +1,7 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "11068aac2270",
+        "stable": "ae94f3d13ada",
         "unstable": "sql-opti"
     },
     "configs": [
@@ -50,9 +50,9 @@
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "Orthanc-1.12.7",
+            "stable": "Orthanc-1.12.8",
             "unstable": "sql-opti",
-            "stableMacOS": "Orthanc-1.12.7",
+            "stableMacOS": "Orthanc-1.12.8",
             "artifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "unstableArtifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu -DUSE_LEGACY_JSONCPP=ON",
@@ -178,7 +178,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-7.2",
+            "stable": "OrthancPostgreSQL-8.0",
             "unstable": "sql-opti",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,
@@ -715,7 +715,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.9.2",
+            "stable": "0.9.4",
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
@@ -799,9 +799,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "1.8.3",
+            "stable": "1.8.5",
             "unstable": "master",
-            "unstableMacOS": "1.8.3", 
+            "unstableMacOS": "1.8.5", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
@@ -823,6 +823,36 @@
             }],
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-advanced-storage", 
+            "repo": "https://github.com/orthanc-server/orthanc-advanced-storage/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_ORTHANC_ADVANCED_STORAGE",
+            "stable": "0.1.1",
+            "unstableMacOS": "0.1.1", 
+            "unstable": "master",
+            "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libAdvancedStorage-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-advanced-storage/releases/download/",
+            "windows": [{
+                "Description": "Orthanc Advanced Storage plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "databases",
+                "Artifacts64": [
+                    ["windows-64/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dll", "Plugins", "AdvancedStorage.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dll", "Plugins", "AdvancedStorage.dll"]
+                ],
+                "Resources": [
+                    ["advanced-storage.json", "Configuration"]
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dylib"
             ]
         },
         {
