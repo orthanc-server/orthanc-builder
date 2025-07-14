@@ -65,9 +65,9 @@ jobs:
       if: inputs.runner_type != 'github-hosted'
       run: echo "skipped on ARM 64"
 
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-        timeout-minutes: 20
+    # - name: Setup tmate session
+    #   if: ${{ failure() }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   with:
+    #     limit-access-to-actor: true
+    #     timeout-minutes: 20
