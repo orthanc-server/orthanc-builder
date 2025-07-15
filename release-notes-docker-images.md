@@ -23,9 +23,9 @@
 
 
 
-- DOCKER: switched Auth plugin to `inbox` branch, depending on Orthanc SDK from `sql-opti`
+- DOCKER: switched Auth plugin to `inbox` branch, depending on Orthanc SDK from `default`
 - DOCKER: switched OE2 to `inbox` branch
-- DOCKER: switched PG to `sql-opti` branch, depending on Orthanc SDK from `sql-opti`
+- DOCKER: switched PG to `sql-opti` branch, depending on Orthanc SDK from `default`
 - DOCKER: switched Orthanc to `sql-opti` branch
 
 25.7.0
