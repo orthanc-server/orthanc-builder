@@ -27,6 +27,7 @@
 - DOCKER: switched OE2 to `inbox` branch
 - DOCKER: switched PG to `sql-opti` branch, depending on Orthanc SDK from `default`
 - DOCKER: switched Orthanc to `sql-opti` branch
+- DOCKER: python, depending on Orthanc SDK from `default`
 
 25.7.0
 ------
