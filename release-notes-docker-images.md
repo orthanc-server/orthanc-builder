@@ -26,6 +26,8 @@
 - DOCKER: ugraded base image to `ubuntu:noble-20250714`
 - DOCKER: upgraded StoneWebViewer to 2.6+266b0b912c35
 
+TODO: update ohif, python, oe2, auth, pg
+
 25.7.0
 ------
 

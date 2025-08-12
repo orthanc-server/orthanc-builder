@@ -161,8 +161,6 @@ elif [[ $target == "orthanc-python" ]]; then
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
-        pip install pystache
-        
         pushd $buildRootPath
         cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.12 $sourcesRootPath
         make -j 4
