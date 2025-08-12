@@ -168,7 +168,7 @@ ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChe
 ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle)
 ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle)
 
-BASE_UBUNTU_IMAGE=noble-20250619
+BASE_UBUNTU_IMAGE=noble-20250714
 BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)

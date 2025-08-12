@@ -23,6 +23,8 @@
 
 
 - upgraded Orthanc to [1.12.9](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250714`
+
 
 25.7.0
 ------
