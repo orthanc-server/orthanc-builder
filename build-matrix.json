@@ -1,7 +1,7 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "ae94f3d13ada",
+        "stable": "Orthanc-1.12.9",
         "unstable": "default"
     },
     "configs": [
