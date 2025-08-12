@@ -37,7 +37,7 @@ Delayed Deletion plugin               1.12.9
 Multitenant DICOM plugin              1.12.9
 Stone Web viewer plugin               2.6+266b0b912c35
 Osimis Web viewer plugin              1.4.3
-Python plugin                         5.0
+Python plugin                         6.0
 Orthanc Web viewer plugin             2.10
 DICOMweb plugin                       1.20
 PostgreSQL plugins                    8.0
