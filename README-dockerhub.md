@@ -35,7 +35,7 @@ Connectivity check plugin             1.12.9
 Housekeeper plugin                    1.12.9
 Delayed Deletion plugin               1.12.9
 Multitenant DICOM plugin              1.12.9
-Stone Web viewer plugin               2.6+e90ddb89c3ae
+Stone Web viewer plugin               2.6+266b0b912c35
 Osimis Web viewer plugin              1.4.3
 Python plugin                         5.0
 Orthanc Web viewer plugin             2.10
@@ -53,7 +53,7 @@ Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
 Orthanc Explorer 2                    1.8.5
 Kitware's VolView plugin              1.2+4c850b84e90f
-OHIF plugin                           1.6
+OHIF plugin                           1.7
 STL plugin                            1.2
 Advanced Storage plugin               0.1.1
 
