@@ -23,10 +23,12 @@
 
 
 - upgraded Orthanc to [1.12.9](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded advanced authorization plugin to [0.10.0](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - DOCKER: ugraded base image to `ubuntu:noble-20250714`
 - DOCKER: upgraded StoneWebViewer to 2.6+266b0b912c35
 
-TODO: update ohif, python, oe2, auth, pg
+TODO: update ohif, python, oe2, pg
+
 
 25.7.0
 ------

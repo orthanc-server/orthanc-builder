@@ -43,7 +43,7 @@ DICOMweb plugin                       1.20
 PostgreSQL plugins                    8.0
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.2
-Authorization plugin                  0.9.4
+Authorization plugin                  0.10.0
 Transfers accelerator plugin          1.5
 GDCM plugin                           1.8
 ODBC plugin                           1.3
