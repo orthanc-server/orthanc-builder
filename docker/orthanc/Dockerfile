@@ -87,7 +87,7 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-mys
 
 ########################## Orthanc Transfers
 
-FROM orthanc-builder-base as build-plugin-transfers
+FROM orthanc-builder-base AS build-plugin-transfers
 
 ARG ORTHANC_TRANSFERS_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-transfers commitId=$ORTHANC_TRANSFERS_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
