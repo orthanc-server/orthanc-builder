@@ -22,6 +22,9 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.8.0
+------
+
 - upgraded Orthanc to [1.12.9](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - upgraded PostgreSQL plugins to [9.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - upgraded OHIF plugin to [1.7](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.11.0.
