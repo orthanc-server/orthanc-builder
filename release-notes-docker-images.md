@@ -26,7 +26,7 @@
 - upgraded PostgreSQL plugins to [9.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - upgraded OHIF plugin to [1.7](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.11.0.
 - upgraded advanced authorization plugin to [0.10.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
-- upgraded Orthanc Explorer 2 plugin to [1.8.5](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.9.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded Python plugin to [6.0](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
 - DOCKER: ugraded base image to `ubuntu:noble-20250714`
 - DOCKER: upgraded StoneWebViewer to 2.6+266b0b912c35
