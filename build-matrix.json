@@ -375,7 +375,8 @@
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.8 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.8.10/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -402,7 +403,8 @@
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.9 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.9.13/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -429,7 +431,8 @@
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.10 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.10.11/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -456,7 +459,8 @@
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.9/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -483,7 +487,8 @@
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.12 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.12.9/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
