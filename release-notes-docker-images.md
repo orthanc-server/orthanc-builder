@@ -22,6 +22,12 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.8.1
+------
+
+- upgraded DICOMweb plugin to [1.21](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+
+
 25.8.0
 ------
 
