@@ -33,7 +33,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends libmysqlclient21 && \
   apt-get --assume-yes install --no-install-recommends unixodbc && \
   apt-get --assume-yes install --no-install-recommends libopenslide0 && \
-  apt-get --assume-yes install --no-install-recommends libcrypto++ && \
+  apt-get --assume-yes install --no-install-recommends libcrypto++8 && \
   apt-get --assume-yes install --no-install-recommends libcpprest && \
   apt-get --assume-yes install --no-install-recommends libprotobuf32 && \
   apt-get --assume-yes install --no-install-recommends pkg-config && \
