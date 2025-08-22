@@ -22,6 +22,9 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- upgraded Java plugin to [2.0](https://orthanc.uclouvain.be/hg/orthanc-java/file/default/NEWS)
+
+
 25.8.1
 ------
 
