@@ -299,12 +299,12 @@ elif [[ $target == "orthanc-java" ]]; then
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
         pushd $buildRootPath
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath/Plugin
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Plugin
         make -j 4
 
         mkdir /buildJavaSDK
         pushd /buildJavaSDK
-        cmake $sourcesRootPath/JavaSDK
+        cmake -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/JavaSDK
         make
         mv /buildJavaSDK/OrthancJavaSDK.jar $buildRootPath/
         
