@@ -22,6 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- switched Orthanc to `utf8-path` branch
+
 25.8.2
 ------
 
