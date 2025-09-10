@@ -55,7 +55,7 @@ Orthanc Explorer 2                    1.9.1
 Kitware's VolView plugin              1.2+4c850b84e90f
 OHIF plugin                           1.7
 STL plugin                            1.2
-Advanced Storage plugin               0.1.1
+Advanced Storage plugin               0.2.0
 
 
 System components                     version
