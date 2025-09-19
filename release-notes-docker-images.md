@@ -22,6 +22,13 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.9.1
+------
+
+- upgraded Advanced Storage plugin [0.2.1](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- DOCKER: ugraded base image to `ubuntu:noble-20250910`
+
+
 25.9.0
 ------
 
