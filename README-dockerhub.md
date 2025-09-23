@@ -52,7 +52,7 @@ Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
 Orthanc Explorer 2                    1.9.1
-Kitware's VolView plugin              1.2+4c850b84e90f
+Kitware's VolView plugin              1.3
 OHIF plugin                           1.7
 STL plugin                            1.2
 Advanced Storage plugin               0.2.2
