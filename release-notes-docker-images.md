@@ -22,6 +22,10 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.10.0
+-------
+
+- upgraded Orthanc Explorer 2 plugin to [1.9.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded Kitware VolView plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
 
 
