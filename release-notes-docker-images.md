@@ -22,6 +22,11 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.10.1
+-------
+
+- upgraded Orthanc Explorer 2 plugin to [1.9.3](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+
 25.10.0
 -------
 
