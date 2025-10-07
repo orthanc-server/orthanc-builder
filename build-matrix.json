@@ -274,7 +274,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-transfers/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TRANSFERS",
-            "stable": "OrthancTransfers-1.5",
+            "stable": "OrthancTransfers-1.6",
             "unstable": "default",
             "artifactsMacOS": "libOrthancTransfers.dylib",
             "buildForMacOS": true,

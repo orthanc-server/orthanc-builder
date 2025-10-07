@@ -22,8 +22,12 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.10.3
+-------
 
 - DOCKER: ugraded base image to `ubuntu:noble-20250925`
+- upgraded transfers accelerator plugin [1.6](https://orthanc.uclouvain.be/hg/orthanc-transfers/file/default/NEWS)
+
 
 25.10.2
 -------
