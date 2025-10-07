@@ -22,6 +22,9 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- switched orthanc to `queues-timeout` branch
+- switched PG to `pg-next-699` branch
+
 25.10.3
 -------
 
