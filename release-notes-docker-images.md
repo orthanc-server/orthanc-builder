@@ -21,6 +21,13 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+
+25.10.5
+-------
+
+- upgraded STL plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
+
+
 25.10.4
 -------
 
