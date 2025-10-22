@@ -21,6 +21,10 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes (not released)
+------------------------------
+
+- DOCKER: worklists plugin: removed the default configuration `"Database" : "/var/lib/orthanc/worklists"`
 
 25.10.5
 -------

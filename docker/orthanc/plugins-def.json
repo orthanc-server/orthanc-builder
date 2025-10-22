@@ -117,8 +117,7 @@
 
   "Worklists" : {
     "nonStandardDefaults" : {
-      "Enable" : true,
-      "Database" : "/var/lib/orthanc/worklists"
+      "Enable" : true
     },
     "enablingEnvVar" : "WORKLISTS_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WL_ENABLED",
