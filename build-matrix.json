@@ -1029,6 +1029,32 @@
                 "Resources": [
                 ]
             }]
+        },
+        {
+            "name": "Orthanc-education",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-education/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_EDUCATION",
+            "stable": "OrthancEducation-1.0",
+            "unstable": "default",
+            "artifactsMacOS": "libOrthancEducation.dylib",
+            "buildForMacOS": false,
+            "windows": [{
+                "Description": "Education plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-education/OrthancEducation-${VERSION}.dll", "Plugins", "OrthancEducation.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-education/OrthancEducation-${VERSION}.dll", "Plugins", "OrthancEducation.dll"]
+                ],
+                "Resources": [
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-education/OrthancEducation-${VERSION}.dylib"
+            ]
         }
     ]
     

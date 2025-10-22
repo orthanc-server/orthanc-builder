@@ -175,6 +175,13 @@ FROM orthanc-builder-base AS build-plugin-java
 ARG ORTHANC_JAVA_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-java commitId=$ORTHANC_JAVA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Orthanc Education
+
+FROM orthanc-builder-base AS build-plugin-education
+
+ARG ORTHANC_EDUCATION_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-education commitId=$ORTHANC_EDUCATION_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Advanced Storage
 
 FROM orthanc-builder-base AS build-plugin-advanced-storage
@@ -349,6 +356,7 @@ COPY --from=build-plugin-volview --chown=orthanc:orthanc --chmod=755 /build/libO
 COPY --from=build-plugin-ohif --chown=orthanc:orthanc --chmod=755 /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-advanced-storage --chown=orthanc:orthanc --chmod=755 /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/libOrthancEducation.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/

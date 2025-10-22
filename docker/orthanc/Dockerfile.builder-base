@@ -45,6 +45,9 @@ RUN apt-get --assume-yes install libgl1-mesa-dev libxt-dev
 
 RUN apt-get --assume-yes install default-jdk
 
+# for orthanc-wsi and orthanc-education plugins:
+RUN apt-get --assume-yes install libopenslide0
+
 # # install a recent cmake version (required later by recent vcpkg versions that we don't use now !)
 # WORKDIR /tmp
 # RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1.tar.gz

@@ -768,5 +768,21 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
     fi
 
-fi
+elif [[ $target == "orthanc-education" ]]; then
 
+    dl=$(( $dl + $(download libOrthancEducation.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-education/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j4
+
+        upload libOrthancEducation.so
+    fi
+
+fi

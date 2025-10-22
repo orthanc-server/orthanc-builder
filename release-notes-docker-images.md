@@ -25,6 +25,7 @@ Pending changes (not released)
 ------------------------------
 
 - DOCKER: worklists plugin: removed the default configuration `"Database" : "/var/lib/orthanc/worklists"`
+- added new [Education](https://orthanc.uclouvain.be/book/plugins/education.html) plugin [1.0](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
 
 25.10.5
 -------
