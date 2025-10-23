@@ -167,6 +167,7 @@ ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitC
 ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks $throttle)
 ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle)
 ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle)
+ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle)
 
 BASE_UBUNTU_IMAGE=noble-20250925
 BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
@@ -356,6 +357,7 @@ for target in $buildTargets; do
         --build-arg ORTHANC_STL_COMMIT_ID=$ORTHANC_STL_COMMIT_ID \
         --build-arg ORTHANC_JAVA_COMMIT_ID=$ORTHANC_JAVA_COMMIT_ID \
         --build-arg ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID \
+        --build-arg ORTHANC_EDUCATION_COMMIT_ID=$ORTHANC_EDUCATION_COMMIT_ID \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         --build-arg ARG_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
         --build-arg ARG_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \

@@ -153,6 +153,13 @@
     "libs" : ["libAdvancedStorage.so"]
   },
 
+  "Education" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "EDUCATION_PLUGIN_ENABLED",
+    "libs" : ["libOrthancEducation.so"]
+  },
 
   "Wsi": {
     "enablingEnvVar" : "WSI_PLUGIN_ENABLED",
