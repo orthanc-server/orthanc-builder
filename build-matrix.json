@@ -1,7 +1,7 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "Orthanc-1.12.7",
+        "stable": "Orthanc-1.12.9",
         "unstable": "pixel-anon"
     },
     "configs": [
@@ -50,9 +50,9 @@
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "Orthanc-1.12.7",
+            "stable": "Orthanc-1.12.9",
             "unstable": "pixel-anon",
-            "stableMacOS": "Orthanc-1.12.7",
+            "stableMacOS": "Orthanc-1.12.9",
             "artifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "unstableArtifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu -DUSE_LEGACY_JSONCPP=ON",
@@ -178,7 +178,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-7.2",
+            "stable": "OrthancPostgreSQL-9.0",
             "unstable": "default",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,
@@ -274,7 +274,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-transfers/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TRANSFERS",
-            "stable": "OrthancTransfers-1.5",
+            "stable": "OrthancTransfers-1.6",
             "unstable": "default",
             "artifactsMacOS": "libOrthancTransfers.dylib",
             "buildForMacOS": true,
@@ -359,7 +359,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
+            "stable": "OrthancPython-6.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -371,11 +371,12 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
+            "stable": "OrthancPython-6.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.8 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.8.10/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -398,11 +399,12 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
+            "stable": "OrthancPython-6.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.9 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.9.13/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -425,11 +427,12 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
+            "stable": "OrthancPython-6.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.10 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.10.11/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -452,11 +455,12 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
+            "stable": "OrthancPython-6.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.11 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.11.9/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -479,11 +483,12 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-5.0",
+            "stable": "OrthancPython-6.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
-            "buildForWin": true,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
             "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.12 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.12.9/x64/",
             "artifactsWin": "OrthancPython.dll",
             "windows": [{
@@ -507,7 +512,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/Applications/StoneWebViewer/Plugin",
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
-            "stable": "e90ddb89c3ae",
+            "stable": "266b0b912c35",
             "stableWin": "StoneWebViewer-2.6",
             "BuildbotVersion": "2.6",
             "stableMacOS": "StoneWebViewer-2.6",
@@ -543,7 +548,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
-            "stable": "OrthancDicomWeb-1.18",
+            "stable": "OrthancDicomWeb-1.21",
             "unstable": "default",
             "artifactsMacOS": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",
@@ -689,7 +694,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-webviewer/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_ORTHANC_WEB_VIEWER",
-            "stable": "OrthancWebViewer-2.9",
+            "stable": "OrthancWebViewer-2.10",
             "unstable": "default",
             "artifactsMacOS": "libOrthancWebViewer.dylib",
             "buildForMacOS": true,
@@ -715,7 +720,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.9.1",
+            "stable": "0.10.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
@@ -799,9 +804,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "1.8.2",
+            "stable": "1.9.4",
             "unstable": "master",
-            "unstableMacOS": "1.8.2", 
+            "unstableMacOS": "1.9.4", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
@@ -823,6 +828,36 @@
             }],
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-explorer-2/OrthancExplorer2-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-advanced-storage", 
+            "repo": "https://github.com/orthanc-server/orthanc-advanced-storage/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_ORTHANC_ADVANCED_STORAGE",
+            "stable": "0.2.2",
+            "unstableMacOS": "0.2.2", 
+            "unstable": "master",
+            "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libAdvancedStorage-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-advanced-storage/releases/download/",
+            "windows": [{
+                "Description": "Orthanc Advanced Storage plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "databases",
+                "Artifacts64": [
+                    ["windows-64/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dll", "Plugins", "AdvancedStorage.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dll", "Plugins", "AdvancedStorage.dll"]
+                ],
+                "Resources": [
+                    ["advanced-storage.json", "Configuration"]
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-advanced-storage/AdvancedStorage-${VERSION}.dylib"
             ]
         },
         {
@@ -891,9 +926,9 @@
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_VOLVIEW",
             "stable": "e2fd60bf5a09",
-            "stableWin": "OrthancVolView-1.2",
-            "BuildbotVersion": "1.2", 
-            "stableMacOS": "OrthancVolView-1.2",
+            "stableWin": "OrthancVolView-1.3",
+            "BuildbotVersion": "1.3",
+            "stableMacOS": "OrthancVolView-1.3",
             "unstable": "default",
             "artifactsMacOS": "libOrthancVolView.dylib",
             "buildForMacOS": true,
@@ -922,7 +957,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-ohif/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_OHIF",
-            "stable": "OrthancOHIF-1.5",
+            "stable": "OrthancOHIF-1.7",
             "unstable": "default",
             "artifactsMacOS": "libOrthancOHIF.dylib",
             "buildForMacOS": false,
@@ -951,7 +986,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-stl/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_STL  !!!!!! also change version number in build-or-download.sh !!!!!!!!!!!!",
-            "stable": "OrthancSTL-1.2",
+            "stable": "OrthancSTL-1.3",
             "unstable": "default",
             "artifactsMacOS": "libOrthancSTL.dylib",
             "buildForMacOS": false,
@@ -977,7 +1012,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-java/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_JAVA",
-            "stable": "OrthancJava-1.0",
+            "stable": "OrthancJava-2.0",
             "unstable": "default",
             "buildForMacOS": false,
             "windows": [{
@@ -994,6 +1029,32 @@
                 "Resources": [
                 ]
             }]
+        },
+        {
+            "name": "Orthanc-education",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-education/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_EDUCATION",
+            "stable": "OrthancEducation-1.0",
+            "unstable": "default",
+            "artifactsMacOS": "libOrthancEducation.dylib",
+            "buildForMacOS": false,
+            "windows": [{
+                "Description": "Education plugin",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-education/OrthancEducation-${VERSION}.dll", "Plugins", "OrthancEducation.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-education/OrthancEducation-${VERSION}.dll", "Plugins", "OrthancEducation.dll"]
+                ],
+                "Resources": [
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-education/OrthancEducation-${VERSION}.dylib"
+            ]
         }
     ]
     

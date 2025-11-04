@@ -119,7 +119,7 @@ if [[ $target == "orthanc" ]]; then
 
         # note: building with static DCMTK because base images are often one version late
         # also force latest OpenSSL (and therefore, we need to force static libcurl)
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF $sourcesRootPath/OrthancServer        
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_CURL=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
         make -j 4
         $buildRootPath/UnitTests
 
@@ -193,7 +193,7 @@ elif [[ $target == "orthanc-pg" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r default /orthanc
+        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/IndexPlugin.cpp
@@ -215,7 +215,8 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r default /orthanc
+        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
@@ -237,7 +238,8 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r default /orthanc
+        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+
         hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
@@ -297,12 +299,12 @@ elif [[ $target == "orthanc-java" ]]; then
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
         pushd $buildRootPath
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath/Plugin
+        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Plugin
         make -j 4
 
         mkdir /buildJavaSDK
         pushd /buildJavaSDK
-        cmake $sourcesRootPath/JavaSDK
+        cmake -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/JavaSDK
         make
         mv /buildJavaSDK/OrthancJavaSDK.jar $buildRootPath/
         
@@ -383,6 +385,31 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         make -j 4
 
         upload libOrthancExplorer2.so
+    fi
+
+elif [[ $target == "orthanc-advanced-storage" ]]; then
+
+    dl=$(( $dl + $(download libAdvancedStorage.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+
+        pushd $sourcesRootPath
+
+        git clone https://github.com/orthanc-server/orthanc-advanced-storage.git && \
+        cd $sourcesRootPath/orthanc-advanced-storage && \
+	    git checkout $commitId
+
+        patch_version_name_on_unstable "return ADVANCED_STORAGE_VERSION" $sourcesRootPath/orthanc-advanced-storage/Plugin/Plugin.cpp
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-advanced-storage/
+        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-advanced-storage/
+
+        make -j 4
+
+        upload libAdvancedStorage.so
     fi
 
 elif [[ $target == "download-orthanc-volview-dist" ]]; then
@@ -504,7 +531,8 @@ elif [[ $target == "orthanc-ohif" ]]; then
         export NVM_DIR="/root/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-        nvm install v20.3.0
+        nvm install v20.18.1
+        npm install --global bun
         npm install --global yarn
 
         pushd $sourcesRootPath
@@ -730,12 +758,6 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
             patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
 
-            needle="return PLUGIN_VERSION"
-            file=$sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
-            replace="return \"mainline-$commitId\""
-
-            echo replacing "$needle" by "$replace" in "$file"
-            sed -i "s/$needle/$replace/" $file
         fi
 
         pushd $buildRootPath
@@ -746,5 +768,21 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
     fi
 
-fi
+elif [[ $target == "orthanc-education" ]]; then
 
+    dl=$(( $dl + $(download libOrthancEducation.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg clone https://orthanc.uclouvain.be/hg/orthanc-education/ -r $commitId $sourcesRootPath
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        make -j4
+
+        upload libOrthancEducation.so
+    fi
+
+fi

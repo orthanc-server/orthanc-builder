@@ -117,8 +117,7 @@
 
   "Worklists" : {
     "nonStandardDefaults" : {
-      "Enable" : true,
-      "Database" : "/var/lib/orthanc/worklists"
+      "Enable" : true
     },
     "enablingEnvVar" : "WORKLISTS_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WL_ENABLED",
@@ -144,6 +143,22 @@
   "MultitenantDicom" : {
     "enablingEnvVar" : "MULTITENANT_DICOM_PLUGIN_ENABLED",
     "libs" : ["libMultitenantDicom.so"]
+  },
+
+  "AdvancedStorage" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "ADVANCED_STORAGE_PLUGIN_ENABLED",
+    "libs" : ["libAdvancedStorage.so"]
+  },
+
+  "Education" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "EDUCATION_PLUGIN_ENABLED",
+    "libs" : ["libOrthancEducation.so"]
   },
 
   "Wsi": {
@@ -220,7 +235,7 @@
     "enablingEnvVar" : "ORTHANC_EXPLORER_2_ENABLED",
     "nonStandardDefaults" : {
       "Enable" : true,
-      "IsDefaultOrthancUI": false
+      "IsDefaultOrthancUI": true
     },
     "libs" : ["libOrthancExplorer2.so"]
   },

@@ -27,6 +27,144 @@ Pending changes in the mainline
 - DOCKER: switched Orthanc to `pixel-anon` branch.
 
 
+- DOCKER: worklists plugin: removed the default configuration `"Database" : "/var/lib/orthanc/worklists"`
+- added new [Education](https://orthanc.uclouvain.be/book/plugins/education.html) plugin [1.0](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
+
+25.10.5
+-------
+
+- upgraded STL plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
+
+
+25.10.4
+-------
+
+- upgraded advanced authorization plugin to [0.10.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+
+25.10.3
+-------
+
+- DOCKER: ugraded base image to `ubuntu:noble-20250925`
+- upgraded transfers accelerator plugin [1.6](https://orthanc.uclouvain.be/hg/orthanc-transfers/file/default/NEWS)
+
+
+25.10.2
+-------
+
+- upgraded Orthanc Explorer 2 plugin to [1.9.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+
+25.10.1
+-------
+
+- upgraded Orthanc Explorer 2 plugin to [1.9.3](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+
+25.10.0
+-------
+
+- upgraded Orthanc Explorer 2 plugin to [1.9.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Kitware VolView plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-volview/file/default/NEWS)
+
+
+25.9.2
+------
+
+- upgraded Advanced Storage plugin [0.2.2](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+
+
+25.9.1
+------
+
+- upgraded Advanced Storage plugin [0.2.1](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- DOCKER: ugraded base image to `ubuntu:noble-20250910`
+
+
+25.9.0
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.9.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Advanced Storage plugin [0.2.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- DOCKER: ugraded base image to `ubuntu:noble-20250805`
+
+
+25.8.2
+------
+
+- upgraded Java plugin to [2.0](https://orthanc.uclouvain.be/hg/orthanc-java/file/default/NEWS)
+- DOCKER: reduced the size of Docker images by a factor of 3.
+
+
+25.8.1
+------
+
+- upgraded DICOMweb plugin to [1.21](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+
+
+25.8.0
+------
+
+- upgraded Orthanc to [1.12.9](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- upgraded PostgreSQL plugins to [9.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded OHIF plugin to [1.7](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.11.0.
+- upgraded advanced authorization plugin to [0.10.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.9.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Python plugin to [6.0](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250714`
+- DOCKER: upgraded StoneWebViewer to 2.6+266b0b912c35
+
+
+25.7.0
+------
+
+- upgraded advanced authorization plugin to [0.9.4](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250619`
+
+
+25.6.4
+------
+
+- upgraded Advanced Storage plugin [0.1.1](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+
+
+25.6.3
+------
+
+- upgraded PostgreSQL plugins to [8.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- added new [Advanced Storage](https://orthanc.uclouvain.be/book/plugins/advanced-storage.html) plugin [0.1.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.8.5](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- DOCKER: OE2 is now the default Orthanc UI.
+
+
+25.6.2
+------
+
+- upgraded Orthanc to [1.12.8](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+
+25.6.0
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.8.4](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.9.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250529`
+
+
+25.5.1
+------
+
+- upgraded DICOMweb plugin to [1.20](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+
+
+25.5.0
+------
+
+- upgraded OHIF plugin to [1.6](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring
+  OHIF v3.10.1.
+- upgraded DICOMweb plugin to [1.19](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.8.3](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded advanced authorization plugin to [0.9.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- upgraded Orthanc Web viewer plugin to [2.10](https://orthanc.uclouvain.be/hg/orthanc-webviewer/file/default/NEWS)
+- DOCKER: ugraded base image to `ubuntu:noble-20250404`
+
+
 25.4.2
 ------
 

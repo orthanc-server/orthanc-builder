@@ -87,7 +87,7 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-mys
 
 ########################## Orthanc Transfers
 
-FROM orthanc-builder-base as build-plugin-transfers
+FROM orthanc-builder-base AS build-plugin-transfers
 
 ARG ORTHANC_TRANSFERS_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-transfers commitId=$ORTHANC_TRANSFERS_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
@@ -174,6 +174,20 @@ FROM orthanc-builder-base AS build-plugin-java
 
 ARG ORTHANC_JAVA_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-java commitId=$ORTHANC_JAVA_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+########################## Orthanc Education
+
+FROM orthanc-builder-base AS build-plugin-education
+
+ARG ORTHANC_EDUCATION_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-education commitId=$ORTHANC_EDUCATION_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+########################## Advanced Storage
+
+FROM orthanc-builder-base AS build-plugin-advanced-storage
+
+ARG ORTHANC_ADVANCED_STORAGE_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Stone Web Viewer
 
@@ -289,59 +303,75 @@ RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-v
 ################################# the image that will run Orthanc dynamicaly linked (intermediate version without vcpkg builds)
 FROM orthanc-runner-base AS orthanc-no-vcpkg
 
-RUN mkdir -p /etc/orthanc
-RUN mkdir -p /usr/share/orthanc/plugins-available && \
-	ln --symbolic /usr/share/orthanc/plugins-available /usr/share/orthanc/plugins-disabled && \
-	echo "plugins-disabled is deprecated, please source plugins from plugins-available instead" >/usr/share/orthanc/plugins-disabled.README
-RUN mkdir -p /usr/share/orthanc/plugins/
+# always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
+# and grants him all permissions on files that can be modified by the docker-entrypoint.sh
+# The default root users can still access these files too.
+# for the /etc/hostid -> we must make sure the file exists to grant the permission
+RUN groupadd --system orthanc --gid=999; \
+    useradd --system --gid=orthanc --uid=999 --home-dir=/var/lib/orthanc --shell=/bin/false orthanc;
 
-COPY --from=build-orthanc /build/Orthanc /usr/local/bin/
-COPY --from=build-orthanc /build/libModalityWorklists.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/libServeFolders.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/libHousekeeper.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/libDelayedDeletion.so /usr/share/orthanc/plugins-available/
-COPY --from=build-orthanc /build/libMultitenantDicom.so /usr/share/orthanc/plugins-available/
+RUN mkdir -p /etc/orthanc && \
+      mkdir -p /usr/share/orthanc/plugins-available && \
+      ln --symbolic /usr/share/orthanc/plugins-available /usr/share/orthanc/plugins-disabled && \
+      echo "plugins-disabled is deprecated, please source plugins from plugins-available instead" >/usr/share/orthanc/plugins-disabled.README && \
+      mkdir -p /usr/share/orthanc/plugins/ && \
+      mkdir -p /var/lib/orthanc; \
+      chown -R orthanc:orthanc /var/lib/orthanc; \
+      chown -R orthanc:orthanc /tmp; \
+      chown -R orthanc:orthanc /usr/share/orthanc/plugins; \
+      chown -R orthanc:orthanc /usr/share/orthanc/plugins-available; \
+      echo not-generated > /etc/hostid; \
+      chown orthanc:orthanc /etc/hostid
+
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/Orthanc /usr/local/bin/
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libModalityWorklists.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libServeFolders.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libHousekeeper.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libDelayedDeletion.so /usr/share/orthanc/plugins-available/
+COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libMultitenantDicom.so /usr/share/orthanc/plugins-available/
 # RUN ldd /usr/bin/Orthanc
 
-COPY --from=build-plugin-pg /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-pg /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-mysql /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-mysql /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-transfers /build/libOrthancTransfers.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-dicomweb /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-wsi /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomToTiff /usr/local/bin/
-COPY --from=build-plugin-wsi /downloads/OrthancWSIDicomizer /usr/local/bin/
-COPY --from=build-plugin-auth /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-owv /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-python /build/libOrthancPython.so /usr/share/orthanc/plugins-available/
-COPY --from=build-gdcm /build/libOrthancGdcm.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-odbc /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-odbc /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-tcia /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-indexer /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-neuro /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
-COPY --from=build-stone-viewer /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
-COPY --from=build-oe2 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-volview /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-ohif /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-stl /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-pg --chown=orthanc:orthanc --chmod=755 /build/libOrthancPostgreSQLIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-pg --chown=orthanc:orthanc --chmod=755 /build/libOrthancPostgreSQLStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-mysql --chown=orthanc:orthanc --chmod=755 /build/libOrthancMySQLIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-mysql --chown=orthanc:orthanc --chmod=755 /build/libOrthancMySQLStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-transfers --chown=orthanc:orthanc --chmod=755 /build/libOrthancTransfers.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-dicomweb --chown=orthanc:orthanc --chmod=755 /build/libOrthancDicomWeb.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-wsi --chown=orthanc:orthanc --chmod=755 /build/libOrthancWSI.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-wsi --chown=orthanc:orthanc --chmod=755 /downloads/OrthancWSIDicomToTiff /usr/local/bin/
+COPY --from=build-plugin-wsi --chown=orthanc:orthanc --chmod=755 /downloads/OrthancWSIDicomizer /usr/local/bin/
+COPY --from=build-plugin-auth --chown=orthanc:orthanc --chmod=755 /build/libOrthancAuthorization.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-owv --chown=orthanc:orthanc --chmod=755 /build/libOrthancWebViewer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-python --chown=orthanc:orthanc --chmod=755 /build/libOrthancPython.so /usr/share/orthanc/plugins-available/
+COPY --from=build-gdcm --chown=orthanc:orthanc --chmod=755 /build/libOrthancGdcm.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-odbc --chown=orthanc:orthanc --chmod=755 /build/libOrthancOdbcIndex.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-odbc --chown=orthanc:orthanc --chmod=755 /build/libOrthancOdbcStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-tcia --chown=orthanc:orthanc --chmod=755 /build/libOrthancTcia.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-indexer --chown=orthanc:orthanc --chmod=755 /build/libOrthancIndexer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-neuro --chown=orthanc:orthanc --chmod=755 /build/libOrthancNeuro.so /usr/share/orthanc/plugins-available/
+COPY --from=build-stone-viewer --chown=orthanc:orthanc --chmod=755 /build/libStoneWebViewer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-oe2 --chown=orthanc:orthanc --chmod=755 /build/libOrthancExplorer2.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-volview --chown=orthanc:orthanc --chmod=755 /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-ohif --chown=orthanc:orthanc --chmod=755 /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-advanced-storage --chown=orthanc:orthanc --chmod=755 /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/libOrthancEducation.so /usr/share/orthanc/plugins-available/
 
-COPY --from=build-downloader /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
-COPY --from=build-downloader /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
+COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
+COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
 
-COPY --from=build-s3-object-storage /build/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-s3-object-storage --chown=orthanc:orthanc --chmod=755 /build/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer &
 # OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
-RUN if [[ ! -z "$TARGETPLATFORM" ]] && [[ "$TARGETPLATFORM" != "linux/amd64" ]]; then \
+RUN if [[ ! -z "$PLATFORM" ]] && [[ "$PLATFORM" != "linux/amd64" ]]; then \
 	rm /usr/share/orthanc/plugins-available/libOsimisWebViewer.so && \
 	rm /usr/share/orthanc/plugins-available/libOsimisWebViewerAlpha.so; \
 	fi
 
-RUN chmod +x /usr/share/orthanc/plugins-available/*
-RUN chmod +x /usr/local/bin/*
+# RUN chmod +x /usr/share/orthanc/plugins-available/*
+# RUN chmod +x /usr/local/bin/*
 
 RUN pip install envsubst==0.1.5 --break-system-packages
 
@@ -365,20 +395,6 @@ COPY test-aliveness.py /probes/
 # cleanup unnecessary packages that can trigger errors during security scan
 RUN apt purge --assume-yes build-essential perl bzip2 gnupg xdg-user-dirs && apt --assume-yes autoremove
 
-
-# always create an 'orthanc' group (gid=999) and an orthanc user (uid=999)
-# and grants him all permissions on files that can be modified by the docker-entrypoint.sh
-# The default root users can still access these files too.
-# for the /etc/hostid -> we must make sure the file exists to grant the permission
-RUN groupadd --system orthanc --gid=999; \
-    useradd --system --gid=orthanc --uid=999 --home-dir=/var/lib/orthanc --shell=/bin/false orthanc; \
-    mkdir -p /var/lib/orthanc; \
-    chown -R orthanc:orthanc /var/lib/orthanc; \
-    chown -R orthanc:orthanc /tmp; \
-    chown -R orthanc:orthanc /usr/share/orthanc/plugins; \
-    chown -R orthanc:orthanc /usr/share/orthanc/plugins-available; \
-    echo not-generated > /etc/hostid; \
-    chown orthanc:orthanc /etc/hostid
 
 
 ################################# the "full" image that will run Orthanc dynamicaly linked (final version with vcpkg builds and Microsoft unixodbc)
@@ -404,11 +420,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-google-object-storage --chown=orthanc:orthanc /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-azure-object-storage --chown=orthanc:orthanc /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-java --chown=orthanc:orthanc /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
-COPY --from=build-plugin-java --chown=orthanc:orthanc /build/OrthancJavaSDK.jar /java
-
-RUN chmod +x /usr/share/orthanc/plugins-available/*
-RUN chmod +x /usr/local/bin/*
-
+COPY --from=build-google-object-storage --chown=orthanc:orthanc --chmod=775 /build/libOrthancGoogleCloudStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-azure-object-storage --chown=orthanc:orthanc --chmod=775 /build/libOrthancAzureBlobStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java --chown=orthanc:orthanc --chmod=775 /build/libOrthancJava.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-java --chown=orthanc:orthanc --chmod=775 /build/OrthancJavaSDK.jar /java

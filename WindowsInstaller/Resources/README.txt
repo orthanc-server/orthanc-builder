@@ -45,6 +45,7 @@ OHIF plugin                           ${ORTHANC_OHIF}
 Python plugin                         ${ORTHANC_PYTHON}
 STL plugin                            ${ORTHANC_STL}
 AWS S3 plugin                         ${ORTHANC_AWS_STORAGE}
+Education plugin                      ${ORTHANC_EDUCATION}
 
 
 Folders

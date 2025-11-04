@@ -5,6 +5,7 @@ set -o xtrace
 # sudo rm -rf orthanc-tests-repo-full/
 # sudo rm -rf orthanc-tests-repo-normal/
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable
+# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:attach-custom-data-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:22.7.0-full version=stable image=full
 
@@ -13,7 +14,7 @@ source ../../bash-helpers.sh
 imageUnderTest=orthancteam/orthanc:latest
 version=unknown
 image=normal
-testsGroup=all
+testsGroup=tests-group-all
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 
@@ -117,6 +118,16 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
     python3 -u main.py --pattern=Authorization.* \
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
                     --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=AdvancedStorage.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=AdvancedStorage.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043 \
+                    --db=sqlite
+
 fi
 
 popd
@@ -188,9 +199,8 @@ if [[ $image == "normal" ]]; then
         COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose down -v
         COMPOSE_FILE=docker-compose.scu-transcoding.yml             docker compose up --build --exit-code-from orthanc-under-tests --abort-on-container-exit
 
-        # TODO: re-integrate from attach-custom-data branch ?
-        # COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose down -v
-        # COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
+        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose down -v
+        COMPOSE_FILE=docker-compose.sqlite-recycling.yml            docker compose up --build --exit-code-from orthanc-tests-recycling --abort-on-container-exit
     fi
 
     if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]; then
@@ -210,8 +220,12 @@ if [[ $image == "normal" ]]; then
     # TODO: add mysql-dicomweb tests
     # TODO: add sqlserver-dicomweb tests
 
-        COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
-        COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        if [[ "$version" == "stable" ]]; then
+            # TODO: re-enable ODBC tests in unstable mode
+
+            COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose down -v
+            COMPOSE_FILE=docker-compose.odbc-postgres.yml               docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        fi
 
     # disabled since we use ubuntu as a base image:
     # DBMS Name: SQLite
@@ -240,7 +254,10 @@ else  # full images (MSSQL only !)
 
         docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
-        COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
-        COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        if [[ "$version" == "stable" ]]; then
+            # TODO: re-enable ODBC tests in unstable mode
+            COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose down -v
+            COMPOSE_FILE=docker-compose.odbc-sql-server.yml             docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        fi
     fi
 fi

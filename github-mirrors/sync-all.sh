@@ -21,6 +21,7 @@ syncAllBranchesFromRepo orthanc-authorization
 syncAllBranchesFromRepo orthanc-book
 syncAllBranchesFromRepo orthanc-databases
 syncAllBranchesFromRepo orthanc-dicomweb
+syncAllBranchesFromRepo orthanc-education
 syncAllBranchesFromRepo orthanc-gcp
 syncAllBranchesFromRepo orthanc-gdcm
 syncAllBranchesFromRepo orthanc-indexer

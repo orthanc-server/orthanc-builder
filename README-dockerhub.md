@@ -24,37 +24,39 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 25.4.2 Default image
+#### 25.10.5 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.12.7
-Modality worklists plugin             1.12.7
-Serve folders plugin                  1.12.7
-Connectivity check plugin             1.12.7
-Housekeeper plugin                    1.12.7
-Delayed Deletion plugin               1.12.7
-Multitenant DICOM plugin              1.12.7
-Stone Web viewer plugin               2.6+e90ddb89c3ae
+Orthanc server                        1.12.9
+Modality worklists plugin             1.12.9
+Serve folders plugin                  1.12.9
+Connectivity check plugin             1.12.9
+Housekeeper plugin                    1.12.9
+Delayed Deletion plugin               1.12.9
+Multitenant DICOM plugin              1.12.9
+Stone Web viewer plugin               2.6+266b0b912c35
 Osimis Web viewer plugin              1.4.3
-Python plugin                         5.0
-Orthanc Web viewer plugin             2.9
-DICOMweb plugin                       1.18
-PostgreSQL plugins                    7.2
+Python plugin                         6.0
+Orthanc Web viewer plugin             2.10
+DICOMweb plugin                       1.21
+PostgreSQL plugins                    9.0
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.2
-Authorization plugin                  0.9.1
-Transfers accelerator plugin          1.5
+Authorization plugin                  0.10.2
+Transfers accelerator plugin          1.6
 GDCM plugin                           1.8
 ODBC plugin                           1.3
 TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.8.2
-Kitware's VolView plugin              1.2+4c850b84e90f
-OHIF plugin                           1.5
-STL plugin                            1.2
+Orthanc Explorer 2                    1.9.4
+Kitware's VolView plugin              1.3
+OHIF plugin                           1.7
+STL plugin                            1.3
+Advanced Storage plugin               0.2.2
+Education plugin                      1.0
 
 
 System components                     version
@@ -65,11 +67,11 @@ Lua                                   5.4
 
 ```
 
-#### 25.4.2-full image
+#### 25.10.5-full image
 ```
 additional component                  version
 ---------------------------------------------
 Azure Blob Storage plugin             2.3.1
 Google Cloud Storage plugin           2.5.1
-Java plugin                           1.0
+Java plugin                           2.0
 ````
