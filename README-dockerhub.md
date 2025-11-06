@@ -42,7 +42,7 @@ Orthanc Web viewer plugin             2.10
 DICOMweb plugin                       1.21
 PostgreSQL plugins                    9.0
 MySQL plugins                         5.2
-WSI Web viewer plugin                 3.2
+WSI Web viewer plugin                 3.3
 Authorization plugin                  0.10.2
 Transfers accelerator plugin          1.6
 GDCM plugin                           1.8
