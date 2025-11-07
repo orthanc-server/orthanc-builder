@@ -22,6 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- upgraded education plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
+
 25.11.0
 -------
 
