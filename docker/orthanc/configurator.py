@@ -98,6 +98,13 @@ class OrthancConfigurator:
         self.pluginsDef.update(json.load(fp))
 
   def getJsonPathFromEnvVarName(self, envVarName: str) -> JsonPath:
+    if envVarName.startswith("ORTHANC__POSTGRESQL__"):
+      envVarName = envVarName.replace("ORTHANC__POSTGRESQL__", "ORTHANC__POSTGRE_S_Q_L__")
+    elif envVarName.startswith("ORTHANC__MYSQL__"):
+      envVarName = envVarName.replace("ORTHANC__MYSQL__", "ORTHANC__MY_S_Q_L__")
+    elif envVarName.startswith("ORTHANC__OHIF__"):
+      envVarName = envVarName.replace("ORTHANC__OHIF__", "ORTHANC__O_H_I_F__")
+
     if envVarName in self.nonStandardEnvVars:
       return JsonPath(self.nonStandardEnvVars[envVarName])
 

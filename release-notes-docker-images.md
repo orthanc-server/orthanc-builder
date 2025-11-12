@@ -21,6 +21,11 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes
+---------------
+
+- DOCKER-INTERNAL: automate handling of non standard env var for `ORTHANC__POSTGRESQL__`, `ORTHANC__MYSQL__` and `ORTHANC__OHIF__`
+
 
 25.11.0
 -------
