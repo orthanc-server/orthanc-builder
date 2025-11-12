@@ -10,6 +10,7 @@
   "ORTHANC__POSTGRESQL": "PostgreSQL",
 
   "ORTHANC__MYSQL": "MySQL",
+  "ORTHANC__MYSQL__SSL_CA_CERTIFICATES": "MySQL.SslCACertificates",
 
   "ORTHANC__OHIF": "OHIF"
 }
