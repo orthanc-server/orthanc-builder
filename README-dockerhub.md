@@ -56,7 +56,7 @@ Kitware's VolView plugin              1.3
 OHIF plugin                           1.7
 STL plugin                            1.3
 Advanced Storage plugin               0.2.2
-Education plugin                      1.0
+Education plugin                      1.1
 
 
 System components                     version
