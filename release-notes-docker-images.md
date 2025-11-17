@@ -24,10 +24,13 @@
 Pending changes
 ---------------
 
+
+- replaced the [Sample Modality worklist](https://orthanc.uclouvain.be/book/plugins/worklists-plugin.html) plugin by the [Worklist plugin](https://orthanc.uclouvain.be/book/plugins/worklists-plugin-new.html) (--- TODO doc ! ---) that is backward compatible but provides
+advanced features like a REST API and the ability to store worklists in the Orthanc
+database.
 - DOCKER-INTERNAL: automate handling of non standard env var for `ORTHANC__POSTGRESQL__`, `ORTHANC__MYSQL__` and `ORTHANC__OHIF__`
-
-
 - upgraded education plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
+
 
 25.11.0
 -------

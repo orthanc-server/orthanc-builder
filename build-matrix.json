@@ -53,8 +53,8 @@
             "stable": "Orthanc-1.12.9",
             "unstable": "default",
             "stableMacOS": "Orthanc-1.12.9",
-            "artifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
-            "unstableArtifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "artifactsMacOS": "Orthanc libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "unstableArtifactsMacOS": "Orthanc libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu -DUSE_LEGACY_JSONCPP=ON",
             "unitTests": "./UnitTests",
             "buildForMacOS": true,
@@ -67,20 +67,6 @@
                     ],
                     "Artifacts32": [
                         ["windows-32/orthanc/${VERSION}/Orthanc.exe", ""]
-                    ]
-                },
-                {
-                    "Description": "Modality worklists",
-                    "Mandatory": false,
-                    "Category": "plugins",
-                    "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins"]
-                    ],
-                    "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins"]
-                    ],
-                    "Resources": [
-                        ["worklists.json", "Configuration"]
                     ]
                 },
                 {
@@ -167,7 +153,6 @@
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ConnectivityChecks.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/DelayedDeletion.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Housekeeper.dylib",
-              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ModalityWorklists.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/MultitenantDicom.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ServeFolders.dylib"
             ]
@@ -1054,6 +1039,36 @@
             }],
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-education/OrthancEducation-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-worklists", 
+            "repo": "https://github.com/orthanc-server/orthanc-worklists/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_ORTHANC_WORKLISTS",
+            "stable": "master",
+            "unstableMacOS": "master", 
+            "unstable": "master",
+            "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libOrthancWorklists-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-worklists/releases/download/",
+            "windows": [{
+                "Description": "Orthanc Worklists plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-worklists/OrthancWorklists-${VERSION}.dll", "Plugins", "OrthancWorklists.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-worklists/OrthancWorklists-${VERSION}.dll", "Plugins", "OrthancWorklists.dll"]
+                ],
+                "Resources": [
+                    ["worklists.json", "Configuration"]
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-worklists/OrthancWorklists-${VERSION}.dylib"
             ]
         }
     ]
