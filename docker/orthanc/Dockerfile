@@ -331,7 +331,6 @@ RUN mkdir -p /etc/orthanc && \
       chown orthanc:orthanc /etc/hostid
 
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/Orthanc /usr/local/bin/
-COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libModalityWorklists.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libServeFolders.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libHousekeeper.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
@@ -363,6 +362,7 @@ COPY --from=build-plugin-volview --chown=orthanc:orthanc --chmod=755 /build/libO
 COPY --from=build-plugin-ohif --chown=orthanc:orthanc --chmod=755 /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-advanced-storage --chown=orthanc:orthanc --chmod=755 /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-worklists --chown=orthanc:orthanc --chmod=755 /build/libOrthancWorklists.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/libOrthancEducation.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
