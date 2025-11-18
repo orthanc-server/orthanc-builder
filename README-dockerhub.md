@@ -24,12 +24,12 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 25.11.0 Default image
+#### 25.11.1 Default image
 ```
 component                             version
 ---------------------------------------------
 Orthanc server                        1.12.9
-Modality worklists plugin             1.12.9
+Sample modality worklists plugin      removed from 25.11.1
 Serve folders plugin                  1.12.9
 Connectivity check plugin             1.12.9
 Housekeeper plugin                    1.12.9
@@ -57,7 +57,7 @@ OHIF plugin                           1.7
 STL plugin                            1.3
 Advanced Storage plugin               0.2.2
 Education plugin                      1.1
-
+Worklists plugin                      0.9.0
 
 System components                     version
 ---------------------------------------------
@@ -67,7 +67,7 @@ Lua                                   5.4
 
 ```
 
-#### 25.11.0-full image
+#### 25.11.1-full image
 ```
 additional component                  version
 ---------------------------------------------

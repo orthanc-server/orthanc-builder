@@ -1046,7 +1046,7 @@
             "repo": "https://github.com/orthanc-server/orthanc-worklists/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_WORKLISTS",
-            "stable": "master",
+            "stable": "0.9.0",
             "unstableMacOS": "master", 
             "unstable": "master",
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
