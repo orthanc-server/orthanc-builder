@@ -43,7 +43,7 @@ DICOMweb plugin                       1.21
 PostgreSQL plugins                    9.0
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.3
-Authorization plugin                  0.10.2
+Authorization plugin                  0.10.3
 Transfers accelerator plugin          1.6
 GDCM plugin                           1.8
 ODBC plugin                           1.3
@@ -51,7 +51,7 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.9.4
+Orthanc Explorer 2                    1.10.0
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.7
 STL plugin                            1.3
