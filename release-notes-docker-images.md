@@ -22,7 +22,7 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-25.11.1
+25.11.2
 -------
 
 - replaced the [Sample Modality worklist](https://orthanc.uclouvain.be/book/plugins/worklists-plugin.html) plugin by the new [Worklists plugin](https://orthanc.uclouvain.be/book/plugins/worklists-plugin-new.html) that is backward compatible but provides
