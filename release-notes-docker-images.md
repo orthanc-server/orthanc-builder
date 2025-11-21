@@ -30,7 +30,7 @@ advanced features like a REST API and the ability to store worklists in the Orth
 database.
   On Windows, if you are re-installing Orthanc to replace an existing installation and if you plan to use the Worklists plugin,
   you should manually delete the previous plugin that may still exists in `C:\Program Files\Orthanc Server\Plugins\ModalityWorklists.dll`
-- upgraded Orthanc Explorer 2 plugin to [1.10.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- upgraded Orthanc Explorer 2 plugin to [1.10.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.10.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - upgraded education plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
 - DOCKER-INTERNAL: automate handling of non standard env var for `ORTHANC__POSTGRESQL__`, `ORTHANC__MYSQL__` and `ORTHANC__OHIF__`
