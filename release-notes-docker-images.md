@@ -21,13 +21,15 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
 
+25.11.1
+-------
 
 - replaced the [Sample Modality worklist](https://orthanc.uclouvain.be/book/plugins/worklists-plugin.html) plugin by the new [Worklists plugin](https://orthanc.uclouvain.be/book/plugins/worklists-plugin-new.html) that is backward compatible but provides
 advanced features like a REST API and the ability to store worklists in the Orthanc
 database.
+  On Windows, if you are re-installing Orthanc to replace an existing installation and if you plan to use the Worklists plugin,
+  you should manually delete the previous plugin that may still exists in `C:\Program Files\Orthanc Server\Plugins\ModalityWorklists.dll`
 - upgraded Orthanc Explorer 2 plugin to [1.10.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded advanced authorization plugin to [0.10.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - upgraded education plugin to [1.1](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
