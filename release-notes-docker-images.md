@@ -22,6 +22,12 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+Pending changes
+---------------
+
+- upgraded Orthanc to [1.12.10](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+
+
 25.11.2
 -------
 
