@@ -22,10 +22,42 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+<!-- Enable python 3.14 for 7.0 is released 
+        {
+            "name": "Orthanc-python-3-14", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-6.0",
+            "unstable": "default",
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.14 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.14.0/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.14 (AGPL license)",
+                "Name": "python_3_14",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.14-${VERSION}.dll", "Plugins", "OrthancPython3.14.dll"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.14-${VERSION}.dll", "Plugins", "OrthancPython3.14.dll"]
+                ]
+            }]
+        },
+-->
+
 Pending changes
 ---------------
 
 - upgraded Orthanc to [1.12.10](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
+- WIN-INSTALLER: added support for Python 3.13
 
 
 25.11.2
