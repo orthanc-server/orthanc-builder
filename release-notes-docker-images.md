@@ -53,8 +53,8 @@
         },
 -->
 
-Pending changes
----------------
+25.11.3
+-------
 
 - upgraded Orthanc to [1.12.10](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - WIN-INSTALLER: added support for Python 3.13
