@@ -24,6 +24,8 @@
 
 
 - upgraded Python plugin to [7.0](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+- upgraded PostgreSQL plugins to [10.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+- upgraded DICOMweb plugin to [1.22](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 - WIN-INSTALLER: added support for Python 3.14
 
 
