@@ -101,7 +101,14 @@ class OrthancConfigurator:
     if envVarName in self.nonStandardEnvVars:
       return JsonPath(self.nonStandardEnvVars[envVarName])
 
-    elif envVarName.startswith("ORTHANC__"):
+    if envVarName.startswith("ORTHANC__POSTGRESQL__"):
+      envVarName = envVarName.replace("ORTHANC__POSTGRESQL__", "ORTHANC__POSTGRE_S_Q_L__")
+    elif envVarName.startswith("ORTHANC__MYSQL__"):
+      envVarName = envVarName.replace("ORTHANC__MYSQL__", "ORTHANC__MY_S_Q_L__")
+    elif envVarName.startswith("ORTHANC__OHIF__"):
+      envVarName = envVarName.replace("ORTHANC__OHIF__", "ORTHANC__O_H_I_F__")
+
+    if envVarName.startswith("ORTHANC__"):
       envVarTokens = envVarName[len("ORTHANC__"):].split("__")
       jsonPath = JsonPath()
       for envVarToken in envVarTokens:

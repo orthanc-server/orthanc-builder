@@ -412,6 +412,31 @@ elif [[ $target == "orthanc-advanced-storage" ]]; then
         upload libAdvancedStorage.so
     fi
 
+elif [[ $target == "orthanc-worklists" ]]; then
+
+    dl=$(( $dl + $(download libOrthancWorklists.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+
+        pushd $sourcesRootPath
+
+        git clone https://github.com/orthanc-server/orthanc-worklists.git && \
+        cd $sourcesRootPath/orthanc-worklists && \
+	    git checkout $commitId
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-worklists/Plugin.cpp
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-worklists/
+        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-worklists/
+
+        make -j 4
+
+        upload libOrthancWorklists.so
+    fi
+
 elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
     dl=$(( $dl + $(download VolView-dist.zip) ))

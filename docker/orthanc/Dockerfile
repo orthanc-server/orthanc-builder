@@ -109,8 +109,8 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-wsi
 RUN mkdir /downloads
 
 # TODO: we should probably build these tools here as well
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.2/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.2/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.3/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.3/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
 
 ########################## Orthanc Webviewer
 
@@ -188,6 +188,13 @@ FROM orthanc-builder-base AS build-plugin-advanced-storage
 
 ARG ORTHANC_ADVANCED_STORAGE_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
+########################## Worklists
+
+FROM orthanc-builder-base AS build-plugin-worklists
+
+ARG ORTHANC_WORKLISTS_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-worklists commitId=$ORTHANC_WORKLISTS_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Stone Web Viewer
 
@@ -324,7 +331,6 @@ RUN mkdir -p /etc/orthanc && \
       chown orthanc:orthanc /etc/hostid
 
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/Orthanc /usr/local/bin/
-COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libModalityWorklists.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libServeFolders.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libHousekeeper.so /usr/share/orthanc/plugins-available/
 COPY --from=build-orthanc --chown=orthanc:orthanc --chmod=755 /build/libConnectivityChecks.so /usr/share/orthanc/plugins-available/
@@ -356,6 +362,7 @@ COPY --from=build-plugin-volview --chown=orthanc:orthanc --chmod=755 /build/libO
 COPY --from=build-plugin-ohif --chown=orthanc:orthanc --chmod=755 /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-advanced-storage --chown=orthanc:orthanc --chmod=755 /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-worklists --chown=orthanc:orthanc --chmod=755 /build/libOrthancWorklists.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/libOrthancEducation.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/

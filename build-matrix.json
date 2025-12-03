@@ -50,11 +50,11 @@
             "repoType": "hg",
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
-            "stable": "Orthanc-1.12.9",
-            "unstable": "pixel-anon",
-            "stableMacOS": "Orthanc-1.12.9",
-            "artifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
-            "unstableArtifactsMacOS": "Orthanc libModalityWorklists.dylib libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "stable": "Orthanc-1.12.10",
+            "unstable": "default",
+            "stableMacOS": "Orthanc-1.12.10",
+            "artifactsMacOS": "Orthanc libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
+            "unstableArtifactsMacOS": "Orthanc libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu -DUSE_LEGACY_JSONCPP=ON",
             "unitTests": "./UnitTests",
             "buildForMacOS": true,
@@ -67,20 +67,6 @@
                     ],
                     "Artifacts32": [
                         ["windows-32/orthanc/${VERSION}/Orthanc.exe", ""]
-                    ]
-                },
-                {
-                    "Description": "Modality worklists",
-                    "Mandatory": false,
-                    "Category": "plugins",
-                    "Artifacts64": [
-                        ["windows-64/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins"]
-                    ],
-                    "Artifacts32": [
-                        ["windows-32/orthanc/${VERSION}/ModalityWorklists.dll", "Plugins"]
-                    ],
-                    "Resources": [
-                        ["worklists.json", "Configuration"]
                     ]
                 },
                 {
@@ -167,7 +153,6 @@
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ConnectivityChecks.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/DelayedDeletion.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/Housekeeper.dylib",
-              "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ModalityWorklists.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/MultitenantDicom.dylib",
               "https://orthanc.uclouvain.be/downloads/macos/orthanc/${VERSION}/ServeFolders.dylib"
             ]
@@ -178,7 +163,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
-            "stable": "OrthancPostgreSQL-9.0",
+            "stable": "OrthancPostgreSQL-10.0",
             "unstable": "default",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,
@@ -359,7 +344,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-6.0",
+            "stable": "OrthancPython-7.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -371,7 +356,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-6.0",
+            "stable": "OrthancPython-7.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -399,7 +384,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-6.0",
+            "stable": "OrthancPython-7.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -427,7 +412,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-6.0",
+            "stable": "OrthancPython-7.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -455,7 +440,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-6.0",
+            "stable": "OrthancPython-7.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -483,7 +468,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_PYTHON",
-            "stable": "OrthancPython-6.0",
+            "stable": "OrthancPython-7.0",
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
@@ -503,6 +488,62 @@
                 ],
                 "Downloads32": [
                     ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.12-${VERSION}.dll", "Plugins", "OrthancPython3.12.dll"]
+                ]
+            }]
+        },
+        {
+            "name": "Orthanc-python-3-13", 
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-7.0",
+            "unstable": "default",
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.13 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.13.2/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.13 (AGPL license)",
+                "Name": "python_3_13",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.13-${VERSION}.dll", "Plugins", "OrthancPython3.13.dll"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.13-${VERSION}.dll", "Plugins", "OrthancPython3.13.dll"]
+                ]
+            }]
+        },
+        {
+            "name": "Orthanc-python-3-14",
+            "repo": "https://orthanc.uclouvain.be/hg/orthanc-python/",
+            "repoType": "hg",
+            "comment": "# CHANGE_VERSION_PYTHON",
+            "stable": "OrthancPython-7.0",
+            "unstable": "default",
+            "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
+            "buildForMacOS": false,
+            "buildForWin": false,
+            "commentWin": "# disabled because we need to install pystache -> need a custom windows step",
+            "extraCMakeFlagsWin": "-DPYTHON_VERSION=3.14 -DPYTHON_WINDOWS_ROOT=C:/hostedtoolcache/windows/Python/3.14.0/x64/",
+            "artifactsWin": "OrthancPython.dll",
+            "windows": [{
+                "Description": "Python plugin for Python 3.14 (AGPL license)",
+                "Name": "python_3_14",
+                "Mandatory": false,
+                "Checked": false,
+                "Exclusive": true,
+                "Category": "python_plugins",
+                "Downloads64": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-64/orthanc-python/OrthancPython-Python3.14-${VERSION}.dll", "Plugins", "OrthancPython3.14.dll"]
+                ],
+                "Downloads32": [
+                    ["https://orthanc.uclouvain.be/downloads/windows-32/orthanc-python/OrthancPython-Python3.14-${VERSION}.dll", "Plugins", "OrthancPython3.14.dll"]
                 ]
             }]
         },
@@ -548,7 +589,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-dicomweb/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_DW",
-            "stable": "OrthancDicomWeb-1.21",
+            "stable": "OrthancDicomWeb-1.22",
             "unstable": "default",
             "artifactsMacOS": "libOrthancDicomWeb.dylib",
             "artifactsWin": "OrthancDicomWeb.dll",
@@ -607,7 +648,7 @@
             "repoType": "hg",
             "sourcesSubPath": "/ViewerPlugin",
             "comment": "# CHANGE_VERSION_WSI",
-            "stable": "OrthancWSI-3.2",
+            "stable": "OrthancWSI-3.3",
             "unstable": "default",
             "commentMacOS": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
             "buildForMacOS": false,
@@ -720,7 +761,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.10.2",
+            "stable": "0.10.3",
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
@@ -804,9 +845,9 @@
             "repo": "https://github.com/orthanc-server/orthanc-explorer-2/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
-            "stable": "1.9.4",
+            "stable": "1.10.1",
             "unstable": "master",
-            "unstableMacOS": "1.9.4", 
+            "unstableMacOS": "1.10.1", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
@@ -838,7 +879,7 @@
             "stable": "0.2.2",
             "unstableMacOS": "0.2.2", 
             "unstable": "master",
-            "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
+            "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
             "buildForMacOS": false,
             "artifactsMacOS": "libAdvancedStorage-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-advanced-storage/releases/download/",
@@ -1035,7 +1076,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-education/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_EDUCATION",
-            "stable": "OrthancEducation-1.0",
+            "stable": "OrthancEducation-1.1",
             "unstable": "default",
             "artifactsMacOS": "libOrthancEducation.dylib",
             "buildForMacOS": false,
@@ -1054,6 +1095,36 @@
             }],
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-education/OrthancEducation-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-worklists", 
+            "repo": "https://github.com/orthanc-server/orthanc-worklists/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_ORTHANC_WORKLISTS",
+            "stable": "0.9.0",
+            "unstableMacOS": "0.9.0", 
+            "unstable": "master",
+            "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libOrthancWorklists-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-worklists/releases/download/",
+            "windows": [{
+                "Description": "Orthanc Worklists plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-worklists/OrthancWorklists-${VERSION}.dll", "Plugins", "OrthancWorklists.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-worklists/OrthancWorklists-${VERSION}.dll", "Plugins", "OrthancWorklists.dll"]
+                ],
+                "Resources": [
+                    ["worklists.json", "Configuration"]
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-worklists/OrthancWorklists-${VERSION}.dylib"
             ]
         }
     ]

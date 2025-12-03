@@ -13,13 +13,16 @@ RUN apt-get update
 RUN apt-get install -yq wine 
 
 # innosetup
+# old url: "https://downloads.sourceforge.net/project/innounp/innounp/innounp%200.45/innounp045.rar?r=&ts=1439566551&use_mirror=skylineservers"
+
 RUN mkdir innosetup && \
     cd innosetup && \
-    curl -fsSL -o innounp045.rar "https://downloads.sourceforge.net/project/innounp/innounp/innounp%200.45/innounp045.rar?r=&ts=1439566551&use_mirror=skylineservers" && \
+    curl -fsSL -o innounp045.rar "https://orthanc.uclouvain.be/downloads/third-party-downloads/innounp045.rar" && \
     unrar e innounp045.rar
 
+# old url: https://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe
 RUN cd innosetup && \
-    curl -fsSL -o is-unicode.exe http://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe && \
+    curl -fsSL -o is-unicode.exe "https://orthanc.uclouvain.be/downloads/third-party-downloads/isetup-5.5.8-unicode.exe" && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
 RUN pip3 install requests

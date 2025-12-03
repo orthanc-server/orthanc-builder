@@ -24,26 +24,25 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 25.10.5 Default image
+#### 25.12.0 Default image
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.12.9
-Modality worklists plugin             1.12.9
-Serve folders plugin                  1.12.9
-Connectivity check plugin             1.12.9
-Housekeeper plugin                    1.12.9
-Delayed Deletion plugin               1.12.9
-Multitenant DICOM plugin              1.12.9
+Orthanc server                        1.12.10
+Serve folders plugin                  1.12.10
+Connectivity check plugin             1.12.10
+Housekeeper plugin                    1.12.10
+Delayed Deletion plugin               1.12.10
+Multitenant DICOM plugin              1.12.10
 Stone Web viewer plugin               2.6+266b0b912c35
 Osimis Web viewer plugin              1.4.3
-Python plugin                         6.0
+Python plugin                         7.0
 Orthanc Web viewer plugin             2.10
-DICOMweb plugin                       1.21
-PostgreSQL plugins                    9.0
+DICOMweb plugin                       1.22
+PostgreSQL plugins                    10.0
 MySQL plugins                         5.2
-WSI Web viewer plugin                 3.2
-Authorization plugin                  0.10.2
+WSI Web viewer plugin                 3.3
+Authorization plugin                  0.10.3
 Transfers accelerator plugin          1.6
 GDCM plugin                           1.8
 ODBC plugin                           1.3
@@ -51,13 +50,13 @@ TCIA plugin                           1.2
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0
-Orthanc Explorer 2                    1.9.4
+Orthanc Explorer 2                    1.10.1
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.7
 STL plugin                            1.3
 Advanced Storage plugin               0.2.2
-Education plugin                      1.0
-
+Education plugin                      1.1
+Worklists plugin                      0.9.0
 
 System components                     version
 ---------------------------------------------
@@ -67,7 +66,7 @@ Lua                                   5.4
 
 ```
 
-#### 25.10.5-full image
+#### 25.11.3-full image
 ```
 additional component                  version
 ---------------------------------------------

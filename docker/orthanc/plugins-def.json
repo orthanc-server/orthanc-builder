@@ -121,7 +121,7 @@
     },
     "enablingEnvVar" : "WORKLISTS_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "WL_ENABLED",
-    "libs" : ["libModalityWorklists.so"]
+    "libs" : ["libOrthancWorklists.so"]
   },
 
   "Housekeeper" : {

@@ -42,7 +42,7 @@ jobs:
 
   build:
     name: build
-    runs-on: "macos-13"
+    runs-on: "macos-15"
     needs: [get-build-matrix]
     strategy:
       fail-fast: false
