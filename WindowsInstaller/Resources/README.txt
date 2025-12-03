@@ -18,7 +18,6 @@ Content of the package ${VERSION}
 -----------------------${VERSION_DASHES}
 
 Orthanc server                        ${ORTHANC}
-Modality worklists plugin             ${ORTHANC}
 Serve folders plugin                  ${ORTHANC}
 Connectivity check plugin             ${ORTHANC}
 Housekeeper plugin                    ${ORTHANC}
@@ -46,6 +45,9 @@ Python plugin                         ${ORTHANC_PYTHON}
 STL plugin                            ${ORTHANC_STL}
 AWS S3 plugin                         ${ORTHANC_AWS_STORAGE}
 Education plugin                      ${ORTHANC_EDUCATION}
+Worklists plugin                      ${ORTHANC_WORKLISTS}
+Pixels masker plugin                  ${ORTHANC_PIXELS_MASKER}
+
 
 
 Folders
