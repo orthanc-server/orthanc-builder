@@ -1,8 +1,8 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "Orthanc-1.12.9",
-        "unstable": "pixel-anon"
+        "stable": "Orthanc-1.12.10",
+        "unstable": "default"
     },
     "configs": [
         {
