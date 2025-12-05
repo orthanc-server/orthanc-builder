@@ -99,6 +99,10 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
 
     ######## Other new tests
 
+    python3 -u main.py --pattern=PixelsMasker.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
     python3 -u main.py --pattern=ExtraMainDicomTags.* \
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
                     --orthanc_under_tests_http_port=8043

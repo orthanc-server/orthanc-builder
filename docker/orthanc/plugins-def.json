@@ -264,8 +264,16 @@
       "Enable" : true,
       "Classpath": "MUST BE DEFINED BY YOU",
       "InitializationClass": "MUST BE DEFINED BY YOU"
-  },
+    },
     "libs" : ["libOrthancJava.so"]
+  },
+
+  "PixelsMasker" : {
+    "nonStandardDefaults" : {
+      "Enable" : true
+    },
+    "enablingEnvVar" : "PIXELS_MASKER_PLUGIN_ENABLED",
+    "libs" : ["libOrthancPixelsMasker.so"]
   }
 
 }

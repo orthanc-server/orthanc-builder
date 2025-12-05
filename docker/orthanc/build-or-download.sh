@@ -437,6 +437,31 @@ elif [[ $target == "orthanc-worklists" ]]; then
         upload libOrthancWorklists.so
     fi
 
+elif [[ $target == "orthanc-pixels-masker" ]]; then
+
+    dl=$(( $dl + $(download libOrthancPixelsMasker.so) ))
+
+    if [[ $dl != 0 ]]; then
+
+        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+
+        pushd $sourcesRootPath
+
+        git clone https://github.com/orthanc-server/orthanc-pixels-masker.git && \
+        cd $sourcesRootPath/orthanc-pixels-masker && \
+	    git checkout $commitId
+
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-pixels-masker/Sources/Plugin.cpp
+
+        pushd $buildRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-pixels-masker/
+        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-worklists/
+
+        make -j 4
+
+        upload libOrthancPixelsMasker.so
+    fi
+
 elif [[ $target == "download-orthanc-volview-dist" ]]; then
 
     dl=$(( $dl + $(download VolView-dist.zip) ))

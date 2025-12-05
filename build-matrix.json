@@ -1,7 +1,7 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "default",
+        "stable": "Orthanc-1.12.10",
         "unstable": "default"
     },
     "configs": [
@@ -1125,6 +1125,36 @@
             }],
             "downloadsMacOS" : [
               "https://orthanc.uclouvain.be/downloads/macos/orthanc-worklists/OrthancWorklists-${VERSION}.dylib"
+            ]
+        },
+        {
+            "name": "Orthanc-pixels-masker", 
+            "repo": "https://github.com/orthanc-server/orthanc-pixels-masker/",
+            "repoType": "git",
+            "comment": "# CHANGE_VERSION_ORTHANC_PIXELS_MASKER",
+            "stable": "master",
+            "unstableMacOS": "master", 
+            "unstable": "master",
+            "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
+            "buildForMacOS": false,
+            "artifactsMacOS": "libOrthancPixelsMasker-universal.dylib",
+            "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-pixels-masker/releases/download/",
+            "windows": [{
+                "Description": "Orthanc pixels masker plugin (AGPL license)",
+                "Mandatory": false,
+                "Category": "plugins",
+                "Artifacts64": [
+                    ["windows-64/orthanc-pixels-masker/OrthancPixelsMasker-${VERSION}.dll", "Plugins", "OrthancPixelsMasker.dll"]
+                ],
+                "Artifacts32": [
+                    ["windows-32/orthanc-pixels-masker/OrthancPixelsMasker-${VERSION}.dll", "Plugins", "OrthancPixelsMasker.dll"]
+                ],
+                "Resources": [
+                    ["pixels-masker.json", "Configuration"]
+                ]
+            }],
+            "downloadsMacOS" : [
+              "https://orthanc.uclouvain.be/downloads/macos/orthanc-pixels-masker/OrthancPixelsMasker-${VERSION}.dylib"
             ]
         }
     ]

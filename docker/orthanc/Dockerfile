@@ -196,6 +196,13 @@ FROM orthanc-builder-base AS build-plugin-worklists
 ARG ORTHANC_WORKLISTS_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-worklists commitId=$ORTHANC_WORKLISTS_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
+########################## Pixels masker
+
+FROM orthanc-builder-base AS build-plugin-pixels-masker
+
+ARG ORTHANC_PIXELS_MASKER_COMMIT_ID
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pixels-masker commitId=$ORTHANC_PIXELS_MASKER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+
 ########################## Stone Web Viewer
 
 FROM wasm-builder-base-amd64 AS build-wasm-stone-viewer-amd64
@@ -363,6 +370,7 @@ COPY --from=build-plugin-ohif --chown=orthanc:orthanc --chmod=755 /build/libOrth
 COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-advanced-storage --chown=orthanc:orthanc --chmod=755 /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-worklists --chown=orthanc:orthanc --chmod=755 /build/libOrthancWorklists.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-pixels-masker --chown=orthanc:orthanc --chmod=755 /build/libOrthancPixelsMasker.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/libOrthancEducation.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
