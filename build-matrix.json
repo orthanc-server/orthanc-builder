@@ -1,7 +1,7 @@
 {
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
-        "stable": "Orthanc-1.12.10",
+        "stable": "default",
         "unstable": "default"
     },
     "configs": [
@@ -1132,8 +1132,8 @@
             "repo": "https://github.com/orthanc-server/orthanc-pixels-masker/",
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_PIXELS_MASKER",
-            "stable": "master",
-            "unstableMacOS": "master", 
+            "stable": "0.1.0",
+            "unstableMacOS": "0.1.0", 
             "unstable": "master",
             "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
             "buildForMacOS": false,
