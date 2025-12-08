@@ -21,6 +21,14 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+25.12.2
+-------
+
+Small updates of these 3 plugins whose version number was not correctly reported:
+- upgraded Advanced Storage plugin [0.2.3](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
+- upgraded pixels masker plugin to [0.1.1](https://github.com/orthanc-server/orthanc-pixels-masker/blob/master/release-notes.md).
+- upgraded pixels masker plugin to [0.9.2](https://github.com/orthanc-server/orthanc-worklists/blob/master/release-notes.md).
+
 
 25.12.1
 -------
