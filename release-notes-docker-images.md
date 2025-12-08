@@ -22,7 +22,11 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+25.12.1
+-------
+
 - upgraded Stone Web viewer to [3.0](https://orthanc.uclouvain.be/hg/orthanc-stone/file/default/Applications/StoneWebViewer/NEWS)
+- added the new [Pixels Masker plugin](https://orthanc.uclouvain.be/book/plugins/pixels-masker.html) 0.1.0.
 
 
 25.12.0
