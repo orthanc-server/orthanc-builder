@@ -21,8 +21,8 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
+25.12.3
+-------
 
 - upgraded transfers accelerator plugin [1.7](https://orthanc.uclouvain.be/hg/orthanc-transfers/file/default/NEWS)
 
