@@ -24,7 +24,8 @@
 Pending changes
 ---------------
 
-- DOCKER: ugraded base image to `ubuntu:noble-20251013`
+- upgraded transfers accelerator plugin [1.7](https://orthanc.uclouvain.be/hg/orthanc-transfers/file/default/NEWS)
+
 
 25.12.2
 -------
