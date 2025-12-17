@@ -21,6 +21,12 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes
+---------------
+
+- DOCKER: ugraded base image to `ubuntu:questing-20251029`
+
+
 25.12.3
 -------
 
