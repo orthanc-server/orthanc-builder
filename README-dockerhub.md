@@ -61,8 +61,8 @@ Pixels masker plugin                  0.1.1
 
 System components                     version
 ---------------------------------------------
-Base image Ubuntu version             24.04 (noble)
-Python                                3.12
+Base image Ubuntu version             25.10 (question)
+Python                                3.13
 Lua                                   5.4
 
 ```

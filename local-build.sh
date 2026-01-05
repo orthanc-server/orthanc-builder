@@ -171,7 +171,7 @@ ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $s
 ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle)
 ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle)
 
-BASE_UBUNTU_IMAGE=noble-20250925
+BASE_UBUNTU_IMAGE=questing-20251029
 BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
