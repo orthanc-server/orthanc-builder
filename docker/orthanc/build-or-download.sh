@@ -281,10 +281,9 @@ elif [[ $target == "orthanc-neuro" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin/Plugin.cpp
 
-        # TODO: we can remove -DORTHANC_FRAMEWORK_VERSION=1.12.5 once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  
-        # It currently fails because of sha1.get_digest(digest);
+        # TODO: we can remove -DUSE_LEGACY_BOOST=ON once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DORTHANC_FRAMEWORK_VERSION=1.12.5 $sourcesRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_LEGACY_BOOST=ON $sourcesRootPath
         make -j 4
 
         upload libOrthancNeuro.so
