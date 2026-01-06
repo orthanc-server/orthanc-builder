@@ -210,50 +210,68 @@ elif [[ $target == "orthanc-pg" ]]; then
 
 elif [[ $target == "orthanc-mysql" ]]; then
 
-    dl=$(( $dl + $(download libOrthancMySQLIndex.so) ))
-    dl=$(( $dl + $(download libOrthancMySQLStorage.so) ))
+    # we keep the normal build for the unstable branch but, the stable is too old to build on ubuntu 25.10 -> let's download the LSB instead
+    if [[ $version == unstable ]]; then
 
-    if [[ $dl != 0 ]]; then
+        dl=$(( $dl + $(download libOrthancMySQLIndex.so) ))
+        dl=$(( $dl + $(download libOrthancMySQLStorage.so) ))
 
-        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+            # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
 
-        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
-        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
+            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
-        pushd $buildRootPath
-        # TODO: we can remove -DUSE_LEGACY_BOOST=ON once the mysql plugin updates to a new release
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_LEGACY_BOOST=ON $sourcesRootPath/MySQL
-        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
-        make -j 4
+            patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
+            patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
 
-        upload libOrthancMySQLIndex.so
-        upload libOrthancMySQLStorage.so
+            pushd $buildRootPath
+            # TODO: we can remove -DUSE_LEGACY_BOOST=ON once the mysql plugin updates to a new release
+            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_LEGACY_BOOST=ON $sourcesRootPath/MySQL
+            # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
+            make -j 4
+
+            upload libOrthancMySQLIndex.so
+            upload libOrthancMySQLStorage.so
+        fi
+    else
+        # CHANGE_VERSION_MYSQL
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-mysql/5.2/libOrthancMySQLIndex.so --output-document $buildRootPath/libOrthancMySQLIndex.so
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-mysql/5.2/libOrthancMySQLStorage.so --output-document $buildRootPath/libOrthancMySQLStorage.so
     fi
+
 
 elif [[ $target == "orthanc-odbc" ]]; then
 
-    dl=$(( $dl + $(download libOrthancOdbcIndex.so) ))
-    dl=$(( $dl + $(download libOrthancOdbcStorage.so) ))
+    # we keep the normal build for the unstable branch but, the stable is too old to build on ubuntu 25.10 -> let's download the LSB instead
+    if [[ $version == unstable ]]; then
 
-    if [[ $dl != 0 ]]; then
+        dl=$(( $dl + $(download libOrthancOdbcIndex.so) ))
+        dl=$(( $dl + $(download libOrthancOdbcStorage.so) ))
 
-        # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        if [[ $dl != 0 ]]; then
 
-        hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+            # hg clone https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
 
-        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
-        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
+            hg clone https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
 
-        pushd $buildRootPath
-        # TODO: we can remove -DUSE_LEGACY_BOOST=ON once the odbc plugin updates to a new release
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_LEGACY_BOOST=ON $sourcesRootPath/Odbc
-        # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/Odbc
-        make -j 4
+            patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
+            patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
 
-        upload libOrthancOdbcIndex.so
-        upload libOrthancOdbcStorage.so
+            pushd $buildRootPath
+            # TODO: we can remove -DUSE_LEGACY_BOOST=ON once the odbc plugin updates to a new release
+            cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_LEGACY_BOOST=ON $sourcesRootPath/Odbc
+            # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/Odbc
+            make -j 4
+
+            upload libOrthancOdbcIndex.so
+            upload libOrthancOdbcStorage.so
+        fi
+    else
+        # CHANGE_VERSION_ODBC
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-odbc/1.3/libOrthancOdbcIndex.so --output-document $buildRootPath/libOrthancOdbcIndex.so
+        wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-odbc/1.3/libOrthancOdbcStorage.so --output-document $buildRootPath/libOrthancOdbcStorage.so
+
     fi
 
 elif [[ $target == "orthanc-indexer" ]]; then
