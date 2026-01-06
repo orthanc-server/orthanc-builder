@@ -24,7 +24,8 @@
 Pending changes
 ---------------
 
-- DOCKER: ugraded base image to `ubuntu:questing-20251029`
+- DOCKER: ugraded base image to `ubuntu:questing-20251029` (ubuntu 25.10)
+  - python has been upgraded to 3.13
 
 
 25.12.3
