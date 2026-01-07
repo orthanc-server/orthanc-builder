@@ -335,7 +335,8 @@ elif [[ $target == "orthanc-stl" ]]; then
 
         pushd $buildRootPath
         # we build STL in static because it uses DCMTK and the DCMTK dynamic libraries are not installed (see in Orthanc section)
-        cmake -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
+        # Note: we force the ORTHANC_FRAMEWORK_VERSION because the 1.12.4 uses DCMTK 3.6.8 that fails to build on ubuntu 25.10
+        cmake -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release -DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.5 $sourcesRootPath
         make -j 4
 
         upload libOrthancSTL.so
