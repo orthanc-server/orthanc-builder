@@ -351,8 +351,9 @@ elif [[ $target == "orthanc-tcia" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the tcia plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF $sourcesRootPath
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancTcia.so
