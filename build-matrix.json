@@ -316,7 +316,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-tcia/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_TCIA",
-            "stable": "OrthancTcia-1.2",
+            "stable": "OrthancTcia-1.3",
             "unstable": "default",
             "artifactsMacOS": "libOrthancTcia.dylib",
             "buildForMacOS": true,

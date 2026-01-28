@@ -46,7 +46,7 @@ Authorization plugin                  0.10.3
 Transfers accelerator plugin          1.7
 GDCM plugin                           1.8
 ODBC plugin                           1.3
-TCIA plugin                           1.2
+TCIA plugin                           1.3
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.0

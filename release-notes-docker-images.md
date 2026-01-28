@@ -26,6 +26,7 @@ Pending changes
 
 - DOCKER: ugraded base image to `ubuntu:questing-20251029` (ubuntu 25.10)
   - python has been upgraded to 3.13
+- upgraded TCIA plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-tcia/file/default/NEWS)
 
 
 25.12.3
@@ -39,8 +40,8 @@ Pending changes
 
 Small updates of these 3 plugins whose version number was not correctly reported:
 - upgraded Advanced Storage plugin [0.2.3](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
-- upgraded pixels masker plugin to [0.1.1](https://github.com/orthanc-server/orthanc-pixels-masker/blob/master/release-notes.md).
-- upgraded pixels masker plugin to [0.9.2](https://github.com/orthanc-server/orthanc-worklists/blob/master/release-notes.md).
+- upgraded Pixels Masker plugin to [0.1.1](https://github.com/orthanc-server/orthanc-pixels-masker/blob/master/release-notes.md).
+- upgraded Worklists plugin to [0.9.2](https://github.com/orthanc-server/orthanc-worklists/blob/master/release-notes.md).
 
 
 25.12.1
