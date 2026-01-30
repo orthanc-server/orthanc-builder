@@ -17,17 +17,19 @@
 >  - the ODBC plugin with SQL Server (msodbcsql18 is preinstalled)
 >  - the Java plugin (from version 24.6.2)
 >
-> Only the default tags are listed here.  You just need to append `-full` for the full image.
+> Only the default tags are listed here.  You just need to append `-full` to the tag name for the full image.
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
-Pending changes
----------------
+
+26.1.0
+------
 
 - upgraded TCIA plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-tcia/file/default/NEWS)
 - upgraded Orthanc Explorer 2 plugin to [1.10.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: ugraded base image to `ubuntu:questing-20251217` (ubuntu 25.10)
   - python has been upgraded to 3.13
+
 
 25.12.3
 -------
