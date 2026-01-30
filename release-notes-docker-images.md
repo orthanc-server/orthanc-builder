@@ -24,7 +24,7 @@
 Pending changes
 ---------------
 
-- DOCKER: ugraded base image to `ubuntu:questing-20251029` (ubuntu 25.10)
+- DOCKER: ugraded base image to `ubuntu:questing-20251217` (ubuntu 25.10)
   - python has been upgraded to 3.13
 - upgraded TCIA plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-tcia/file/default/NEWS)
 
