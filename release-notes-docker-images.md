@@ -24,10 +24,10 @@
 Pending changes
 ---------------
 
+- upgraded TCIA plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-tcia/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.10.2](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: ugraded base image to `ubuntu:questing-20251217` (ubuntu 25.10)
   - python has been upgraded to 3.13
-- upgraded TCIA plugin to [1.3](https://orthanc.uclouvain.be/hg/orthanc-tcia/file/default/NEWS)
-
 
 25.12.3
 -------
