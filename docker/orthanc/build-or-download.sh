@@ -589,7 +589,8 @@ elif [[ $target == "orthanc-ohif" ]]; then
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
         nvm install v20.18.1
-        npm install --global bun
+        npm install --global bun@1.2.23
+        npm install --global lerna@7.4.2
         npm install --global yarn
 
         pushd $sourcesRootPath
