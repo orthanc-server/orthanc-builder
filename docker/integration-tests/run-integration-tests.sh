@@ -54,7 +54,7 @@ popd  # back to docker/integration-tests folder
 ############ run NewTests first
 testRepoFolder=orthanc-tests-repo-$image
 rm -rf $testRepoFolder/
-hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+hgCloneWithRetries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
 
 pushd $testRepoFolder/NewTests
 

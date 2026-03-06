@@ -250,3 +250,26 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
 
     echo $commit_id
 }
+
+hgCloneWithRetries() {
+    local max_retries=5
+    local retry_delay=30  # seconds
+    local attempt=1
+
+    while [ $attempt -le $max_retries ]; do
+        echo "Attempt $attempt of $max_retries..."
+        if hg clone "$@"; then
+            echo "Clone succeeded."
+            return 0
+        else
+            if [ $attempt -lt $max_retries ]; then
+                echo "Clone failed. Retrying in $retry_delay seconds..."
+                sleep $retry_delay
+            else
+                echo "Clone failed after $max_retries attempts."
+                return 1
+            fi
+        fi
+        ((attempt++))
+    done
+}

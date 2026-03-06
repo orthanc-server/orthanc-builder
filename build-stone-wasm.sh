@@ -25,7 +25,7 @@ echo "version = $version"
 echo "commit_id = $commit_id"
 echo "workspace = $workspace"
 
-hg clone $repo $workspace/sources
+hgCloneWithRetries $repo $workspace/sources
 cd $workspace/sources
 hg update -r $commit_id
 last_commit_id=$(hg id -i)
