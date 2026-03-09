@@ -265,6 +265,8 @@ hgCloneWithRetries() {
             if [ $attempt -lt $max_retries ]; then
                 echo "Clone failed. Retrying in $retry_delay seconds..."
                 sleep $retry_delay
+                # Double the delay for the next attempt (exponential backoff)
+                retry_delay=$((retry_delay * 2))                
             else
                 echo "Clone failed after $max_retries attempts."
                 return 1
