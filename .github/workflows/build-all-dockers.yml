@@ -90,8 +90,8 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "unstable",
-            buildRunner: "ubuntu-amd64",
-            buildRunnerType: "self-hosted",
+            buildRunner: "ubuntu-latest",
+            buildRunnerType: "github-hosted",
             testRunner: "ubuntu-latest",
             testRunnerType: "github-hosted"
           }
