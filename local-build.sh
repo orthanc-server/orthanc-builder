@@ -336,6 +336,7 @@ for target in $buildTargets; do
         $add_host_cmd \
         --progress=plain --platform=$platform \
         --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
+        --build-arg ORTHANC_TESTS_COMMIT_ID=$ORTHANC_TESTS_COMMIT_ID \
         --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
         --build-arg ORTHANC_PG_COMMIT_ID=$ORTHANC_PG_COMMIT_ID \
         --build-arg ORTHANC_MYSQL_COMMIT_ID=$ORTHANC_MYSQL_COMMIT_ID \
