@@ -142,7 +142,8 @@ jobs:
       run: |
         cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path
         FILE_CONTENT=$(cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path)
-        echo "orthanc-tests-archive-path=$FILE_CONTENT" >> $GITHUB_OUTPUT
+        echo "orthanc_tests_archive_path=$FILE_CONTENT" >> $GITHUB_OUTPUT
+        echo $GITHUB_OUTPUT
 
   run-docker-integ-tests:
 
@@ -157,7 +158,7 @@ jobs:
       is_tag: ${{ inputs.is_tag }}
       tests_group: ${{ matrix.config.testsGroup}}
       image_type: ${{ matrix.config.imageType}}
-      orthanc_tests_archive_path: ${{ needs.build-docker-normal-image.outputs.orthanc-tests-archive-path }}
+      orthanc_tests_archive_path: ${{ needs.build-docker-normal-image.outputs.orthanc_tests_archive_path }}
 
     strategy:
       fail-fast: false
