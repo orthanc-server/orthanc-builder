@@ -47,8 +47,8 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "stable",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted"
+            runner: "ubuntu-amd64",
+            runnerType: "self-hosted"
           }
         - {
             name: "linux/arm64",
@@ -82,8 +82,8 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "unstable",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted"
+            runner: "ubuntu-amd64",
+            runnerType: "self-hosted"
           }
         - {
             name: "linux/arm64",
@@ -94,7 +94,7 @@ jobs:
           }
 
   publish-manifest-stable:
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-amd64"
     needs: [build-docker-stable]
 
     steps:
@@ -133,7 +133,7 @@ jobs:
 
 
   publish-manifest-unstable:
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-amd64"
     needs: [build-docker-unstable]
 
     steps:
