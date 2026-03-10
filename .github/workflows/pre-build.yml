@@ -29,6 +29,11 @@ jobs:
 
     - uses: actions/checkout@v3
 
+    - name: Add SSH key to ssh-agent
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_MIRRORS_PRIVATE_KEY }}
+
     - name: Sync orthanc-tests on orthanc-mirrors
       run: |
         source github-mirrors/mirror-helpers.sh
