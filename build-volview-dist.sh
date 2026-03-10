@@ -25,14 +25,11 @@ echo "version = $version"
 echo "commit_id = $commit_id"
 echo "workspace = $workspace"
 
-hgCloneWithRetries $repo $workspace/sources
-cd $workspace/sources
-hg update -r $commit_id
-last_commit_id=$(hg id -i)
-
-already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/$last_commit_id/dist.zip | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/$commit_id/dist.zip | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
+    hgCloneWithRetries $repo $commit_id $workspace/sources
+    cd $workspace/sources
 
     cd $workspace/sources/Resources/
     ./CreateVolViewDist.sh
@@ -40,6 +37,6 @@ if [[ $already_built == 0 ]]; then
     cd $workspace/sources/VolView/dist/
     zip -r dist.zip .
 
-    aws s3 --region eu-west-1 cp $workspace/sources/VolView/dist/dist.zip s3://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/$last_commit_id/ --cache-control=max-age=1
+    aws s3 --region eu-west-1 cp $workspace/sources/VolView/dist/dist.zip s3://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/$commit_id/ --cache-control=max-age=1
     aws s3 --region eu-west-1 cp $workspace/sources/VolView/dist/dist.zip s3://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/$version/  --cache-control=max-age=1
 fi

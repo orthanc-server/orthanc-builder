@@ -59,7 +59,7 @@ rm -rf $testRepoFolder/
 
 if [[ "$downloadOrthancTestsRepo" == "false" ]]; then
     orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
-    hgCloneWithRetries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+    hgCloneWithRetries https://orthanc.uclouvain.be/hg/orthanc-tests/ $orthanc_tests_revision $testRepoFolder
 else
     wget $downloadOrthancTestsRepo --output-document /tmp/orthanc-tests.tar.gz --quiet
     mkdir -p $testRepoFolder

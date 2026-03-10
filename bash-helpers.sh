@@ -261,14 +261,21 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
     echo $commit_id
 }
 
-hgCloneWithRetries() {
+hgCloneWithRetries() {  # $1 = repoUrl $2 = commitId $3 = folder
+    repoShortName=$(getHgRepoShortName $1)
+    echo $repoShortName
+    if download_hg_repo_from_orthanc_team $repoShortName $2 $1 $3; then
+        echo "Downloaded from webserver"
+        return 0
+    fi
+
     local max_retries=5
     local retry_delay=30  # seconds
     local attempt=1
 
     while [ $attempt -le $max_retries ]; do
         echo "Attempt $attempt of $max_retries..."
-        if hg clone "$@"; then
+        if hg clone $1 -r $2 $3; then
             echo "Clone succeeded."
             return 0
         else
@@ -286,15 +293,19 @@ hgCloneWithRetries() {
     done
 }
 
-download_hg_repo_from_orthanc_team() { # $1 repoShortName $2 commitId $3 repo-url
+download_hg_repo_from_orthanc_team() { # $1=repoShortName $2=commitId $3=repo-url $4=folder
 
-    mkdir -p $buildRootPath
-    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$commitId | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_there == 1 ]]; then
-        wget "https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$commitId" --output-document $buildRootPath/$1
-        echo 0
+        wget "https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz" --output-document /tmp/$1-$2.tar.gz
+
+        mkdir -p $4
+        pushd $4
+        tar xvf /tmp/$1-$2.tar.gz --strip-components=1
+        popd
+        return 0
     else
-        echo 1
+        return 1
     fi
 }
 
@@ -302,14 +313,14 @@ upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 co
     already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_there == 0 ]]; then
         rm -rf /tmp/$1
-        hgCloneWithRetries $3 -r $2 /tmp/$1
+        hgCloneWithRetries $3 $2 /tmp/$1
         pushd /tmp/$1
         hg archive /tmp/$1-$2.tar.gz
 
-        echo "uploading hg-repo $1";
+        # echo "uploading hg-repo $1";
 
         aws s3 --region eu-west-1 cp /tmp/$1-$2.tar.gz s3://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz --cache-control=max-age=1
-    else
-        echo "skipping uploading of $1-$2.tar.gz - already on the webserver";
+    # else
+    #     echo "skipping uploading of $1-$2.tar.gz - already on the webserver";
     fi
 }

@@ -93,29 +93,42 @@ patch_version_name_on_unstable() {
     fi
 }
 
-hg_clone_with_retries() {
-    local max_retries=5
-    local retry_delay=30  # seconds
-    local attempt=1
+hg_clone_with_retries() {    # $1 = repoShortName $2 = commitId $3 = folder
 
-    while [ $attempt -le $max_retries ]; do
-        echo "Attempt $attempt of $max_retries..."
-        if hg clone "$@"; then
-            echo "Clone succeeded."
-            return 0
-        else
-            if [ $attempt -lt $max_retries ]; then
-                echo "Clone failed. Retrying in $retry_delay seconds..."
-                sleep $retry_delay
-                # Double the delay for the next attempt (exponential backoff)
-                retry_delay=$((retry_delay * 2))                
+    # try to download from a webserver instead of accessing the hg server that rejects many Azure IPs
+    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    if [[ $already_there == 1 ]]; then
+        wget "https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz" --output-document /tmp/$1-$2.tar.gz
+
+        mkdir -p $3
+        pushd $3
+        tar xvf /tmp/$1-$2.tar.gz --strip-components=1
+        popd
+        return 0
+    else
+        local max_retries=5
+        local retry_delay=30  # seconds
+        local attempt=1
+
+        while [ $attempt -le $max_retries ]; do
+            echo "Attempt $attempt of $max_retries..."
+            if hg clone "$@"; then
+                echo "Clone succeeded."
+                return 0
             else
-                echo "Clone failed after $max_retries attempts."
-                return 1
+                if [ $attempt -lt $max_retries ]; then
+                    echo "Clone failed. Retrying in $retry_delay seconds..."
+                    sleep $retry_delay
+                    # Double the delay for the next attempt (exponential backoff)
+                    retry_delay=$((retry_delay * 2))                
+                else
+                    echo "Clone failed after $max_retries attempts."
+                    return 1
+                fi
             fi
-        fi
-        ((attempt++))
-    done
+            ((attempt++))
+        done
+    fi
 }
 
 if [[ $target == "orthanc" ]]; then
@@ -130,7 +143,7 @@ if [[ $target == "orthanc" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "result\[VERSION\] = ORTHANC_VERSION" $sourcesRootPath/OrthancServer/Sources/OrthancRestApi/OrthancRestSystem.cpp "result\[VERSION\] = \"mainline-$commitId\""
         patch_version_name_on_unstable "return MODALITY_WORKLISTS_VERSION" $sourcesRootPath/OrthancServer/Plugins/Samples/ModalityWorklists/Plugin.cpp
@@ -165,7 +178,7 @@ elif [[ $target == "orthanc-tests" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-tests $commitId $sourcesRootPath
         pushd $sourcesRootPath
         hg archive $buildRootPath/orthanc-tests.tar.gz
 
@@ -178,7 +191,7 @@ elif [[ $target == "orthanc-authorization" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-authorization/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-authorization $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -196,7 +209,7 @@ elif [[ $target == "orthanc-python" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-python/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-python $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
@@ -213,7 +226,7 @@ elif [[ $target == "orthanc-gdcm" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-gdcm/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-gdcm $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -232,8 +245,8 @@ elif [[ $target == "orthanc-pg" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+        # hg_clone_with_retries orthanc attach-custom-data /orthanc
+        hg_clone_with_retries orthanc-databases $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/StoragePlugin.cpp
@@ -254,9 +267,9 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        # hg_clone_with_retries orthanc attach-custom-data /orthanc
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-databases $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
@@ -279,9 +292,9 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        # hg_clone_with_retries orthanc attach-custom-data /orthanc
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-databases/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-databases $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
@@ -302,7 +315,7 @@ elif [[ $target == "orthanc-indexer" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-indexer/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-indexer $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
@@ -320,7 +333,7 @@ elif [[ $target == "orthanc-neuro" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-neuro/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-neuro $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin/Plugin.cpp
 
@@ -338,7 +351,7 @@ elif [[ $target == "orthanc-java" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-java/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-java $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -362,7 +375,7 @@ elif [[ $target == "orthanc-stl" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-stl/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-stl $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_STL_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
@@ -387,7 +400,7 @@ elif [[ $target == "orthanc-tcia" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-tcia/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-tcia $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -439,7 +452,7 @@ elif [[ $target == "orthanc-advanced-storage" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        # hg_clone_with_retries orthanc attach-custom-data /orthanc
 
         pushd $sourcesRootPath
 
@@ -464,7 +477,7 @@ elif [[ $target == "orthanc-worklists" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        # hg_clone_with_retries orthanc attach-custom-data /orthanc
 
         pushd $sourcesRootPath
 
@@ -489,7 +502,7 @@ elif [[ $target == "orthanc-pixels-masker" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        # hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc/ -r attach-custom-data /orthanc
+        # hg_clone_with_retries orthanc attach-custom-data /orthanc
 
         pushd $sourcesRootPath
 
@@ -526,7 +539,7 @@ elif [[ $target == "orthanc-volview-from-dist" ]]; then
         # build only the C++ code, not the dist.zip that has been downloaded before
 
         pushd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-volview $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_VOLVIEW_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
@@ -554,7 +567,7 @@ elif [[ $target == "orthanc-volview" ]]; then
         nvm install v19.7.0
 
         pushd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-volview/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-volview $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_VOLVIEW_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
@@ -601,7 +614,7 @@ elif [[ $target == "orthanc-ohif-from-dist" ]]; then
         # build only the C++ code, not the dist.zip that has been downloaded before
 
         pushd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-ohif $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
@@ -633,7 +646,7 @@ elif [[ $target == "orthanc-ohif" ]]; then
         npm install --global yarn
 
         pushd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-ohif/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-ohif $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
         ohif_version=$(cat $sourcesRootPath/Resources/CreateOHIFDist.sh | grep -oP 'PACKAGE=Viewers-\K\d+\.\d+\.\d+')
@@ -668,7 +681,7 @@ elif [[ $target == "orthanc-s3" ]]; then
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the object-storage plugin updates to a new release
         cd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
+        hg_clone_with_retries orthanc-object-storage $commitId
         ln -s /third-party-downloads $sourcesRootPath/orthanc-object-storage/Aws/ThirdPartyDownloads
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
@@ -691,7 +704,7 @@ elif [[ $target == "orthanc-google-storage" ]]; then
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the object-storage plugin updates to a new release
         cd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
+        hg_clone_with_retries orthanc-object-storage $commitId
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
@@ -713,7 +726,7 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
         export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install libcrypto++-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
 
         cd $sourcesRootPath
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-object-storage/ -r $commitId
+        hg_clone_with_retries orthanc-object-storage $commitId
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
@@ -732,7 +745,7 @@ elif [[ $target == "orthanc-webviewer" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-webviewer/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-webviewer $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -750,7 +763,7 @@ elif [[ $target == "orthanc-transfers" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-transfers/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-transfers $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -769,7 +782,7 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-dicomweb/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-dicomweb $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_DICOM_WEB_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
@@ -787,7 +800,7 @@ elif [[ $target == "orthanc-wsi" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-wsi/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-wsi $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_WSI_VERSION" $sourcesRootPath/ViewerPlugin/Plugin.cpp
 
@@ -824,7 +837,7 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-stone/ -r $commitId /source
+        hg_clone_with_retries orthanc-stone $commitId /source
         pushd /source/Applications/StoneWebViewer/WebAssembly
         chmod +x docker-internal.sh
         STONE_BRANCH=${commitId} ./docker-internal.sh Release
@@ -851,7 +864,7 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-stone/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-stone $commitId $sourcesRootPath
 
         # StoneViewer is quite often on a non stable branch -> if its version is "mainline", always append the commit id
         if grep -q "set(STONE_WEB_VIEWER_VERSION \"mainline\")" "$sourcesRootPath/Applications/StoneWebViewer/Version.cmake"; then
@@ -874,7 +887,7 @@ elif [[ $target == "orthanc-education" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-education/ -r $commitId $sourcesRootPath
+        hg_clone_with_retries orthanc-education $commitId $sourcesRootPath
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
