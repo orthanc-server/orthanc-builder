@@ -158,6 +158,17 @@ if [[ $target == "orthanc" ]]; then
 
     fi
 
+elif [[ $target == "orthanc-tests" ]]; then
+
+    dl=$(( $dl + $(download orthanc-tests.tar.gz) ))
+
+    if [[ $dl != 0 ]]; then
+
+        hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $commitId $sourcesRootPath
+
+        upload orthanc-tests.tar.gz
+    fi
+
 elif [[ $target == "orthanc-authorization" ]]; then
 
     dl=$(( $dl + $(download libOrthancAuthorization.so) ))

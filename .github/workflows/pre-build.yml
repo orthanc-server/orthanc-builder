@@ -30,21 +30,21 @@ jobs:
         echo ${{ steps.branch_name.outputs.is_tag }} ${{ steps.branch_name.outputs.current_branch_tag }}
         echo ${{ github.ref}}
 
-    - uses: actions/checkout@v3
+    # - uses: actions/checkout@v3
 
-    - name: Add SSH key to ssh-agent
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.ssh_mirrors_private_key }}
+    # - name: Add SSH key to ssh-agent
+    #   uses: webfactory/ssh-agent@v0.9.0
+    #   with:
+    #     ssh-private-key: ${{ secrets.ssh_mirrors_private_key }}
 
-    - name: Sync orthanc-tests on orthanc-mirrors
-      run: |
-        source github-mirrors/mirror-helpers.sh
-        if [ -d ".env" ]; then
-          source .env/bin/activate
-        else
-          initVirtualEnv
-        fi
-        mkdir -p ${{github.workspace}}/github-mirrors/mirrors
-        syncAllBranchesFromRepo orthanc-tests
+    # - name: Sync orthanc-tests on orthanc-mirrors
+    #   run: |
+    #     source github-mirrors/mirror-helpers.sh
+    #     if [ -d ".env" ]; then
+    #       source .env/bin/activate
+    #     else
+    #       initVirtualEnv
+    #     fi
+    #     mkdir -p ${{github.workspace}}/github-mirrors/mirrors
+    #     syncAllBranchesFromRepo orthanc-tests
 
