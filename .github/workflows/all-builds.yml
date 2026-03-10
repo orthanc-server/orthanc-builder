@@ -19,6 +19,8 @@ concurrency:
 jobs:
   pre-build:
     uses: ./.github/workflows/pre-build.yml
+  secrets:
+    ssh_mirrors_private_key: ${{ secrets.SSH_MIRRORS_PRIVATE_KEY }}
 
   build-stone-wasm-stable:
     if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}  

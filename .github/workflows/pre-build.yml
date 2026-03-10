@@ -32,7 +32,7 @@ jobs:
     - name: Add SSH key to ssh-agent
       uses: webfactory/ssh-agent@v0.9.0
       with:
-        ssh-private-key: ${{ secrets.SSH_MIRRORS_PRIVATE_KEY }}
+        ssh-private-key: ${{ secrets.ssh_mirrors_private_key }}
 
     - name: Sync orthanc-tests on orthanc-mirrors
       run: |
