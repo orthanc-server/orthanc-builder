@@ -51,6 +51,8 @@ jobs:
   build-docker-normal-image:
     name: build-docker-normal-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.build_runner }}
+    outputs:
+      orthanc_tests_archive_path: ${{ steps.set-output.outputs.orthanc_tests_archive_path }}
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
       # limit concurrency
@@ -139,6 +141,7 @@ jobs:
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
     - name: Output orthanc_tests_archive_path
+      id: set-output
       run: |
         cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path
         FILE_CONTENT=$(cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path)
