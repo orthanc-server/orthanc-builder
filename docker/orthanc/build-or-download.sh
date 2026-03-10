@@ -159,12 +159,15 @@ if [[ $target == "orthanc" ]]; then
     fi
 
 elif [[ $target == "orthanc-tests" ]]; then
+    # the runners that are executing the tests often fail to have access to mercurial -> clone it and upload the archive to a webserver
 
     dl=$(( $dl + $(download orthanc-tests.tar.gz) ))
 
     if [[ $dl != 0 ]]; then
 
         hg_clone_with_retries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $commitId $sourcesRootPath
+        pushd $sourcesRootPath
+        hg archive $buildRootPath/orthanc-tests.tar.gz
 
         upload orthanc-tests.tar.gz
     fi
