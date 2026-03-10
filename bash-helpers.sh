@@ -301,6 +301,7 @@ download_hg_repo_from_orthanc_team() { # $1 repoShortName $2 commitId $3 repo-ur
 upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 commitId $3 repo-url
     already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_there == 0 ]]; then
+        rm -rf /tmp/$1
         hgCloneWithRetries $3 -r $2 /tmp/$1
         pushd /tmp/$1
         hg archive /tmp/$1-$2.tar.gz
