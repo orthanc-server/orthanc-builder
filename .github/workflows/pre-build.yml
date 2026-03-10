@@ -37,6 +37,6 @@ jobs:
         else
           initVirtualEnv
         fi
-
+        mkdir -p mirrors
         syncAllBranchesFromRepo orthanc-tests
 
