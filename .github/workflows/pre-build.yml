@@ -10,7 +10,7 @@ jobs:
 
   pre_build:
     name: pre_build
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-arm64"
     outputs:
       current_branch_tag: ${{steps.branch_name.outputs.current_branch_tag}}
       is_tag: ${{steps.branch_name.outputs.is_tag}}
@@ -26,4 +26,17 @@ jobs:
       run: |
         echo ${{ steps.branch_name.outputs.is_tag }} ${{ steps.branch_name.outputs.current_branch_tag }}
         echo ${{ github.ref}}
+
+    - uses: actions/checkout@v3
+
+    - name: Sync orthanc-tests on orthanc-mirrors
+      run: |
+        source github-mirrors/mirror-helpers.sh
+        if [ -d ".env" ]; then
+          source .env/bin/activate
+        else
+          initVirtualEnv
+        fi
+
+        syncAllBranchesFromRepo orthanc-tests
 
