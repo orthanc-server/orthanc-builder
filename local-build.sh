@@ -256,7 +256,7 @@ else
 
     # save the orthanc-tests archive path for runners who are not able to run hg clone
     echo "https://public-files.orthanc.team/tmp-builds/docker-builds/$BASE_UBUNTU_IMAGE/$ORTHANC_TESTS_COMMIT_ID-orthanc-tests-tar.gz" > "/tmp/$version-orthanc-tests-archive-path"
-
+    cat "/tmp/$version-orthanc-tests-archive-path"
     prefer_downloads=1
     enable_upload=1
 fi

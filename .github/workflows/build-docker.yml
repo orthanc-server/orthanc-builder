@@ -140,6 +140,7 @@ jobs:
 
     - name: Output orthanc_tests_archive_path
       run: |
+        cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path
         FILE_CONTENT=$(cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path)
         echo "orthanc-tests-archive-path=$FILE_CONTENT" >> $GITHUB_OUTPUT
 
