@@ -135,13 +135,13 @@ jobs:
     #   timeout-minutes: 30
   
     - name: Download unstable commit id matrix as artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: commit-ids-matrix-unstable
         path: /tmp
 
     - name: Download stable commit id matrix as artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: commit-ids-matrix-stable
         path: /tmp
@@ -233,13 +233,13 @@ jobs:
         password: ${{ secrets.docker_hub_token }}
 
     - name: Download unstable commit id matrix as artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: commit-ids-matrix-unstable
         path: /tmp
 
     - name: Download stable commit id matrix as artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: commit-ids-matrix-stable
         path: /tmp

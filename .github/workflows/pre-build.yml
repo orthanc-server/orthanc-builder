@@ -39,13 +39,13 @@ jobs:
       run: ./local-build.sh step=generate-commit-id-matrix version=stable
 
     - name: Upload unstable commit id matrix as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: commit-ids-matrix-unstable
         path: /tmp/commit-ids-matrix-unstable.json
 
     - name: Upload stable commit id matrix as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: commit-ids-matrix-stable
         path: /tmp/commit-ids-matrix-stable.json
