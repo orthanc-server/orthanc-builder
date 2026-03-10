@@ -37,6 +37,6 @@ jobs:
         else
           initVirtualEnv
         fi
-        mkdir -p mirrors
+        mkdir -p ${{github.workspace}}/github-mirrors/mirrors
         syncAllBranchesFromRepo orthanc-tests
 
