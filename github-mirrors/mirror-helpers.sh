@@ -14,7 +14,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 initVirtualEnv() {
     python -m venv .env
     source .env/bin/activate
-    pip install mercurial hg-git
+    pip install mercurial==6.8.2 hg-git==1.1.3
 }
 
 firstCloneMercurialRepo() { # $1 = repo-name
