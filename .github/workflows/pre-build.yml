@@ -30,21 +30,23 @@ jobs:
         echo ${{ steps.branch_name.outputs.is_tag }} ${{ steps.branch_name.outputs.current_branch_tag }}
         echo ${{ github.ref}}
 
-    # - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    # - name: Add SSH key to ssh-agent
-    #   uses: webfactory/ssh-agent@v0.9.0
-    #   with:
-    #     ssh-private-key: ${{ secrets.ssh_mirrors_private_key }}
+    - name: Get Commit id matrix (unstable)
+      run: ./local-build.sh step=generate-commit-id-matrix version=unstable
 
-    # - name: Sync orthanc-tests on orthanc-mirrors
-    #   run: |
-    #     source github-mirrors/mirror-helpers.sh
-    #     if [ -d ".env" ]; then
-    #       source .env/bin/activate
-    #     else
-    #       initVirtualEnv
-    #     fi
-    #     mkdir -p ${{github.workspace}}/github-mirrors/mirrors
-    #     syncAllBranchesFromRepo orthanc-tests
+    - name: Get Commit id matrix (stable)
+      run: ./local-build.sh step=generate-commit-id-matrix version=stable
+
+    - name: Upload unstable commit id matrix as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: commit-ids-matrix-unstable
+        path: /tmp/commit-ids-matrix-unstable.json
+
+    - name: Upload stable commit id matrix as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: commit-ids-matrix-stable
+        path: /tmp/commit-ids-matrix-stable.json
 
