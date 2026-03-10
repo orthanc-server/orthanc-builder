@@ -138,6 +138,9 @@ if [[ $step == "publish-manifest" ]]; then
     exit 0
 fi
 
+echo $(whoami)
+docker ps -a
+docker info
 
 # get version number from build-matrix.json (stable or unstable)
 # note: we get the last commit id from a branch to detect last changes in a branch
