@@ -27,8 +27,10 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' || inputs.is_tag == 'true' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
-      runner: ${{ matrix.config.runner }}
-      runner_type: ${{ matrix.config.runnerType }}
+      build_runner: ${{ matrix.config.buildRunner }}
+      test_runner: ${{ matrix.config.testRunner }}
+      build_runner_type: ${{ matrix.config.buildRunnerType }}
+      test_runner_type: ${{ matrix.config.testRunnerType }}
       platform: ${{ matrix.config.platform }}
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
@@ -47,23 +49,29 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "stable",
-            runner: "ubuntu-amd64",
-            runnerType: "self-hosted"
+            buildRunner: "ubuntu-amd64",
+            buildRunnerType: "self-hosted",
+            testRunner: "ubuntu-latest",
+            testRunnerType: "github-hosted"
           }
         - {
             name: "linux/arm64",
             platform: "linux/arm64",
             stableUnstable: "stable",
-            runner: "debian-arm64",
-            runnerType: "self-hosted"
+            buildRunner: "debian-arm64",
+            buildRunnerType: "self-hosted",
+            testRunner: "debian-arm64",
+            testRunnerType: "github-hosted"
           }
 
   build-docker-unstable:
     if: ${{ inputs.is_tag != 'true' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
-      runner: ${{ matrix.config.runner }}
-      runner_type: ${{ matrix.config.runnerType }}
+      build_runner: ${{ matrix.config.buildRunner }}
+      test_runner: ${{ matrix.config.testRunner }}
+      build_runner_type: ${{ matrix.config.buildRunnerType }}
+      test_runner_type: ${{ matrix.config.testRunnerType }}
       platform: ${{ matrix.config.platform }}
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
@@ -82,15 +90,19 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "unstable",
-            runner: "ubuntu-amd64",
-            runnerType: "self-hosted"
+            buildRunner: "ubuntu-amd64",
+            buildRunnerType: "self-hosted",
+            testRunner: "ubuntu-latest",
+            testRunnerType: "github-hosted"
           }
         - {
             name: "linux/arm64",
             platform: "linux/arm64",
             stableUnstable: "unstable",
-            runner: "debian-arm64",
-            runnerType: "self-hosted"
+            buildRunner: "debian-arm64",
+            buildRunnerType: "self-hosted",
+            testRunner: "debian-arm64",
+            testRunnerType: "github-hosted"
           }
 
   publish-manifest-stable:

@@ -8,6 +8,7 @@ set -o xtrace
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:attach-custom-data-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:22.7.0-full version=stable image=full
+# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable downloadOrthancTestsRepo=https://public-files.orthanc.team/tmp-builds/docker-builds/linux/amd64/questing-20251217-stable/1a4681ee6139-orthanc-tests.tar.gz
 
 source ../../bash-helpers.sh
 
@@ -15,6 +16,7 @@ imageUnderTest=orthancteam/orthanc:latest
 version=unknown
 image=normal
 testsGroup=tests-group-all
+downloadOrthancTestsRepo=false
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 
@@ -32,6 +34,7 @@ echo "imageUnderTest     = $imageUnderTest"
 echo "version            = $version"
 echo "image              = $image"
 echo "testsGroup         = $testsGroup"
+echo "downloadOrthancTestsRepo = $downloadOrthancTestsRepo"
 
 # build to orthanc-under-tests image
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
@@ -46,15 +49,23 @@ else
     integ_tests_branch_tag=$(getIntegTestsRevision $version)
 fi
 
-orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
-
 popd  # back to docker/integration-tests folder
 
 
 ############ run NewTests first
 testRepoFolder=orthanc-tests-repo-$image
 rm -rf $testRepoFolder/
-hgCloneWithRetries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+
+if [[ "$downloadOrthancTestsRepo" == "false" ]]; then
+    orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
+    hgCloneWithRetries https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+else
+    wget $downloadOrthancTestsRepo --output-document /tmp/orthanc-tests.tar.gz --quiet
+    mkdir $testRepoFolder
+    pushd $testRepoFolder
+    tar xvf /tmp/orthanc-tests.tar.gz --strip-components=1
+    popd # back to docker/integration-tests folder
+fi
 
 pushd $testRepoFolder/NewTests
 

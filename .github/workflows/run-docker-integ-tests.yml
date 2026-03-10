@@ -33,6 +33,10 @@ on:
         description: 'image type: full, normal'
         type: string
         required: true
+      orthanc_tests_archive_path:
+        description: 'url where the orthanc-tests archive can be downloaded'
+        type: string
+        required: true
 
 jobs:
   run-integ-tests:
@@ -46,7 +50,7 @@ jobs:
 
     - uses: actions/checkout@v3
       # TODO: enable on ARM64 too
-      if: inputs.runner == 'ubuntu-amd64'
+      if: inputs.runner == 'ubuntu-latest'
 
     - name: Pull image for integ tests
       if: inputs.runner_type == 'github-hosted'
@@ -54,13 +58,13 @@ jobs:
 
     - name: Run normal image integration tests
       # TODO: enable on ARM64 too
-      if: inputs.runner == 'ubuntu-amd64'
-      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=${{ inputs.image_type }} imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=${{ inputs.tests_group }}
+      if: inputs.runner == 'ubuntu-latest'
+      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=${{ inputs.image_type }} imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=${{ inputs.tests_group }} downloadOrthancTestsRepo=${{ inputs.orthanc_tests_archive_path}}
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Skipped for ARM64
       # TODO: enable on ARM64 too
-      if: inputs.runner == 'ubuntu-arm64'
+      if: inputs.runner == 'debian-arm64'
       run: echo "skipped on ARM 64"
 
     # - name: Setup tmate session
