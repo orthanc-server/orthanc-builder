@@ -1,0 +1,3 @@
+.gitignore
+Dockerfile
+Dockerfile.orthanc-transcoding-tests

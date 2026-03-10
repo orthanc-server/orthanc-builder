@@ -1,20 +1,9 @@
-# mercurial does not work anymore on jodogne/orthanc-tests -> use a specific image
-FROM ubuntu:22.04 AS ubuntu-hg
-
-RUN apt-get update
-RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install mercurial
-
-WORKDIR /
-
-ARG ORTHANC_TESTS_REVISION=default
-RUN hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $ORTHANC_TESTS_REVISION
-
 ##############################################################
 FROM jodogne/orthanc-tests AS orthanc-tests
 RUN mkdir /tests
 WORKDIR /tests
 
-COPY --from=ubuntu-hg /orthanc-tests /tests/orthanc-tests
+COPY ./orthanc-tests-repo /tests/orthanc-tests
 RUN ls -al /tests/
 RUN mkdir /tmp/orthanc-tests/
 
@@ -38,7 +27,7 @@ RUN pip install pynetdicom==1.5.6
 RUN mkdir /tests
 WORKDIR /tests
 
-COPY --from=ubuntu-hg /orthanc-tests /tests/orthanc-tests
+COPY ./orthanc-tests-repo /tests/orthanc-tests
 RUN ls -al /tests/
 RUN mkdir /tmp/orthanc-tests/
 
@@ -66,7 +55,7 @@ RUN rm /usr/local/bin/findscu /usr/local/bin/storescu /usr/local/bin/echoscu /us
 RUN mkdir /tests
 WORKDIR /tests
 
-COPY --from=ubuntu-hg /orthanc-tests /tests/orthanc-tests
+COPY ./orthanc-tests-repo /tests/orthanc-tests
 RUN ls -al /tests/
 RUN mkdir /tmp/orthanc-tests/
 
