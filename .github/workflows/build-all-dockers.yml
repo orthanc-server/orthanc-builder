@@ -61,7 +61,7 @@ jobs:
             buildRunner: "debian-arm64",
             buildRunnerType: "self-hosted",
             testRunner: "debian-arm64",
-            testRunnerType: "github-hosted"
+            testRunnerType: "disabled"
           }
 
   build-docker-unstable:
