@@ -10,7 +10,7 @@ jobs:
 
   pre_build:
     name: pre_build
-    runs-on: "ubuntu-arm64"
+    runs-on: "debian-arm64"
     outputs:
       current_branch_tag: ${{steps.branch_name.outputs.current_branch_tag}}
       is_tag: ${{steps.branch_name.outputs.is_tag}}
