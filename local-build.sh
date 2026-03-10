@@ -252,7 +252,7 @@ if [[ $type == "local" ]]; then
 else
 
     # when building in CI, don't use intermediate targets (it would push plenty of images)
-    buildTargets=$finalImageTarget
+    buildTargets="build-orthanc-tests $finalImageTarget"
 
     prefer_downloads=1
     enable_upload=1
