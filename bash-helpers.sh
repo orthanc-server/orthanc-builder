@@ -214,7 +214,12 @@ getGitCommitId() { # $1 = repo, $2 = branch/tag/revision
     echo $commit_id
 }
 
-getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1), $5 = throttle (0/1)
+getHgRepoShortName() { # $1 = repo url (https://orthanc.uclouvain.be/hg/orthanc-databases/)
+    repoShortName=$(echo "$1" | grep -oP '(?<=hg\/).*(?=\/)')
+    echo $repoShortName
+}
+
+getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1), $5 = throttle (0/1) $6 = uploadToWebServer
 
     if [[ $3 == "macos" ]]; then
         revision=$(getBranchTagToBuildMacOS $1 $2)
@@ -241,6 +246,11 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
     if [[ $repoType == "hg" ]]; then
 
         commit_id=$(getHgCommitId $repo $revision)
+        repoShortName=$(getHgRepoShortName $repo)
+
+        if [[ $uploadToWebServer == "1" ]]; then
+            upload_hg_repo_to_orthanc_team_if_not_already_there $repoShortName $commit_id $repo
+        fi
 
     elif [[ $repoType == "git" ]]; then
 
@@ -274,4 +284,31 @@ hgCloneWithRetries() {
         fi
         ((attempt++))
     done
+}
+
+download_hg_repo_from_orthanc_team() { # $1 repoShortName $2 commitId $3 repo-url
+
+    mkdir -p $buildRootPath
+    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$commitId | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    if [[ $already_there == 1 ]]; then
+        wget "https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$commitId" --output-document $buildRootPath/$1
+        echo 0
+    else
+        echo 1
+    fi
+}
+
+upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 commitId $3 repo-url
+    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    if [[ $already_there == 0 ]]; then
+        hgCloneWithRetries $3 -r $2 /tmp/$1
+        pushd /tmp/$1
+        hg archive /tmp/$1-$2.tar.gz
+
+        echo "uploading hg-repo $1";
+
+        aws s3 --region eu-west-1 cp /tmp/$1-$2.tar.gz s3://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz --cache-control=max-age=1
+    else
+        echo "skipping uploading of $1-$2.tar.gz - already on the webserver";
+    fi
 }

@@ -6,7 +6,9 @@ on:
       current_branch_tag: 
         value: ${{ jobs.pre_build.outputs.current_branch_tag }}
     secrets:
-      ssh_mirrors_private_key:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
         required: true
 
 jobs:
@@ -34,9 +36,15 @@ jobs:
 
     - name: Get Commit id matrix (unstable)
       run: ./local-build.sh step=generate-commit-id-matrix version=unstable
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
 
     - name: Get Commit id matrix (stable)
       run: ./local-build.sh step=generate-commit-id-matrix version=stable
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
 
     - name: Upload unstable commit id matrix as artifact
       uses: actions/upload-artifact@v4
