@@ -576,7 +576,8 @@ elif [[ $target == "orthanc-volview" ]]; then
         volview_version=$(cat $sourcesRootPath/Resources/CreateVolViewDist.sh | grep 'VERSION=' | grep -v '#' | grep -v '\$' | cut -d'=' -f2)
 
         # CreateVolViewDist/build.sh needs to work with /target and /source
-        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
+        # wget https://orthanc.uclouvain.be/downloads/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/VolView-${volview_version}.tar.gz --quiet --output-document $sourcesRootPath/VolView-${volview_version}.tar.gz
 
         # CreateVolViewDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target
@@ -652,7 +653,8 @@ elif [[ $target == "orthanc-ohif" ]]; then
         patch_version_name_on_unstable "return ORTHANC_OHIF_VERSION" $sourcesRootPath/Sources/Plugin.cpp
         ohif_version=$(cat $sourcesRootPath/Resources/CreateOHIFDist.sh | grep -oP 'PACKAGE=Viewers-\K\d+\.\d+\.\d+')
 
-        wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${ohif_version}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${ohif_version}.tar.gz
+        # wget https://orthanc.uclouvain.be/downloads/third-party-downloads/OHIF/Viewers-${ohif_version}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${ohif_version}.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/OHIF/Viewers-${ohif_version}.tar.gz --quiet --output-document $sourcesRootPath/Viewers-${ohif_version}.tar.gz
 
         # CreateOHIFDist/build.sh needs /target and /source while $sourcesRootPath usually points to /sources
         mkdir /target

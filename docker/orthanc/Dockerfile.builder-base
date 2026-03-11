@@ -68,6 +68,7 @@ RUN mkdir -p /third-party-downloads
 # download most commonly used third-party files to avoid downloading too many files from UCLouvain servers when building
 WORKDIR /third-party-downloads
 RUN wget https://public-files.orthanc.team/third-party-downloads/VolView-4.1.1.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/VolView-4.4.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-auth-0.7.1.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-cal-0.6.1.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-common-0.9.3.tar.gz
@@ -90,6 +91,8 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.5.0.tar.
 RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.9.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.17.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.6.8.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.6.9.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.7.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/gdcm-3.0.22.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/jpegsrc.v9f.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/jsoncpp-1.9.5.tar.gz
