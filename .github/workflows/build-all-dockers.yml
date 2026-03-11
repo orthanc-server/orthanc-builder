@@ -51,7 +51,7 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "stable",
-            buildRunner: "ubuntu-amd64",
+            buildRunner: "ubuntu-latest",
             buildRunnerType: "self-hosted",
             testRunner: "ubuntu-latest",
             testRunnerType: "github-hosted",
@@ -118,7 +118,7 @@ jobs:
           }
 
   publish-manifest-stable:
-    runs-on: "ubuntu-amd64"
+    runs-on: "ubuntu-latest"
     needs: [build-docker-stable]
 
     steps:
@@ -157,7 +157,7 @@ jobs:
 
 
   publish-manifest-unstable:
-    runs-on: "ubuntu-amd64"
+    runs-on: "ubuntu-latest"
     needs: [build-docker-unstable]
 
     steps:
