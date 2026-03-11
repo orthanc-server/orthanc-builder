@@ -109,8 +109,11 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-wsi
 RUN mkdir /downloads
 
 # TODO: we should probably build these tools here as well
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.3/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.3/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+# RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.3/OrthancWSIDicomToTiff --output-document /downloads/OrthancWSIDicomToTiff --quiet
+# RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-wsi/3.3/OrthancWSIDicomizer --output-document /downloads/OrthancWSIDicomizer --quiet
+RUN wget https://public-files.orthanc.team/lsb-mirror/OrthancWSIDicomToTiff-3.3 --output-document /downloads/OrthancWSIDicomToTiff --quiet
+RUN wget https://public-files.orthanc.team/lsb-mirror/OrthancWSIDicomizer-3.3 --output-document /downloads/OrthancWSIDicomizer --quiet
+
 
 ########################## Orthanc Webviewer
 
@@ -314,10 +317,10 @@ RUN if [ "$PLATFORM" = "linux/arm64" ]; then /scripts/build-or-download.sh versi
 FROM orthanc-builder-base AS build-downloader
 
 RUN mkdir /downloads
-# CHANGE_VERSION_WVB (LSB are still built by Jenkins because jenkins is also building the frontend)
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
-# CHANGE_VERSION_WVB_ALPHA
-RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+# RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
+# RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
+RUN wget https://public-files.orthanc.team/lsb-mirror/libOsimisWebViewer-1.4.3.so --output-document /downloads/libOsimisWebViewer.so --quiet
+RUN wget https://public-files.orthanc.team/lsb-mirror/libOsimisWebViewer-1.4.3.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 
 
 
