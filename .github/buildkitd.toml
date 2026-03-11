@@ -1,2 +1,6 @@
 [worker.oci]
+  enabled = true
   max-parallelism = 4
+
+[worker.containerd]
+  enabled = true
