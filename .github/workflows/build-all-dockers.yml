@@ -52,7 +52,7 @@ jobs:
             platform: "linux/amd64",
             stableUnstable: "stable",
             buildRunner: "ubuntu-latest",
-            buildRunnerType: "self-hosted",
+            buildRunnerType: "github-hosted",
             testRunner: "ubuntu-latest",
             testRunnerType: "github-hosted",
             concurrencyGroupNormal: "concurrency-group-amd64-stable-normal",
