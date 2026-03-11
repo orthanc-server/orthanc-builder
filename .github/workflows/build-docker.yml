@@ -34,11 +34,11 @@ on:
         type: string
         required: true
       concurrency_group_normal:
-        description: 'concurrency group'
+        description: 'concurrency group normal'
         type: string
         required: true
       concurrency_group_full:
-        description: 'concurrency group'
+        description: 'concurrency group full'
         type: string
         required: true
 

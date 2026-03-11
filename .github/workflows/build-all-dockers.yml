@@ -35,7 +35,8 @@ jobs:
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
       is_tag: ${{ inputs.is_tag }}
-      concurrency_group: ${{ matrix.config.concurrencyGroup }}
+      concurrency_group_normal: ${{ matrix.config.concurrencyGroupNormal }}
+      concurrency_group_full: ${{ matrix.config.concurrencyGroupFull }}
     secrets:
       docker_hub_username: ${{ secrets.docker_hub_username }}
       docker_hub_token: ${{ secrets.docker_hub_token }}
