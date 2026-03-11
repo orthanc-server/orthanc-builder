@@ -10,7 +10,7 @@ set -ex
 # TO build locally on ARM64
 # ./local-build.sh skipCommitChecks=1 platform=linux/arm64 image=normal
 # TO populate commit id matrix
-# ./local-build.sh step=generate-commit-id-matrix
+# ./local-build.sh step=generate-commit-id-matrix version=unstable
 
 source bash-helpers.sh
 
