@@ -51,12 +51,10 @@ jobs:
   build-docker-normal-image:
     name: build-docker-normal-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.build_runner }}
-    outputs:
-      orthanc_tests_archive_path: ${{ steps.set-output.outputs.orthanc_tests_archive_path }}
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
       # limit concurrency
-      group: ${{ inputs.build_runner }}-${{ inputs.stable_unstble }}-group
+      group: ${{ inputs.build_runner }}-${{ inputs.stable_unstable }}-group
       cancel-in-progress: false
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
@@ -152,13 +150,6 @@ jobs:
     - name: Push test pre-release image with branch/tag
       run: ./local-build.sh getCommitIdsFromFile=1 version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
-    - name: Output orthanc_tests_archive_path
-      id: set-output
-      run: |
-        cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path
-        FILE_CONTENT=$(cat /tmp/${{ inputs.stable_unstable }}-orthanc-tests-archive-path)
-        echo "orthanc_tests_archive_path=$FILE_CONTENT" >> $GITHUB_OUTPUT
-        echo $GITHUB_OUTPUT
 
   run-docker-integ-tests:
 
@@ -173,7 +164,6 @@ jobs:
       is_tag: ${{ inputs.is_tag }}
       tests_group: ${{ matrix.config.testsGroup}}
       image_type: ${{ matrix.config.imageType}}
-      orthanc_tests_archive_path: ${{ needs.build-docker-normal-image.outputs.orthanc_tests_archive_path }}
 
     strategy:
       fail-fast: false

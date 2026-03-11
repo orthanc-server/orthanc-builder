@@ -178,7 +178,11 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
     ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    
     ORTHANC_TESTS_COMMIT_ID=$(getHgCommitId "https://orthanc.uclouvain.be/hg/orthanc-tests/" $(getIntegTestsRevision $version))
+    if [[ $uploadToWebServer == "1" ]]; then
+        upload_hg_repo_to_orthanc_team_if_not_already_there orthanc-tests $ORTHANC_TESTS_COMMIT_ID https://orthanc.uclouvain.be/hg/orthanc-tests/
+    fi
 
     if [[ $step == "generate-commit-id-matrix" ]]; then
         cat <<EOF > /tmp/commit-ids-matrix-$version.json
@@ -329,11 +333,8 @@ if [[ $type == "local" ]]; then
 else
 
     # when building in CI, don't use intermediate targets (it would push plenty of images)
-    buildTargets="build-orthanc-tests $finalImageTarget"
+    buildTargets="$finalImageTarget"
 
-    # save the orthanc-tests archive path for runners who are not able to run hg clone
-    echo "https://public-files.orthanc.team/tmp-builds/docker-builds/$platform/$BASE_UBUNTU_IMAGE-$version/$ORTHANC_TESTS_COMMIT_ID-orthanc-tests.tar.gz" > "/tmp/$version-orthanc-tests-archive-path"
-    cat "/tmp/$version-orthanc-tests-archive-path"
     prefer_downloads=1
     enable_upload=1
 fi
