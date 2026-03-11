@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # sample command
-# ./build-stone-wasm.sh version=stable workspace="/tmp/stone-wasm-builder"
+# ./build-stone-wasm.sh version=stable workspace="/tmp/stone-wasm-builder" avoidHgClone=1
 
 set -ex
 
 source bash-helpers.sh
+
+avoidHgClone=0
 
 for argument in "$@"
 do
@@ -18,8 +20,13 @@ do
 done
 
 configName=Orthanc-stone
-commit_id=$(getCommitId $configName $version)
 repo=$(getFromMatrix $configName repo)
+
+if [[ "$avoidHgClone" == "1" ]]; then
+    commit_id=$(jq -r '.ORTHANC_STONE_VIEWER_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+else
+    commit_id=$(getCommitId $configName $version)
+fi
 
 echo "version = $version"
 echo "commit_id = $commit_id"
