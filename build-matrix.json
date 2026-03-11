@@ -595,7 +595,7 @@
             "artifactsWin": "OrthancDicomWeb.dll",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "buildForMacOS": true,
-            "buildForWin": true,
+            "buildForWin": false,
             "unitTests": "UnitTests",
             "windows": [{
                 "Description": "DICOMweb support (AGPL license)",
