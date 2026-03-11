@@ -33,6 +33,14 @@ on:
         description: 'stable_unstable type'
         type: string
         required: true
+      concurrency_group_normal:
+        description: 'concurrency group'
+        type: string
+        required: true
+      concurrency_group_full:
+        description: 'concurrency group'
+        type: string
+        required: true
 
     secrets:
       docker_hub_username:
@@ -54,7 +62,7 @@ jobs:
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
       # limit concurrency
-      group: ${{ inputs.build_runner }}-${{ inputs.stable_unstable }}-group
+      group: ${{ inputs.concurrency_group_normal }}
       cancel-in-progress: false
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
@@ -203,6 +211,11 @@ jobs:
     name: build-docker-full-${{ inputs.platform }} ${{ inputs.stable_unstable}}
     runs-on: ${{ inputs.build_runner }}
     needs: [build-docker-normal-image]
+    # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
+    concurrency:
+      # limit concurrency
+      group: ${{ inputs.concurrency_group_full }}
+      cancel-in-progress: false
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

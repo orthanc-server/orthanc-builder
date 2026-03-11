@@ -35,6 +35,7 @@ jobs:
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
       is_tag: ${{ inputs.is_tag }}
+      concurrency_group: ${{ matrix.config.concurrencyGroup }}
     secrets:
       docker_hub_username: ${{ secrets.docker_hub_username }}
       docker_hub_token: ${{ secrets.docker_hub_token }}
@@ -52,7 +53,9 @@ jobs:
             buildRunner: "ubuntu-amd64",
             buildRunnerType: "self-hosted",
             testRunner: "ubuntu-latest",
-            testRunnerType: "github-hosted"
+            testRunnerType: "github-hosted",
+            concurrencyGroupNormal: "concurrency-group-amd64-stable-normal",
+            concurrencyGroupFull: "concurrency-group-amd64-stable-full"
           }
         - {
             name: "linux/arm64",
@@ -61,7 +64,9 @@ jobs:
             buildRunner: "debian-arm64",
             buildRunnerType: "self-hosted",
             testRunner: "debian-arm64",
-            testRunnerType: "disabled"
+            testRunnerType: "disabled",
+            concurrencyGroupNormal: "concurrency-group-arm64",
+            concurrencyGroupFull: "concurrency-group-arm64"
           }
 
   build-docker-unstable:
@@ -76,6 +81,8 @@ jobs:
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
       is_tag: ${{ inputs.is_tag }}
+      concurrency_group_normal: ${{ matrix.config.concurrencyGroupNormal }}
+      concurrency_group_full: ${{ matrix.config.concurrencyGroupFull }}
     secrets:
       docker_hub_username: ${{ secrets.docker_hub_username }}
       docker_hub_token: ${{ secrets.docker_hub_token }}
@@ -93,7 +100,9 @@ jobs:
             buildRunner: "ubuntu-latest",
             buildRunnerType: "github-hosted",
             testRunner: "ubuntu-latest",
-            testRunnerType: "github-hosted"
+            testRunnerType: "github-hosted",
+            concurrencyGroupNormal: "concurrency-group-amd64-unstable-normal",
+            concurrencyGroupFull: "concurrency-group-amd64-unstable-full"
           }
         - {
             name: "linux/arm64",
@@ -102,7 +111,9 @@ jobs:
             buildRunner: "debian-arm64",
             buildRunnerType: "self-hosted",
             testRunner: "debian-arm64",
-            testRunnerType: "disabled"
+            testRunnerType: "disabled",
+            concurrencyGroupNormal: "concurrency-group-arm64",
+            concurrencyGroupFull: "concurrency-group-arm64"
           }
 
   publish-manifest-stable:
