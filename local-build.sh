@@ -38,13 +38,12 @@ do
    export "$key"="$value"
 done
 
-# disabled since we use a self-hosted amd64 runner (don't use public cache since it stays on the host)
-# if [[ $type == "ci" ]]; then
-#     if [[ $platform == "linux/amd64" ]]; then
-#         useBuildx=true
-#     fi
-#     throttle=1
-# fi
+if [[ $type == "ci" ]]; then
+    if [[ $platform == "linux/amd64" ]]; then
+        useBuildx=true
+    fi
+    throttle=1
+fi
 
 if [[ $platform == "linux/amd64" ]]; then
     shortPlatform="amd64"
