@@ -261,11 +261,15 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
     echo $commit_id
 }
 
-hgCloneWithRetries() {  # $1 = repoUrl $2 = commitId $3 = folder
-    repoShortName=$(getHgRepoShortName $1)
-    echo $repoShortName
-    if download_hg_repo_from_orthanc_team $repoShortName $2 $1 $3; then
-        echo "Downloaded from webserver"
+
+hgCloneWithRetries() {  # $1 = repoUrl, $2 = commitId, $3 = folder, $4 = silent (default: false)
+    local silent=${4:-false}
+
+    repoShortName=$(getHgRepoShortName "$1")
+    [ "$silent" = false ] && echo "$repoShortName"
+
+    if download_hg_repo_from_orthanc_team "$repoShortName" "$2" "$1" "$3"; then
+        [ "$silent" = false ] && echo "Downloaded from webserver"
         return 0
     fi
 
@@ -273,25 +277,35 @@ hgCloneWithRetries() {  # $1 = repoUrl $2 = commitId $3 = folder
     local retry_delay=30  # seconds
     local attempt=1
 
-    while [ $attempt -le $max_retries ]; do
-        echo "Attempt $attempt of $max_retries..."
-        if hg clone $1 -r $2 $3; then
-            echo "Clone succeeded."
-            return 0
-        else
-            if [ $attempt -lt $max_retries ]; then
-                echo "Clone failed. Retrying in $retry_delay seconds..."
-                sleep $retry_delay
-                # Double the delay for the next attempt (exponential backoff)
-                retry_delay=$((retry_delay * 2))                
-            else
-                echo "Clone failed after $max_retries attempts."
-                return 1
+    while [ "$attempt" -le "$max_retries" ]; do
+        [ "$silent" = false ] && echo "Attempt $attempt of $max_retries..."
+        
+        # Redirect hg clone output to /dev/null only if silent is true
+        if [ "$silent" = true ]; then
+            if hg clone "$1" -r "$2" "$3" >/dev/null 2>&1; then
+                [ "$silent" = false ] && echo "Clone succeeded."
+                return 0
             fi
+        else
+            if hg clone "$1" -r "$2" "$3"; then
+                [ "$silent" = false ] && echo "Clone succeeded."
+                return 0
+            fi
+        fi
+
+        if [ "$attempt" -lt "$max_retries" ]; then
+            [ "$silent" = false ] && echo "Clone failed. Retrying in $retry_delay seconds..."
+            sleep "$retry_delay"
+            # Double the delay for the next attempt (exponential backoff)
+            retry_delay=$((retry_delay * 2))
+        else
+            [ "$silent" = false ] && echo "Clone failed after $max_retries attempts."
+            return 1
         fi
         ((attempt++))
     done
 }
+
 
 download_hg_repo_from_orthanc_team() { # $1=repoShortName $2=commitId $3=repo-url $4=folder
 
@@ -313,7 +327,7 @@ upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 co
     already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_there == 0 ]]; then
         rm -rf /tmp/$1
-        hgCloneWithRetries $3 $2 /tmp/$1
+        hgCloneWithRetries $3 $2 /tmp/$1 true
         pushd /tmp/$1
         hg archive /tmp/$1-$2.tar.gz
 
