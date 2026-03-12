@@ -155,7 +155,7 @@ if [[ $target == "orthanc" ]]; then
 
         pushd $buildRootPath
 
-        ln -s /third-party-downloads $sourcesRootPath/orthanc/OrthancServer/ThirdPartyDownloads
+        ln -s /third-party-downloads $sourcesRootPath/OrthancServer/ThirdPartyDownloads
 
         # note: building with static DCMTK because base images are often one version late
         # also force latest OpenSSL (and therefore, we need to force static libcurl)
@@ -171,20 +171,6 @@ if [[ $target == "orthanc" ]]; then
         upload libDelayedDeletion.so
         upload libMultitenantDicom.so
 
-    fi
-
-elif [[ $target == "orthanc-tests" ]]; then
-    # the runners that are executing the tests often fail to have access to mercurial -> clone it and upload the archive to a webserver
-
-    dl=$(( $dl + $(download orthanc-tests.tar.gz) ))
-
-    if [[ $dl != 0 ]]; then
-
-        hg_clone_with_retries orthanc-tests $commitId $sourcesRootPath
-        pushd $sourcesRootPath
-        hg archive $buildRootPath/orthanc-tests.tar.gz
-
-        upload orthanc-tests.tar.gz
     fi
 
 elif [[ $target == "orthanc-authorization" ]]; then
