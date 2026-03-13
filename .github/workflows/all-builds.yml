@@ -99,7 +99,7 @@ jobs:
 
   macos-stable-build:
     if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}
-    needs: [pre-build, build-stone-wasm-stable, build-volview-dist-stable]
+    needs: [pre-build, build-volview-dist-stable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
@@ -111,7 +111,7 @@ jobs:
 
   macos-unstable-build:
     if: ${{ needs.pre-build.outputs.is_tag == 'false' }} 
-    needs: [pre-build, build-stone-wasm-unstable, build-volview-dist-unstable]
+    needs: [pre-build, build-volview-dist-unstable]
     uses: ./.github/workflows/build-macos-binaries.yml
     with:
       is_tag: ${{ needs.pre-build.outputs.is_tag }}
