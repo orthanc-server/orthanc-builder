@@ -35,7 +35,8 @@ echo "workspace = $workspace"
 already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/$commit_id/wasm-binaries.zip | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
-    hgCloneWithRetries $repo $commit_id $workspace/sources
+    # the internal build system sill requires an access to Mercurial -> force Hg Clone
+    downloadOrClone $repo $commit_id $workspace/sources false true
     cd $workspace/sources
 
     cd $workspace/sources/Applications/StoneWebViewer/WebAssembly

@@ -59,7 +59,7 @@ rm -rf $testRepoFolder/
 
 if [[ "$downloadOrthancTestsRepo" == "false" ]]; then
     orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
-    hgCloneWithRetries https://orthanc.uclouvain.be/hg/orthanc-tests/ $orthanc_tests_revision $testRepoFolder
+    downloadOrClone https://orthanc.uclouvain.be/hg/orthanc-tests/ $orthanc_tests_revision $testRepoFolder
 else  # no access to hg clone
     ORTHANC_TESTS_COMMIT_ID=$(jq -r '.ORTHANC_TESTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     wget https://public-files.orthanc.team/tmp-builds/hg-repos/orthanc-tests-$ORTHANC_TESTS_COMMIT_ID.tar.gz --output-document /tmp/orthanc-tests.tar.gz --quiet

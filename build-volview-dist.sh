@@ -35,7 +35,7 @@ echo "workspace = $workspace"
 already_built=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/$commit_id/dist.zip | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
 
 if [[ $already_built == 0 ]]; then
-    hgCloneWithRetries $repo $commit_id $workspace/sources
+    downloadOrClone $repo $commit_id $workspace/sources
     cd $workspace/sources
 
     cd $workspace/sources/Resources/

@@ -262,15 +262,18 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
 }
 
 
-hgCloneWithRetries() {  # $1 = repoUrl, $2 = commitId, $3 = folder, $4 = silent (default: false)
+downloadOrClone() {  # $1 = repoUrl, $2 = commitId, $3 = folder, $4 = silent (default: false), $5 = force clone (default: false)
     local silent=${4:-false}
+    local forceClone=${5:-false}
 
     repoShortName=$(getHgRepoShortName "$1")
     [ "$silent" = false ] && echo "$repoShortName"
 
-    if download_hg_repo_from_orthanc_team "$repoShortName" "$2" "$1" "$3"; then
-        [ "$silent" = false ] && echo "Downloaded from webserver"
-        return 0
+    if [[ $forceClone == "false" ]]; then
+        if download_hg_repo_from_orthanc_team "$repoShortName" "$2" "$1" "$3"; then
+            [ "$silent" = false ] && echo "Downloaded from webserver"
+            return 0
+        fi
     fi
 
     local max_retries=5
@@ -327,7 +330,7 @@ upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 co
     already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
     if [[ $already_there == 0 ]]; then
         rm -rf /tmp/$1
-        hgCloneWithRetries $3 $2 /tmp/$1 true
+        downloadOrClone $3 $2 /tmp/$1 true true
         pushd /tmp/$1
         hg archive /tmp/$1-$2.tar.gz
 
