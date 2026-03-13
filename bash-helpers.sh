@@ -333,7 +333,7 @@ upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 co
 
         # echo "uploading hg-repo $1";
 
-        aws s3 --region eu-west-1 cp /tmp/$1-$2.tar.gz s3://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz --cache-control=max-age=1
+        aws s3 --region eu-west-1 cp /tmp/$1-$2.tar.gz s3://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz --cache-control=max-age=1 --quiet
     # else
     #     echo "skipping uploading of $1-$2.tar.gz - already on the webserver";
     fi
