@@ -23,29 +23,30 @@ jobs:
       aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
-  build-stone-wasm-stable:
-    if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}  
-    needs: [pre-build]
-    uses: ./.github/workflows/build-stone-wasm.yml
-    with:
-      is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: stable
-      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-    secrets:
-      aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
+  # disabled: now part of the amd64 build
+  # build-stone-wasm-stable:
+  #   if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}  
+  #   needs: [pre-build]
+  #   uses: ./.github/workflows/build-stone-wasm.yml
+  #   with:
+  #     is_tag: ${{ needs.pre-build.outputs.is_tag }}
+  #     stable_unstable: stable
+  #     current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+  #   secrets:
+  #     aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
+  #     aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
-  build-stone-wasm-unstable:
-    if: ${{ needs.pre-build.outputs.is_tag == 'false' }}  
-    needs: [pre-build]
-    uses: ./.github/workflows/build-stone-wasm.yml
-    with:
-      is_tag: ${{ needs.pre-build.outputs.is_tag }}
-      stable_unstable: unstable
-      current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
-    secrets:
-      aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
+  # build-stone-wasm-unstable:
+  #   if: ${{ needs.pre-build.outputs.is_tag == 'false' }}  
+  #   needs: [pre-build]
+  #   uses: ./.github/workflows/build-stone-wasm.yml
+  #   with:
+  #     is_tag: ${{ needs.pre-build.outputs.is_tag }}
+  #     stable_unstable: unstable
+  #     current_branch_tag: ${{ needs.pre-build.outputs.current_branch_tag }}
+  #   secrets:
+  #     aws_access_key_id: ${{ secrets.OT_AWS_ACCESS_KEY_ID }}
+  #     aws_secret_access_key: ${{ secrets.OT_AWS_SECRET_ACCESS_KEY }}
 
   build-volview-dist-stable:
     if: ${{ github.ref == 'refs/heads/master' || needs.pre-build.outputs.is_tag == 'true' }}  

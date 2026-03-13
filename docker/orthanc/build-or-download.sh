@@ -933,16 +933,51 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
     if [[ $dl != 0 ]]; then
 
         download_or_clone orthanc-stone $commitId /source
-        pushd /source/Applications/StoneWebViewer/WebAssembly
-        chmod +x docker-internal.sh
-        STONE_BRANCH=${commitId} ./docker-internal.sh Release
+
+        mkdir -p /source/Applications/StoneWebViewer/WebAssembly/ThirdPartyDownloads
+        pushd /source/Applications/StoneWebViewer/WebAssembly/ThirdPartyDownloads
+        wget https://public-files.orthanc.team/third-party-downloads/pdfjs-2.5.207-dist.zip
+        wget https://public-files.orthanc.team/third-party-downloads/jquery-3.7.1.min.js
+        wget https://public-files.orthanc.team/third-party-downloads/axios-1.7.5.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/vue-2.6.14.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/bootstrap-3.4.1-dist.zip
+        wget https://public-files.orthanc.team/third-party-downloads/fontawesome-free-5.14.0-web.zip
+        wget https://public-files.orthanc.team/third-party-downloads/ubuntu-font-family-0.83.zip
+        wget https://public-files.orthanc.team/third-party-downloads/pixman-0.34.0.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/freetype-2.9.1.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/cairo-1.14.12.tar.xz
+        wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.7.0.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/boost_1_89_0_bcpdigest-1.12.11.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/e2fsprogs-1.44.5.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/jsoncpp-1.9.5.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/pugixml-1.14.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/libpng-1.6.50.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/zlib-1.3.1.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/jpegsrc.v9f.tar.gz
+        popd
+
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
+        # equivalent of docker-internal.sh from orthanc-stone repo
+        source /opt/emsdk/emsdk_env.sh
+
+        # Use a folder that is writeable by non-root users for the Emscripten cache
+        export EM_CACHE=/tmp/emscripten-cache
 
         mkdir -p $buildRootPath
-        mkdir -p /target
+        pushd $buildRootPath
+        cmake $framework_flags -DORTHANC_STONE_INSTALL_PREFIX=/target/StoneWebViewer -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE=${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DSTATIC_BUILD=ON -DLIBCLANG=/usr/lib/llvm-4.0/lib/libclang-4.0.so /source/Applications/StoneWebViewer/WebAssembly
+        make -j 8
+        make install
+
         pushd /target
         tar -zcvf $buildRootPath/stone.wasm.tar.gz StoneWebViewer/
 
         upload stone.wasm.tar.gz
+
+        if [[ $enableUploads == 1 ]]; then
+            aws s3 --region eu-west-1 cp $buildRootPath/stone.wasm.tar.gz s3://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/$version/wasm-binaries.zip --cache-control=max-age=1
+        fi
 
     else
 
