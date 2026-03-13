@@ -68,17 +68,17 @@ RUN mkdir -p /third-party-downloads
 # download most commonly used third-party files to avoid downloading too many files from UCLouvain servers when building
 WORKDIR /third-party-downloads
 RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-auth-0.7.1.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-cal-0.6.1.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-common-0.9.3.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-auth-0.7.22.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-cal-0.7.0.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-common-0.9.23.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-compression-0.2.17.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-event-stream-0.3.1.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-http-0.7.11.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-io-0.13.31.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-mqtt-0.9.5.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-s3-0.3.14.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-sdkutils-0.1.11.tar.gz
-RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-checksums-0.1.17.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-event-stream-0.4.2.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-http-0.8.2.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-io-0.14.9.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-mqtt-0.10.4.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-s3-0.5.10.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-sdkutils-0.1.16.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-checksums-0.1.18.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-crt-cpp-0.24.1.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/aws/aws-sdk-cpp-1.11.178.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/axios-0.19.0.tar.gz

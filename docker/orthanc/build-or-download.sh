@@ -756,17 +756,16 @@ elif [[ $target == "orthanc-s3" ]]; then
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the object-storage plugin updates to a new release
         cd $sourcesRootPath
-        hg_clone_with_retries orthanc-object-storage $commitId
-        ln -s /third-party-downloads $sourcesRootPath/orthanc-object-storage/Aws/ThirdPartyDownloads
+        hg_clone_with_retries orthanc-object-storage $commitId $sourcesRootPath
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Common/StoragePlugin.cpp
 
         pushd $buildRootPath
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/Aws/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
-        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_VCPKG_PACKAGES=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/orthanc-object-storage/Aws/
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_VCPKG_PACKAGES=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/Aws/
         make -j 4
 
         upload libOrthancAwsS3Storage.so
@@ -782,16 +781,16 @@ elif [[ $target == "orthanc-google-storage" ]]; then
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the object-storage plugin updates to a new release
         cd $sourcesRootPath
-        hg_clone_with_retries orthanc-object-storage $commitId
+        hg_clone_with_retries orthanc-object-storage $commitId $sourcesRootPath
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Common/StoragePlugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/Google/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
 
-        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Google/
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/Google/
         make -j 4
 
         upload libOrthancGoogleCloudStorage.so
@@ -807,17 +806,17 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
         export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install libcrypto++-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
 
         cd $sourcesRootPath
-        hg_clone_with_retries orthanc-object-storage $commitId
+        hg_clone_with_retries orthanc-object-storage $commitId $sourcesRootPath
 
-        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
+        patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Common/StoragePlugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/Azure/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the object-storage plugin updates to a new release
         pushd $buildRootPath
 
-        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/Azure/
         make -j 4
 
         upload libOrthancAzureBlobStorage.so
