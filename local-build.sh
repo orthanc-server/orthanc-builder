@@ -183,6 +183,11 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
         upload_hg_repo_to_orthanc_team_if_not_already_there orthanc-tests $ORTHANC_TESTS_COMMIT_ID https://orthanc.uclouvain.be/hg/orthanc-tests/
     fi
 
+    if [[ $version == "unstable" ]]; then
+        aws s3 --region eu-west-1 cp /tmp/orthanc-$ORTHANC_COMMIT_ID.tar.gz s3://public-files.orthanc.team/third-party-downloads/Orthanc-mainline.tar.gz --cache-control=max-age=1 --quiet
+        upload_hg_repo_to_orthanc_team_if_not_already_there $repoShortName $commit_id $repo
+    fi
+
     if [[ $step == "generate-commit-id-matrix" ]]; then
         cat <<EOF > /tmp/commit-ids-matrix-$version.json
 {
@@ -346,6 +351,8 @@ fi
 # builder_vcpkg_google_tag="vcpkg-google-$final_image_temporary_tag"
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
+# to simulate uclouvain servers being unreachables
+# add_host_cmd=--add-host=orthanc.uclouvain.be:1.1.1.1
 
 ###### runner-base
 docker $build \

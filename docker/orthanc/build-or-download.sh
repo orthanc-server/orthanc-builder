@@ -131,6 +131,32 @@ hg_clone_with_retries() {    # $1 = repoShortName $2 = commitId $3 = folder
     fi
 }
 
+# link 3rd party downloads folder and download the mainline orthanc framework
+link_third_party_downloads() { # $1 = target folder, $2 = download Orthanc mainline framework
+    local download_framework=${2:-true}
+
+    if [[ $download_framework == "true" ]]; then
+        if [[ $version == "unstable" ]]; then
+            wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-mainline.tar.gz --output-document /third-party-downloads/Orthanc-mainline.tar.gz
+        fi
+    fi
+
+    ln -s /third-party-downloads $1
+}
+
+configure_orthanc_framework() { # $1 = cmake flags for orthanc framework for the stable release (usually empty)
+    if [[ $version == "unstable" ]]; then
+        mkdir /orthanc-framework
+        wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-mainline.tar.gz --output-document /tmp/Orthanc-mainline.tar.gz --quiet
+        pushd /orthanc-framework
+        tar xf /tmp/Orthanc-mainline.tar.gz --strip-components=1 >/dev/null 2>&1
+        echo "-DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc-framework/OrthancFramework/Sources"
+        popd
+    else
+        echo $1
+    fi
+}
+
 if [[ $target == "orthanc" ]]; then
 
     dl=$(( $dl + $(download Orthanc) ))
@@ -155,7 +181,8 @@ if [[ $target == "orthanc" ]]; then
 
         pushd $buildRootPath
 
-        ln -s /third-party-downloads $sourcesRootPath/OrthancServer/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/OrthancServer/ThirdPartyDownloads
+        # ln -s /third-party-downloads $sourcesRootPath/OrthancServer/ThirdPartyDownloads
 
         # note: building with static DCMTK because base images are often one version late
         # also force latest OpenSSL (and therefore, we need to force static libcurl)
@@ -183,8 +210,11 @@ elif [[ $target == "orthanc-authorization" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
@@ -201,8 +231,11 @@ elif [[ $target == "orthanc-python" ]]; then
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.13 $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.13 $sourcesRootPath
         make -j 4
 
         upload libOrthancPython.so
@@ -218,8 +251,11 @@ elif [[ $target == "orthanc-gdcm" ]]; then
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
         
         make -j 4
 
@@ -239,8 +275,11 @@ elif [[ $target == "orthanc-pg" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/StoragePlugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF  $sourcesRootPath/PostgreSQL
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/PostgreSQL
         make -j 4
 
@@ -262,9 +301,12 @@ elif [[ $target == "orthanc-mysql" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the mysql plugin updates to a new release
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/MySQL
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/MySQL
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
         make -j 4
 
@@ -287,9 +329,12 @@ elif [[ $target == "orthanc-odbc" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the odbc plugin updates to a new release
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/Odbc
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/Odbc
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/Odbc
         make -j 4
 
@@ -307,9 +352,12 @@ elif [[ $target == "orthanc-indexer" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancIndexer.so
@@ -325,9 +373,12 @@ elif [[ $target == "orthanc-neuro" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancNeuro.so
@@ -343,13 +394,16 @@ elif [[ $target == "orthanc-java" ]]; then
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Plugin
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/Plugin
         make -j 4
 
         mkdir /buildJavaSDK
         pushd /buildJavaSDK
-        cmake -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/JavaSDK
+        cmake $framework_flags -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/JavaSDK
         make
         mv /buildJavaSDK/OrthancJavaSDK.jar $buildRootPath/
         
@@ -374,10 +428,13 @@ elif [[ $target == "orthanc-stl" ]]; then
         wget https://public-files.orthanc.team/lsb-mirror/STL-dist-1.3.zip --output-document dist.zip --quiet
         unzip dist.zip
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.5")
+
         pushd $buildRootPath
         # we build STL in static because it uses DCMTK and the DCMTK dynamic libraries are not installed (see in Orthanc section)
         # Note: we force the ORTHANC_FRAMEWORK_VERSION because the 1.12.4 uses DCMTK 3.6.8 that fails to build on ubuntu 25.10
-        cmake -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release -DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.5 $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
         make -j 4
 
         upload libOrthancSTL.so
@@ -393,9 +450,12 @@ elif [[ $target == "orthanc-tcia" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the tcia plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_LIBCSV=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancTcia.so
@@ -428,8 +488,11 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         npm install
         npm run build
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$extraArg1 $sourcesRootPath/orthanc-explorer-2/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPLUGIN_VERSION=$extraArg1 $sourcesRootPath/orthanc-explorer-2/
         make -j 4
 
         upload libOrthancExplorer2.so
@@ -451,8 +514,11 @@ elif [[ $target == "orthanc-advanced-storage" ]]; then
 
         patch_version_name_on_unstable "return ADVANCED_STORAGE_VERSION" $sourcesRootPath/orthanc-advanced-storage/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-advanced-storage/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-advanced-storage/
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-advanced-storage/
 
         make -j 4
@@ -476,8 +542,11 @@ elif [[ $target == "orthanc-worklists" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-worklists/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-worklists/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-worklists/
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-worklists/
 
         make -j 4
@@ -501,8 +570,11 @@ elif [[ $target == "orthanc-pixels-masker" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-pixels-masker/Sources/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-pixels-masker/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-pixels-masker/
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-worklists/
 
         make -j 4
@@ -536,8 +608,11 @@ elif [[ $target == "orthanc-volview-from-dist" ]]; then
         pushd /
         unzip $buildRootPath/VolView-dist.zip
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancVolView.so
@@ -579,8 +654,11 @@ elif [[ $target == "orthanc-volview" ]]; then
         zip -r $buildRootPath/VolView-dist.zip $sourcesRootPath/VolView/dist
         upload VolView-dist.zip
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancVolView.so
@@ -612,8 +690,11 @@ elif [[ $target == "orthanc-ohif-from-dist" ]]; then
         pushd /
         unzip $buildRootPath/OHIF-dist.zip
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancOHIF.so
@@ -655,8 +736,11 @@ elif [[ $target == "orthanc-ohif" ]]; then
         zip -r $buildRootPath/OHIF-dist.zip $sourcesRootPath/OHIF/dist
         upload OHIF-dist.zip
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancOHIF.so
@@ -679,7 +763,10 @@ elif [[ $target == "orthanc-s3" ]]; then
 
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_VCPKG_PACKAGES=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/orthanc-object-storage/Aws/
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_VCPKG_PACKAGES=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/orthanc-object-storage/Aws/
         make -j 4
 
         upload libOrthancAwsS3Storage.so
@@ -699,9 +786,12 @@ elif [[ $target == "orthanc-google-storage" ]]; then
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Google/
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Google/
         make -j 4
 
         upload libOrthancGoogleCloudStorage.so
@@ -721,10 +811,13 @@ elif [[ $target == "orthanc-azure-storage" ]]; then
 
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/orthanc-object-storage/Common/StoragePlugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the object-storage plugin updates to a new release
         pushd $buildRootPath
 
-        cmake -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
+        cmake $framework_flags -DCMAKE_BUILD_TYPE:STRING=Release -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake $sourcesRootPath/orthanc-object-storage/Azure/
         make -j 4
 
         upload libOrthancAzureBlobStorage.so
@@ -740,8 +833,11 @@ elif [[ $target == "orthanc-webviewer" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
@@ -758,8 +854,11 @@ elif [[ $target == "orthanc-transfers" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
@@ -777,8 +876,11 @@ elif [[ $target == "orthanc-dicomweb" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_DICOM_WEB_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
@@ -795,8 +897,11 @@ elif [[ $target == "orthanc-wsi" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_WSI_VERSION" $sourcesRootPath/ViewerPlugin/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF $sourcesRootPath/ViewerPlugin
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_OPENJPEG=OFF $sourcesRootPath/ViewerPlugin
         make -j 4
 
         # TODO: build dicomizer tools ?
@@ -859,13 +964,14 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
         # StoneViewer is quite often on a non stable branch -> if its version is "mainline", always append the commit id
         if grep -q "set(STONE_WEB_VIEWER_VERSION \"mainline\")" "$sourcesRootPath/Applications/StoneWebViewer/Version.cmake"; then
-
             patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
-
         fi
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer $sourcesRootPath/Applications/StoneWebViewer/Plugin/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer $sourcesRootPath/Applications/StoneWebViewer/Plugin/
         make -j 4
 
         upload libStoneWebViewer.so
@@ -882,8 +988,11 @@ elif [[ $target == "orthanc-education" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Sources/Plugin.cpp
 
+        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+
         pushd $buildRootPath
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j4
 
         upload libOrthancEducation.so
