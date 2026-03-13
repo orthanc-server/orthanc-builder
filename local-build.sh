@@ -185,7 +185,6 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
 
     if [[ $version == "unstable" ]]; then
         aws s3 --region eu-west-1 cp /tmp/orthanc-$ORTHANC_COMMIT_ID.tar.gz s3://public-files.orthanc.team/third-party-downloads/Orthanc-mainline.tar.gz --cache-control=max-age=1 --quiet
-        upload_hg_repo_to_orthanc_team_if_not_already_there $repoShortName $commit_id $repo
     fi
 
     if [[ $step == "generate-commit-id-matrix" ]]; then
