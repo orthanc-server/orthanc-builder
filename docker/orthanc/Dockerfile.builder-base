@@ -87,6 +87,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_84_0_bc
 RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_85_0_bcpdigest-1.12.4.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_86_0_bcpdigest-1.12.5.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/boost_1_89_0_bcpdigest-1.12.11.tar.gz
+RUN wget https://public-files.orthanc.team/third-party-downloads/civetweb-1.16-fixed.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.5.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.9.0.tar.gz
 RUN wget https://public-files.orthanc.team/third-party-downloads/curl-8.17.0.tar.gz
