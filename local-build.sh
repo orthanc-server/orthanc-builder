@@ -64,6 +64,10 @@ echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
 echo "image            = $image"
 echo "getCommitIdsFromFile = $getCommitIdsFromFile"
+echo "useBuildx        = $useBuildx"
+echo "throttle         = $throttle"
+
+
 
 if [[ $step == "push-before-test-image" ]]; then
 
