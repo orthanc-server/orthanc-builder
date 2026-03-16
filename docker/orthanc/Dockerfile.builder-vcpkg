@@ -3,32 +3,31 @@
 ARG BASE_IMAGE_TAG=current
 FROM orthancteam/orthanc-builder-base:${BASE_IMAGE_TAG} AS orthanc-build-vcpkg
 
-# prerequisites (for VCPKG builds)
 RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get --assume-yes update && \
-		apt-get --assume-yes install ninja-build && \
+    apt-get update && \
+    apt-get --assume-yes install ninja-build git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /
 RUN git clone https://github.com/Microsoft/vcpkg.git && \
-  cd vcpkg/ && \
-  git checkout 2025.03.19
+    cd vcpkg && \
+    git checkout 2025.03.19
 
 WORKDIR /vcpkg
-# RUN ls -al /vcpkg
 RUN ./bootstrap-vcpkg.sh
+
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
-
-RUN mkdir ~/.vcpkg/
-
+ENV VCPKG_DEFAULT_BINARY_CACHE=/tmp/vcpkg-cache
 RUN ./vcpkg integrate install
 
 # patch the triplet to produce only release builds
 RUN bash -c '[[ $(uname -m) == "x86_64" ]] && echo "set(VCPKG_BUILD_TYPE release)" >> /vcpkg/triplets/x64-linux.cmake || echo "set(VCPKG_BUILD_TYPE release)" >>  /vcpkg/triplets/community/arm64-linux.cmake'
 
-# object storage prerequisites
-RUN ./vcpkg install cryptopp
+# avoid overlayfs path depth issues
+RUN ./vcpkg install cryptopp \
+    --x-buildtrees-root=/tmp/vcpkg-buildtrees \
+    --binarycaching=off
 
 
 ########################## Orthanc builder vcpkg-google
@@ -36,12 +35,16 @@ RUN ./vcpkg install cryptopp
 FROM orthancteam/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} AS orthanc-build-vcpkg-google
 
 WORKDIR /vcpkg
-RUN  ./vcpkg install google-cloud-cpp[storage]
+RUN  ./vcpkg install google-cloud-cpp[storage] \
+    --x-buildtrees-root=/tmp/vcpkg-buildtrees \
+    --binarycaching=off
 
 ########################## Orthanc builder vcpkg-azure
 
 FROM orthancteam/orthanc-builder-base:vcpkg-${BASE_IMAGE_TAG} AS orthanc-build-vcpkg-azure
 
 WORKDIR /vcpkg
-RUN  ./vcpkg install azure-core-cpp azure-storage-blobs-cpp
+RUN  ./vcpkg install azure-core-cpp azure-storage-blobs-cpp \
+    --x-buildtrees-root=/tmp/vcpkg-buildtrees \
+    --binarycaching=off
 
