@@ -691,7 +691,7 @@ elif [[ $target == "orthanc-ohif-from-dist" ]]; then
         unzip $buildRootPath/OHIF-dist.zip
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
-        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.10") # force framework 1.12.10 because of FindPythonInterp)
 
         pushd $buildRootPath
         cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
