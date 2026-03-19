@@ -3,12 +3,14 @@ set -ex
 # example
 # To build locally:
 # ./local-build.sh 
-# ./local-build.sh version=unstable skipCommitChecks=1
+# ./local-build.sh version=unstable getCommitIdsFromFile=1
 # ./local-build.sh version=unstable skipCommitChecks=1 image=full
 # To build from CI:
 # ./local-build.sh version=stable platform=linux/amd64 type=ci step=push pushTag=22.4.0
 # TO build locally on ARM64
 # ./local-build.sh skipCommitChecks=1 platform=linux/arm64 image=normal
+# TO populate commit id matrix
+# ./local-build.sh step=generate-commit-id-matrix version=unstable
 
 source bash-helpers.sh
 
@@ -23,6 +25,7 @@ pushTag=unknown
 image=normal
 isTag=false
 useBuildx=false
+getCommitIdsFromFile=false
 throttle=0
 
 for argument in "$@"
@@ -60,6 +63,11 @@ echo "step             = $step"
 echo "currentTag       = $currentTag"
 echo "pushTag          = $pushTag"
 echo "image            = $image"
+echo "getCommitIdsFromFile = $getCommitIdsFromFile"
+echo "useBuildx        = $useBuildx"
+echo "throttle         = $throttle"
+
+
 
 if [[ $step == "push-before-test-image" ]]; then
 
@@ -139,39 +147,121 @@ if [[ $step == "publish-manifest" ]]; then
 fi
 
 
-# get version number from build-matrix.json (stable or unstable)
-# note: we get the last commit id from a branch to detect last changes in a branch
+if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "false" ]]; then
 
-ORTHANC_COMMIT_ID=$(getCommitId "Orthanc" $version docker $skipCommitChecks $throttle)
-ORTHANC_GDCM_COMMIT_ID=$(getCommitId "Orthanc-gdcm" $version docker $skipCommitChecks $throttle)
-ORTHANC_PG_COMMIT_ID=$(getCommitId "Orthanc-postgresql" $version docker $skipCommitChecks $throttle)
-ORTHANC_MYSQL_COMMIT_ID=$(getCommitId "Orthanc-mysql" $version docker $skipCommitChecks $throttle)
-ORTHANC_TRANSFERS_COMMIT_ID=$(getCommitId "Orthanc-transfers" $version docker $skipCommitChecks $throttle)
-ORTHANC_DW_COMMIT_ID=$(getCommitId "Orthanc-dicomweb" $version docker $skipCommitChecks $throttle)
-ORTHANC_WSI_COMMIT_ID=$(getCommitId "Orthanc-wsi" $version docker $skipCommitChecks $throttle)
-ORTHANC_OWV_COMMIT_ID=$(getCommitId "Orthanc-webviewer" $version docker $skipCommitChecks $throttle)
-ORTHANC_AUTH_COMMIT_ID=$(getCommitId "Orthanc-auth" $version docker $skipCommitChecks $throttle)
-ORTHANC_PYTHON_COMMIT_ID=$(getCommitId "Orthanc-python" $version docker $skipCommitChecks $throttle)
-ORTHANC_ODBC_COMMIT_ID=$(getCommitId "Orthanc-odbc" $version docker $skipCommitChecks $throttle)
-ORTHANC_INDEXER_COMMIT_ID=$(getCommitId "Orthanc-indexer" $version docker $skipCommitChecks $throttle)
-ORTHANC_NEURO_COMMIT_ID=$(getCommitId "Orthanc-neuro" $version docker $skipCommitChecks $throttle)
-ORTHANC_TCIA_COMMIT_ID=$(getCommitId "Orthanc-tcia" $version docker $skipCommitChecks $throttle)
-ORTHANC_STONE_VIEWER_COMMIT_ID=$(getCommitId "Orthanc-stone" $version docker $skipCommitChecks $throttle)
-ORTHANC_AZURE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-azure-storage" $version docker $skipCommitChecks $throttle)
-ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version docker $skipCommitChecks $throttle)
-ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks $throttle)
-ORTHANC_OE2_COMMIT_ID=$(getCommitId "Orthanc-explorer-2" $version docker $skipCommitChecks $throttle)
-ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version $throttle)
-ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipCommitChecks $throttle)
-ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks $throttle)
-ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks $throttle)
-ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle)
-ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle)
-ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $skipCommitChecks $throttle)
-ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle)
-ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle)
+    # get version number from build-matrix.json (stable or unstable)
+    # note: we get the last commit id from a branch to detect last changes in a branch
+    uploadToWebServer=1
 
-BASE_UBUNTU_IMAGE=questing-20251029
+    ORTHANC_COMMIT_ID=$(getCommitId "Orthanc" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_GDCM_COMMIT_ID=$(getCommitId "Orthanc-gdcm" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_PG_COMMIT_ID=$(getCommitId "Orthanc-postgresql" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_MYSQL_COMMIT_ID=$(getCommitId "Orthanc-mysql" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_TRANSFERS_COMMIT_ID=$(getCommitId "Orthanc-transfers" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_DW_COMMIT_ID=$(getCommitId "Orthanc-dicomweb" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_WSI_COMMIT_ID=$(getCommitId "Orthanc-wsi" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_OWV_COMMIT_ID=$(getCommitId "Orthanc-webviewer" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_AUTH_COMMIT_ID=$(getCommitId "Orthanc-auth" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_PYTHON_COMMIT_ID=$(getCommitId "Orthanc-python" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_ODBC_COMMIT_ID=$(getCommitId "Orthanc-odbc" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_INDEXER_COMMIT_ID=$(getCommitId "Orthanc-indexer" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_NEURO_COMMIT_ID=$(getCommitId "Orthanc-neuro" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_TCIA_COMMIT_ID=$(getCommitId "Orthanc-tcia" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_STONE_VIEWER_COMMIT_ID=$(getCommitId "Orthanc-stone" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_AZURE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-azure-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-google-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_AWS_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-aws-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_OE2_COMMIT_ID=$(getCommitId "Orthanc-explorer-2" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_OE2_VERSION=$(getBranchTagToBuildDocker "Orthanc-explorer-2" $version $throttle)
+    ORTHANC_VOLVIEW_COMMIT_ID=$(getCommitId "Orthanc-volview" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_OHIF_COMMIT_ID=$(getCommitId "Orthanc-ohif" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    
+    ORTHANC_TESTS_COMMIT_ID=$(getHgCommitId "https://orthanc.uclouvain.be/hg/orthanc-tests/" $(getIntegTestsRevision $version))
+    if [[ $uploadToWebServer == "1" ]]; then
+        upload_hg_repo_to_orthanc_team_if_not_already_there orthanc-tests $ORTHANC_TESTS_COMMIT_ID https://orthanc.uclouvain.be/hg/orthanc-tests/
+    fi
+
+    if [[ $version == "unstable" ]]; then
+        wget https://public-files.orthanc.team/tmp-builds/hg-repos/orthanc-$ORTHANC_COMMIT_ID.tar.gz --output-document /tmp/orthanc-$ORTHANC_COMMIT_ID.tar.gz
+        aws s3 --region eu-west-1 cp /tmp/orthanc-$ORTHANC_COMMIT_ID.tar.gz s3://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-mainline.tar.gz --cache-control=max-age=1
+    fi
+
+    if [[ $step == "generate-commit-id-matrix" ]]; then
+        cat <<EOF > /tmp/commit-ids-matrix-$version.json
+{
+"ORTHANC_COMMIT_ID": "$ORTHANC_COMMIT_ID",
+"ORTHANC_GDCM_COMMIT_ID": "$ORTHANC_GDCM_COMMIT_ID",
+"ORTHANC_PG_COMMIT_ID": "$ORTHANC_PG_COMMIT_ID",
+"ORTHANC_MYSQL_COMMIT_ID": "$ORTHANC_MYSQL_COMMIT_ID",
+"ORTHANC_TRANSFERS_COMMIT_ID": "$ORTHANC_TRANSFERS_COMMIT_ID",
+"ORTHANC_DW_COMMIT_ID": "$ORTHANC_DW_COMMIT_ID",
+"ORTHANC_WSI_COMMIT_ID": "$ORTHANC_WSI_COMMIT_ID",
+"ORTHANC_OWV_COMMIT_ID": "$ORTHANC_OWV_COMMIT_ID",
+"ORTHANC_AUTH_COMMIT_ID": "$ORTHANC_AUTH_COMMIT_ID",
+"ORTHANC_PYTHON_COMMIT_ID": "$ORTHANC_PYTHON_COMMIT_ID",
+"ORTHANC_ODBC_COMMIT_ID": "$ORTHANC_ODBC_COMMIT_ID",
+"ORTHANC_INDEXER_COMMIT_ID": "$ORTHANC_INDEXER_COMMIT_ID",
+"ORTHANC_NEURO_COMMIT_ID": "$ORTHANC_NEURO_COMMIT_ID",
+"ORTHANC_TCIA_COMMIT_ID": "$ORTHANC_TCIA_COMMIT_ID",
+"ORTHANC_STONE_VIEWER_COMMIT_ID": "$ORTHANC_STONE_VIEWER_COMMIT_ID",
+"ORTHANC_AZURE_STORAGE_COMMIT_ID": "$ORTHANC_AZURE_STORAGE_COMMIT_ID",
+"ORTHANC_GOOGLE_STORAGE_COMMIT_ID": "$ORTHANC_GOOGLE_STORAGE_COMMIT_ID",
+"ORTHANC_AWS_STORAGE_COMMIT_ID": "$ORTHANC_AWS_STORAGE_COMMIT_ID",
+"ORTHANC_OE2_COMMIT_ID": "$ORTHANC_OE2_COMMIT_ID",
+"ORTHANC_OE2_VERSION": "$ORTHANC_OE2_VERSION",
+"ORTHANC_VOLVIEW_COMMIT_ID": "$ORTHANC_VOLVIEW_COMMIT_ID",
+"ORTHANC_OHIF_COMMIT_ID": "$ORTHANC_OHIF_COMMIT_ID",
+"ORTHANC_STL_COMMIT_ID": "$ORTHANC_STL_COMMIT_ID",
+"ORTHANC_JAVA_COMMIT_ID": "$ORTHANC_JAVA_COMMIT_ID",
+"ORTHANC_ADVANCED_STORAGE_COMMIT_ID": "$ORTHANC_ADVANCED_STORAGE_COMMIT_ID",
+"ORTHANC_WORKLISTS_COMMIT_ID": "$ORTHANC_WORKLISTS_COMMIT_ID",
+"ORTHANC_PIXELS_MASKER_COMMIT_ID": "$ORTHANC_PIXELS_MASKER_COMMIT_ID",
+"ORTHANC_EDUCATION_COMMIT_ID": "$ORTHANC_EDUCATION_COMMIT_ID",
+"ORTHANC_TESTS_COMMIT_ID": "$ORTHANC_TESTS_COMMIT_ID"
+}
+EOF
+        exit 0
+    fi
+else
+
+    ORTHANC_COMMIT_ID=$(jq -r '.ORTHANC_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_GDCM_COMMIT_ID=$(jq -r '.ORTHANC_GDCM_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_PG_COMMIT_ID=$(jq -r '.ORTHANC_PG_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_MYSQL_COMMIT_ID=$(jq -r '.ORTHANC_MYSQL_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_TRANSFERS_COMMIT_ID=$(jq -r '.ORTHANC_TRANSFERS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_DW_COMMIT_ID=$(jq -r '.ORTHANC_DW_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_WSI_COMMIT_ID=$(jq -r '.ORTHANC_WSI_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_OWV_COMMIT_ID=$(jq -r '.ORTHANC_OWV_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_AUTH_COMMIT_ID=$(jq -r '.ORTHANC_AUTH_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_PYTHON_COMMIT_ID=$(jq -r '.ORTHANC_PYTHON_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_ODBC_COMMIT_ID=$(jq -r '.ORTHANC_ODBC_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_INDEXER_COMMIT_ID=$(jq -r '.ORTHANC_INDEXER_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_NEURO_COMMIT_ID=$(jq -r '.ORTHANC_NEURO_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_TCIA_COMMIT_ID=$(jq -r '.ORTHANC_TCIA_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_STONE_VIEWER_COMMIT_ID=$(jq -r '.ORTHANC_STONE_VIEWER_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_AZURE_STORAGE_COMMIT_ID=$(jq -r '.ORTHANC_AZURE_STORAGE_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_GOOGLE_STORAGE_COMMIT_ID=$(jq -r '.ORTHANC_GOOGLE_STORAGE_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_AWS_STORAGE_COMMIT_ID=$(jq -r '.ORTHANC_AWS_STORAGE_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_OE2_COMMIT_ID=$(jq -r '.ORTHANC_OE2_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_OE2_VERSION=$(jq -r '.ORTHANC_OE2_VERSION' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_VOLVIEW_COMMIT_ID=$(jq -r '.ORTHANC_VOLVIEW_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_OHIF_COMMIT_ID=$(jq -r '.ORTHANC_OHIF_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_STL_COMMIT_ID=$(jq -r '.ORTHANC_STL_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_JAVA_COMMIT_ID=$(jq -r '.ORTHANC_JAVA_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(jq -r '.ORTHANC_ADVANCED_STORAGE_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_WORKLISTS_COMMIT_ID=$(jq -r '.ORTHANC_WORKLISTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_PIXELS_MASKER_COMMIT_ID=$(jq -r '.ORTHANC_PIXELS_MASKER_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_EDUCATION_COMMIT_ID=$(jq -r '.ORTHANC_EDUCATION_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_TESTS_COMMIT_ID=$(jq -r '.ORTHANC_TESTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+fi
+
+BASE_UBUNTU_IMAGE=questing-20251217
 BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
@@ -251,7 +341,7 @@ if [[ $type == "local" ]]; then
 else
 
     # when building in CI, don't use intermediate targets (it would push plenty of images)
-    buildTargets=$finalImageTarget
+    buildTargets="$finalImageTarget"
 
     prefer_downloads=1
     enable_upload=1
@@ -265,6 +355,8 @@ fi
 # builder_vcpkg_google_tag="vcpkg-google-$final_image_temporary_tag"
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
+# to simulate uclouvain servers being unreachables
+# add_host_cmd=--add-host=orthanc.uclouvain.be:1.1.1.1
 
 ###### runner-base
 docker $build \
@@ -335,6 +427,7 @@ for target in $buildTargets; do
         $add_host_cmd \
         --progress=plain --platform=$platform \
         --build-arg ORTHANC_COMMIT_ID=$ORTHANC_COMMIT_ID \
+        --build-arg ORTHANC_TESTS_COMMIT_ID=$ORTHANC_TESTS_COMMIT_ID \
         --build-arg ORTHANC_GDCM_COMMIT_ID=$ORTHANC_GDCM_COMMIT_ID \
         --build-arg ORTHANC_PG_COMMIT_ID=$ORTHANC_PG_COMMIT_ID \
         --build-arg ORTHANC_MYSQL_COMMIT_ID=$ORTHANC_MYSQL_COMMIT_ID \

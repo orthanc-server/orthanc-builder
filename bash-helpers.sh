@@ -214,7 +214,12 @@ getGitCommitId() { # $1 = repo, $2 = branch/tag/revision
     echo $commit_id
 }
 
-getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1), $5 = throttle (0/1)
+getHgRepoShortName() { # $1 = repo url (https://orthanc.uclouvain.be/hg/orthanc-databases/)
+    repoShortName=$(echo "$1" | grep -oP '(?<=hg\/).*(?=\/)')
+    echo $repoShortName
+}
+
+getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (macos/win/docker), $4 = skipCommitCheck (0/1), $5 = throttle (0/1) $6 = uploadToWebServer
 
     if [[ $3 == "macos" ]]; then
         revision=$(getBranchTagToBuildMacOS $1 $2)
@@ -241,6 +246,11 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
     if [[ $repoType == "hg" ]]; then
 
         commit_id=$(getHgCommitId $repo $revision)
+        repoShortName=$(getHgRepoShortName $repo)
+
+        if [[ $uploadToWebServer == "1" ]]; then
+            upload_hg_repo_to_orthanc_team_if_not_already_there $repoShortName $commit_id $repo
+        fi
 
     elif [[ $repoType == "git" ]]; then
 
@@ -249,4 +259,85 @@ getCommitId() { # $1 = name, $2 = version (stable or unstable), $3 = platform (m
     fi
 
     echo $commit_id
+}
+
+
+downloadOrClone() {  # $1 = repoUrl, $2 = commitId, $3 = folder, $4 = silent (default: false), $5 = force clone (default: false)
+    local silent=${4:-false}
+    local forceClone=${5:-false}
+
+    repoShortName=$(getHgRepoShortName "$1")
+    [ "$silent" = false ] && echo "$repoShortName"
+
+    if [[ $forceClone == "false" ]]; then
+        if download_hg_repo_from_orthanc_team "$repoShortName" "$2" "$1" "$3"; then
+            [ "$silent" = false ] && echo "Downloaded from webserver"
+            return 0
+        fi
+    fi
+
+    local max_retries=5
+    local retry_delay=30  # seconds
+    local attempt=1
+
+    while [ "$attempt" -le "$max_retries" ]; do
+        [ "$silent" = false ] && echo "Attempt $attempt of $max_retries..."
+        
+        # Redirect hg clone output to /dev/null only if silent is true
+        if [ "$silent" = true ]; then
+            if hg clone "$1" -r "$2" "$3" >/dev/null 2>&1; then
+                [ "$silent" = false ] && echo "Clone succeeded."
+                return 0
+            fi
+        else
+            if hg clone "$1" -r "$2" "$3"; then
+                [ "$silent" = false ] && echo "Clone succeeded."
+                return 0
+            fi
+        fi
+
+        if [ "$attempt" -lt "$max_retries" ]; then
+            [ "$silent" = false ] && echo "Clone failed. Retrying in $retry_delay seconds..."
+            sleep "$retry_delay"
+            # Double the delay for the next attempt (exponential backoff)
+            retry_delay=$((retry_delay * 2))
+        else
+            [ "$silent" = false ] && echo "Clone failed after $max_retries attempts."
+            return 1
+        fi
+        ((attempt++))
+    done
+}
+
+
+download_hg_repo_from_orthanc_team() { # $1=repoShortName $2=commitId $3=repo-url $4=folder
+
+    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    if [[ $already_there == 1 ]]; then
+        wget "https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz" --output-document /tmp/$1-$2.tar.gz
+
+        mkdir -p $4
+        pushd $4
+        tar xvf /tmp/$1-$2.tar.gz --strip-components=1
+        popd
+        return 0
+    else
+        return 1
+    fi
+}
+
+upload_hg_repo_to_orthanc_team_if_not_already_there() { # $1 repoShortName $2 commitId $3 repo-url
+    already_there=$(($(curl --silent -I https://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz | grep -E "^HTTP"     | awk -F " " '{print $2}') == 200))
+    if [[ $already_there == 0 ]]; then
+        rm -rf /tmp/$1
+        downloadOrClone $3 $2 /tmp/$1 true true
+        pushd /tmp/$1
+        hg archive /tmp/$1-$2.tar.gz
+
+        # echo "uploading hg-repo $1";
+
+        aws s3 --region eu-west-1 cp /tmp/$1-$2.tar.gz s3://public-files.orthanc.team/tmp-builds/hg-repos/$1-$2.tar.gz --cache-control=max-age=1 --quiet
+    # else
+    #     echo "skipping uploading of $1-$2.tar.gz - already on the webserver";
+    fi
 }

@@ -27,12 +27,16 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' || inputs.is_tag == 'true' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
-      runner: ${{ matrix.config.runner }}
-      runner_type: ${{ matrix.config.runnerType }}
+      build_runner: ${{ matrix.config.buildRunner }}
+      test_runner: ${{ matrix.config.testRunner }}
+      build_runner_type: ${{ matrix.config.buildRunnerType }}
+      test_runner_type: ${{ matrix.config.testRunnerType }}
       platform: ${{ matrix.config.platform }}
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
       is_tag: ${{ inputs.is_tag }}
+      concurrency_group_normal: ${{ matrix.config.concurrencyGroupNormal }}
+      concurrency_group_full: ${{ matrix.config.concurrencyGroupFull }}
     secrets:
       docker_hub_username: ${{ secrets.docker_hub_username }}
       docker_hub_token: ${{ secrets.docker_hub_token }}
@@ -47,27 +51,39 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "stable",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted"
+            buildRunner: "ubuntu-latest",
+            buildRunnerType: "github-hosted",
+            testRunner: "ubuntu-latest",
+            testRunnerType: "github-hosted",
+            concurrencyGroupNormal: "concurrency-group-amd64-stable-normal",
+            concurrencyGroupFull: "concurrency-group-amd64-stable-full"
           }
         - {
             name: "linux/arm64",
             platform: "linux/arm64",
             stableUnstable: "stable",
-            runner: "debian-arm64",
-            runnerType: "self-hosted"
+            buildRunner: "debian-arm64",
+            buildRunnerType: "self-hosted",
+            testRunner: "debian-arm64",
+            testRunnerType: "disabled",
+            concurrencyGroupNormal: "concurrency-group-arm64",
+            concurrencyGroupFull: "concurrency-group-arm64"
           }
 
   build-docker-unstable:
     if: ${{ inputs.is_tag != 'true' }}  
     uses: ./.github/workflows/build-docker.yml
     with:
-      runner: ${{ matrix.config.runner }}
-      runner_type: ${{ matrix.config.runnerType }}
+      build_runner: ${{ matrix.config.buildRunner }}
+      test_runner: ${{ matrix.config.testRunner }}
+      build_runner_type: ${{ matrix.config.buildRunnerType }}
+      test_runner_type: ${{ matrix.config.testRunnerType }}
       platform: ${{ matrix.config.platform }}
       stable_unstable: ${{ matrix.config.stableUnstable }}
       current_branch_tag: ${{ inputs.current_branch_tag }}
       is_tag: ${{ inputs.is_tag }}
+      concurrency_group_normal: ${{ matrix.config.concurrencyGroupNormal }}
+      concurrency_group_full: ${{ matrix.config.concurrencyGroupFull }}
     secrets:
       docker_hub_username: ${{ secrets.docker_hub_username }}
       docker_hub_token: ${{ secrets.docker_hub_token }}
@@ -82,15 +98,23 @@ jobs:
             name: "linux/amd64",
             platform: "linux/amd64",
             stableUnstable: "unstable",
-            runner: "ubuntu-latest",
-            runnerType: "github-hosted"
+            buildRunner: "ubuntu-latest",
+            buildRunnerType: "github-hosted",
+            testRunner: "ubuntu-latest",
+            testRunnerType: "github-hosted",
+            concurrencyGroupNormal: "concurrency-group-amd64-unstable-normal",
+            concurrencyGroupFull: "concurrency-group-amd64-unstable-full"
           }
         - {
             name: "linux/arm64",
             platform: "linux/arm64",
             stableUnstable: "unstable",
-            runner: "debian-arm64",
-            runnerType: "self-hosted"
+            buildRunner: "debian-arm64",
+            buildRunnerType: "self-hosted",
+            testRunner: "debian-arm64",
+            testRunnerType: "disabled",
+            concurrencyGroupNormal: "concurrency-group-arm64",
+            concurrencyGroupFull: "concurrency-group-arm64"
           }
 
   publish-manifest-stable:

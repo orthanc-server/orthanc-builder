@@ -9,12 +9,20 @@ on:
         description: 'Git branch or Tag'
         type: string
         required: true
-      runner:
-        description: 'Runner'
+      build_runner:
+        description: 'Runner for builds'
         type: string
         required: true
-      runner_type:
-        description: 'Runner type'
+      build_runner_type:
+        description: 'Runner type for builds'
+        type: string
+        required: true
+      test_runner:
+        description: 'Runner for tests'
+        type: string
+        required: true
+      test_runner_type:
+        description: 'Runner type for tests'
         type: string
         required: true
       platform:
@@ -23,6 +31,14 @@ on:
         required: true
       stable_unstable:
         description: 'stable_unstable type'
+        type: string
+        required: true
+      concurrency_group_normal:
+        description: 'concurrency group normal'
+        type: string
+        required: true
+      concurrency_group_full:
+        description: 'concurrency group full'
         type: string
         required: true
 
@@ -42,11 +58,11 @@ jobs:
 
   build-docker-normal-image:
     name: build-docker-normal-${{ inputs.platform }} ${{ inputs.stable_unstable}}
-    runs-on: ${{ inputs.runner }}
+    runs-on: ${{ inputs.build_runner }}
     # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
     concurrency:
       # limit concurrency
-      group: ${{ inputs.runner }}-${{ inputs.stable_unstble }}-group
+      group: ${{ inputs.concurrency_group_normal }}
       cancel-in-progress: false
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
@@ -77,7 +93,7 @@ jobs:
     # - name: Maximize build space (2)
     #   # to list folder sizes:
     #   # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh | less
-    #   if: inputs.runner_type == 'github-hosted'
+    #   if: inputs.build_runner_type == 'github-hosted'
     #   run: |
     #     df -h
     #     rm -rf /opt/microsoft && rm -rf /opt/google && rm -rf /opt/az
@@ -107,7 +123,7 @@ jobs:
     #   uses: docker/setup-qemu-action@v1
 
     - name: Set up Docker Buildx
-      if: inputs.runner_type == 'github-hosted'
+      if: inputs.build_runner_type == 'github-hosted'
       uses: docker/setup-buildx-action@v2
       with:
         config: .github/buildkitd.toml
@@ -123,12 +139,24 @@ jobs:
     #   with:
     #     limit-access-to-actor: true
     #   timeout-minutes: 30
+  
+    - name: Download unstable commit id matrix as artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: commit-ids-matrix-unstable
+        path: /tmp
+
+    - name: Download stable commit id matrix as artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: commit-ids-matrix-stable
+        path: /tmp
 
     - name: Build normal image with local-build.sh
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
+      run: ./local-build.sh getCommitIdsFromFile=1 version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=build currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
 
     - name: Push test pre-release image with branch/tag
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
+      run: ./local-build.sh getCommitIdsFromFile=1 version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
 
 
   run-docker-integ-tests:
@@ -153,8 +181,8 @@ jobs:
             name: "linux/amd64-pg",
             platform: "${{ inputs.platform }}",
             stableUnstable: "${{ inputs.stable_unstable }}",
-            runner: "${{ inputs.runner }}",
-            runnerType: "${{ inputs.runner_type }}",
+            runner: "${{ inputs.test_runner }}",
+            runnerType: "${{ inputs.test_runner_type }}",
             testsGroup: "tests-group-db",
             imageType: "normal"
           }
@@ -162,8 +190,8 @@ jobs:
             name: "linux/amd64-others",
             platform: "${{ inputs.platform }}",
             stableUnstable: "${{ inputs.stable_unstable }}",
-            runner: "${{ inputs.runner }}",
-            runnerType: "${{ inputs.runner_type }}",
+            runner: "${{ inputs.test_runner }}",
+            runnerType: "${{ inputs.test_runner_type }}",
             testsGroup: "tests-group-others",
             imageType: "normal"
           }
@@ -174,15 +202,20 @@ jobs:
 
     # - name: Run normal image integration tests
     #   # TODO: enable on ARM64 too
-    #   if: inputs.runner_type == 'github-hosted'
+    #   if: inputs.test_runner_type == 'github-hosted'
     #   run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=normal tagToTest=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
     #   working-directory: ${{github.workspace}}/docker/integration-tests
 
 
   build-docker-full-image:
     name: build-docker-full-${{ inputs.platform }} ${{ inputs.stable_unstable}}
-    runs-on: ${{ inputs.runner }}
+    runs-on: ${{ inputs.build_runner }}
     needs: [build-docker-normal-image]
+    # prevent 2 concurrent jobs (needed for ARM64 self-hosted runner)
+    concurrency:
+      # limit concurrency
+      group: ${{ inputs.concurrency_group_full }}
+      cancel-in-progress: false
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
@@ -191,7 +224,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Set up Docker Buildx
-      if: inputs.runner_type == 'github-hosted'
+      if: inputs.build_runner_type == 'github-hosted'
       uses: docker/setup-buildx-action@v2
       with:
         config: .github/buildkitd.toml
@@ -202,16 +235,28 @@ jobs:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_token }}
 
+    - name: Download unstable commit id matrix as artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: commit-ids-matrix-unstable
+        path: /tmp
+
+    - name: Download stable commit id matrix as artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: commit-ids-matrix-stable
+        path: /tmp
+
     - name: Build full image with local-build.sh
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+      run: ./local-build.sh getCommitIdsFromFile=1 version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=build currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
 
     - name: Push test pre-release image with branch/tag
-      run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
+      run: ./local-build.sh getCommitIdsFromFile=1 version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}
 
     - name: Run full image integration tests
       # TODO: enable on ARM64 too
-      if: inputs.runner_type == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=full imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=tests-group-full
+      if: inputs.test_runner_type == 'github-hosted'
+      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=full imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=tests-group-full downloadOrthancTestsRepo=true
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     # - name: Setup tmate session
@@ -222,14 +267,14 @@ jobs:
 
   publish-images:
     name: publish-images-${{ inputs.platform }} ${{ inputs.stable_unstable}}
-    runs-on: ${{ inputs.runner }}
+    runs-on: ${{ inputs.build_runner }}
     needs: [build-docker-normal-image, run-docker-integ-tests, build-docker-full-image]
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Set up Docker Buildx
-      if: inputs.runner_type == 'github-hosted'
+      if: inputs.build_runner_type == 'github-hosted'
       uses: docker/setup-buildx-action@v2
       with:
         config: .github/buildkitd.toml
@@ -255,7 +300,7 @@ jobs:
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=pull-tag-push currentTag=${{ inputs.current_branch_tag }}-full-${{ inputs.stable_unstable }} pushTag=latest-full isTag=${{ inputs.is_tag }}
 
     # - name: Setup tmate session
-    #   if: ${{ failure() && inputs.runner_type == 'github-hosted' }}
+    #   if: ${{ failure() && inputs.build_runner_type == 'github-hosted' }}
     #   uses: mxschmitt/action-tmate@v3
     #   with:
     #     limit-access-to-actor: true

@@ -41,33 +41,43 @@ jobs:
     steps:
 
     - name: Install Integration tests prerequisites
-      # TODO: enable on ARM64 too
       if: inputs.runner_type == 'github-hosted'
       run: sudo apt-get install -y dcmtk
 
     - uses: actions/checkout@v3
       # TODO: enable on ARM64 too
-      if: inputs.runner_type == 'github-hosted'
+      if: inputs.runner == 'ubuntu-latest'
 
     - name: Pull image for integ tests
-      # TODO: enable on ARM64 too
       if: inputs.runner_type == 'github-hosted'
       run: ./local-build.sh version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=full type=ci step=pull-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }}
 
+    - name: Download unstable commit id matrix as artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: commit-ids-matrix-unstable
+        path: /tmp
+
+    - name: Download stable commit id matrix as artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: commit-ids-matrix-stable
+        path: /tmp
+
     - name: Run normal image integration tests
       # TODO: enable on ARM64 too
-      if: inputs.runner_type == 'github-hosted'
-      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=${{ inputs.image_type }} imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=${{ inputs.tests_group }}
+      if: inputs.runner == 'ubuntu-latest'
+      run: ./run-integration-tests.sh version=${{ inputs.stable_unstable }} image=${{ inputs.image_type }} imageUnderTest=orthancteam/orthanc-pre-release:${{ inputs.current_branch_tag }}-${{ inputs.image_type }}-${{ inputs.stable_unstable }}-before-tests-amd64 testsGroup=${{ inputs.tests_group }} downloadOrthancTestsRepo=true
       working-directory: ${{github.workspace}}/docker/integration-tests
 
     - name: Skipped for ARM64
       # TODO: enable on ARM64 too
-      if: inputs.runner_type != 'github-hosted'
+      if: inputs.runner == 'debian-arm64'
       run: echo "skipped on ARM 64"
 
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-        timeout-minutes: 20
+    # - name: Setup tmate session
+    #   if: ${{ failure() }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   timeout-minutes: 30
+    #   with:
+    #     limit-access-to-actor: true

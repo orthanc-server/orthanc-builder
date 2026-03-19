@@ -8,6 +8,7 @@ set -o xtrace
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:attach-custom-data-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:22.7.0-full version=stable image=full
+# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable downloadOrthancTestsRepo=true
 
 source ../../bash-helpers.sh
 
@@ -15,6 +16,7 @@ imageUnderTest=orthancteam/orthanc:latest
 version=unknown
 image=normal
 testsGroup=tests-group-all
+downloadOrthancTestsRepo=false
 
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
 
@@ -32,6 +34,7 @@ echo "imageUnderTest     = $imageUnderTest"
 echo "version            = $version"
 echo "image              = $image"
 echo "testsGroup         = $testsGroup"
+echo "downloadOrthancTestsRepo = $downloadOrthancTestsRepo"
 
 # build to orthanc-under-tests image
 add_host_cmd=--add-host=orthanc.uclouvain.be:130.104.229.21
@@ -46,15 +49,25 @@ else
     integ_tests_branch_tag=$(getIntegTestsRevision $version)
 fi
 
-orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
-
 popd  # back to docker/integration-tests folder
 
 
 ############ run NewTests first
-testRepoFolder=orthanc-tests-repo-$image
+# testRepoFolder=orthanc-tests-repo-$image
+testRepoFolder=orthanc-tests/orthanc-tests-repo
 rm -rf $testRepoFolder/
-hg clone https://orthanc.uclouvain.be/hg/orthanc-tests/ -r $orthanc_tests_revision $testRepoFolder
+
+if [[ "$downloadOrthancTestsRepo" == "false" ]]; then
+    orthanc_tests_revision=$(getHgCommitId https://orthanc.uclouvain.be/hg/orthanc-tests/ $integ_tests_branch_tag)
+    downloadOrClone https://orthanc.uclouvain.be/hg/orthanc-tests/ $orthanc_tests_revision $testRepoFolder
+else  # no access to hg clone
+    ORTHANC_TESTS_COMMIT_ID=$(jq -r '.ORTHANC_TESTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    wget https://public-files.orthanc.team/tmp-builds/hg-repos/orthanc-tests-$ORTHANC_TESTS_COMMIT_ID.tar.gz --output-document /tmp/orthanc-tests.tar.gz --quiet
+    mkdir -p $testRepoFolder
+    pushd $testRepoFolder
+    tar xvf /tmp/orthanc-tests.tar.gz --strip-components=1
+    popd # back to docker/integration-tests folder
+fi
 
 pushd $testRepoFolder/NewTests
 
@@ -134,31 +147,31 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
 
 fi
 
-popd
+popd # back to docker/integration-tests folder
 ############ end run NewTests
 
 ############ run legacy tests
 
 if [[ $image == "normal" ]]; then
 
-    docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
+    docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
     if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ] || [ "$testsGroup" = "tests-group-db" ]; then
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-recycling -t orthanc-tests-recycling orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-dicomweb -t orthanc-tests-dicomweb orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-recycling -t orthanc-tests-recycling orthanc-tests
     fi
 
     if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-transfers -t orthanc-tests-transfers orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision --build-arg IMAGE_UNDER_TEST=$imageUnderTest -f orthanc-transcoding-tests/Dockerfile -t orthanc-transcoding-tests orthanc-transcoding-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client -t orthanc-tests-tls-no-check-client orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client-generate-config -t orthanc-tests-tls-no-check-client-generate-config orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-worklists -t orthanc-tests-worklists orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-transfers -t orthanc-tests-transfers orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-wsi -t orthanc-tests-wsi orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-webdav -t orthanc-tests-webdav orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-cget -t orthanc-tests-cget orthanc-tests
+        docker build $add_host_cmd --build-arg IMAGE_UNDER_TEST=$imageUnderTest -f orthanc-tests/Dockerfile.orthanc-transcoding-tests -t orthanc-transcoding-tests orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client -t orthanc-tests-tls-no-check-client orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-tls-no-check-client-generate-config -t orthanc-tests-tls-no-check-client-generate-config orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
 
         COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
         COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
@@ -256,7 +269,7 @@ else  # full images (MSSQL only !)
 
     if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-full" ]; then
 
-        docker build $add_host_cmd --build-arg ORTHANC_TESTS_REVISION=$orthanc_tests_revision -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
+        docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests -t orthanc-tests orthanc-tests
 
         if [[ "$version" == "stable" ]]; then
             # TODO: re-enable ODBC tests in unstable mode
