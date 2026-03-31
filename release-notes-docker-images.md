@@ -25,7 +25,8 @@
 Pending changes
 ---------------
 
-- switched to `case-sensitive` branches
+- switched orthanc to `case-sensitive-find` branch
+- switched tests to `case-sensitive-search` branch
 - upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
 
 
