@@ -26,6 +26,7 @@ Pending changes
 ---------------
 
 - upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
+- upgraded Python plugin to [7.1](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
 
 
 26.1.0
