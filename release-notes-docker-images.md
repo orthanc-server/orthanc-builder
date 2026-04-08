@@ -25,8 +25,9 @@
 Pending changes
 ---------------
 
-- upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
 - upgraded Python plugin to [7.1](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
+- upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
+- upgraded Stone Web viewer to [3.0+d4a8203b3390](https://orthanc.uclouvain.be/hg/orthanc-stone/file/default/Applications/StoneWebViewer/NEWS)
 
 
 26.1.0
@@ -56,8 +57,8 @@ Small updates of these 3 plugins whose version number was not correctly reported
 25.12.1
 -------
 
-- upgraded Stone Web viewer to [3.0](https://orthanc.uclouvain.be/hg/orthanc-stone/file/default/Applications/StoneWebViewer/NEWS)
 - added the new [Pixels Masker plugin](https://orthanc.uclouvain.be/book/plugins/pixels-masker.html) 0.1.0.
+- WIN-INSTALLER: upgraded Stone Web viewer to [3.0](https://orthanc.uclouvain.be/hg/orthanc-stone/file/default/Applications/StoneWebViewer/NEWS)
 
 
 25.12.0
