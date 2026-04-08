@@ -996,13 +996,13 @@ elif [[ $target == "orthanc-stone-so" ]]; then
 
         download_or_clone orthanc-stone $commitId $sourcesRootPath
 
-        # StoneViewer is quite often on a non stable branch -> if its version is "mainline", always append the commit id
+        # StoneViewer is quite often on a non stable branch even in the stable build -> if its version is "mainline", always append the commit id
         if grep -q "set(STONE_WEB_VIEWER_VERSION \"mainline\")" "$sourcesRootPath/Applications/StoneWebViewer/Version.cmake"; then
             patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Applications/StoneWebViewer/Plugin/Plugin.cpp
         fi
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
-        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.10")
 
         pushd $buildRootPath
         cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_STONE_BINARIES=/downloads/wasm-binaries/StoneWebViewer $sourcesRootPath/Applications/StoneWebViewer/Plugin/
