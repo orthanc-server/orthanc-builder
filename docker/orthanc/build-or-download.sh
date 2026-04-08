@@ -512,7 +512,7 @@ elif [[ $target == "orthanc-advanced-storage" ]]; then
         cd $sourcesRootPath/orthanc-advanced-storage && \
 	    git checkout $commitId
 
-        patch_version_name_on_unstable "return ADVANCED_STORAGE_VERSION" $sourcesRootPath/orthanc-advanced-storage/Plugin/Plugin.cpp
+        patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-advanced-storage/Plugin/Plugin.cpp
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
