@@ -954,11 +954,13 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
         wget https://public-files.orthanc.team/third-party-downloads/libpng-1.6.50.tar.gz
         wget https://public-files.orthanc.team/third-party-downloads/zlib-1.3.1.tar.gz
         wget https://public-files.orthanc.team/third-party-downloads/jpegsrc.v9f.tar.gz
+        wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-mainline.tar.gz
         popd
 
-        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.10")
+        cp /third-party-downloads/* /source/Applications/StoneWebViewer/WebAssembly/ThirdPartyDownloads 
 
-        link_third_party_downloads /source/Applications/StoneWebViewer/WebAssembly/ThirdPartyDownloads
+        ls -al /source/Applications/StoneWebViewer/WebAssembly/ThirdPartyDownloads
 
         # equivalent of docker-internal.sh from orthanc-stone repo
         source /opt/emsdk/emsdk_env.sh

@@ -211,13 +211,14 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pix
 FROM wasm-builder-base-amd64 AS build-wasm-stone-viewer-amd64
 
 COPY --from=orthanc-builder-base /scripts/build-or-download.sh /scripts/
-
-RUN ls -al /
+COPY --from=orthanc-builder-base /third-party-downloads /third-party-downloads
+# RUN ls -al /third-party-downloads
+# RUN ls -al /
 # RUN env
-RUN ls -al /scripts
+# RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
-RUN ls -al /target
+# RUN ls -al /target
 
 
 FROM orthanc-builder-base AS build-stone-viewer-amd64
@@ -226,19 +227,19 @@ ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 
 RUN mkdir -p /downloads/wasm-binaries/StoneWebViewer
 COPY --from=build-wasm-stone-viewer-amd64 /target/StoneWebViewer/ /downloads/wasm-binaries/StoneWebViewer
-RUN ls -al /downloads/wasm-binaries/StoneWebViewer
+# RUN ls -al /downloads/wasm-binaries/StoneWebViewer
 
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stone-so commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 FROM orthanc-builder-base AS download-wasm-stone-viewer-arm64
 
-RUN ls -al /
+# RUN ls -al /
 # RUN env
-RUN ls -al /scripts
+# RUN ls -al /scripts
 ARG ORTHANC_STONE_VIEWER_COMMIT_ID
 # when building for arm64, simply download the WASM build that has been published by CI when building the linux/amd64 platform
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=download-orthanc-stone-wasm commitId=$ORTHANC_STONE_VIEWER_COMMIT_ID baseImage=linux/amd64/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=0
-RUN ls -al /target
+# RUN ls -al /target
 
 
 
