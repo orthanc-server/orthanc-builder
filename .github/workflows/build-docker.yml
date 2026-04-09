@@ -134,12 +134,6 @@ jobs:
         username: ${{ secrets.docker_hub_username }}
         password: ${{ secrets.docker_hub_token }}
 
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-      timeout-minutes: 60
-  
     - name: Download unstable commit id matrix as artifact
       uses: actions/download-artifact@v4
       with:
@@ -157,6 +151,12 @@ jobs:
 
     - name: Push test pre-release image with branch/tag
       run: ./local-build.sh getCommitIdsFromFile=1 version=${{ inputs.stable_unstable }} platform=${{ inputs.platform }} image=normal type=ci step=push-before-test-image currentTag=${{ inputs.current_branch_tag }}-normal-${{ inputs.stable_unstable }} pushTag=${{ inputs.current_branch_tag }} isTag=${{ inputs.is_tag }}
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+      timeout-minutes: 60
 
 
   run-docker-integ-tests:
