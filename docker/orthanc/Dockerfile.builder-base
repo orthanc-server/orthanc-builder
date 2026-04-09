@@ -71,7 +71,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-auth-0.7.22.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-cal-0.7.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-common-0.9.23.tar.gz && \
-    wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-compression-0.2.17.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-compression-0.2.18.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-event-stream-0.4.2.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-http-0.8.2.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/aws/aws-c-io-0.14.9.tar.gz && \
