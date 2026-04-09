@@ -958,6 +958,8 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
 
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
+        link_third_party_downloads /source/Applications/StoneWebViewer/WebAssembly/ThirdPartyDownloads
+
         # equivalent of docker-internal.sh from orthanc-stone repo
         source /opt/emsdk/emsdk_env.sh
 
