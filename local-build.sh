@@ -187,7 +187,7 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
         upload_hg_repo_to_orthanc_team_if_not_already_there orthanc-tests $ORTHANC_TESTS_COMMIT_ID https://orthanc.uclouvain.be/hg/orthanc-tests/
     fi
 
-    if [[ $version == "unstable" ]]; then
+    if [[ $version == "unstable" ]] && [[ $type == "ci" ]]; then
         wget https://public-files.orthanc.team/tmp-builds/hg-repos/orthanc-$ORTHANC_COMMIT_ID.tar.gz --output-document /tmp/orthanc-$ORTHANC_COMMIT_ID.tar.gz
         aws s3 --region eu-west-1 cp /tmp/orthanc-$ORTHANC_COMMIT_ID.tar.gz s3://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-mainline.tar.gz --cache-control=max-age=1
     fi
