@@ -761,7 +761,7 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-authorization/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_AUTH",
-            "stable": "0.11.1",
+            "stable": "0.11.2",
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
