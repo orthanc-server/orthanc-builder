@@ -49,7 +49,7 @@ ODBC plugin                           1.3
 TCIA plugin                           1.3
 Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
-AWS S3 plugin                         2.5.0
+AWS S3 plugin                         2.5.2
 Orthanc Explorer 2                    1.10.2
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
@@ -71,7 +71,7 @@ Lua                                   5.4
 ```
 additional component                  version
 ---------------------------------------------
-Azure Blob Storage plugin             2.3.1
+Azure Blob Storage plugin             2.5.2
 Google Cloud Storage plugin           2.5.1
 Java plugin                           2.0
 ````
