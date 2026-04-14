@@ -32,6 +32,7 @@ Pending changes
 - upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
 - upgraded Stone Web viewer to [3.0+d4a8203b3390](https://orthanc.uclouvain.be/hg/orthanc-stone/file/default/Applications/StoneWebViewer/NEWS)
 - upgraded advanced authorization plugin to [0.11.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- upgraded Advanced Storage plugin [0.3.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
 - upgraded AWS S3 object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - upgraded Azure object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 
