@@ -35,13 +35,13 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Get Commit id matrix + upload hg archives to webserver (unstable)
-      run: ./local-build.sh step=generate-commit-id-matrix version=unstable
+      run: ./local-build.sh step=generate-commit-id-matrix version=unstable type=ci
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
 
     - name: Get Commit id matrix  + upload hg archives to webserver (stable)
-      run: ./local-build.sh step=generate-commit-id-matrix version=stable
+      run: ./local-build.sh step=generate-commit-id-matrix version=stable type=ci
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
