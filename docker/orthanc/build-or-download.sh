@@ -542,7 +542,7 @@ elif [[ $target == "orthanc-worklists" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-worklists/Plugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/orthanc-worklists/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
@@ -570,7 +570,7 @@ elif [[ $target == "orthanc-pixels-masker" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-pixels-masker/Sources/Plugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/orthanc-pixels-masker/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
