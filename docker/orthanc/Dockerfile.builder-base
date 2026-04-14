@@ -134,6 +134,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/postgresql-18.1.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/protobuf-cpp-3.5.1.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/pugixml-1.14.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/reproc-14.2.5.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/sqlite-amalgamation-3460100.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/sqlite-amalgamation-3500400.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/three.js-r154-sources.tar.gz && \
