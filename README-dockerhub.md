@@ -39,7 +39,7 @@ Osimis Web viewer plugin              1.4.3
 Python plugin                         7.1
 Orthanc Web viewer plugin             2.10
 DICOMweb plugin                       1.22
-PostgreSQL plugins                    10.0
+PostgreSQL plugins                    10.1
 MySQL plugins                         5.2
 WSI Web viewer plugin                 3.3
 Authorization plugin                  0.11.2
