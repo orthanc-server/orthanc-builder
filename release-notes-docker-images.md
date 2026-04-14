@@ -25,6 +25,7 @@
 Pending changes
 ---------------
 
+- upgraded Orthanc to [1.12.11](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - upgraded Orthanc Explorer 2 plugin to [1.11.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded Python plugin to [7.1](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
 - upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
