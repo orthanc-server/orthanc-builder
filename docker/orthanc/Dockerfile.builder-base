@@ -121,6 +121,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.8.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.9.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.10.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.11.tar.gz && \    
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-0ebe8cfd9bf7.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-56eb61c86f93.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-94c7f3784456.tar.gz && \
@@ -139,7 +140,6 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/sqlite-amalgamation-3500400.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/three.js-r154-sources.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/three-84.js.gz && \
-    wget https://public-files.orthanc.team/third-party-downloads/VolView-4.1.1.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/VolView-4.4.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/vuejs-2.6.10.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/VTK-7.1.1.tar.gz && \
