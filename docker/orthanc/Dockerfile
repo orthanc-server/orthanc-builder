@@ -190,7 +190,9 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-edu
 FROM orthanc-builder-base AS build-plugin-advanced-storage
 
 ARG ORTHANC_ADVANCED_STORAGE_COMMIT_ID
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+ARG ORTHANC_ADVANCED_STORAGE_VERSION
+
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-advanced-storage commitId=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID extraArg1=$ORTHANC_ADVANCED_STORAGE_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Worklists
 

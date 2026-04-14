@@ -178,6 +178,7 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
     ORTHANC_STL_COMMIT_ID=$(getCommitId "Orthanc-stl" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_JAVA_COMMIT_ID=$(getCommitId "Orthanc-java" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_ADVANCED_STORAGE_VERSION=$(getBranchTagToBuildDocker "Orthanc-advanced-storage" $version $throttle)
     ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle $uploadToWebServer)
@@ -220,6 +221,7 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
 "ORTHANC_STL_COMMIT_ID": "$ORTHANC_STL_COMMIT_ID",
 "ORTHANC_JAVA_COMMIT_ID": "$ORTHANC_JAVA_COMMIT_ID",
 "ORTHANC_ADVANCED_STORAGE_COMMIT_ID": "$ORTHANC_ADVANCED_STORAGE_COMMIT_ID",
+"ORTHANC_ADVANCED_STORAGE_VERSION": "$ORTHANC_ADVANCED_STORAGE_VERSION",
 "ORTHANC_WORKLISTS_COMMIT_ID": "$ORTHANC_WORKLISTS_COMMIT_ID",
 "ORTHANC_PIXELS_MASKER_COMMIT_ID": "$ORTHANC_PIXELS_MASKER_COMMIT_ID",
 "ORTHANC_EDUCATION_COMMIT_ID": "$ORTHANC_EDUCATION_COMMIT_ID",
@@ -255,6 +257,7 @@ else
     ORTHANC_STL_COMMIT_ID=$(jq -r '.ORTHANC_STL_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_JAVA_COMMIT_ID=$(jq -r '.ORTHANC_JAVA_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(jq -r '.ORTHANC_ADVANCED_STORAGE_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_ADVANCED_STORAGE_VERSION=$(jq -r '.ORTHANC_ADVANCED_STORAGE_VERSION' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_WORKLISTS_COMMIT_ID=$(jq -r '.ORTHANC_WORKLISTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_PIXELS_MASKER_COMMIT_ID=$(jq -r '.ORTHANC_PIXELS_MASKER_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_EDUCATION_COMMIT_ID=$(jq -r '.ORTHANC_EDUCATION_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
@@ -452,6 +455,7 @@ for target in $buildTargets; do
         --build-arg ORTHANC_STL_COMMIT_ID=$ORTHANC_STL_COMMIT_ID \
         --build-arg ORTHANC_JAVA_COMMIT_ID=$ORTHANC_JAVA_COMMIT_ID \
         --build-arg ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID \
+        --build-arg ORTHANC_ADVANCED_STORAGE_VERSION=$ORTHANC_ADVANCED_STORAGE_VERSION \
         --build-arg ORTHANC_WORKLISTS_COMMIT_ID=$ORTHANC_WORKLISTS_COMMIT_ID \
         --build-arg ORTHANC_EDUCATION_COMMIT_ID=$ORTHANC_EDUCATION_COMMIT_ID \
         --build-arg ORTHANC_PIXELS_MASKER_COMMIT_ID=$ORTHANC_PIXELS_MASKER_COMMIT_ID \

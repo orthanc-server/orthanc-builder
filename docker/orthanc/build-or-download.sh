@@ -488,7 +488,7 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
         npm install
         npm run build
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/orthanc-explorer-2/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
@@ -514,11 +514,11 @@ elif [[ $target == "orthanc-advanced-storage" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/orthanc-advanced-storage/Plugin/Plugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/orthanc-advanced-storage/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-advanced-storage/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_PLUGIN_VERSION=$extraArg1  $sourcesRootPath/orthanc-advanced-storage/
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-advanced-storage/
 
         make -j 4
