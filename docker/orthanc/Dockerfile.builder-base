@@ -108,6 +108,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/jsPanel-2.3.3-fixed.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/js-url-1.8.6.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/libcsv-3.0.3.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/libiconv-1.15.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/libpng-1.6.40.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/libpng-1.6.50.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/nexus-4.3.zip && \
