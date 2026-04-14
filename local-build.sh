@@ -183,7 +183,7 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
     ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     
     ORTHANC_TESTS_COMMIT_ID=$(getHgCommitId "https://orthanc.uclouvain.be/hg/orthanc-tests/" $(getIntegTestsRevision $version))
-    if [[ $uploadToWebServer == "1" ]]; then
+    if [[ $uploadToWebServer == "1" ]] && [[ $type == "ci" ]]; then
         upload_hg_repo_to_orthanc_team_if_not_already_there orthanc-tests $ORTHANC_TESTS_COMMIT_ID https://orthanc.uclouvain.be/hg/orthanc-tests/
     fi
 

@@ -112,7 +112,7 @@ download_or_clone() {    # $1 = repoShortName $2 = commitId $3 = folder
 
         while [ $attempt -le $max_retries ]; do
             echo "Attempt $attempt of $max_retries..."
-            if hg clone "$@"; then
+            if hg clone "https://orthanc.uclouvain.be/hg/$1" -r $2 $3; then
                 echo "Clone succeeded."
                 return 0
             else
