@@ -21,7 +21,7 @@
 
 
 def GetVersion(repo):
-    if 'BuildbotVersion' in repo:
-        return repo['BuildbotVersion']
+    if 'WinInstallerVersion' in repo:
+        return repo['WinInstallerVersion']
     else:
         return repo['stable'].split('-') [-1]

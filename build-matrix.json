@@ -13,7 +13,7 @@
             "comment": "# CHANGE_VERSION_XXX",
             "stable": "XXX-1.1                                 Name of the stable branch/tag: used by Docker/Win/MacOS if not overriden",
             "unstable": "default                               Name of the unstable branch: used by Docker/Win/MacOS if not overriden",
-            "BuildbotVersion": "1.2                            OPTIONAL the version included in the Win sintaller ",
+            "WinInstallerVersion": "1.2                        OPTIONAL the version included in the Win sintaller ",
             "stableWin": "4b8fd4b10742                         OPTIONAL specific unstable branch/tag for Windows",
             "unstableWin": "4b8fd4b10742                       OPTIONAL specific stable branch/tag for Windows",
             "stableMacOS": "4b8fd4b10742                       OPTIONAL specific stable branch/tag for MacOS",
@@ -28,6 +28,7 @@
             "unitTests": "./UnitTests                          OPTIONAL",
             "extraCMakeFlags": "-DORTHANC_SDK_VERSION=1.9.2    OPTIONAL",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
                 "Exclude": true,
                 "Description": "Osimis Web viewer (AGPL license)",
@@ -58,6 +59,7 @@
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON -DUSE_LEGACY_LIBICU=ON -DBOOST_LOCALE_BACKEND=icu -DUSE_LEGACY_JSONCPP=ON",
             "unitTests": "./UnitTests",
             "buildForMacOS": true,
+            "buildForWin": false,
             "windows": [
                 {
                     "Description": "Orthanc server",
@@ -167,6 +169,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "PostgreSQL backend (AGPL license)",
@@ -199,6 +202,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancMySQLIndex.dylib libOrthancMySQLStorage.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "MySQL backend (AGPL license)",
@@ -232,6 +236,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancOdbcIndex.dylib libOrthancOdbcStorage.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "ODBC backend (AGPL license)",
@@ -263,6 +268,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancTransfers.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
@@ -292,6 +298,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancIndexer.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Folder indexer plugin",
@@ -320,6 +327,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancTcia.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "The Cancer Imaging Archive plugin",
@@ -348,6 +356,7 @@
             "unstable": "default",
             "commentMacOS": "# disabled because link fails with ld: cannot link directly with dylib/framework, your binary is not an allowed client of /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libpython2.7.tbd for architecture x86_64",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
             }]
         },
@@ -555,12 +564,13 @@
             "comment": "# CHANGE_VERSION_STONE_WEB_VIEWER",
             "stable": "d4a8203b3390",
             "stableWin": "StoneWebViewer-3.0",
-            "BuildbotVersion": "3.0",
+            "WinInstallerVersion": "3.0",
             "stableMacOS": "StoneWebViewer-3.0",
             "unstable": "default",
             "artifactsMacOS": "libStoneWebViewer.dylib",
             "commentMacOS": "# currently always building with wasm-binaries from latest offical version",
             "buildForMacOS": true,
+            "buildForWin": false,
             "preBuildStableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "preBuildUnstableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads",
             "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
@@ -627,6 +637,7 @@
             "customBuildMacOS" : "cmake -B $workspace/build-arm64 $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 $extraCMakeFlagsMacOS -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOrthancGdcm.dylib $workspace/build-amd64/libOrthancGdcm.dylib $workspace/build-arm64/libOrthancGdcm.dylib",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "buildForMacOS": true,
+            "buildForWin": false,
             "windows": [{
                 "Description": "GDCM decoder/transcoder",
                 "Mandatory": false,
@@ -652,6 +663,7 @@
             "unstable": "default",
             "commentMacOS": "# currently disabled because of error Uncompressing openlayers-3.19.0-dist.zip -> CMake Error at /Users/runner/work/orthanc-builder/orthanc-builder/build/orthanc/OrthancFramework/Resources/CMake/DownloadPackage.cmake:222 (message): The package was not uncompressed at the proper location.",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [
                 {
                     "Description": "Web viewer of whole-slide microscopic images (AGPL license)",
@@ -739,6 +751,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancWebViewer.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "unitTests": "./UnitTests",
             "windows": [{
@@ -765,6 +778,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancAuthorization.dylib",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
                 "Description": "Advanced authorization plugin (AGPL license)",
                 "Mandatory": false,
@@ -787,6 +801,8 @@
             "sourcesSubPath": "/Azure",
             "comment": "# CHANGE_VERSION_AZURE_OBJECT_STORAGE",
             "stable": "2.5.2",
+            "WinInstallerVersionComment": "Currently unable to build 2.5.2 for Windows",
+            "WinInstallerVersion": "2.3.1",
             "unstable": "default",
             "artifactsWin": "OrthancAzureBlobStorage.dll",
             "buildForMacOS": false,
@@ -825,6 +841,7 @@
             "stable": "2.5.2",
             "unstable": "default",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
                 "Description": "Orthanc AWS S3 storage plugin (AGPL license)",
                 "Mandatory": false,
@@ -850,6 +867,7 @@
             "unstableMacOS": "1.11.0", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",
             "buildForMacOS": false,
+            "buildForWin": false,
             "artifactsMacOS": "libOrthancExplorer2-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-explorer-2/releases/download/",
             "windows": [{
@@ -881,6 +899,7 @@
             "unstable": "master",
             "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
             "buildForMacOS": false,
+            "buildForWin": false,
             "artifactsMacOS": "libAdvancedStorage-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-advanced-storage/releases/download/",
             "windows": [{
@@ -909,8 +928,9 @@
             "comment": "# CHANGE_VERSION_WVB",
             "stable": "dev",
             "unstable": "dev",
-            "BuildbotVersion": "1.4.3",
+            "WinInstallerVersion": "1.4.3",
             "buildForMacOS": false,
+            "buildForWin": false,
             "customBuildMacOS" : "cmake -B $workspace/build-arm64 -DVIEWER_VERSION_FULL=1.4.3 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-arm64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='arm64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-arm64              && make -j 6             && cmake -B $workspace/build-amd64 -DVIEWER_VERSION_FULL=1.4.3 -DORTHANC_FRAMEWORK_VERSION=1.6.1 -DORTHANC_FRAMEWORK_SOURCE=hg -DJS_CLIENT_PATH=/Users/runner/work/orthanc-builder/orthanc-builder/build-amd64/frontend-build -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES='x86_64' -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DSTATIC_BUILD=ON -DUNIT_TESTS_WITH_HTTP_CONNEXIONS:BOOL=OFF -DCMAKE_C_FLAGS='-Wno-implicit-function-declaration'  $workspace/sources$sourcesSubPath             && cd $workspace/build-amd64             && make -j 6             && mkdir $workspace/build             && lipo -create -output $workspace/build/libOsimisWebViewer.dylib $workspace/build-amd64/libOsimisWebViewer.dylib $workspace/build-arm64/libOsimisWebViewer.dylib",
             "unitTests": "./UnitTests",
             "artifactsMacOS": "libOsimisWebViewer.dylib",
@@ -943,6 +963,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancNeuro.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
                 "Description": "Neuroimaging plugin",
@@ -966,13 +987,14 @@
             "repo": "https://orthanc.uclouvain.be/hg/orthanc-volview/",
             "repoType": "hg",
             "comment": "# CHANGE_VERSION_VOLVIEW",
-            "stable": "e2fd60bf5a09",
+            "stable": "OrthancVolView-1.3",
             "stableWin": "OrthancVolView-1.3",
-            "BuildbotVersion": "1.3",
+            "WinInstallerVersion": "1.3",
             "stableMacOS": "OrthancVolView-1.3",
             "unstable": "default",
             "artifactsMacOS": "libOrthancVolView.dylib",
             "buildForMacOS": true,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "preBuildStableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/stable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
             "preBuildUnstableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-volview-dist-builds/unstable/dist.zip --output-document /tmp/downloads/dist.zip --quiet && mkdir -p ${GITHUB_WORKSPACE}/VolView/dist && unzip /tmp/downloads/dist.zip -d ${GITHUB_WORKSPACE}/sources/VolView/dist",
@@ -1002,6 +1024,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancOHIF.dylib",
             "buildForMacOS": false,
+            "buildForWin": false,
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "preBuildStableMacOS": "TODO viewer=Viewers-3.9.1 && rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/$viewer.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p /tmp/ohif && tar xvf /tmp/downloads/dist.tar.gz -C /tmp/ohif && cd /tmp/ohif/$viewer && npm install &&  mkdir -p ${GITHUB_WORKSPACE}/source/OHIF && cp -r /tmp/ohif",
             "preBuildUnstableMacOS": "TODO rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://orthanc.uclouvain.be/third-party-downloads/OHIF/Viewers-3.9.1.tar.gz --output-document /tmp/downloads/dist.tar.gz --quiet && mkdir -p ${GITHUB_WORKSPACE}/OHIF/dist",
@@ -1031,6 +1054,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancSTL.dylib",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
                 "Description": "STL plugin",
                 "Mandatory": false,
@@ -1056,6 +1080,7 @@
             "stable": "OrthancJava-2.0",
             "unstable": "default",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
                 "Description": "Java plugin",
                 "Mandatory": false,
@@ -1080,6 +1105,7 @@
             "unstable": "default",
             "artifactsMacOS": "libOrthancEducation.dylib",
             "buildForMacOS": false,
+            "buildForWin": false,
             "windows": [{
                 "Description": "Education plugin",
                 "Mandatory": false,
@@ -1107,6 +1133,7 @@
             "unstable": "master",
             "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
             "buildForMacOS": false,
+            "buildForWin": false,
             "artifactsMacOS": "libOrthancWorklists-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-worklists/releases/download/",
             "windows": [{
@@ -1137,6 +1164,7 @@
             "unstable": "master",
             "comment2": "this plugin has its own build process on Github -> MacOS is built by Github",
             "buildForMacOS": false,
+            "buildForWin": false,
             "artifactsMacOS": "libOrthancPixelsMasker-universal.dylib",
             "rootDownloadForMacOS": "https://github.com/orthanc-server/orthanc-pixels-masker/releases/download/",
             "windows": [{

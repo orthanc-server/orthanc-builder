@@ -22,8 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes
----------------
+26.4.0
+------
 
 - upgraded Orthanc to [1.12.11](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - upgraded Orthanc Explorer 2 plugin to [1.11.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
@@ -31,11 +31,12 @@ Pending changes
 - upgraded Python plugin to [7.1](https://orthanc.uclouvain.be/hg/orthanc-python/file/default/NEWS)
 - upgraded OHIF plugin to [1.8](https://orthanc.uclouvain.be/hg/orthanc-ohif/file/default/NEWS) featuring OHIF v3.12.0.
 - upgraded Stone Web viewer to [3.0+d4a8203b3390](https://orthanc.uclouvain.be/hg/orthanc-stone/file/default/Applications/StoneWebViewer/NEWS)
+- upgraded DICOMweb plugin to [1.23](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 - upgraded advanced authorization plugin to [0.11.2](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - upgraded Advanced Storage plugin [0.3.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
 - upgraded AWS S3 object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
-- upgraded Azure object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
-- upgraded DICOMweb plugin to [1.23](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+- upgraded Azure object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS).
+  Note: in the Windows Installer, the version is still 2.3.1
 
 
 26.1.0
