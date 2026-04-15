@@ -35,6 +35,7 @@ Pending changes
 - upgraded Advanced Storage plugin [0.3.0](https://github.com/orthanc-server/orthanc-advanced-storage/blob/master/release-notes.md)
 - upgraded AWS S3 object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - upgraded Azure object-storage plugin to [2.5.2](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- upgraded DICOMweb plugin to [1.23](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
 
 
 26.1.0
