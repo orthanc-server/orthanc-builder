@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 26.4.1 Default image
+#### 26.4.2 Default image
 ```
 component                             version
 ---------------------------------------------
@@ -54,7 +54,7 @@ Orthanc Explorer 2                    1.12.0
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
 STL plugin                            1.3
-Advanced Storage plugin               0.3.0
+Advanced Storage plugin               0.3.1
 Education plugin                      1.1
 Worklists plugin                      0.9.2
 Pixels masker plugin                  0.1.1
@@ -67,7 +67,7 @@ Lua                                   5.4
 
 ```
 
-#### 26.4.1-full image
+#### 26.4.2-full image
 ```
 additional component                  version
 ---------------------------------------------
