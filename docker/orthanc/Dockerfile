@@ -27,7 +27,7 @@ ARG STABLE_OR_UNSTABLE=stable
 
 
 RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
-RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli
+RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli zip
 
 
 FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG} AS orthanc-runner-base
