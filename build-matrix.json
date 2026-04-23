@@ -572,7 +572,7 @@
             "buildForMacOS": true,
             "buildForWin": false,
             "preBuildStableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/stable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads/wasm-binaries/",
-            "preBuildUnstableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloadswasm-binaries/",
+            "preBuildUnstableMacOS": "rm -rf /tmp/downloads/ && mkdir -p /tmp/downloads && wget https://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/unstable/wasm-binaries.zip --output-document /tmp/downloads/wasm-binaries.zip --quiet && unzip /tmp/downloads/wasm-binaries.zip -d /tmp/downloads/wasm-binaries/",
             "extraCMakeFlags": "-DORTHANC_STONE_BINARIES=/tmp/downloads/wasm-binaries/StoneWebViewer",
             "extraCMakeFlagsMacOS": "-DUSE_LEGACY_BOOST=ON",
             "windows": [{
