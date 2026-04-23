@@ -975,12 +975,15 @@ elif [[ $target == "orthanc-stone-wasm" ]]; then
         make install
 
         pushd /target
+        # this is used by the ARM64 build
         tar -zcvf $buildRootPath/stone.wasm.tar.gz StoneWebViewer/
+        # this is used by the macOS build
+        zip -r $buildRootPath/wasm-binaries.zip StoneWebViewer/
 
         upload stone.wasm.tar.gz
 
         if [[ $enableUploads == 1 ]]; then
-            aws s3 --region eu-west-1 cp $buildRootPath/stone.wasm.tar.gz s3://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/$version/wasm-binaries.zip --cache-control=max-age=1
+            aws s3 --region eu-west-1 cp $buildRootPath/wasm-binaries.zip s3://public-files.orthanc.team/tmp-builds/nightly-stone-wasm-builds/$version/stone.wasm.tar.gz --cache-control=max-age=1
         fi
 
     else
