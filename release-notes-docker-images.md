@@ -22,6 +22,13 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+26.4.1
+------
+
+- upgraded advanced authorization plugin to [0.11.3](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
+- upgraded Orthanc Explorer 2 plugin to [1.12.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+
+
 26.4.0
 ------
 
