@@ -33,12 +33,12 @@
   "DicomModalities": {
     "orthanctest": [
       "ORTHANCTEST",
-      "127.0.1.1",
+      "orthanc-tests",
       5001
     ],
     "orthanctest-with-local-aet": {
       "AET": "ORTHANCTEST2",
-      "Host": "127.0.1.1",
+      "Host": "orthanc-tests",
       "LocalAet": "OT-FROM-CONFIG",
       "Port": 5001
     },
