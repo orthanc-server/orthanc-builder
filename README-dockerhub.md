@@ -53,7 +53,7 @@ AWS S3 plugin                         2.5.2
 Orthanc Explorer 2                    1.12.0
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
-STL plugin                            1.3
+STL plugin                            1.4
 Advanced Storage plugin               0.3.1
 Education plugin                      1.1
 Worklists plugin                      0.9.2
