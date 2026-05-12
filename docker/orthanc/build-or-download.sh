@@ -235,7 +235,7 @@ elif [[ $target == "orthanc-python" ]]; then
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.13 $sourcesRootPath
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DPYTHON_VERSION=3.14 $sourcesRootPath
         make -j 4
 
         upload libOrthancPython.so

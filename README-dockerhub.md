@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 26.4.2 Default image
+#### 26.5.X Default image
 ```
 component                             version
 ---------------------------------------------
@@ -61,13 +61,13 @@ Pixels masker plugin                  0.1.1
 
 System components                     version
 ---------------------------------------------
-Base image Ubuntu version             25.10 (question)
-Python                                3.13
+Base image Ubuntu version             26.04 (resolute)
+Python                                3.14
 Lua                                   5.4
 
 ```
 
-#### 26.4.2-full image
+#### 26.5.X-full image
 ```
 additional component                  version
 ---------------------------------------------

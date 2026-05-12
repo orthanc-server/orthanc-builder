@@ -28,6 +28,9 @@
   ENV PYTHONUTF8=1
   ENV LANG=C.UTF-8
   ```
+- DOCKER: ugraded base image to `ubuntu:resolute-20260421` (ubuntu 26.04)
+  - python has been upgraded to 3.14
+
 
 
 26.4.2
