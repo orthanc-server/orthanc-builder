@@ -48,3 +48,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # case-insensitive comparison of strings with accents)
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
+
+# Make sure python files can use UTF-8
+ENV PYTHONUTF8=1
+ENV LANG=C.UTF-8
