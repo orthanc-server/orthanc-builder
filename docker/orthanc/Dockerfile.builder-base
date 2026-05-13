@@ -31,6 +31,7 @@ RUN apt-get --assume-yes install protobuf-compiler
 RUN apt-get --assume-yes install libprotobuf-dev
 RUN apt-get --assume-yes install default-libmysqlclient-dev
 RUN apt-get --assume-yes install zlib1g-dev
+RUN apt-get --assume-yes install libvtk9-dev
 
 
 RUN apt-get --assume-yes install cmake

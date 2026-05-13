@@ -429,12 +429,13 @@ elif [[ $target == "orthanc-stl" ]]; then
         unzip dist.zip
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
-        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.5")
+        framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web -DORTHANC_FRAMEWORK_VERSION=1.12.10")
 
         pushd $buildRootPath
         # we build STL in static because it uses DCMTK and the DCMTK dynamic libraries are not installed (see in Orthanc section)
-        # Note: we force the ORTHANC_FRAMEWORK_VERSION because the 1.12.4 uses DCMTK 3.6.8 that fails to build on ubuntu 25.10
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=ON -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
+        # Note: - we force the ORTHANC_FRAMEWORK_VERSION because the 1.12.4 uses DCMTK 3.6.8 that fails to build on ubuntu 26.04
+        #       - we force usage of system libvtk because the static vtk 7.1.1 is not compatible with recent Cmake versions
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_ORTHANC_SDK=OFF -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
         make -j 4
 
         upload libOrthancSTL.so
