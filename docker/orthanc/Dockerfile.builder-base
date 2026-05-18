@@ -20,7 +20,9 @@ RUN apt-get --assume-yes install libgtest-dev
 RUN apt-get --assume-yes install libpng-dev
 RUN apt-get --assume-yes install libsqlite3-dev
 RUN apt-get --assume-yes install libjpeg-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev
-RUN apt-get --assume-yes install libboost-log1.88-dev libboost-filesystem1.88-dev libboost-locale1.88-dev libboost-regex1.88-dev libboost-system1.88-dev libboost-thread1.88-dev libboost-iostreams1.88-dev
+# RUN apt-get --assume-yes install libboost-log1.88-dev libboost-filesystem1.88-dev libboost-locale1.88-dev libboost-regex1.88-dev libboost-system1.88-dev libboost-thread1.88-dev libboost-iostreams1.88-dev
+# RUN apt-get --assume-yes install libboost-dev
+RUN apt-get --assume-yes install --no-install-recommends libboost-log1.90-dev libboost-filesystem1.90-dev libboost-locale1.90-dev libboost-regex1.90-dev libboost-thread1.90-dev libboost-iostreams1.90-dev
 RUN apt-get --assume-yes install git
 RUN apt-get --assume-yes install mercurial
 RUN apt-get --assume-yes install zip
