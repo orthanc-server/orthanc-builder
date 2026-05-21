@@ -52,7 +52,7 @@
             "sourcesSubPath": "/OrthancServer",
             "comment": "# CHANGE_VERSION_ORTHANC",
             "stable": "Orthanc-1.12.11",
-            "unstable": "default",
+            "unstable": "streaming",
             "stableMacOS": "Orthanc-1.12.11",
             "artifactsMacOS": "Orthanc libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",
             "unstableArtifactsMacOS": "Orthanc libServeFolders.dylib libConnectivityChecks.dylib libHousekeeper.dylib libDelayedDeletion.dylib libMultitenantDicom.dylib",

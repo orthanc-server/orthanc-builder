@@ -22,6 +22,7 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- switched Orthanc to `streaming` branch
 - upgraded STL plugin to [1.4](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
 - DOCKER: added 2 environment variables to support UTF-8 python plugins:
   ```
