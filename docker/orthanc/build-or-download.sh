@@ -275,7 +275,7 @@ elif [[ $target == "orthanc-pg" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/PostgreSQL/Plugins/StoragePlugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/PostgreSQL/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
@@ -301,7 +301,7 @@ elif [[ $target == "orthanc-mysql" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/MySQL/Plugins/StoragePlugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/MySQL/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
@@ -329,7 +329,7 @@ elif [[ $target == "orthanc-odbc" ]]; then
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/IndexPlugin.cpp
         patch_version_name_on_unstable "return ORTHANC_PLUGIN_VERSION" $sourcesRootPath/Odbc/Plugins/StoragePlugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/Odbc/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
