@@ -6,9 +6,17 @@ set -o xtrace
 # sudo rm -rf orthanc-tests-repo-normal/
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
-# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:attach-custom-data-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
+# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:master-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:22.7.0-full version=stable image=full
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable downloadOrthancTestsRepo=true
+#
+# To debug a test:
+# - run this script to generate the orthanc-under-tests image
+# - in the docker-compose file of interest, change the entrypoint of orthanc-tests to `entrypoint: sleep 10000`
+# - launch the docker-compose e.g: `COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up`    
+# - `docker exec -it xx bash` into the orthanc-tests container
+# - run `python /tests/orthanc-tests/Tests/Run.py --server=orthanc-under-tests --force --docker -- -v Orthanc.test_statistics`
+
 
 source ../../bash-helpers.sh
 
