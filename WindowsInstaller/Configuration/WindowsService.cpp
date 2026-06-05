@@ -221,9 +221,6 @@ private:
      * shutdowns" (no need to kill "Orthanc.exe") and "manual service
      * stop" (need to send CTRL-C to "Orthanc.exe"). This is
      * implemented in the "Kill()" function.
-     *
-     * Link to the earlier, incorrect implementation:
-     * https://bitbucket.org/osimis/orthanc-builder/src/cc47276ba9ba02835e957f500c40978cd57628eb/WindowsInstaller/Configuration/WindowsService.cpp
      **/
 
     if (!CreateProcessW(NULL,   // No module name (use command line)

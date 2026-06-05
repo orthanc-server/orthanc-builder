@@ -200,5 +200,9 @@
     "Database": "/worklists",
     "Enable": true
   },
-  "ZipLoaderThreads": 0
+  "ZipLoaderThreads": 0,
+  "Gdcm": {
+    "Comment": "When it is enabled, it is enabled for all TS",
+    "RestrictTransferSyntaxes": []
+  }
 }

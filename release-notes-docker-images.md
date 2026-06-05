@@ -23,6 +23,11 @@
 
 
 - switched Orthanc to `streaming` branch
+
+26.6.0
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.12.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded STL plugin to [1.4](https://orthanc.uclouvain.be/hg/orthanc-stl/file/default/NEWS)
 - DOCKER: added 2 environment variables to support UTF-8 python plugins:
   ```
