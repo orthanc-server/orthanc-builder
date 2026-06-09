@@ -196,6 +196,15 @@ jobs:
             testsGroup: "tests-group-others",
             imageType: "normal"
           }
+        - {
+            name: "linux/amd64-perfs",
+            platform: "${{ inputs.platform }}",
+            stableUnstable: "${{ inputs.stable_unstable }}",
+            runner: "${{ inputs.test_runner }}",
+            runnerType: "${{ inputs.test_runner_type }}",
+            testsGroup: "tests-group-perfs",
+            imageType: "normal"
+          }
 
 
     # - name: Install Integration tests prerequisites

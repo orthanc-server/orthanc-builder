@@ -99,6 +99,20 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]
                     --orthanc_under_tests_docker_image=$imageUnderTest
 fi
 
+if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-perfs" ]; then
+
+    ######## perfs
+
+    python3 -u main.py --pattern=NonRegressionPerfs.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # no need to execute the remaining tests that are handled by other groups
+    if [ "$testsGroup" = "tests-group-perfs" ]; then
+        exit 0
+    fi
+fi
+
 if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
 
     ######## housekeeper
@@ -107,42 +121,7 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
 
     docker pull $previous_image
 
-    python3 -u main.py --pattern=Housekeeper.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_previous_version_docker_image=$previous_image \
-                    --orthanc_under_tests_http_port=8043
-
-    ######## delayed-deletion
-
-    python3 -u main.py --pattern=DelayedDeletion.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
     ######## Other new tests
-
-    python3 -u main.py --pattern=PixelsMasker.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=ExtraMainDicomTags.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=WithIngestTranscoding.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=MaxStorage.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=StorageCompression.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=Authorization.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
 
     python3 -u main.py --pattern=AdvancedStorage.* \
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
@@ -152,6 +131,57 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
                     --orthanc_under_tests_http_port=8043 \
                     --db=sqlite
+
+    python3 -u main.py --pattern=CGet.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=Authorization.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # Concurrency tests are performed in the tests-group-db
+
+    python3 -u main.py --pattern=DelayedDeletion.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=ExtraMainDicomTags.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=Housekeeper.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_previous_version_docker_image=$previous_image \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=InterruptedDownloads.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=MaxStorage.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # NonRegressionPerfs tests are performed in the tests-group-perfs
+
+    python3 -u main.py --pattern=PixelsMasker.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # PostgresUpgrades tests are performed in the tests-group-perfs
+
+    python3 -u main.py --pattern=ReadOnly.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=StorageCompression.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=WithIngestTranscoding.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
 
 fi
 
