@@ -467,13 +467,12 @@ elif [[ $target == "orthanc-explorer-2" ]]; then
 
     if [[ $dl != 0 ]]; then
 
-        export DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get --assume-yes install npm gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.40.5/install.sh | bash
+        source /root/.bashrc
+        export NVM_DIR="/root/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-        export DEBIAN_FRONTEND=noninteractive && \
-            mkdir -p /etc/apt/keyrings && \
-            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
-            apt-get update && apt-get install --assume-yes nodejs
+        nvm install v24.16.0
 
         pushd $sourcesRootPath
 
