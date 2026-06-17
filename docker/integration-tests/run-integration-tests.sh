@@ -230,14 +230,17 @@ if [[ $image == "normal" ]]; then
         COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
         COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
+        COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose down -v
+        COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+
         COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
         COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
 
         COMPOSE_FILE=docker-compose.cget.yml                        docker compose down -v
         COMPOSE_FILE=docker-compose.cget.yml                        docker compose up --build --exit-code-from orthanc-tests-cget --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.s3.yml                         docker compose down -v
-        COMPOSE_FILE=docker-compose.s3.yml                         docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        COMPOSE_FILE=docker-compose.s3.yml                          docker compose down -v
+        COMPOSE_FILE=docker-compose.s3.yml                          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
         COMPOSE_FILE=docker-compose.wsi.yml                         docker compose down -v
         COMPOSE_FILE=docker-compose.wsi.yml                         docker compose up --build --exit-code-from orthanc-tests-wsi --abort-on-container-exit
