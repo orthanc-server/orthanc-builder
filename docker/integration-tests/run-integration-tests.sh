@@ -6,9 +6,17 @@ set -o xtrace
 # sudo rm -rf orthanc-tests-repo-normal/
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
-# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:attach-custom-data-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
+# ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:master-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:22.7.0-full version=stable image=full
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable downloadOrthancTestsRepo=true
+#
+# To debug a test:
+# - run this script to generate the orthanc-under-tests image
+# - in the docker-compose file of interest, change the entrypoint of orthanc-tests to `entrypoint: sleep 10000`
+# - launch the docker-compose e.g: `COMPOSE_FILE=docker-compose.mysql.yml                       docker compose up`    
+# - `docker exec -it xx bash` into the orthanc-tests container
+# - run `python /tests/orthanc-tests/Tests/Run.py --server=orthanc-under-tests --force --docker -- -v Orthanc.test_statistics`
+
 
 source ../../bash-helpers.sh
 
@@ -91,6 +99,20 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]
                     --orthanc_under_tests_docker_image=$imageUnderTest
 fi
 
+if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-perfs" ]; then
+
+    ######## perfs
+
+    python3 -u main.py --pattern=NonRegressionPerfs.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # no need to execute the remaining tests that are handled by other groups
+    if [ "$testsGroup" = "tests-group-perfs" ]; then
+        exit 0
+    fi
+fi
+
 if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
 
     ######## housekeeper
@@ -99,42 +121,7 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
 
     docker pull $previous_image
 
-    python3 -u main.py --pattern=Housekeeper.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_previous_version_docker_image=$previous_image \
-                    --orthanc_under_tests_http_port=8043
-
-    ######## delayed-deletion
-
-    python3 -u main.py --pattern=DelayedDeletion.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
     ######## Other new tests
-
-    python3 -u main.py --pattern=PixelsMasker.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=ExtraMainDicomTags.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=WithIngestTranscoding.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=MaxStorage.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=StorageCompression.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
-
-    python3 -u main.py --pattern=Authorization.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
 
     python3 -u main.py --pattern=AdvancedStorage.* \
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
@@ -144,6 +131,57 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
                     --orthanc_under_tests_docker_image=orthanc-under-tests \
                     --orthanc_under_tests_http_port=8043 \
                     --db=sqlite
+
+    python3 -u main.py --pattern=CGet.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=Authorization.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # Concurrency tests are performed in the tests-group-db
+
+    python3 -u main.py --pattern=DelayedDeletion.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=ExtraMainDicomTags.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=Housekeeper.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_previous_version_docker_image=$previous_image \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=InterruptedDownloads.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=MaxStorage.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # NonRegressionPerfs tests are performed in the tests-group-perfs
+
+    python3 -u main.py --pattern=PixelsMasker.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    # PostgresUpgrades tests are performed in the tests-group-perfs
+
+    python3 -u main.py --pattern=ReadOnly.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=StorageCompression.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
+
+    python3 -u main.py --pattern=WithIngestTranscoding.* \
+                    --orthanc_under_tests_docker_image=orthanc-under-tests \
+                    --orthanc_under_tests_http_port=8043
 
 fi
 
@@ -192,14 +230,17 @@ if [[ $image == "normal" ]]; then
         COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
         COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
+        COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose down -v
+        COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+
         COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
         COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
 
         COMPOSE_FILE=docker-compose.cget.yml                        docker compose down -v
         COMPOSE_FILE=docker-compose.cget.yml                        docker compose up --build --exit-code-from orthanc-tests-cget --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.s3.yml                         docker compose down -v
-        COMPOSE_FILE=docker-compose.s3.yml                         docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        COMPOSE_FILE=docker-compose.s3.yml                          docker compose down -v
+        COMPOSE_FILE=docker-compose.s3.yml                          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
         COMPOSE_FILE=docker-compose.wsi.yml                         docker compose down -v
         COMPOSE_FILE=docker-compose.wsi.yml                         docker compose up --build --exit-code-from orthanc-tests-wsi --abort-on-container-exit
