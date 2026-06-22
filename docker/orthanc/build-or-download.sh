@@ -157,6 +157,15 @@ configure_orthanc_framework() { # $1 = cmake flags for orthanc framework for the
     fi
 }
 
+
+fix_old_cmake_compat() { # $1 = cmake flags to add when building the stable release (usually empty)
+    if [[ $version == "unstable" ]]; then
+        echo $1
+    else
+    fi
+}
+
+
 if [[ $target == "orthanc" ]]; then
 
     dl=$(( $dl + $(download Orthanc) ))
@@ -253,9 +262,10 @@ elif [[ $target == "orthanc-gdcm" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
+        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
         
         make -j 4
 
@@ -303,10 +313,11 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
         link_third_party_downloads $sourcesRootPath/MySQL/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the mysql plugin updates to a new release
-        cmake $framework_flags -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/MySQL
+        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/MySQL
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
         make -j 4
 
@@ -354,10 +365,11 @@ elif [[ $target == "orthanc-indexer" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
+        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancIndexer.so
@@ -375,10 +387,11 @@ elif [[ $target == "orthanc-neuro" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
+        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath
         make -j 4
 
         upload libOrthancNeuro.so
@@ -834,9 +847,10 @@ elif [[ $target == "orthanc-webviewer" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
+        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 

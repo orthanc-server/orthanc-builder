@@ -26,16 +26,11 @@ Pending changes
 ---------------
 
 - upgraded Orthanc Explorer 2 plugin to [1.13.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
-- upgraded AWS S3 object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- upgraded AWS S3 object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS) (no functional changes)
 - DOCKER: ugraded base image to `ubuntu:resolute-20260421` (ubuntu 26.04)
   - python has been upgraded to 3.14
-  - updated a few old plugins to mainline because they were not compiling with ubuntu 26.04
-    - upgraded neuro plugin to `1.1+c8cb5bd6a149`
-    - upgraded webviewer plugin to `2.10+bc3a74cdb06b`
-    - upgraded indexer plugin to `1.1+47aad9eb21b2`
-    - upgraded GDCM plugin to `1.8+3b96baa5caa6`
-  - upgraded Google cloud object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
-  - upgraded Azure object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS).
+  - upgraded Google cloud object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS) (no functional changes)
+  - upgraded Azure object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS) (no functional changes).
     Note: in the Windows Installer, the version is still 2.3.1
 
 
