@@ -158,8 +158,8 @@ configure_orthanc_framework() { # $1 = cmake flags for orthanc framework for the
 }
 
 
-fix_old_cmake_compat() { # $1 = cmake flags to add when building the stable release (usually empty)
-    if [[ $version == "unstable" ]]; then
+fix_cmake_compat_for_old_stable() { # $1 = cmake flags to add when building the stable release (usually empty)
+    if [[ $version == "stable" ]]; then
         echo $1
     else
         echo ""
@@ -263,7 +263,7 @@ elif [[ $target == "orthanc-gdcm" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
-        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+        cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
         cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON $sourcesRootPath
@@ -314,7 +314,7 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
         link_third_party_downloads $sourcesRootPath/MySQL/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
-        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+        cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the mysql plugin updates to a new release
@@ -366,7 +366,7 @@ elif [[ $target == "orthanc-indexer" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
-        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+        cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
@@ -388,7 +388,7 @@ elif [[ $target == "orthanc-neuro" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
-        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+        cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the neuro plugin updates to a more recent Framework (it is currently using 1.12.3).  It currently fails because of sha1.get_digest(digest);
         pushd $buildRootPath
@@ -848,7 +848,7 @@ elif [[ $target == "orthanc-webviewer" ]]; then
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
-        cmake_compat=$(fix_old_cmake_compat "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+        cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
         cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
