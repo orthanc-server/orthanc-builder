@@ -28,6 +28,8 @@ Pending changes
 - upgraded Orthanc Explorer 2 plugin to [1.13.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: ugraded base image to `ubuntu:resolute-20260421` (ubuntu 26.04)
   - python has been upgraded to 3.14
+  - upgraded neuro plugin to 1.1+c8cb5bd6a149
+  - upgraded webviewer plugin to 2.10+bc3a74cdb06b
 
 
 26.6.0
