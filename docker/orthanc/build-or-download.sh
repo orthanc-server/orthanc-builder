@@ -162,6 +162,7 @@ fix_old_cmake_compat() { # $1 = cmake flags to add when building the stable rele
     if [[ $version == "unstable" ]]; then
         echo $1
     else
+        echo ""
     fi
 }
 
