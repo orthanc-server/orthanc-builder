@@ -306,7 +306,7 @@ elif [[ $target == "orthanc-mysql" ]]; then
 
         pushd $buildRootPath
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the mysql plugin updates to a new release
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/MySQL
+        cmake $framework_flags -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/MySQL
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/MySQL
         make -j 4
 
@@ -334,7 +334,7 @@ elif [[ $target == "orthanc-odbc" ]]; then
 
         pushd $buildRootPath
         # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the odbc plugin updates to a new release
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/Odbc
+        cmake $framework_flags -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DUSE_SYSTEM_BOOST=OFF $sourcesRootPath/Odbc
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/Odbc
         make -j 4
 
