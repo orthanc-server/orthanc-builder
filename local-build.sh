@@ -180,7 +180,9 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
     ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_ADVANCED_STORAGE_VERSION=$(getBranchTagToBuildDocker "Orthanc-advanced-storage" $version $throttle)
     ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_WORKLISTS_VERSION=$(getBranchTagToBuildDocker "Orthanc-worklists" $version $throttle)
     ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_PIXELS_MASKER_VERSION=$(getBranchTagToBuildDocker "Orthanc-pixels-masker" $version $throttle)
     ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     
     ORTHANC_TESTS_COMMIT_ID=$(getHgCommitId "https://orthanc.uclouvain.be/hg/orthanc-tests/" $(getIntegTestsRevision $version))

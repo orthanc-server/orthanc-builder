@@ -546,7 +546,7 @@ elif [[ $target == "orthanc-worklists" ]]; then
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-worklists/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_PLUGIN_VERSION=$extraArg1 $sourcesRootPath/orthanc-worklists/
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-worklists/
 
         make -j 4
@@ -574,7 +574,7 @@ elif [[ $target == "orthanc-pixels-masker" ]]; then
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath/orthanc-pixels-masker/
+        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTATIC_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_PLUGIN_VERSION=$extraArg1 $sourcesRootPath/orthanc-pixels-masker/
         # cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_ORTHANC_SDK=OFF -DORTHANC_FRAMEWORK_SOURCE=path -DORTHANC_FRAMEWORK_ROOT=/orthanc/OrthancFramework/Sources -DORTHANC_SDK_VERSION=framework $sourcesRootPath/orthanc-worklists/
 
         make -j 4
