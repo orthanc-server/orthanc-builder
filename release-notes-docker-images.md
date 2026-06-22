@@ -25,6 +25,7 @@
 Pending changes
 ---------------
 
+- upgraded Orthanc Explorer 2 plugin to [1.13.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - DOCKER: ugraded base image to `ubuntu:resolute-20260421` (ubuntu 26.04)
   - python has been upgraded to 3.14
 
