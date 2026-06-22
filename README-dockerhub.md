@@ -47,7 +47,7 @@ Transfers accelerator plugin          1.7
 GDCM plugin                           1.8
 ODBC plugin                           1.3
 TCIA plugin                           1.3
-Orthanc Indexer plugin                1.1
+Orthanc Indexer plugin                1.1+47aad9eb21b2
 Orthanc neuroimaging plugin           1.1+c8cb5bd6a149
 AWS S3 plugin                         2.5.2
 Orthanc Explorer 2                    1.13.0
