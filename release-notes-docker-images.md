@@ -33,6 +33,7 @@ Pending changes
     - upgraded neuro plugin to `1.1+c8cb5bd6a149`
     - upgraded webviewer plugin to `2.10+bc3a74cdb06b`
     - upgraded indexer plugin to `1.1+47aad9eb21b2`
+    - upgraded GDCM plugin to `1.8+3b96baa5caa6`
   - upgraded Google cloud object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
   - upgraded Azure object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS).
     Note: in the Windows Installer, the version is still 2.3.1
