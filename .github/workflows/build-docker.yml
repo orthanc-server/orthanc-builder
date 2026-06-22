@@ -124,7 +124,7 @@ jobs:
 
     - name: Set up Docker Buildx
       if: inputs.build_runner_type == 'github-hosted'
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v4
       with:
         config: .github/buildkitd.toml
 
@@ -235,7 +235,7 @@ jobs:
 
     - name: Set up Docker Buildx
       if: inputs.build_runner_type == 'github-hosted'
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v4
       with:
         config: .github/buildkitd.toml
 
@@ -285,7 +285,7 @@ jobs:
 
     - name: Set up Docker Buildx
       if: inputs.build_runner_type == 'github-hosted'
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v4
       with:
         config: .github/buildkitd.toml
 
