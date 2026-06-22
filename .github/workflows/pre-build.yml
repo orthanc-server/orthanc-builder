@@ -47,13 +47,13 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
 
     - name: Upload unstable commit id matrix as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: commit-ids-matrix-unstable
         path: /tmp/commit-ids-matrix-unstable.json
 
     - name: Upload stable commit id matrix as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: commit-ids-matrix-stable
         path: /tmp/commit-ids-matrix-stable.json
