@@ -851,7 +851,8 @@ elif [[ $target == "orthanc-webviewer" ]]; then
         cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
         pushd $buildRootPath
-        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
+        # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the webviewer plugin updates to a new release
+        cmake $framework_flags $cmake_compat -DALLOW_DOWNLOADS=ON -DUSE_SYSTEM_BOOST=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DUSE_SYSTEM_GOOGLE_TEST=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF $sourcesRootPath
         make -j 4
         $buildRootPath/UnitTests
 
