@@ -449,7 +449,8 @@ elif [[ $target == "orthanc-stl" ]]; then
         # we build STL in static because it uses DCMTK and the DCMTK dynamic libraries are not installed (see in Orthanc section)
         # Note: - we force the ORTHANC_FRAMEWORK_VERSION because the 1.12.4 uses DCMTK 3.6.8 that fails to build on ubuntu 26.04
         #       - we force usage of system libvtk because the static vtk 7.1.1 is not compatible with recent Cmake versions
-        cmake $framework_flags -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_ORTHANC_SDK=OFF -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
+        # TODO: we can remove -DUSE_SYSTEM_BOOST=OFF once the plugin updates to a new release
+        cmake $framework_flags -DUSE_SYSTEM_BOOST=OFF -DALLOW_DOWNLOADS=ON -DSTATIC_BUILD=OFF -DUSE_SYSTEM_DCMTK=OFF -DUSE_SYSTEM_NIFTILIB=OFF -DUSE_SYSTEM_ORTHANC_SDK=OFF -DSTANDALONE_BUILD=ON -DCMAKE_BUILD_TYPE:STRING=Release $sourcesRootPath
         make -j 4
 
         upload libOrthancSTL.so
