@@ -225,7 +225,9 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
 "ORTHANC_ADVANCED_STORAGE_COMMIT_ID": "$ORTHANC_ADVANCED_STORAGE_COMMIT_ID",
 "ORTHANC_ADVANCED_STORAGE_VERSION": "$ORTHANC_ADVANCED_STORAGE_VERSION",
 "ORTHANC_WORKLISTS_COMMIT_ID": "$ORTHANC_WORKLISTS_COMMIT_ID",
+"ORTHANC_WORKLISTS_VERSION": "$ORTHANC_WORKLISTS_VERSION",
 "ORTHANC_PIXELS_MASKER_COMMIT_ID": "$ORTHANC_PIXELS_MASKER_COMMIT_ID",
+"ORTHANC_PIXELS_MASKER_VERSION": "$ORTHANC_PIXELS_MASKER_VERSION",
 "ORTHANC_EDUCATION_COMMIT_ID": "$ORTHANC_EDUCATION_COMMIT_ID",
 "ORTHANC_TESTS_COMMIT_ID": "$ORTHANC_TESTS_COMMIT_ID"
 }
@@ -281,7 +283,7 @@ fi
 buildTargets="$buildTargets $finalImageTarget"
 
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
-# buildTargets=build-plugin-java
+# buildTargets=build-plugin-owv
 
 if [[ $useBuildx == "true" ]]; then
     from_cache_arg_runner_base="--cache-from=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
