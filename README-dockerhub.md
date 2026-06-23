@@ -57,7 +57,7 @@ STL plugin                            1.4
 Advanced Storage plugin               0.3.1
 Education plugin                      1.1
 Worklists plugin                      0.9.2
-Pixels masker plugin                  0.1.1
+Pixels masker plugin                  0.1.2
 
 System components                     version
 ---------------------------------------------
