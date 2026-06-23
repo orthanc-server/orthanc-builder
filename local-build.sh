@@ -40,7 +40,7 @@ done
 
 if [[ $type == "ci" ]]; then
     if [[ $platform == "linux/amd64" ]]; then
-        useBuildx=true
+        useBuildx=false
     fi
     throttle=1
 fi
