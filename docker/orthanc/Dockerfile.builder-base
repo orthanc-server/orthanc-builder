@@ -119,6 +119,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/nexus-4.3.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/nifti_clib-3.0.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/Online3DViewer-0.12.0.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/openjpeg-2.4.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.3.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.4.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.5.tar.gz && \
