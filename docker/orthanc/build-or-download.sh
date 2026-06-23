@@ -638,12 +638,12 @@ elif [[ $target == "orthanc-volview" ]]; then
     dl=$(( $dl + $(download libOrthancVolView.so) ))
 
     if [[ $dl != 0 ]]; then
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.40.5/install.sh | bash
         source /root/.bashrc
         export NVM_DIR="/root/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-        nvm install v19.7.0
+        nvm install v24.16.0
 
         pushd $sourcesRootPath
         download_or_clone orthanc-volview $commitId $sourcesRootPath
