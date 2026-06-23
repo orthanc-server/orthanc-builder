@@ -913,7 +913,7 @@ elif [[ $target == "orthanc-wsi" ]]; then
 
         patch_version_name_on_unstable "return ORTHANC_WSI_VERSION" $sourcesRootPath/ViewerPlugin/Plugin.cpp
 
-        link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        link_third_party_downloads $sourcesRootPath/ViewerPlugin/ThirdPartyDownloads
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
 
         pushd $buildRootPath
