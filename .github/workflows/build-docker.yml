@@ -124,11 +124,10 @@ jobs:
 
     - name: Set up Docker Buildx
       if: inputs.build_runner_type == 'github-hosted'
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v4
       with:
-        # buildkitd-flags: --debug
-        # buildkitd-config: .github/buildkitd.toml
-        config: .github/buildkitd.toml
+        buildkitd-flags: --debug
+        buildkitd-config: .github/buildkitd.toml
 
     - name: Login to DockerHub
       uses: docker/login-action@v4
@@ -237,10 +236,9 @@ jobs:
 
     - name: Set up Docker Buildx
       if: inputs.build_runner_type == 'github-hosted'
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v4
       with:
-        # buildkitd-config: .github/buildkitd.toml
-        config: .github/buildkitd.toml
+        buildkitd-config: .github/buildkitd.toml
 
     - name: Login to DockerHub
       uses: docker/login-action@v4
@@ -288,10 +286,9 @@ jobs:
 
     - name: Set up Docker Buildx
       if: inputs.build_runner_type == 'github-hosted'
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v4
       with:
-        # buildkitd-config: .github/buildkitd.toml
-        config: .github/buildkitd.toml
+        buildkitd-config: .github/buildkitd.toml
 
     - name: Login to DockerHub
       uses: docker/login-action@v4
