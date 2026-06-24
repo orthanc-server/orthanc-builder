@@ -29,28 +29,22 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 component                             version
 ---------------------------------------------
 Orthanc server                        1.12.11
-Serve folders plugin                  1.12.11
-Connectivity check plugin             1.12.11
 Housekeeper plugin                    1.12.11
-Delayed Deletion plugin               1.12.11
-Multitenant DICOM plugin              1.12.11
-Stone Web viewer plugin               3.0+d4a8203b3390
-Osimis Web viewer plugin              1.4.3
-Python plugin                         7.1
-Orthanc Web viewer plugin             2.10
-DICOMweb plugin                       1.23
+Orthanc Explorer 2                    1.13.0
 PostgreSQL plugins                    10.2
-MySQL plugins                         5.2
-WSI Web viewer plugin                 3.3
+DICOMweb plugin                       1.23
+Python plugin                         7.1
 Authorization plugin                  0.11.3
+Stone Web viewer plugin               3.0+d4a8203b3390
+Orthanc Web viewer plugin             2.10
+WSI Web viewer plugin                 3.3
 Transfers accelerator plugin          1.7
 GDCM plugin                           1.8
 ODBC plugin                           1.3
+MySQL plugins                         5.2
 TCIA plugin                           1.3
-Orthanc Indexer plugin                1.1
 Orthanc neuroimaging plugin           1.1
 AWS S3 plugin                         2.5.3
-Orthanc Explorer 2                    1.13.0
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
 STL plugin                            1.4
@@ -58,6 +52,13 @@ Advanced Storage plugin               0.3.1
 Education plugin                      1.1
 Worklists plugin                      0.9.2
 Pixels masker plugin                  0.1.3
+Sample Serve folders plugin           1.12.11
+Sample Connectivity check plugin      1.12.11
+Sample Multitenant DICOM plugin       1.12.11
+Orthanc Indexer plugin (deprecated)   1.1
+Osimis Web viewer plugin (deprecated) 1.4.3
+Delayed Deletion plugin (deprecated)  1.12.11
+
 
 System components                     version
 ---------------------------------------------
