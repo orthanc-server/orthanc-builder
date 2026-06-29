@@ -119,6 +119,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/nexus-4.3.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/nifti_clib-3.0.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/Online3DViewer-0.12.0.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/openjpeg-2.4.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.3.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.4.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.5.tar.gz && \
@@ -132,6 +133,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-56eb61c86f93.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-94c7f3784456.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-e0979326ac53.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-004b351797fe.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/openlayers-10.6.1-package.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/openssl-3.1.4.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/pako-0.2.5.zip && \

@@ -24,6 +24,22 @@
 
 - switched Orthanc to `streaming` branch
 
+
+26.6.1
+------
+
+- upgraded Orthanc Explorer 2 plugin to [1.13.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
+- Other plugins have been updated without any functional changes but we needed to modify the sources in order to build
+  them for Ubuntu 26.04
+  - upgraded AWS S3 object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS) (no functional changes)
+  - upgraded PostgreSQL plugins to [10.2](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS) (no functional changes)
+  - upgraded Pixels Masker plugin to [0.1.3](https://github.com/orthanc-server/orthanc-pixels-masker/blob/master/release-notes.md) (no functional changes)
+- DOCKER: ugraded base image to `ubuntu:resolute-20260421` (ubuntu 26.04)
+  - python has been upgraded to 3.14
+  - upgraded Google cloud object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS) (no functional changes)
+  - upgraded Azure object-storage plugin to [2.5.3](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS) (no functional changes)
+    Note: in the Windows Installer, the version is still 2.3.1
+
 26.6.0
 ------
 
@@ -34,9 +50,6 @@
   ENV PYTHONUTF8=1
   ENV LANG=C.UTF-8
   ```
-- DOCKER: ugraded base image to `ubuntu:resolute-20260421` (ubuntu 26.04)
-  - python has been upgraded to 3.14
-
 
 
 26.4.2

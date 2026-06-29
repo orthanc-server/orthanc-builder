@@ -199,14 +199,16 @@ RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-adv
 FROM orthanc-builder-base AS build-plugin-worklists
 
 ARG ORTHANC_WORKLISTS_COMMIT_ID
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-worklists commitId=$ORTHANC_WORKLISTS_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+ARG ORTHANC_WORKLISTS_VERSION
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-worklists commitId=$ORTHANC_WORKLISTS_COMMIT_ID extraArg1=$ORTHANC_WORKLISTS_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Pixels masker
 
 FROM orthanc-builder-base AS build-plugin-pixels-masker
 
 ARG ORTHANC_PIXELS_MASKER_COMMIT_ID
-RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pixels-masker commitId=$ORTHANC_PIXELS_MASKER_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+ARG ORTHANC_PIXELS_MASKER_VERSION
+RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-pixels-masker commitId=$ORTHANC_PIXELS_MASKER_COMMIT_ID extraArg1=$ORTHANC_PIXELS_MASKER_VERSION baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
 
 ########################## Stone Web Viewer
 

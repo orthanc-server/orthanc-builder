@@ -1,0 +1,13 @@
+services:
+  orthanc-under-tests:
+    image: orthanc-under-tests
+    environment:
+      # VERBOSE_STARTUP: "true"
+      # VERBOSE_ENABLED: "true"
+      GDCM_PLUGIN_ENABLED: "true"
+
+  orthanc-tests-dicomweb:
+    image: orthanc-tests-dicomweb
+    depends_on:
+      - orthanc-under-tests
+

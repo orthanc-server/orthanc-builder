@@ -180,7 +180,9 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
     ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(getCommitId "Orthanc-advanced-storage" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     ORTHANC_ADVANCED_STORAGE_VERSION=$(getBranchTagToBuildDocker "Orthanc-advanced-storage" $version $throttle)
     ORTHANC_WORKLISTS_COMMIT_ID=$(getCommitId "Orthanc-worklists" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_WORKLISTS_VERSION=$(getBranchTagToBuildDocker "Orthanc-worklists" $version $throttle)
     ORTHANC_PIXELS_MASKER_COMMIT_ID=$(getCommitId "Orthanc-pixels-masker" $version docker $skipCommitChecks $throttle $uploadToWebServer)
+    ORTHANC_PIXELS_MASKER_VERSION=$(getBranchTagToBuildDocker "Orthanc-pixels-masker" $version $throttle)
     ORTHANC_EDUCATION_COMMIT_ID=$(getCommitId "Orthanc-education" $version docker $skipCommitChecks $throttle $uploadToWebServer)
     
     ORTHANC_TESTS_COMMIT_ID=$(getHgCommitId "https://orthanc.uclouvain.be/hg/orthanc-tests/" $(getIntegTestsRevision $version))
@@ -223,7 +225,9 @@ if [[ $step == "generate-commit-id-matrix" ]] || [[ $getCommitIdsFromFile == "fa
 "ORTHANC_ADVANCED_STORAGE_COMMIT_ID": "$ORTHANC_ADVANCED_STORAGE_COMMIT_ID",
 "ORTHANC_ADVANCED_STORAGE_VERSION": "$ORTHANC_ADVANCED_STORAGE_VERSION",
 "ORTHANC_WORKLISTS_COMMIT_ID": "$ORTHANC_WORKLISTS_COMMIT_ID",
+"ORTHANC_WORKLISTS_VERSION": "$ORTHANC_WORKLISTS_VERSION",
 "ORTHANC_PIXELS_MASKER_COMMIT_ID": "$ORTHANC_PIXELS_MASKER_COMMIT_ID",
+"ORTHANC_PIXELS_MASKER_VERSION": "$ORTHANC_PIXELS_MASKER_VERSION",
 "ORTHANC_EDUCATION_COMMIT_ID": "$ORTHANC_EDUCATION_COMMIT_ID",
 "ORTHANC_TESTS_COMMIT_ID": "$ORTHANC_TESTS_COMMIT_ID"
 }
@@ -259,7 +263,9 @@ else
     ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$(jq -r '.ORTHANC_ADVANCED_STORAGE_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_ADVANCED_STORAGE_VERSION=$(jq -r '.ORTHANC_ADVANCED_STORAGE_VERSION' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_WORKLISTS_COMMIT_ID=$(jq -r '.ORTHANC_WORKLISTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_WORKLISTS_VERSION=$(jq -r '.ORTHANC_WORKLISTS_VERSION' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_PIXELS_MASKER_COMMIT_ID=$(jq -r '.ORTHANC_PIXELS_MASKER_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
+    ORTHANC_PIXELS_MASKER_VERSION=$(jq -r '.ORTHANC_PIXELS_MASKER_VERSION' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_EDUCATION_COMMIT_ID=$(jq -r '.ORTHANC_EDUCATION_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
     ORTHANC_TESTS_COMMIT_ID=$(jq -r '.ORTHANC_TESTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
 fi
@@ -279,7 +285,7 @@ fi
 buildTargets="$buildTargets $finalImageTarget"
 
 # to debug a particular build, you can hardcode the target hereunder (don't commit that !)
-# buildTargets=build-plugin-java
+# buildTargets=build-plugin-pixels-masker
 
 if [[ $useBuildx == "true" ]]; then
     from_cache_arg_runner_base="--cache-from=orthancteam/orthanc-runner-base:cache-$BASE_BUILDER_IMAGE_TAG"
@@ -457,8 +463,10 @@ for target in $buildTargets; do
         --build-arg ORTHANC_ADVANCED_STORAGE_COMMIT_ID=$ORTHANC_ADVANCED_STORAGE_COMMIT_ID \
         --build-arg ORTHANC_ADVANCED_STORAGE_VERSION=$ORTHANC_ADVANCED_STORAGE_VERSION \
         --build-arg ORTHANC_WORKLISTS_COMMIT_ID=$ORTHANC_WORKLISTS_COMMIT_ID \
+        --build-arg ORTHANC_WORKLISTS_VERSION=$ORTHANC_WORKLISTS_VERSION \
         --build-arg ORTHANC_EDUCATION_COMMIT_ID=$ORTHANC_EDUCATION_COMMIT_ID \
         --build-arg ORTHANC_PIXELS_MASKER_COMMIT_ID=$ORTHANC_PIXELS_MASKER_COMMIT_ID \
+        --build-arg ORTHANC_PIXELS_MASKER_VERSION=$ORTHANC_PIXELS_MASKER_VERSION \
         --build-arg BASE_IMAGE_TAG=$BASE_BUILDER_IMAGE_TAG \
         --build-arg ARG_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
         --build-arg ARG_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
