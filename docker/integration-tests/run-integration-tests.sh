@@ -2,8 +2,7 @@ set -o errexit
 set -o xtrace
 
 # example usage
-# sudo rm -rf orthanc-tests-repo-full/
-# sudo rm -rf orthanc-tests-repo-normal/
+# sudo rm -rf orthanc-tests/orthanc-tests-repo/
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc:current version=unstable testsGroup=tests-group-db
 # ./run-integration-tests.sh imageUnderTest=orthancteam/orthanc-pre-release:master-normal-unstable-before-tests-amd64 version=unstable testsGroup=tests-group-db
