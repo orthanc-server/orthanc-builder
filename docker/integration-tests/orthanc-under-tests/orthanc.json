@@ -107,7 +107,15 @@
       1,
       1,
       "Philips PET Private Group"
-    ]
+    ],
+    "0405,1001" : ["CS", "PatternType", 1, 1, "99CZM_CapeCod_OctSettings" ],
+    "0405,101a" : ["FL", "SignalStrength", 1, 1, "99CZM_CapeCod_OctSettings" ],
+    "0407,1001" : ["US", "UndefinedPrivateTag1001", 1, 1, "99CZM_CapeCod_OctGeneral" ],
+    "0407,1002" : ["US", "UndefinedPrivateTag1002", 1, 1, "99CZM_CapeCod_OctGeneral" ],
+    "0407,1003" : ["US", "UndefinedPrivateTag1003", 1, 1, "99CZM_CapeCod_OctGeneral" ],
+    "0407,1005" : ["SQ", "OCTCubeSequence2", 1, 1, "99CZM_CapeCod_OctGeneral" ], 
+    "0407,10a1" : ["SQ", "OCTCubeSequence", 1, 1, "99CZM_CapeCod_OctGeneral" ], 
+    "2301,1002" : ["CS", "Favorite", 1, 1, "99CZM_FORUM" ]
   },
   "ExecuteLuaEnabled": true,
   "HttpCompressionEnabled": false,
