@@ -27,7 +27,7 @@ Pending changes
 
 - DOCKER;
   - The Docker image will now refuse to start if you are still using deprecated environment variables (they are deprecated since April 2020 !)
-
+  - New `ORTHANC_PASSWORD` environment variable to create an `orthanc` user and set his password.
 
 
 26.6.1
