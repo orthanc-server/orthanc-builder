@@ -79,6 +79,7 @@ if configurator.hasDeprecatedSettings:
   logError("** List of deprecated settings: ")
   for s in configurator.deprecatedSettings:
     logError(f"** {s}")
+  exit(-2)
 
 if configurator.hasErrors:
   logError("There were some errors while preparing the configuration file for Orthanc.")
