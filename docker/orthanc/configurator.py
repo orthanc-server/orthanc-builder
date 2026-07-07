@@ -133,9 +133,9 @@ class OrthancConfigurator:
       elif k in first:
         if overwrite:
           if str(keyPath) in self.configurationSource:
-            logWarning("{k} has already been defined in {cs}; it will be overwritten by the value defined in {s}".format(k = str(keyPath), cs = self.configurationSource[str(keyPath)], s = secondSource))
+            logWarning(f"{str(keyPath)} has already been defined in {self.configurationSource[str(keyPath)]}; it will be overwritten by the value defined in {secondSource}")
           else:
-            logWarning("{k} has already been defined; it will be overwritten by the value defined in {s}".format(k = str(keyPath), s = secondSource))
+            logWarning(f"{str(keyPath)} has already been defined; it will be overwritten by the value defined in {secondSource}")
         else:
           apply = False
 
@@ -164,7 +164,7 @@ class OrthancConfigurator:
 
       if "nonStandardDefaults" in pluginDef:
 
-        logInfo("Applying defaults for {p} plugin".format(p = pluginName))
+        logInfo(f"Applying defaults for {pluginName} plugin")
 
         if "section" in pluginDef:
           section = pluginDef["section"]
@@ -177,7 +177,7 @@ class OrthancConfigurator:
         self._mergeConfigFromDefaults(pluginDefaultConfig, pluginName)
 
       if moveSoFiles and "libs" in pluginDef:
-        logInfo("Installing .so file for {p} plugin".format(p = pluginName))
+        logInfo(f"Installing .so file for {pluginName} plugin")
 
         for lib in pluginDef["libs"]:
           try:
@@ -194,7 +194,7 @@ class OrthancConfigurator:
                 else:
                   raise
           except Exception as ex:
-            logError("failed to install {l} file: {e}".format(l = lib, e = ex))
+            logError(f"failed to install {lib} file: {ex}")
             self.hasErrors = True
 
 
@@ -241,11 +241,7 @@ class OrthancConfigurator:
           else:
             self.pluginsDisabledByEnvVar.add(pluginName)
             
-          logWarning("You're using a deprecated env-var to enable the {p} plugin, you should use {n} instead of {o}".format(
-            p=pluginName,
-            n=pluginDef["enablingEnvVar"],
-            o=pluginDef["enablingEnvVarLegacy"]
-          ))
+          logWarning(f"You're using a deprecated env-var to enable the {pluginName} plugin, you should use {pluginDef['enablingEnvVar']} instead of {pluginDef['enablingEnvVarLegacy']}")
           self.hasDeprecatedSettings = True
           self.deprecatedSettings.append(pluginDef["enablingEnvVarLegacy"])
 
@@ -277,7 +273,7 @@ class OrthancConfigurator:
       logInfo("secret won't be read: " + envKey)
       return
     
-    logInfo("readSecret: from {s} into {e} will go into json {j}".format(s=path, e=envKey, j=jsonPath))
+    logInfo(f"readSecret: from {path} into {envKey} will go into json {jsonPath}")
     self.setConfig(jsonPath=jsonPath, value=content, source="secret:" + envKey)
 
 

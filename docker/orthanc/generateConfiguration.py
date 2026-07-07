@@ -43,7 +43,7 @@ for filePath in configFiles:
       cleanedContent = removeCppCommentsFromJson(content)
       configFromFile = json.loads(cleanedContent)
     except:
-      logError("Unable to parse Json file '{f}'; check syntax".format(f = filePath))
+      logError(f"Unable to parse Json file '{filePath}'; check syntax")
     
     configurator.mergeConfigFromFile(configFromFile, filePath)
 
