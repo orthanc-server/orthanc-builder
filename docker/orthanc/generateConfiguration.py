@@ -75,7 +75,10 @@ configurator.mergeConfigFromDefaults(moveSoFiles=True)
 logInfo("generated configuration file: " + json.dumps(configurator.configuration, indent=2))
 
 if configurator.hasDeprecatedSettings:
-  logWarning("************* you are using deprecated settings, these deprecated settings will be removed in June 2021 *************")
+  logError("************* you are using deprecated settings, these settings are deprecated since April 2020 !!!  Starting from July 2026, Orthanc will refuse to start as long as you are still using these deprecated variables *************")
+  logError("** List of deprecated settings: ")
+  for s in configurator.deprecatedSettings:
+    logError(f"** {s}")
 
 if configurator.hasErrors:
   logError("There were some errors while preparing the configuration file for Orthanc.")

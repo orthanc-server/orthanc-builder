@@ -17,6 +17,7 @@ class OrthancConfigurator:
 
     self.hasErrors = False
     self.hasDeprecatedSettings = False
+    self.deprecatedSettings = []
 
     self.nonStandardEnvVars = {}
     self.legacyEnvVars = {}
@@ -220,6 +221,7 @@ class OrthancConfigurator:
       if envKey in self.legacyEnvVars:
         logWarning("You're using a deprecated environment variable name: " + envKey)
         self.hasDeprecatedSettings = True
+        self.deprecatedSettings.append(envKey)
 
       jsonPath = self.getJsonPathFromEnvVarName(envKey)
       self.setConfig(jsonPath=jsonPath, value=envValue, source="env-var:" + envKey)
@@ -245,6 +247,7 @@ class OrthancConfigurator:
             o=pluginDef["enablingEnvVarLegacy"]
           ))
           self.hasDeprecatedSettings = True
+          self.deprecatedSettings.append(pluginDef["enablingEnvVarLegacy"])
 
 
   def mergeConfigFromSecret(self, secretPath: str, content: str):
@@ -261,6 +264,7 @@ class OrthancConfigurator:
       if relativeSecretPath in self.legacyEnvVars:
         logWarning("You're using a deprecated secret name: " + relativeSecretPath)
         self.hasDeprecatedSettings = True
+        self.deprecatedSettings.append(relativeSecretPath)
 
       self.readSecret(secretPath, content, relativeSecretPath)
 

@@ -22,6 +22,14 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+Pending changes
+---------------
+
+- DOCKER;
+  - The Docker image will now refuse to start if you are still using deprecated environment variables (they are deprecated since April 2020 !)
+
+
+
 26.6.1
 ------
 
