@@ -270,7 +270,7 @@ else
     ORTHANC_TESTS_COMMIT_ID=$(jq -r '.ORTHANC_TESTS_COMMIT_ID' /tmp/commit-ids-matrix-$version.json)
 fi
 
-BASE_UBUNTU_IMAGE=resolute-20260421
+BASE_UBUNTU_IMAGE=resolute-20260707
 BASE_BUILDER_IMAGE_TAG=$BASE_UBUNTU_IMAGE-$version
 
 # list all intermediate targets.  It allows us to "slow down" the build and see what's going wrong (which is not possible with 10 parallel builds)
