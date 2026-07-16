@@ -262,6 +262,8 @@ elif [[ $target == "orthanc-gdcm" ]]; then
         patch_version_name_on_unstable "return PLUGIN_VERSION" $sourcesRootPath/Plugin/Plugin.cpp
 
         link_third_party_downloads $sourcesRootPath/ThirdPartyDownloads
+        mkdir -p $buildRootPath/GDCM-prefix/src/
+        cp $sourcesRootPath/ThirdPartyDownloads/gdcm-3.0.24.tar.gz $buildRootPath/GDCM-prefix/src/gdcm-3.0.24.tar.gz
         framework_flags=$(configure_orthanc_framework "-DORTHANC_FRAMEWORK_SOURCE=web")
         cmake_compat=$(fix_cmake_compat_for_old_stable "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
