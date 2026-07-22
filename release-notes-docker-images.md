@@ -31,6 +31,7 @@ Pending changes
   - upgraded base image to `ubuntu:resolute-20260707`
   - New `ORTHANC_PASSWORD` environment variable to create an `orthanc` user and set his password.
   - Removed the default value of `MALLOC_ARENA_MAX` since it is already configured by Orthanc through the `MallocArenaMax` configuration (default value: 5).
+  - Added `LOGS_THREADNAMES_IN_CONTEXT` env var
 
 
 26.6.1
