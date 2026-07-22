@@ -13,7 +13,10 @@ ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
 
-FROM jodogne/wasm-builder:3.1.49 AS wasm-builder-base-amd64
+# This Dockerfile has been archived in orthancteam/wasm-builder:3.1.49-snapshot-2026.07.22 because the base image is an ubuntu:18.04 and it is not possible to apt-get update anymore
+# FROM jodogne/wasm-builder:3.1.49 
+# RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli zip
+FROM orthancteam/wasm-builder:3.1.49-snapshot-2026.07.22 AS wasm-builder-base-amd64
 
 ARG ARG_AWS_ACCESS_KEY_ID
 ARG ARG_AWS_SECRET_ACCESS_KEY
@@ -25,9 +28,7 @@ ARG PLATFORM=linux/amd64
 ARG BASE_IMAGE_TAG=unknown
 ARG STABLE_OR_UNSTABLE=stable
 
-
 RUN mkdir -p /.aws && echo region=eu-west-1 > /.aws/credentials
-RUN DEBIAN_FRONTEND=noninteractive && apt-get --assume-yes update && apt-get -y --fix-broken install && DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl awscli zip
 
 
 FROM orthancteam/orthanc-runner-base:${BASE_IMAGE_TAG} AS orthanc-runner-base
