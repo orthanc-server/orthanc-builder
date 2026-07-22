@@ -43,7 +43,7 @@ for filePath in configFiles:
       cleanedContent = removeCppCommentsFromJson(content)
       configFromFile = json.loads(cleanedContent)
     except:
-      logError("Unable to parse Json file '{f}'; check syntax".format(f = filePath))
+      logError(f"Unable to parse Json file '{filePath}'; check syntax")
     
     configurator.mergeConfigFromFile(configFromFile, filePath)
 
@@ -75,14 +75,38 @@ configurator.mergeConfigFromDefaults(moveSoFiles=True)
 logInfo("generated configuration file: " + json.dumps(configurator.configuration, indent=2))
 
 if configurator.hasDeprecatedSettings:
-  logWarning("************* you are using deprecated settings, these deprecated settings will be removed in June 2021 *************")
+  logError("************* you are using deprecated settings, these settings are deprecated since April 2020 !!!  Starting from July 2026, Orthanc will refuse to start as long as you are still using these deprecated variables *************")
+  logError("** List of deprecated settings: ")
+  for s in configurator.deprecatedSettings:
+    logError(f"** {s}")
+  exit(-2)
 
 if configurator.hasErrors:
   logError("There were some errors while preparing the configuration file for Orthanc.")
   exit(-1)
 
+# check if there are RegisteredUsers and create a default orthanc user if required
+config = configurator.configuration
+
+orthanc_password = os.environ.get('ORTHANC_PASSWORD')
+if orthanc_password is not None and len(orthanc_password) > 0:
+  if 'RegisteredUsers' not in config or len(config['RegisteredUsers']) == 0:
+    config["RegisteredUsers"] = {
+        'orthanc': orthanc_password
+      }
+  else:
+    config["RegisteredUsers"]["orthanc"] = orthanc_password
+
+# Authentication and RemoteAccessAllowed are true and RegisteredUsers are empty -> Orthanc will refuse to start.
+if ('RemoteAccessAllowed' not in config or config['RemoteAccessAllowed']) and ('AuthenticationEnabled' not in config or config['AuthenticationEnabled']):
+    if 'RegisteredUsers' not in config or len(config['RegisteredUsers']) == 0:
+      logError("********** HTTP authentication is enabled and Remote Access is allowed, but no user is declared.  "
+               "Starting with Orthanc 1.13.0, you must at least explicitly declare one user in the configuration option \"RegisteredUsers\". "
+               "As an alternative, you may define the -e ORTHANC_PASSWORD=change-me environment variable to define an 'orthanc' user with the given password. "
+               "Or you may also use -e ORTHANC__AUTHENTICATION_ENABLED=false to allow access to Orthanc without any authentication.  This is *not* recommended.")
+      exit(-3)
 
 configFilePath="/tmp/orthanc.json"
 logInfo("generating temporary configuration file in " + configFilePath)
 with open(configFilePath, "w+t") as fp:
-  json.dump(configurator.configuration, fp=fp, indent=2)
+  json.dump(config, fp=fp, indent=2)
