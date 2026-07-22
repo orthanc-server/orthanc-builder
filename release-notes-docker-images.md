@@ -25,11 +25,12 @@
 Pending changes
 ---------------
 
+- upgraded AWS S3 object-storage plugin to [2.5.4](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
 - DOCKER:
   - The Docker image will now refuse to start if you are still using [deprecated environment variables](https://github.com/orthanc-server/orthanc-builder/blob/master/docker/orthanc/env-var-legacy.json) (they are deprecated since April 2020 !)
   - upgraded base image to `ubuntu:resolute-20260707`
   - New `ORTHANC_PASSWORD` environment variable to create an `orthanc` user and set his password.
-  - Removed the default value of `MALLOC_ARENA_MAX` since it is already configured by Orthanc through the `MallocArenaMax` configuration.
+  - Removed the default value of `MALLOC_ARENA_MAX` since it is already configured by Orthanc through the `MallocArenaMax` configuration (default value: 5).
 
 
 26.6.1

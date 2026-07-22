@@ -44,7 +44,7 @@ ODBC plugin                           1.3
 MySQL plugins                         5.2
 TCIA plugin                           1.3
 Orthanc neuroimaging plugin           1.1
-AWS S3 plugin                         2.5.3
+AWS S3 plugin                         2.5.4
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
 STL plugin                            1.4
