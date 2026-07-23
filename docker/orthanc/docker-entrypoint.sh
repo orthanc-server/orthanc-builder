@@ -46,6 +46,11 @@ if [[ $NO_JOBS == true ]]; then
 	jobs=--no-jobs
 fi
 
+logoption2=""
+if [[ $LOGS_THREADNAMES_IN_CONTEXT == true ]]; then
+	logoption2=--logs-threadnames-in-context
+fi
+
 if [[ ! -z $BEFORE_ORTHANC_STARTUP_SCRIPT ]]; then
 	echo "running custom startup script"
 	$BEFORE_ORTHANC_STARTUP_SCRIPT
@@ -55,6 +60,6 @@ if [[ $JAVA_PLUGIN_ENABLED == true ]]; then
 	export LD_PRELOAD=/usr/lib/jvm/default-java/lib/server/libjvm.so
 fi
 
-argv=(Orthanc $verbosity $logoption $jobs "$@")
+argv=(Orthanc $verbosity $logoption $logoption2 $jobs "$@")
 echo "Startup command: exec \"${argv[*]}\"" >&2
 exec "${argv[@]}"
