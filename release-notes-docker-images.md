@@ -25,7 +25,9 @@
 Pending changes
 ---------------
 
+- upgraded Orthanc Explorer 2 plugin to [1.14.0](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded AWS S3 object-storage plugin to [2.5.4](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
+- upgraded advanced authorization plugin to [0.11.4](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - DOCKER:
   - The Docker image will now refuse to start if you are still using [deprecated environment variables](https://github.com/orthanc-server/orthanc-builder/blob/master/docker/orthanc/env-var-legacy.json) (they are deprecated since April 2020 !)
   - upgraded base image to `ubuntu:resolute-20260707`
