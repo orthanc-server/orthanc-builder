@@ -30,7 +30,7 @@ component                             version
 ---------------------------------------------
 Orthanc server                        1.12.11
 Housekeeper plugin                    1.12.11
-Orthanc Explorer 2                    1.14.0
+Orthanc Explorer 2                    1.14.1
 PostgreSQL plugins                    10.2
 DICOMweb plugin                       1.23
 Python plugin                         7.1
