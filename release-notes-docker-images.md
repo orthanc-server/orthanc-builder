@@ -22,8 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes
----------------
+26.7.0
+------
 
 - upgraded Orthanc Explorer 2 plugin to [1.14.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded AWS S3 object-storage plugin to [2.5.4](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
