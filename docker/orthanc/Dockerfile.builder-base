@@ -128,6 +128,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.9.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.10.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.12.11.tar.gz && \    
+    wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-1.13.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-0ebe8cfd9bf7.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-56eb61c86f93.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-94c7f3784456.tar.gz && \
