@@ -6,6 +6,10 @@
 ARG BASE_UBUNTU_IMAGE=unknown
 FROM ubuntu:$BASE_UBUNTU_IMAGE
 
+# Remove pebble that introduces some CVE in Docker Scout while the pebble package is not used
+# and is not installed through dpkg.
+RUN rm -f /usr/bin/pebble
+
 # we had some issues with one of the mirror -> force it to the Belgian mirror
 # RUN rm /etc/apt/sources.list.d/debian.sources
 # RUN echo "deb http://ftp.be.debian.org/debian/ bookworm main" | tee /etc/apt/sources.list.d/belgium.mirror.list
