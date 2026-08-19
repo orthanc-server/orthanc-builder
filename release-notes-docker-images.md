@@ -21,12 +21,17 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+26.8.1
+------
+
+- upgraded DICOMweb plugin to [1.24](https://orthanc.uclouvain.be/hg/orthanc-dicomweb/file/default/NEWS)
+  - upgraded PostgreSQL plugins to [10.3](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
+
 
 26.8.0
 ------
 
 - upgraded Orthanc to [1.13.0](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
-
 
 26.7.0
 ------

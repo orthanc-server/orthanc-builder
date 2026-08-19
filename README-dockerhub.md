@@ -24,15 +24,15 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 26.7.0 Default image
+#### 26.8.1 Default image
 ```
 component                             version
 ---------------------------------------------
 Orthanc server                        1.13.0
 Housekeeper plugin                    1.13.0
 Orthanc Explorer 2                    1.14.1
-PostgreSQL plugins                    10.2
-DICOMweb plugin                       1.23
+PostgreSQL plugins                    10.3
+DICOMweb plugin                       1.24
 Python plugin                         7.1
 Authorization plugin                  0.11.4
 Stone Web viewer plugin               3.0+d4a8203b3390
@@ -68,7 +68,7 @@ Lua                                   5.4
 
 ```
 
-#### 26.7.0-full image
+#### 26.8.1-full image
 ```
 additional component                  version
 ---------------------------------------------
