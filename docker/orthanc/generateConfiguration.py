@@ -71,8 +71,22 @@ for secretPath in glob.glob("/run/secrets/*"):
 
 configurator.mergeConfigFromDefaults(moveSoFiles=True)
 
+# check if there are RegisteredUsers and create a default orthanc user if required
+config = configurator.configuration
 
-logInfo("generated configuration file: " + json.dumps(configurator.configuration, indent=2))
+orthanc_password = os.environ.get('ORTHANC_PASSWORD')
+if orthanc_password is not None and len(orthanc_password) > 0:
+  if 'RegisteredUsers' not in config or len(config['RegisteredUsers']) == 0:
+    config["RegisteredUsers"] = {
+        'orthanc': orthanc_password
+      }
+  else:
+    config["RegisteredUsers"]["orthanc"] = orthanc_password
+
+logInfo("generated configuration file:")
+logInfo("----------------------------")
+logInfo(json.dumps(config, indent=2))
+logInfo("----------------------------")
 
 if configurator.hasDeprecatedSettings:
   logError("************* you are using deprecated settings, these settings are deprecated since April 2020 !!!  Starting from July 2026, Orthanc will refuse to start as long as you are still using these deprecated variables *************")
@@ -85,17 +99,6 @@ if configurator.hasErrors:
   logError("There were some errors while preparing the configuration file for Orthanc.")
   exit(-1)
 
-# check if there are RegisteredUsers and create a default orthanc user if required
-config = configurator.configuration
-
-orthanc_password = os.environ.get('ORTHANC_PASSWORD')
-if orthanc_password is not None and len(orthanc_password) > 0:
-  if 'RegisteredUsers' not in config or len(config['RegisteredUsers']) == 0:
-    config["RegisteredUsers"] = {
-        'orthanc': orthanc_password
-      }
-  else:
-    config["RegisteredUsers"]["orthanc"] = orthanc_password
 
 # Authentication and RemoteAccessAllowed are true and RegisteredUsers are empty -> Orthanc will refuse to start.
 if ('RemoteAccessAllowed' not in config or config['RemoteAccessAllowed']) and ('AuthenticationEnabled' not in config or config['AuthenticationEnabled']):
