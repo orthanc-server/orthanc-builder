@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 26.8.1 Default image
+#### 26.8.X Default image
 ```
 component                             version
 ---------------------------------------------
@@ -48,7 +48,7 @@ AWS S3 plugin                         2.5.4
 Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
 STL plugin                            1.4
-Advanced Storage plugin               0.3.1
+Advanced Storage plugin               0.3.2
 Education plugin                      1.1
 Worklists plugin                      0.9.2
 Pixels masker plugin                  0.1.3
@@ -68,7 +68,7 @@ Lua                                   5.4
 
 ```
 
-#### 26.8.1-full image
+#### 26.8.X-full image
 ```
 additional component                  version
 ---------------------------------------------
