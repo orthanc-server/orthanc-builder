@@ -24,7 +24,7 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 
 # packages content
 
-#### 26.8.2 Default image
+#### 26.X.Y Default image
 ```
 component                             version
 ---------------------------------------------
@@ -51,7 +51,7 @@ STL plugin                            1.4
 Advanced Storage plugin               0.3.2
 Education plugin                      1.1
 Worklists plugin                      0.9.2
-Pixels masker plugin                  0.1.3
+Pixels masker plugin                  0.1.4
 Sample Serve folders plugin           1.13.0
 Sample Connectivity check plugin      1.13.0
 Sample Multitenant DICOM plugin       1.13.0
@@ -68,7 +68,7 @@ Lua                                   5.4
 
 ```
 
-#### 26.8.X-full image
+#### 26.X.Y-full image
 ```
 additional component                  version
 ---------------------------------------------

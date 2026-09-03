@@ -25,8 +25,10 @@
 Pending changes
 ---------------
 
-DOCKER:
-- upgraded base image to `ubuntu:resolute-20260811.1`
+
+- upgraded Pixels Masker plugin to [0.1.4](https://github.com/orthanc-server/orthanc-pixels-masker/blob/master/release-notes.md) (no functional changes)
+- DOCKER:
+  - upgraded base image to `ubuntu:resolute-20260811.1`
 
 
 26.8.2
