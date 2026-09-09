@@ -49,7 +49,7 @@ Kitware's VolView plugin              1.3
 OHIF plugin                           1.8
 STL plugin                            1.4
 Advanced Storage plugin               0.3.2
-Education plugin                      1.1
+Education plugin                      1.2
 Worklists plugin                      0.9.2
 Pixels masker plugin                  0.1.4
 Sample Serve folders plugin           1.13.0
