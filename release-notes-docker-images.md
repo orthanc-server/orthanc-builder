@@ -25,6 +25,7 @@
 Pending changes
 ---------------
 
+- upgraded whole-slide imaging plugin to [4.0](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/default/NEWS)
 - upgraded education plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
 - upgraded Pixels Masker plugin to [0.1.4](https://github.com/orthanc-server/orthanc-pixels-masker/blob/master/release-notes.md) (no functional changes)
 - DOCKER:

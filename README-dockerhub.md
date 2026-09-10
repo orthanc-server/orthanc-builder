@@ -37,7 +37,7 @@ Python plugin                         7.1
 Authorization plugin                  0.12.0
 Stone Web viewer plugin               3.0+d4a8203b3390
 Orthanc Web viewer plugin             2.10
-WSI Web viewer plugin                 3.3
+wSI Web viewer plugin                 4.0
 Transfers accelerator plugin          1.7
 GDCM plugin                           1.8
 ODBC plugin                           1.3
