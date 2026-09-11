@@ -22,8 +22,8 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes
----------------
+26.9.0
+------
 
 - upgraded whole-slide imaging plugin to [4.0](https://orthanc.uclouvain.be/hg/orthanc-wsi/file/default/NEWS)
 - upgraded education plugin to [1.2](https://orthanc.uclouvain.be/hg/orthanc-education/file/default/NEWS)
