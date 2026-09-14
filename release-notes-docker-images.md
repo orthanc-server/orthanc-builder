@@ -22,6 +22,10 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
+- DOCKER:
+  - upgraded base image to `ubuntu:resolute-20260901`
+
+
 26.9.0
 ------
 

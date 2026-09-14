@@ -2,7 +2,7 @@
     "integrationTests" : {
         "comment": "# CHANGE_ORTHANC_TESTS_VERSION",
         "stable": "default",
-        "unstable": "default"
+        "unstable": "pg-next-1099"
     },
     "configs": [
         {
@@ -166,7 +166,7 @@
             "sourcesSubPath": "/PostgreSQL",
             "comment": "# CHANGE_VERSION_PG",
             "stable": "OrthancPostgreSQL-10.3",
-            "unstable": "default",
+            "unstable": "pg-next-1099",
             "artifactsMacOS": "libOrthancPostgreSQLIndex.dylib libOrthancPostgreSQLStorage.dylib",
             "buildForMacOS": true,
             "buildForWin": false,
