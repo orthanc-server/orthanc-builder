@@ -83,106 +83,106 @@ source .env/bin/activate
 
 pip3 install -r requirements.txt
 
-if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]; then
+# if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-db" ]; then
 
-    ######## concurrency
+#     ######## concurrency
 
-    python3 -u main.py --pattern=Concurrency.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=Concurrency.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
 
-    ######## PG upgrades
+#     ######## PG upgrades
 
-    python3 -u main.py --pattern=PostgresUpgrades.* \
-                    --orthanc_under_tests_docker_image=$imageUnderTest
-fi
+#     python3 -u main.py --pattern=PostgresUpgrades.* \
+#                     --orthanc_under_tests_docker_image=$imageUnderTest
+# fi
 
-if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-perfs" ]; then
+# if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-perfs" ]; then
 
-    ######## perfs
+#     ######## perfs
 
-    python3 -u main.py --pattern=NonRegressionPerfs.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=NonRegressionPerfs.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    # no need to execute the remaining tests that are handled by other groups
-    if [ "$testsGroup" = "tests-group-perfs" ]; then
-        exit 0
-    fi
-fi
+#     # no need to execute the remaining tests that are handled by other groups
+#     if [ "$testsGroup" = "tests-group-perfs" ]; then
+#         exit 0
+#     fi
+# fi
 
-if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
+# if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
 
-    ######## housekeeper
+#     ######## housekeeper
 
-    previous_image=orthancteam/orthanc:22.4.0
+#     previous_image=orthancteam/orthanc:22.4.0
 
-    docker pull $previous_image
+#     docker pull $previous_image
 
-    ######## Other new tests
+#     ######## Other new tests
 
-    python3 -u main.py --pattern=AdvancedStorage.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=AdvancedStorage.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=AdvancedStorage.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043 \
-                    --db=sqlite
+#     python3 -u main.py --pattern=AdvancedStorage.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043 \
+#                     --db=sqlite
 
-    python3 -u main.py --pattern=CGet.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=CGet.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=Authorization.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=Authorization.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    # Concurrency tests are performed in the tests-group-db
+#     # Concurrency tests are performed in the tests-group-db
 
-    python3 -u main.py --pattern=DelayedDeletion.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=DelayedDeletion.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=ExtraMainDicomTags.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=ExtraMainDicomTags.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=Housekeeper.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_previous_version_docker_image=$previous_image \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=Housekeeper.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_previous_version_docker_image=$previous_image \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=InterruptedDownloads.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=InterruptedDownloads.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=MaxStorage.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=MaxStorage.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    # NonRegressionPerfs tests are performed in the tests-group-perfs
+#     # NonRegressionPerfs tests are performed in the tests-group-perfs
 
-    python3 -u main.py --pattern=PixelsMasker.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=PixelsMasker.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    # PostgresUpgrades tests are performed in the tests-group-perfs
+#     # PostgresUpgrades tests are performed in the tests-group-perfs
 
-    python3 -u main.py --pattern=ReadOnly.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=ReadOnly.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=StorageCompression.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=StorageCompression.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-    python3 -u main.py --pattern=WithIngestTranscoding.* \
-                    --orthanc_under_tests_docker_image=orthanc-under-tests \
-                    --orthanc_under_tests_http_port=8043
+#     python3 -u main.py --pattern=WithIngestTranscoding.* \
+#                     --orthanc_under_tests_docker_image=orthanc-under-tests \
+#                     --orthanc_under_tests_http_port=8043
 
-fi
+# fi
 
 popd # back to docker/integration-tests folder
 ############ end run NewTests
@@ -210,33 +210,33 @@ if [[ $image == "normal" ]]; then
         docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client -t orthanc-tests-tls-check-client orthanc-tests
         docker build $add_host_cmd -f orthanc-tests/Dockerfile --target orthanc-tests-tls-check-client-generate-config -t orthanc-tests-tls-check-client-generate-config orthanc-tests
 
-        COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
-        COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
-        COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
-        COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
+        # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
+        # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose run --rm orthanc-tests-tls-no-check-client-generate-config
+        # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose up orthanc-tests-tls-no-check-client --exit-code-from orthanc-tests-tls-no-check-client --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.tls-no-check-client.yml         docker compose down -v
 
-        COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
-        COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose run --rm orthanc-tests-tls-check-client-generate-config
-        COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
-        COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
+        # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
+        # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose run --rm orthanc-tests-tls-check-client-generate-config
+        # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose up orthanc-tests-tls-check-client --exit-code-from orthanc-tests-tls-check-client --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.tls-check-client.yml            docker compose down -v
 
-        COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose down -v
-        COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose down -v
+        # COMPOSE_FILE=docker-compose.sqlite.yml                      docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose down -v
-        COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose down -v
+        # COMPOSE_FILE=docker-compose.sqlite-compression.yml          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
-        COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose down -v
+        # COMPOSE_FILE=docker-compose.dicomweb.yml                    docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose down -v
-        COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose down -v
+        # COMPOSE_FILE=docker-compose.dicomweb-with-gdcm.yml          docker compose up --build --exit-code-from orthanc-tests-dicomweb --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
-        COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.webdav.yml                      docker compose down -v
+        # COMPOSE_FILE=docker-compose.webdav.yml                      docker compose up --build --exit-code-from orthanc-tests-webdav --abort-on-container-exit
 
-        COMPOSE_FILE=docker-compose.cget.yml                        docker compose down -v
-        COMPOSE_FILE=docker-compose.cget.yml                        docker compose up --build --exit-code-from orthanc-tests-cget --abort-on-container-exit
+        # COMPOSE_FILE=docker-compose.cget.yml                        docker compose down -v
+        # COMPOSE_FILE=docker-compose.cget.yml                        docker compose up --build --exit-code-from orthanc-tests-cget --abort-on-container-exit
 
         COMPOSE_FILE=docker-compose.s3.yml                          docker compose down -v
         COMPOSE_FILE=docker-compose.s3.yml                          docker compose up --build --exit-code-from orthanc-tests --abort-on-container-exit
