@@ -27,6 +27,7 @@ Pending changes
 
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20260901`
+  - the docker-entrypoint.sh [now accepts multiple arguments](https://discourse.orthanc-server.org/t/orthanc-1-13-docker-several-config-files/6476)
 
 
 26.9.0
