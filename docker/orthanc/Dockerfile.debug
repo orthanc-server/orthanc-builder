@@ -1,0 +1,9 @@
+# a small debug Dockerfile to debug the startup script:
+# e.g:
+#   docker build -f Dockerfile.debug -t orthancteam/orthanc:debug .
+#   docker run -p 8642:8042 -e VERBOSE_STARTUP=true -v /tmp/conf:/conf orthancteam/orthanc:debug /conf/o1.json /conf/o2.json
+
+FROM orthancteam/orthanc:current
+
+COPY docker-entrypoint.sh /
+COPY generateConfiguration.py /startup/
