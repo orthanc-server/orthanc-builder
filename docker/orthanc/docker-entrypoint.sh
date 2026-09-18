@@ -27,7 +27,14 @@ fi
 
 # generate the configuration file
 cd /startup
-python3 generateConfiguration.py
+
+if [[ $# -gt 0 ]] && ! [[ $# -eq 1 && "$1" == "/tmp/orthanc.json" ]]; then
+    echo "WARNING: You have explicitly provided one or more configuration files to the entrypoint " >&2
+	echo "WARNING: -> NOT reading configurations from /etc/orthanc/ or /run/secrets/" >&2
+	echo "WARNING:    and ignoring ORTHANC__*, ORTHANC_JSON and *_PLUGIN_ENABLED environment variables." >&2
+else
+	python3 generateConfiguration.py
+fi
 
 if [[ $TRACE_ENABLED == true ]]; then
 	verbosity=--trace
