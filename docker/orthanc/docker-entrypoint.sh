@@ -2,7 +2,7 @@
 set -o errexit
 
 if [[ $# -eq 0 ]]; then
-	echo "FATAL ERROR: docker-entrypoint.sh expects a single parameter: the path to the configuration files(s)"
+	echo "FATAL ERROR: docker-entrypoint.sh expects at least one parameter: the path to the configuration files(s)"
 	exit 2
 fi
 
