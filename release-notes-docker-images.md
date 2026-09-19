@@ -25,6 +25,7 @@
 Pending changes
 ---------------
 
+- upgraded PostgreSQL plugins to [11.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20260901`
   - The docker-entrypoint.sh [now accepts multiple arguments](https://discourse.orthanc-server.org/t/orthanc-1-13-docker-several-config-files/6476)
