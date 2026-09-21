@@ -22,15 +22,15 @@
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
 
-Pending changes
----------------
+26.9.1
+------
 
 - upgraded PostgreSQL plugins to [11.0](https://orthanc.uclouvain.be/hg/orthanc-databases/file/default/PostgreSQL/NEWS)
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20260901`
   - The docker-entrypoint.sh [now accepts multiple arguments](https://discourse.orthanc-server.org/t/orthanc-1-13-docker-several-config-files/6476)
   - POSSIBLE BREAKING CHANGE if you are providing configuration files explicitly to the entrypoint e.g. by running : `docker run -v /tmp/conf:/conf orthancteam/orthanc /conf/o1.json /conf/o2.json` or by providing a `command` in a `docker-compose` file:
-    - All `ORTHANC__*`, `ORTHANC_JSON` and `*_PLUGIN_ENABLED` environment variables will be ignored.
+    - Only the configuration files will be considered and all `ORTHANC__*`, `ORTHANC_JSON` and `*_PLUGIN_ENABLED` environment variables will be ignored.
     - To configure Orthanc, we recommand mounting your configuration files in `/etc/orthanc/` or using the `ORTHANC_JSON` and other `ORTHANC__*` environment variables.
       In this case, a startup script will merge this configuration with a default configuration and automatically enable the required plugins.
 
