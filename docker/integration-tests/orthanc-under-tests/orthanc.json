@@ -70,7 +70,8 @@
         "alice",
         "orthanctest"
       ]
-    }
+    },
+    "AllowedHosts": ["my-allowed-domain.com", "my2.allowed.*", "my3.*.com", "*.white-listed.com", "orthanc-under-tests"]
   },
   "Dictionary": {
     "0009,0010": [
