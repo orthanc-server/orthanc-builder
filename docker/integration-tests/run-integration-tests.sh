@@ -114,6 +114,13 @@ fi
 
 if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-others" ]; then
 
+
+    ######## StorageCommitment has a specific startup procedure
+
+    ORTHANC_IMAGE_UNDER_TESTS=orthanc-under-tests docker compose -f docker-compose-storage-commitment.yml up --build
+
+    ########
+
     ######## housekeeper
 
     previous_image=orthancteam/orthanc:22.4.0
