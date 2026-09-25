@@ -52,6 +52,13 @@
       "Host": "127.0.0.1",
       "LocalAet": "SELF-FROM-CONFIG",
       "Port": 4242
+    },
+    "self-with-fake-local-aet": {
+      "AET": "FAKE_SELF_AET",
+      "Host": "127.0.0.1",
+      "LocalAet": "FAKE_SELF_AET",
+      "Port": 4242,
+      "AllowFindWorklist": true   
     }
   },
   "DicomModalitiesInDatabase": false,

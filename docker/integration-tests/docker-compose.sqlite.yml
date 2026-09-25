@@ -1,6 +1,10 @@
 services:
   orthanc-under-tests:
     image: orthanc-under-tests
+    environment:
+      # enable the worklist plugin to have at least one setup where we test 'test_find_worklist_local_aet'
+      WORKLISTS_PLUGIN_ENABLED: true
+
 
   orthanc-tests:
     image: orthanc-tests
