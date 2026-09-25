@@ -117,7 +117,7 @@ if [ "$testsGroup" = "tests-group-all" ] || [ "$testsGroup" = "tests-group-other
 
     ######## StorageCommitment has a specific startup procedure
 
-    ORTHANC_IMAGE_UNDER_TESTS=orthanc-under-tests docker compose -f docker-compose-storage-commitment.yml up --build
+    ORTHANC_IMAGE_UNDER_TESTS=orthanc-under-tests docker compose -f StorageCommitment/docker-compose-storage-commitment.yml up --build --exit-code-from=tests
 
     ########
 
