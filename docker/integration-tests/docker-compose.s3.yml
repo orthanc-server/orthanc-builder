@@ -18,6 +18,8 @@ services:
     depends_on:
       orthanc-under-tests:
         condition: service_started
+    environment:
+      PYTHONUNBUFFERED: "1"
 
   s3-like:
     image: chrislusf/seaweedfs
