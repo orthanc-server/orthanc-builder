@@ -279,7 +279,8 @@ class OrthancConfigurator:
 
   def setConfig(self, jsonPath: JsonPath, value: str, source: str, overwrite: bool = True):
     try:
-      jsonValue = json.loads(value) # will work for number, booleans and json but not for strings
+      cleanedContent = removeCppCommentsFromJson(value)
+      jsonValue = json.loads(cleanedContent)
     except ValueError as e:
       jsonValue = value
 
