@@ -75,9 +75,10 @@ jobs:
       if: inputs.runner == 'debian-arm64'
       run: echo "skipped on ARM 64"
 
-    - name: Setup tmate session
+    - name: Setup upterm session
       if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
+      uses: owenthereal/action-upterm@v2
       timeout-minutes: 90
       with:
-        limit-access-to-actor: true
+        limit-access-to-actor: true # Restrict to the user who triggered the workflow
+        limit-access-to-users: githubuser1,githubuser2 # Specific authorized users only        
