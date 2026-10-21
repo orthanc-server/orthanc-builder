@@ -75,9 +75,9 @@ jobs:
       if: inputs.runner == 'debian-arm64'
       run: echo "skipped on ARM 64"
 
-    # - name: Setup tmate session
-    #   if: ${{ failure() }}
-    #   uses: mxschmitt/action-tmate@v3
-    #   timeout-minutes: 30
-    #   with:
-    #     limit-access-to-actor: true
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      timeout-minutes: 30
+      with:
+        limit-access-to-actor: true
