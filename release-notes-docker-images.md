@@ -29,6 +29,7 @@ Pending changes
 
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20261006`
+  - now linking dynamicaly with libcurl, civetweb and openssl to use more recent versions
 
 
 26.9.1
