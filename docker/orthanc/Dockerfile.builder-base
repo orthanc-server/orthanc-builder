@@ -139,6 +139,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/orthanc-framework/Orthanc-c1dcb63cde6f.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/openlayers-10.6.1-package.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/openssl-3.1.4.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/openssl-3.5.9.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/pako-0.2.5.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/pdfjs-2.5.207-dist.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/popper-2.11.8.min.js.gz && \
