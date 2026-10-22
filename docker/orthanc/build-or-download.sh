@@ -195,7 +195,8 @@ if [[ $target == "orthanc" ]]; then
         # ln -s /third-party-downloads $sourcesRootPath/OrthancServer/ThirdPartyDownloads
 
         # note: building with static DCMTK because base images are often one version late
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_DCMTK=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
+        # we use static openssl because ubuntu is in 3.5.5 and the static version is now 3.5.9
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_DCMTK=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
         make -j 8
         $buildRootPath/UnitTests
 
