@@ -6,12 +6,12 @@ primary dependencies of Orthanc; not its plugins.
 Orthanc third-parties library statically linked:
 
 DCMTK                       ; https://github.com/DCMTK/dcmtk                                                ; 3.7.1
+OpenSSL                     ; https://github.com/openssl/openssl                                            ; 3.5.9
 
 Orthanc third-parties library dynamically linked (depending on the base image, currently: ubuntu 26.04):
   info extracted from "ldd /usr/local/bin/Orthanc" and "apt list | grep jsoncpp"
 
-Civetweb                    ; https://github.com/civetweb/civetweb                                          ; 1.14
-OpenSSL                     ; https://github.com/openssl/openssl                                            ; 3.5.9
+Civetweb                    ; https://github.com/civetweb/civetweb                                          ; 1.16+dfsg-3ubuntu0.1
 curl                        ; https://github.com/curl/curl                                                  ; 8.18.0-1ubuntu2.8
 JsonCpp                     ; https://github.com/open-source-parsers/jsoncpp                                ; 1.9.6-5build1
 SQLite                      ; https://github.com/sqlite/sqlite                                              ; 3.46.1-9ubuntu0.3
@@ -27,5 +27,3 @@ Libgcc & co                 ; https://github.com/gcc-mirror/gcc/tree/master/libg
 LibIcu                      ; https://github.com/unicode-org/icu                                            ; 78.2-2ubuntu1
 XZ                          ; https://sourceforge.net/projects/lzmautils/                                   ; 5.8.3-1
 zstd                        ; https://github.com/facebook/zstd                                              ; 1.5.7+dfsg-3
-
-

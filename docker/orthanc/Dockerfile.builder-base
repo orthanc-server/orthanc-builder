@@ -100,9 +100,8 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/curl-8.5.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/curl-8.9.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/curl-8.17.0.tar.gz && \
-    wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.6.8.tar.gz && \
-    wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.6.9.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.7.0.tar.gz && \
+    wget https://public-files.orthanc.team/third-party-downloads/dcmtk-3.7.1.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/e2fsprogs-1.44.5.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/Font-Awesome-4.7.0.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/gdcm-3.0.22.tar.gz && \

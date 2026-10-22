@@ -198,7 +198,7 @@ if [[ $target == "orthanc" ]]; then
         # - also building with static Civetweb because, when using dynamic linking, it seems to create a conflict with DCMTK (nested sequences test crashes)
         # - also use static openssl because ubuntu is in 3.5.5 and the static version is now 3.5.9
         # - use dynamic libcurl because the static version is currently 8.9.0 while ubuntu version is 8.18.0
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_CURL=ON -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_DCMTK=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CURL=ON -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_DCMTK=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
         make -j 8
         $buildRootPath/UnitTests
 
