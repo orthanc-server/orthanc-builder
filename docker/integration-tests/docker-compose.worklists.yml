@@ -2,8 +2,10 @@ services:
   orthanc-under-tests:
     image: orthanc-under-tests
     volumes:
-      - wl-volume:/worklists:ro
+      - wl-volume:/worklists
     environment:
+      VERBOSE_STARTUP: true
+      VERBOSE_ENABLED: true
       ORTHANC__WORKLISTS: |
         {
           "FilterIssuerAet": false,
