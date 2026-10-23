@@ -4,7 +4,11 @@ services:
     volumes:
       - wl-volume:/worklists:ro
     environment:
-      ORTHANC__WORKLISTS__FILTER_ISSUER_AET: "false"
+      ORTHANC__WORKLISTS: |
+        {
+          "FilterIssuerAet": false,
+          "HousekeepingInterval": 1
+        }
 
   orthanc-tests-worklists:
     image: orthanc-tests-worklists
