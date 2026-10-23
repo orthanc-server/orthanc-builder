@@ -196,11 +196,11 @@ if [[ $target == "orthanc" ]]; then
 
         # note: building with static DCMTK because base images are often one version late
         # - also use static openssl because ubuntu is in 3.5.5 and the static version is now 3.5.9
-        # - use dynamic libcurl because the static version is currently 8.9.0 while ubuntu version is 8.18.0
+        # - we stick to static libcurl because, as of 23.10.2026, using the dynamic libcurl makes the DicomWeb.test_rendered test fail when GDCM is used to uncompress the .70 syntax (see docker-compose.dicomweb-with-gdcm.yml)
         # - use static civetweb because the stack size is limited to 120kB when using the dynamic link while the static lib uses the default OS stack size (8MB on Linux)
         #   ref: https://github.com/civetweb/civetweb/pull/1398
         #   ref: https://orthanc.uclouvain.be/hg/orthanc/rev/9f5e962f174e
-        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_CURL=ON -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_DCMTK=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
+        cmake -DALLOW_DOWNLOADS=ON -DCMAKE_BUILD_TYPE:STRING=Release -DSTANDALONE_BUILD=ON -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DUSE_SYSTEM_CIVETWEB=OFF -DUSE_SYSTEM_CURL=OFF -DUSE_SYSTEM_OPENSSL=OFF -DUSE_SYSTEM_DCMTK=OFF -DUNIT_TESTS_WITH_HTTP_CONNEXIONS=OFF $sourcesRootPath/OrthancServer        
         make -j 8
         $buildRootPath/UnitTests
 
