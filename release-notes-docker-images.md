@@ -29,7 +29,6 @@ Pending changes
 
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20261006`
-  - Fix #38: [now linking dynamicaly with libcurl, civetweb to use more recent versions](https://github.com/orthanc-server/orthanc-builder/issues/38)
   - Fix #34: [allow comments in plugins env var containing JSON](https://github.com/orthanc-server/orthanc-builder/issues/34)
 
 
