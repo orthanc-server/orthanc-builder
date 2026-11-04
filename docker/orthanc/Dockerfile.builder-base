@@ -93,6 +93,7 @@ RUN wget https://public-files.orthanc.team/third-party-downloads/3DHOP_4.3.zip &
     wget https://public-files.orthanc.team/third-party-downloads/boost_1_85_0_bcpdigest-1.12.4.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/boost_1_86_0_bcpdigest-1.12.5.tar.gz && \
     wget https://public-files.orthanc.team/third-party-downloads/boost_1_89_0_bcpdigest-1.12.11.tar.gz  && \
+    wget https://public-files.orthanc.team/third-party-downloads/boost_1_92_0_bcpdigest-1.13.1.tar.gz  && \
     wget https://public-files.orthanc.team/third-party-downloads/bootstrap-4.3.1.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/bootstrap-5.3.3.zip && \
     wget https://public-files.orthanc.team/third-party-downloads/civetweb-1.16-fixed.tar.gz && \
