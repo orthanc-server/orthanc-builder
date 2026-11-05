@@ -24,14 +24,15 @@
 
 
 
-Pending changes
----------------
+26.11.0
+-------
 
 - upgraded Orthanc Explorer 2 plugin to [1.15.1](https://github.com/orthanc-server/orthanc-explorer-2/blob/master/release-notes.md)
 - upgraded Worklists plugin to [1.0.0](https://github.com/orthanc-server/orthanc-worklists/blob/master/release-notes.md).
 - upgraded advanced authorization plugin to [0.12.1](https://orthanc.uclouvain.be/hg/orthanc-authorization/file/default/NEWS)
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20261024.1`
+  - upgraded Google cloud object-storage plugin to [2.5.5](https://orthanc.uclouvain.be/hg/orthanc-object-storage/file/default/NEWS)
   - Fix #34: [allow comments in plugins env var containing JSON](https://github.com/orthanc-server/orthanc-builder/issues/34)
 
 
