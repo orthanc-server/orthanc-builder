@@ -56,14 +56,6 @@
     "libs" : ["libOsimisWebViewer.so"]
   },
 
-  "OsimisWebViewerBasicAlpha" : {
-    "section" : "WebViewer",
-    "enablingEnvVarIsRequired": true,
-    "enablingEnvVar" : "OSIMIS_WEB_VIEWER1_ALPHA_PLUGIN_ENABLED",
-    "enablingEnvVarLegacy" : "WVB_ALPHA_ENABLED",
-    "libs" : ["libOsimisWebViewerAlpha.so"]
-  },
-
   "PostgreSQL" : {
     "enablingEnvVar" : "POSTGRESQL_PLUGIN_ENABLED",
     "enablingEnvVarLegacy" : "PG_ENABLED",

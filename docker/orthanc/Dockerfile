@@ -317,9 +317,7 @@ FROM orthanc-builder-base AS build-downloader
 
 RUN mkdir /downloads
 # RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewer.so --quiet
-# RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/osimis-web-viewer/1.4.3/libOsimisWebViewer.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 RUN wget https://public-files.orthanc.team/lsb-mirror/libOsimisWebViewer-1.4.3.so --output-document /downloads/libOsimisWebViewer.so --quiet
-RUN wget https://public-files.orthanc.team/lsb-mirror/libOsimisWebViewer-1.4.3.so --output-document /downloads/libOsimisWebViewerAlpha.so --quiet
 
 
 
@@ -383,15 +381,12 @@ COPY --from=build-plugin-pixels-masker --chown=orthanc:orthanc --chmod=755 /buil
 COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/libOrthancEducation.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
-COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewerAlpha.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-s3-object-storage --chown=orthanc:orthanc --chmod=755 /build/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
 
-# If the target architecture is not AMD64, then delete the OsimisWebViewer &
-# OsimisWebViewerAlpha plugin as they are only compatible with AMD64 builds
+# If the target architecture is not AMD64, then delete the OsimisWebViewer plugin as it is only compatible with AMD64 builds
 RUN if [[ ! -z "$PLATFORM" ]] && [[ "$PLATFORM" != "linux/amd64" ]]; then \
-	rm /usr/share/orthanc/plugins-available/libOsimisWebViewer.so && \
-	rm /usr/share/orthanc/plugins-available/libOsimisWebViewerAlpha.so; \
+	rm /usr/share/orthanc/plugins-available/libOsimisWebViewer.so; \
 	fi
 
 # RUN chmod +x /usr/share/orthanc/plugins-available/*
