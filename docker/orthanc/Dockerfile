@@ -164,6 +164,7 @@ FROM orthanc-builder-base AS build-plugin-stl
 
 ARG ORTHANC_STL_COMMIT_ID
 RUN /scripts/build-or-download.sh version=$STABLE_OR_UNSTABLE target=orthanc-stl commitId=$ORTHANC_STL_COMMIT_ID baseImage=$PLATFORM/$BASE_IMAGE_TAG preferDownloads=$PREFER_DOWNLOADS enableUploads=$ENABLE_UPLOAD
+RUN /scripts/collect-dependencies.sh /build/libOrthancSTL.so /opt/dependencies
 
 ########################## Orthanc TCIA
 
@@ -375,6 +376,7 @@ COPY --from=build-oe2 --chown=orthanc:orthanc --chmod=755 /build/libOrthancExplo
 COPY --from=build-plugin-volview --chown=orthanc:orthanc --chmod=755 /build/libOrthancVolView.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-ohif --chown=orthanc:orthanc --chmod=755 /build/libOrthancOHIF.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /build/libOrthancSTL.so /usr/share/orthanc/plugins-available/
+COPY --from=build-plugin-stl --chown=orthanc:orthanc --chmod=755 /opt/dependencies/* /opt/dependencies/
 COPY --from=build-plugin-advanced-storage --chown=orthanc:orthanc --chmod=755 /build/libAdvancedStorage.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-worklists --chown=orthanc:orthanc --chmod=755 /build/libOrthancWorklists.so /usr/share/orthanc/plugins-available/
 COPY --from=build-plugin-pixels-masker --chown=orthanc:orthanc --chmod=755 /build/libOrthancPixelsMasker.so /usr/share/orthanc/plugins-available/
@@ -383,6 +385,8 @@ COPY --from=build-plugin-education --chown=orthanc:orthanc --chmod=755 /build/li
 COPY --from=build-downloader --chown=orthanc:orthanc --chmod=755 /downloads/libOsimisWebViewer.so /usr/share/orthanc/plugins-available/
 
 COPY --from=build-s3-object-storage --chown=orthanc:orthanc --chmod=755 /build/libOrthancAwsS3Storage.so /usr/share/orthanc/plugins-available/
+
+ENV LD_LIBRARY_PATH=/opt/dependencies/
 
 # If the target architecture is not AMD64, then delete the OsimisWebViewer plugin as it is only compatible with AMD64 builds
 RUN if [[ ! -z "$PLATFORM" ]] && [[ "$PLATFORM" != "linux/amd64" ]]; then \

@@ -27,7 +27,8 @@ Pending changes
 
 - DOCKER:
   - removed the obsolete `OSIMIS_WEB_VIEWER1_ALPHA_PLUGIN_ENABLED` environment variable.
-
+  - internals:
+    - removed all unused vtk dependencies to reduce the image size (use by the orthanc-stl plugin)
 
 
 26.11.0
