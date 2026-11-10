@@ -27,8 +27,12 @@ if [[ ! -f "$SRC" ]]; then
     exit 1
 fi
 
+echo "Showing dependencies (lddtree output) for humans: "
+lddtree "$SRC"
+
 mkdir -p "$TARGET"
 TARGET=$(cd "$TARGET" && pwd)
+SRC_REAL=$(realpath "$SRC")
 
 LDDTREE_ARGS=(-l)
 if [[ -n "${LDDTREE_ROOT:-}" ]]; then
@@ -45,14 +49,22 @@ if [[ ${#libs[@]} -eq 0 ]]; then
 fi
 
 copied=0
+skipped_self=0
 for lib in "${libs[@]}"; do
     if [[ ! -e "$lib" ]]; then
         echo "Warning: '$lib' not found on disk, skipping" >&2
         continue
     fi
 
-    # Skip anything already inside the target dir.
     real=$(realpath "$lib")
+
+    # Do not copy the analyzed file itself (or a symlink pointing to it).
+    if [[ "$real" == "$SRC_REAL" ]]; then
+        skipped_self=$((skipped_self + 1))
+        continue
+    fi
+
+    # Skip anything already inside the target dir.
     if [[ "$real" == "$TARGET"/* ]]; then
         continue
     fi
@@ -74,5 +86,5 @@ for lib in "${libs[@]}"; do
     fi
 done
 
-echo "Copied $copied unique libraries into $TARGET:"
-ls -l "$TARGET"
+echo "Copied $copied unique libraries into $TARGET ($skipped_self self-reference(s) skipped)."
+ls -lh "$TARGET"
