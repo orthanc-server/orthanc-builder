@@ -43,6 +43,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get --assume-yes install --no-install-recommends libprotobuf32 && \
   apt-get --assume-yes install --no-install-recommends pkg-config && \
   apt-get --assume-yes install --no-install-recommends zlib1g && \
+  apt-get --assume-yes install --no-install-recommends libminizip1t64 && \
   apt-get --assume-yes clean && \
   rm --recursive --force /var/lib/apt/lists/*
 
