@@ -26,6 +26,7 @@ Pending changes
 ---------------
 
 - DOCKER:
+  - upgraded base image to `ubuntu:resolute-20261105.1`
   - removed the obsolete `OSIMIS_WEB_VIEWER1_ALPHA_PLUGIN_ENABLED` environment variable.
   - internals:
     - removed all unused vtk dependencies to reduce the image size (use by the orthanc-stl plugin)
