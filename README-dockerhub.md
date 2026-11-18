@@ -28,8 +28,8 @@ Release notes are available [here](https://github.com/orthanc-server/orthanc-bui
 ```
 component                             version
 ---------------------------------------------
-Orthanc server                        1.13.0
-Housekeeper plugin                    1.13.0
+Orthanc server                        1.13.1
+Housekeeper plugin                    1.13.1
 Orthanc Explorer 2                    1.15.1
 PostgreSQL plugins                    11.0
 DICOMweb plugin                       1.24
@@ -52,12 +52,12 @@ Advanced Storage plugin               0.3.2
 Education plugin                      1.2
 Worklists plugin                      1.0.0
 Pixels masker plugin                  0.1.4
-Sample Serve folders plugin           1.13.0
-Sample Connectivity check plugin      1.13.0
-Sample Multitenant DICOM plugin       1.13.0
+Sample Serve folders plugin           1.13.1
+Sample Connectivity check plugin      1.13.1
+Sample Multitenant DICOM plugin       1.13.1
 Orthanc Indexer plugin (deprecated)   1.1
 Osimis Web viewer plugin (deprecated) 1.4.3
-Delayed Deletion plugin (deprecated)  1.13.0
+Delayed Deletion plugin (deprecated)  1.13.1
 
 
 System components                     version

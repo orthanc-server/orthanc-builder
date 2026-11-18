@@ -25,6 +25,7 @@
 26.11.1
 -------
 
+- upgraded Orthanc to [1.13.1](https://orthanc.uclouvain.be/hg/orthanc/file/default/NEWS)
 - DOCKER:
   - upgraded base image to `ubuntu:resolute-20261105.1`
   - removed the obsolete `OSIMIS_WEB_VIEWER1_ALPHA_PLUGIN_ENABLED` environment variable.
