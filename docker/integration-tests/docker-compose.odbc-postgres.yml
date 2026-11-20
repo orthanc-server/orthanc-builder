@@ -15,8 +15,6 @@ services:
     image: orthanc-tests
     depends_on:
       - orthanc-under-tests
-    environment:
-      PYTHONUNBUFFERED: "1"
 
   odbc-pg-server:
     image: postgres

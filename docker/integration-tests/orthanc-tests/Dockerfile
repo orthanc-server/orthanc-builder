@@ -1,5 +1,8 @@
 ##############################################################
 FROM jodogne/orthanc-tests AS orthanc-tests
+
+ENV PYTHONUNBUFFERED=1
+
 RUN mkdir /tests
 WORKDIR /tests
 
@@ -14,6 +17,8 @@ ENTRYPOINT /scripts/wait-for-it.sh orthanc-under-tests:8042 -t 60 && python /tes
 
 ##############################################################
 FROM python:2.7 AS python2-7-base-image
+
+ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update
 RUN	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install dcmtk
