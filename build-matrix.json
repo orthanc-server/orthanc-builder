@@ -863,7 +863,7 @@
             "repoType": "git",
             "comment": "# CHANGE_VERSION_ORTHANC_EXPLORER_2",
             "stable": "1.15.1",
-            "unstable": "master",
+            "unstable": "mobile-ui",
             "stableMacOS": "1.15.1", 
             "unstableMacOS": "1.15.1", 
             "comment2": "this plugin has its own build process on Github -> MacOS and Win64 are built by Github",

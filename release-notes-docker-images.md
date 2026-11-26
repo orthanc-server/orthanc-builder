@@ -21,6 +21,11 @@
 >
 > Starting from `24.3.5`, the docker images are available for `linux/amd64` and `linux/arm64`.
 
+Pending changes
+---------------
+
+- OE2 in `mobile-ui` branch
+
 
 26.11.1
 -------
